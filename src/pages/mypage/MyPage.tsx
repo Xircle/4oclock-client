@@ -12,9 +12,9 @@ import {
   SubText,
   MainBtn,
   colors,
-} from "../../Styles";
+} from "../../styles";
 import { Link } from "react-router-dom";
-import routes from "../../Routes";
+import routes from "../../routes";
 import { DummyAvartar } from "../../dummyResources/dummyData";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

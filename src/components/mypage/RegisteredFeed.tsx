@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../Styles";
+import { colors } from "../../styles";
 
 interface Props {
   placeImgSrc: string;

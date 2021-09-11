@@ -5,7 +5,7 @@ import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import "./FeedPage.css";
 import { Option } from "react-dropdown";
-import { colors, Container } from "../../Styles";
+import { colors, Container } from "../../styles";
 import Header from "../../components/shared/Header/Header";
 import HeaderTextHeading from "../../components/shared/Header/HeaderTextHeading";
 import HeaderTextDescription from "../../components/shared/Header/HeaderTextDescription";
@@ -13,7 +13,7 @@ import Feed from "../../components/feed/Feed";
 import { feedDummyData } from "../../dummyResources/dummyData";
 import BottomNavBar from "../../components/shared/BottomNavBar";
 import { Link } from "react-router-dom";
-import routes from "../../Routes";
+import routes from "../../routes";
 
 const options: Option[] = [
   {

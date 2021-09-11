@@ -16,8 +16,8 @@ import {
   Tag,
   Heading,
   ContainerwithLeftRightMargin,
-} from "../../Styles";
-import routes from "../../Routes";
+} from "../../styles";
+import routes from "../../routes";
 
 interface Props {}
 

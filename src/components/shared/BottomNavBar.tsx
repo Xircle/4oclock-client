@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { BottomNavBarContainer, colors, SpaceForNavBar } from "../../Styles";
+import { BottomNavBarContainer, colors, SpaceForNavBar } from "../../styles";
 import { Link } from "react-router-dom";
-import routes from "../../Routes";
+import routes from "../../routes";
 
 interface Props {
   selectedItem: string;

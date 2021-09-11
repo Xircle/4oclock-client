@@ -9,7 +9,7 @@ import {
   FlexDiv,
   Avartar,
   colors,
-} from "../../Styles";
+} from "../../styles";
 import { DummyAvartar } from "../../dummyResources/dummyData";
 
 interface Props {}

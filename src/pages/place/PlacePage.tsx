@@ -9,12 +9,12 @@ import {
   SpaceForNavBar,
   BottomFixedButtonContainer,
   BottomFixedButtoninContainer,
-} from "../../Styles";
+} from "../../styles";
 import Header from "../../components/shared/Header/Header";
 import HeaderTextHeading from "../../components/shared/Header/HeaderTextHeading";
 import HeaderTextDescription from "../../components/shared/Header/HeaderTextDescription";
 import Avartar from "../../components/shared/Avartar";
-import routes from "../../Routes";
+import routes from "../../routes";
 import { Link } from "react-router-dom";
 
 interface Props {}

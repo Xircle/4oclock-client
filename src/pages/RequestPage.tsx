@@ -6,7 +6,7 @@ import {
   SubText,
   MainBtn,
   ContainerwithLeftRightMargin,
-} from "../Styles";
+} from "../styles";
 
 interface Props {}
 

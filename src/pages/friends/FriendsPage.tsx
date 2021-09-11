@@ -10,7 +10,7 @@ import {
   ContainerFlexColumn,
   ContainerwithLeftRightMargin,
   FlexDiv,
-} from "../../Styles";
+} from "../../styles";
 import MainPicDummy from "../../dummyResources/MainPicDummy.jpg";
 
 interface Props {}

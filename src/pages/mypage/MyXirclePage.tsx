@@ -4,11 +4,11 @@ import {
   ContainerwithLeftRightMargin,
   Heading,
   colors,
-} from "../../Styles";
+} from "../../styles";
 import BottomNavBar from "../../components/shared/BottomNavBar";
 import { feedDummyData } from "../../dummyResources/dummyData";
 import { Link } from "react-router-dom";
-import routes from "../../Routes";
+import routes from "../../routes";
 import RegisteredFeed from "../../components/mypage/RegisteredFeed";
 
 interface Props {}

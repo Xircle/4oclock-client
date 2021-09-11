@@ -1,17 +1,17 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import "./App.css";
-import { GlobalStyles, AppContainer } from "./Styles";
+import { GlobalStyles, AppContainer } from "./styles";
 import FeedPage from "./pages/feed/FeedPage";
 import RequestPage from "./pages/RequestPage";
 import PlacePage from "./pages/place/PlacePage";
-import routes from "./Routes";
+import routes from "./routes";
 import FriendsPage from "./pages/friends/FriendsPage";
 import MyPage from "./pages/mypage/MyPage";
 import BookingPage from "./pages/place/BookingPage";
 import BookingConfirmPage from "./pages/place/BookingConfirmPage";
 import MyXirclePage from "./pages/mypage/MyXirclePage";
 import ModifyProfilePage from "./pages/mypage/ModifyProfilePage";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
@@ -20,6 +20,10 @@ function App() {
       <AppContainer>
         <Router>
           <Switch>
+            <Route path={routes.root}>
+              <LandingPage />
+            </Route>
+
             <Route path={routes.feed}>
               <FeedPage />
             </Route>

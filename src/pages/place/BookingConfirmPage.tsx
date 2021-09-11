@@ -8,7 +8,7 @@ import {
   MainBtn,
   Heading,
   ContainerwithLeftRightMargin,
-} from "../../Styles";
+} from "../../styles";
 
 interface Props {}
 
