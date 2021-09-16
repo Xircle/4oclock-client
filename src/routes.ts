@@ -1,15 +1,16 @@
 const routes = {
   root: "/",
-  places: "/Places",
-  place: "/Place",
-  friends: "/Friends",
-  mypage: "/MyPage",
-  booking: "/Booking",
-  bookingconfirm: "/BookingConfirm",
-  request: "/Request",
+  socialRedirect: "/social/redirect",
+  places: "/places",
+  place: "/place/:id",
+  friends: "/friends",
+  mypage: "/my-page",
+  reservation: "/reservation",
+  reservationConfirm: "/reservation/confirm",
+  request: "/request",
   myxirclepage: "/MyXirclePage",
-  myprofilemodifypage: "/ProfileModifyPage",
-  auth: "/Auth",
+  myprofilemodifypage: "/profileModifyPage",
+  auth: "/auth",
 };
 
 export default routes;
