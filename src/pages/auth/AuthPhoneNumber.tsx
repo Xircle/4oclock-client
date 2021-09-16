@@ -1,17 +1,13 @@
 import styled from "styled-components";
 import React, { useState } from "react";
 import {
-  ContainerFlexColumn,
   ContainerwithLeftRightMargin,
   Heading,
   SubText,
   colors,
-  MainBtn,
-  NextButtonDisabled,
-  NextButtonEnabled,
+  NextButton,
 } from "../../styles";
 import { AuthState, AuthAction } from "./types";
-import routes from "../../routes";
 
 interface Props {
   onNext: () => void;
@@ -19,12 +15,7 @@ interface Props {
   dispatch: React.Dispatch<AuthAction>;
 }
 
-export default function AuthPage1({
-  onNext,
-  state,
-  dispatch,
-  ...props
-}: Props) {
+export default function AuthPage1({ onNext, state, dispatch }: Props) {
   const Validate = (data: string) => {
     if (data.length < 10 || data.length > 11) {
       dispatch({ type: "setStage1Valid", payload: false });
@@ -43,6 +34,10 @@ export default function AuthPage1({
     }
   };
 
+  const preventDefaultAction = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <ContainerwithLeftRightMargin>
       <Heading style={{ lineHeight: "35px" }}>
@@ -53,7 +48,7 @@ export default function AuthPage1({
         단톡방을 만들어드리는 용도로 사용되기에 꼭! 사용하시는 전화번호를
         적어주셔야 해요.
       </SubText>
-      <form>
+      <form onSubmit={preventDefaultAction}>
         <PhoneNumberInput
           placeholder="전화번호를 입력해주세요"
           type="number"
@@ -64,19 +59,21 @@ export default function AuthPage1({
             Validate(e.target.value);
           }}
         />
+        <NextButton
+          type="submit"
+          onClick={onNext}
+          disabled={!state.stage1Valid}
+        >
+          다음
+        </NextButton>
       </form>
-      {state.stage1Valid ? (
-        <NextButtonEnabled onClick={onNext}>다음</NextButtonEnabled>
-      ) : (
-        <NextButtonDisabled>다음</NextButtonDisabled>
-      )}
     </ContainerwithLeftRightMargin>
   );
 }
 
 const PhoneNumberInput = styled.input`
   margin-top: 40px;
-  padding: 0px;
+  padding: 0 10px;
   width: 100%;
   height: 56px;
   border-radius: 0;

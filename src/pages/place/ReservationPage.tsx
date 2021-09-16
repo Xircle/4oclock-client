@@ -75,7 +75,10 @@ export default function BookingPage(props: Props) {
           </InstructionDetail>
         </Instruction>
         {isSelected1 || isSelected2 ? (
-          <Link to={routes.bookingconfirm} style={{ textDecoration: "none" }}>
+          <Link
+            to={routes.reservationConfirm}
+            style={{ textDecoration: "none" }}
+          >
             <EnabledMainBtnBooking>놀러가기</EnabledMainBtnBooking>
           </Link>
         ) : (
