@@ -218,6 +218,8 @@ export const Avartar = styled.img`
   height: 30px;
   border-radius: 50%;
   object-fit: cover;
+  margin: 20px 0 10px;
+  cursor: pointer;
 `;
 
 export const ContainerFlexColumn = styled(Container)`
@@ -281,20 +283,20 @@ export const Label = styled.p`
   margin-top: 24px;
 `;
 
-export const NextButtonDisabled = styled(MainBtn)`
-  filter: none;
-  background-color: ${colors.LightGray};
+export const NextButton = styled(MainBtn)`
   position: fixed;
   z-index: 3;
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
+  &:disabled {
+    background-color: ${colors.LightGray};
+    filter: none;
+  }
 `;
 
-export const NextButtonEnabled = styled(MainBtn)`
-  position: fixed;
-  z-index: 3;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
+export const FileLabel = styled.label`
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
 `;

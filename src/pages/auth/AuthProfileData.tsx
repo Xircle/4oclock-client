@@ -1,19 +1,14 @@
 import styled from "styled-components";
 import {
-  ContainerFlexColumn,
   ContainerwithLeftRightMargin,
   Heading,
-  SubText,
   colors,
-  MainBtn,
   MidInput,
   FlexDiv,
   GenderText,
   Label,
   BigTextArea,
-  NextButtonDisabled,
-  SpaceForNavBar,
-  NextButtonEnabled,
+  NextButton,
 } from "../../styles";
 import {
   faCheckCircle,
@@ -30,18 +25,8 @@ interface Props {
   dispatch: React.Dispatch<AuthAction>;
 }
 
-export default function AuthPage2({
-  onNext,
-  state,
-  dispatch,
-  ...props
-}: Props) {
-  const univs: string[] = [
-    "고려대학교 재학",
-    "고려대학교 졸업",
-    "연세대학교 재학",
-    "연세대학교 졸업",
-  ];
+export default function AuthPage2({ onNext, state, dispatch }: Props) {
+  const univs: string[] = ["고려대학교", "연세대학교"];
   const [nameError, SetNameError] = useState<boolean>(false);
   const [univError, SetUnivError] = useState<boolean>(false);
   const [ageError, SetAgeError] = useState<boolean>(false);
@@ -88,7 +73,7 @@ export default function AuthPage2({
       SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: false });
       SetAgeError(true);
-    } else if (gender !== "male" && gender !== "female") {
+    } else if (gender !== "Male" && gender !== "Female") {
       SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: false });
       SetGenderError(true);
@@ -130,15 +115,30 @@ export default function AuthPage2({
         <select
           id=""
           name="University"
-          value={state.university}
+          value={
+            state.isGraduate
+              ? state.university + " 졸업"
+              : state.university + " 재학"
+          }
           style={
             univError
-              ? { marginTop: "12px", borderColor: colors.Red }
-              : { marginTop: "12px" }
+              ? {
+                  marginTop: "12px",
+                  borderColor: colors.Red,
+                  color: colors.Black,
+                }
+              : { marginTop: "12px", color: colors.Black }
           }
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-            dispatch({ type: "setUniversity", payload: e.target.value });
-            Validate(e.target.value);
+            dispatch({
+              type: "setUniversity",
+              payload: e.target.value.toString().split(" ")[0],
+            });
+            dispatch({
+              type: "setIsGraduate",
+              payload: e.target.value.toString().split(" ")[1] === "졸업",
+            });
+            Validate(e.target.value.toString().split(" ")[0]);
           }}
         >
           <option value="" style={{ color: colors.BareGray }}>
@@ -181,13 +181,14 @@ export default function AuthPage2({
               justifyContent: "normal",
               display: "flex",
               alignItems: "center",
+              cursor: "pointer",
             }}
             onClick={() => {
-              dispatch({ type: "setGender", payload: "male" });
-              Validate(state.university, "male");
+              dispatch({ type: "setGender", payload: "Male" });
+              Validate(state.university, "Male");
             }}
           >
-            {state.gender === "male" ? (
+            {state.gender === "Male" ? (
               <FontAwesomeIcon
                 icon={faCheckCircle}
                 color={colors.MidBlue}
@@ -216,13 +217,14 @@ export default function AuthPage2({
               display: "flex",
               alignItems: "center",
               marginLeft: "10px",
+              cursor: "pointer",
             }}
             onClick={() => {
-              dispatch({ type: "setGender", payload: "female" });
-              Validate(state.university, "female");
+              dispatch({ type: "setGender", payload: "Female" });
+              Validate(state.university, "Female");
             }}
           >
-            {state.gender === "female" ? (
+            {state.gender === "Female" ? (
               <FontAwesomeIcon
                 icon={faCheckCircle}
                 color={colors.MidBlue}
@@ -284,32 +286,32 @@ export default function AuthPage2({
           onKeyUp={() => Validate()}
         />
         {bioError && <ErrorMessage>{errorMessages[5]}</ErrorMessage>}
+        <p
+          style={{
+            justifyContent: "end",
+            display: "flex",
+            alignItems: "center",
+            fontSize: "12px",
+            color: colors.MidGray,
+            marginTop: "5px",
+          }}
+        >
+          <FontAwesomeIcon
+            icon={faMapMarkerAlt}
+            color={colors.LightGray}
+            size="lg"
+            style={{ marginRight: "8px" }}
+          />
+          {state.location ? state.location : "대한민국 어딘가"}
+        </p>
+        <NextButton
+          type="submit"
+          disabled={!state.stage2Valid}
+          onClick={onNext}
+        >
+          다음
+        </NextButton>
       </form>
-      <p
-        style={{
-          justifyContent: "end",
-          display: "flex",
-          alignItems: "center",
-          fontSize: "12px",
-          color: colors.MidGray,
-          marginTop: "5px",
-        }}
-      >
-        <FontAwesomeIcon
-          icon={faMapMarkerAlt}
-          color={colors.LightGray}
-          size="lg"
-          style={{ marginRight: "8px" }}
-        />
-        {state.location ? state.location : "대한민국 어딘가"}
-      </p>
-      <SpaceForNavBar></SpaceForNavBar>
-
-      {state.stage2Valid ? (
-        <NextButtonEnabled onClick={onNext}>다음</NextButtonEnabled>
-      ) : (
-        <NextButtonDisabled>다음</NextButtonDisabled>
-      )}
     </ContainerwithLeftRightMargin>
   );
 }

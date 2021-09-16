@@ -31,10 +31,25 @@ interface Profile {
 }
 
 // Server interface
-export class SocialProfile {
+export class SocialAuthResponse {
   uid?: number;
   thumbnail?: string;
   username?: string;
   email?: string;
   gender?: string;
+}
+
+export class SocialRedirectResponse {
+  ok: boolean;
+  code: number;
+  data: {
+    token: string;
+    uid: string;
+    username: string;
+    email: string;
+    profile: {
+      id: profileId;
+      thumbnail: string;
+    };
+  };
 }

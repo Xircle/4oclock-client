@@ -1,5 +1,6 @@
 import Avartar1 from "./Avartar1.png";
 import MainPicDummy from "./MainPicDummy.jpg";
+import DefaultAvatar from "./DefaultImage.png";
 
 interface DummyData {
   placeImgSrc: string;
@@ -40,6 +41,7 @@ export const DummyProfileData: DummyProfile = {
 };
 
 export const DummyAvartar = Avartar1;
+export const DummyDefaultAvatar = DefaultAvatar;
 
 export const feedDummyData: DummyData[] = [
   {

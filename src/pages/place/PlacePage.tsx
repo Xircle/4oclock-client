@@ -107,7 +107,7 @@ export default function PlacePage(props: Props) {
           </DirText>
         </ParticipantContainer>
         <Link
-          to={routes.booking}
+          to={routes.reservation}
           style={{ textDecoration: "none", color: colors.Black }}
         >
           <BottomFixedButtonContainer>
