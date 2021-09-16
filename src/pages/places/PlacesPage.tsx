@@ -1,41 +1,48 @@
 import styled from "styled-components";
-import React, { useState } from "react";
 import MainPicDummy from "../../dummyResources/MainPicDummy.jpg";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
-import "./FeedPage.css";
+// import "./PlacesPage.css";
 import { Option } from "react-dropdown";
 import { colors, Container } from "../../styles";
 import Header from "../../components/shared/Header/Header";
 import HeaderTextHeading from "../../components/shared/Header/HeaderTextHeading";
 import HeaderTextDescription from "../../components/shared/Header/HeaderTextDescription";
-import Feed from "../../components/feed/Feed";
+import Place from "../../components/places/Place";
 import { feedDummyData } from "../../dummyResources/dummyData";
 import BottomNavBar from "../../components/shared/BottomNavBar";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
+import { useState, Fragment } from "react";
 
 const options: Option[] = [
   {
-    value: "안암근처",
+    value: "전체",
+    label: "전체",
+    className: "drop-down-option",
+  },
+  {
+    value: "안암",
     label: "안암근처",
     className: "drop-down-option",
   },
   {
-    value: "신촌근처",
+    value: "신촌",
     label: "신촌근처",
-    className: "drop-down-option",
-  },
-  {
-    value: "혜화근처",
-    label: "혜화근처",
     className: "drop-down-option",
   },
 ];
 
 interface Props {}
 
-export default function FeedPage(props: Props) {
+export default function PlacesPage(this: any, props: Props) {
+  const [optionValue, SetOptionValue] = useState<string>(options[0].value);
+
+  const HandleChangeLocation = (option: Option) => {
+    //console.log(option.value);
+    SetOptionValue(option.value);
+  };
+
   return (
     <Container>
       <Top>
@@ -45,10 +52,11 @@ export default function FeedPage(props: Props) {
               controlClassName="drop-down-className"
               options={options}
               value={options[0]}
+              onChange={HandleChangeLocation}
             />
           </div>
           <Link to={routes.request} style={{ textDecoration: "none" }}>
-            <RequestP>식탁 건의하기</RequestP>
+            <RequestP>서클 추가하기</RequestP>
           </Link>
         </TopWrapper>
       </Top>
@@ -58,27 +66,36 @@ export default function FeedPage(props: Props) {
           취향이 통하는 대학친구들과 즐기는 공간
         </HeaderTextDescription>
       </Header>
-      {feedDummyData.map((item) => {
-        return (
-          <Link
-            to={routes.place}
-            style={{ textDecoration: "none", color: colors.Black }}
-          >
-            <Feed
-              placeImgSrc={item.placeImgSrc}
-              feedParticipant={item.feedParticipant}
-              feedClosed={item.feedClosed}
-              feedHeading={item.feedHeading}
-              feedDetail={item.feedDetail}
-              feedLocation={item.feedLocation}
-              feedTime={item.feedTime}
-              feedCondition={item.feedCondition}
-              feedTag={item.feedTag}
-            ></Feed>
-          </Link>
-        );
-      })}
-      <BottomNavBar selectedItem="feed" />
+      {optionValue === "전체" ? (
+        <>
+          {feedDummyData.map((item, idx) => {
+            return (
+              <Fragment key={idx}>
+                <Link
+                  to={routes.place}
+                  style={{ textDecoration: "none", color: colors.Black }}
+                >
+                  <Place
+                    placeImgSrc={item.placeImgSrc}
+                    placeParticipant={item.feedParticipant}
+                    placeClosed={item.feedClosed}
+                    placeHeading={item.feedHeading}
+                    placeDetail={item.feedDetail}
+                    placeLocation={item.feedLocation}
+                    placeTime={item.feedTime}
+                    placeCondition={item.feedCondition}
+                    placeTag={item.feedTag}
+                  ></Place>
+                </Link>
+              </Fragment>
+            );
+          })}
+        </>
+      ) : (
+        <></>
+      )}
+
+      <BottomNavBar selectedItem="places" />
     </Container>
   );
 }
@@ -103,7 +120,7 @@ const TopWrapper = styled.div`
 `;
 
 const RequestP = styled.div`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   color: ${colors.MidGray};
   padding-top: 8px;

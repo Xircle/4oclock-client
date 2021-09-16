@@ -16,25 +16,46 @@ import HeaderTextDescription from "../../components/shared/Header/HeaderTextDesc
 import Avartar from "../../components/shared/Avartar";
 import routes from "../../routes";
 import { Link } from "react-router-dom";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-interface Props {}
+interface Props {
+  // deadline: string;
+  // imgUrl: string;
+  // name: string;
+  // date: string;
+  // ageRange: {min?: number, max?: number};
+  // tags: string[];
+  // participants: string[];
+  // participants_count: number;
+  // isClosed: boolean;
+  // isParticipating: boolean;
+}
 
 export default function PlacePage(props: Props) {
   return (
     <>
       <Container>
-        <Header src={PostMainPicDummy}>
-          <HeaderTextHeading>안암 막걸리 찬가</HeaderTextHeading>
-          <HeaderTextDescription>
-            내일 / 서울 용상구 보광로 60길 14-38 <br />
-            20세~26세
-          </HeaderTextDescription>
-        </Header>
+        <SHeader>
+          <SHeaderPic src={PostMainPicDummy} />
+
+          <TempToBeDeleted></TempToBeDeleted>
+          <HeaderText>
+            <SHeaderTextHeading>안암 막걸리 찬가</SHeaderTextHeading>
+            <HeaderSplit></HeaderSplit>
+            <SHeaderTextDescription>
+              내일 / 서울 용상구 보광로 60길 14-38 <br />
+              20세~26세
+            </SHeaderTextDescription>
+          </HeaderText>
+        </SHeader>
+
         <ContainerDescription>
           <p>
             새내기 미팅은 여기서!! 코로나 학번 모여라~~~
             <br />
-            준비물은 청춘과 체력! 같이 이런저런 이야기 하면서 놀아요 ㅎ<br />
+            준비물은 청춘과 체력! 같이 이런저런 이야기 하면서 놀아요
+            <br />
             나이 상관 없이 즐기는 광란의 안암 프리즘!
             <br />
             좋은 추억 쌓아보아요!
@@ -56,7 +77,7 @@ export default function PlacePage(props: Props) {
             <GridPic src={PostSubPicDummy} />
           </GridRow>
         </GridContainer>
-        <ParticipantContainer>
+        <ParticipantContainer style={{ marginTop: "31px" }}>
           <HeadingParticipant>
             7명 참여중 / 이런 친구들이 참여했어요!
           </HeadingParticipant>
@@ -71,11 +92,19 @@ export default function PlacePage(props: Props) {
             <Avartar src={Avartar1} marginRight={"5px"} />
             <Avartar src={Avartar1} marginRight={"5px"} />
           </AvartarImgContainerParticipant>
-          <PParticipant>참여 완료하면 프로필을 볼 수 있어요.</PParticipant>
+          <PParticipant>참가 전 학교 인증은 필수입니다.</PParticipant>
         </ParticipantContainer>
-        <ParticipantContainer>
+        <ParticipantContainer style={{ marginTop: "25px" }}>
           <HeadingParticipant>찾아오는 길</HeadingParticipant>
-          <DirText>서울 강남구 강남대로 152길 42 2층</DirText>
+          <DirText>
+            <FontAwesomeIcon
+              icon={faMapMarkerAlt}
+              color={colors.LightGray}
+              size="lg"
+              style={{ marginRight: "4px" }}
+            />
+            서울 강남구 강남대로 152길 42 2층
+          </DirText>
         </ParticipantContainer>
         <Link
           to={routes.booking}
@@ -95,10 +124,11 @@ export default function PlacePage(props: Props) {
 
 const ContainerDescription = styled.div`
   margin-top: 27px;
-  width: 80%;
+  width: 345px;
   margin-left: auto;
   margin-right: auto;
-  size: 12px;
+  font-size: 12px;
+  line-height: 150%;
   color: #6f7789;
   position: relative;
 `;
@@ -110,10 +140,10 @@ const DetailDescription = styled.div`
 `;
 
 const GridContainer = styled.div`
-  width: 80%;
+  width: 345px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 40px;
+  margin-top: 36px;
 `;
 
 const GridRow = styled.div`
@@ -124,13 +154,13 @@ const GridRow = styled.div`
 `;
 
 const GridPic = styled.img`
-  width: 96px;
-  height: 96px;
+  width: 112px;
+  height: 112px;
   object-fit: cover;
 `;
 
 const ParticipantContainer = styled.div`
-  width: 80%;
+  width: 345px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 22px;
@@ -147,6 +177,7 @@ const PParticipant = styled.p`
   margin-top: 22px;
   color: #8c94a4;
   font-size: 11px;
+  line-height: 14px;
   font-weight: 400;
 `;
 
@@ -155,10 +186,65 @@ const AvartarImgContainerParticipant = styled.div`
 `;
 
 const DirText = styled.p`
+  color: ${colors.LightGray};
   margin-top: 22px;
-  width: 70%;
   margin-left: auto;
   margin-right: auto;
   line-height: 150%;
   font-size: 11px;
+`;
+
+const TempToBeDeleted = styled.div`
+  position: absolute;
+  width: 375px;
+  height: 250px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(8, 8, 8, 0) 0%,
+    rgba(8, 8, 8, 0.1) 23.94%,
+    rgba(8, 8, 8, 0.24) 34.55%,
+    #191b1a 100%
+  );
+  border-radius: 0px;
+
+  position: absolute;
+  top: 0;
+`;
+
+const SHeaderTextHeading = styled.h3`
+  padding-bottom: 13px;
+  font-size: 20px;
+  font-weight: 800;
+`;
+
+const SHeaderTextDescription = styled.p`
+  margin-top: 13px;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 150%;
+`;
+
+const HeaderSplit = styled.div`
+  width: 180px;
+  border-bottom: 1px solid white;
+`;
+
+const SHeader = styled.div`
+  width: 100%;
+  position: relative;
+`;
+
+const SHeaderPic = styled.img`
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+`;
+
+const HeaderText = styled.div`
+  color: white;
+  position: absolute;
+  bottom: 25px;
+  left: 20px;
+  width: 65%;
 `;

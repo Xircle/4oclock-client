@@ -31,7 +31,7 @@ export default function FriendsPage(props: Props) {
             <p>개발자</p>
           </TagOnName>
         </FlexDiv>
-        <InnerContainer style={{ marginTop: "40px" }}>
+        <InnerContainer style={{ marginTop: "45px" }}>
           <InnerSubject>학교</InnerSubject>
           <InnerContent>고려대학교</InnerContent>
         </InnerContainer>
@@ -40,12 +40,14 @@ export default function FriendsPage(props: Props) {
           <InnerContent>20대 초반</InnerContent>
         </InnerContainer>
         <InnerContainer style={{ marginTop: "25px" }}>
-          <InnerContent style={{ marginLeft: "0px", fontWeight: 400 }}>
+          <InnerContent
+            style={{ marginLeft: "0px", fontWeight: 400, fontSize: "14px" }}
+          >
             수학을 너무 싫어하고... 요즘 너무 심심해요... 관련 있으신 분들과
             이야기 나누고 싶네요
           </InnerContent>
         </InnerContainer>
-        <TagInnerContainer>
+        {/* <TagInnerContainer>
           <TagOnDetail>
             <div>
               <p>스타트업</p>
@@ -71,7 +73,7 @@ export default function FriendsPage(props: Props) {
               <p>패션</p>
             </div>
           </TagOnDetail>
-        </TagInnerContainer>
+        </TagInnerContainer> */}
       </ContainerwithLeftRightMargin>
 
       <BottomNavBar selectedItem="friends" />
@@ -88,7 +90,7 @@ const Heading = styled(SubText)`
   }
 `;
 const AvartarBig = styled(Avartar)`
-  margin-top: 50px;
+  margin-top: 60px;
   width: 200px;
   height: 200px;
 `;

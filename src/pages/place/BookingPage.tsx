@@ -35,7 +35,7 @@ export default function BookingPage(props: Props) {
               <p>4인 모임</p>
             </TagBooking>
           </SelectionMainTextBooking>
-          <SelectionSubTextBooking>5명 참가예정</SelectionSubTextBooking>
+          <SelectionSubTextBooking>5명 참가중</SelectionSubTextBooking>
           <CheckIcon>
             {isSelected1 ? (
               <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
@@ -51,7 +51,7 @@ export default function BookingPage(props: Props) {
               <p>2인 모임</p>
             </TagBooking>
           </SelectionMainTextBooking>
-          <SelectionSubTextBooking>7명 참가예정</SelectionSubTextBooking>
+          <SelectionSubTextBooking>7명 참가중</SelectionSubTextBooking>
           <CheckIcon>
             {isSelected2 ? (
               <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
@@ -70,7 +70,7 @@ export default function BookingPage(props: Props) {
             3. 지정된 장소와 시간에 만나서 놀아요.
             <br />
           </InstructionDetail>
-          <InstructionDetail>
+          <InstructionDetail style={{ marginTop: "9px" }}>
             단톡이 만들어지기전에 적어주신 전화번호로 연락을 드릴게요!
           </InstructionDetail>
         </Instruction>
@@ -83,7 +83,7 @@ export default function BookingPage(props: Props) {
         )}
       </ContainerwithLeftRightMargin>
 
-      <BottomNavBar selectedItem="feed" />
+      <BottomNavBar selectedItem="places" />
     </Container>
   );
 }
@@ -133,12 +133,12 @@ const InstructionHeading = styled.p`
   font-size: 13px;
   line-height: 16px;
   margin-left: 12px;
-  padding-top: 10px;
+  padding-top: 20px;
 `;
 
 const InstructionDetail = styled.p`
-  margin-top: 5px;
-  font-weight: 500;
+  margin-top: 10px;
+  font-weight: 400;
   font-size: 11px;
   line-height: 18px;
   letter-spacing: -0.005em;

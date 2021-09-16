@@ -9,11 +9,13 @@ import {
   ContainerwithLeftRightMargin,
 } from "../styles";
 import KakaoLogin from "react-kakao-login";
-import { LoginResponse, UserProfile } from "../lib/api/kakao";
+import { LoginResponse, SocialProfile, UserProfile } from "../lib/api/kakao";
+import { useHistory } from "react-router-dom";
 
 interface Props {}
 
-export default function LandingPage(props: Props) {
+function LandingPage() {
+  const history = useHistory<SocialProfile>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,8 +24,14 @@ export default function LandingPage(props: Props) {
     profile?: UserProfile | undefined;
   }) => {
     console.log(response);
-    const body = {};
-    // history.push(state)
+    
+    history.push("/social/redirect", {
+      uid: response.profile?.id,
+      thumbnail: response.profile?.properties.thumbnail_image_url,
+      username: response.profile?.properties.nickname,
+      email: response.profile?.kakao_account.email,
+      gender: response.profile?.kakao_account.gender,
+    });
   };
 
   return (
@@ -120,3 +128,5 @@ const KakaoBtn = styled(MainBtn)`
   color: #000;
   margin: 1.25rem 0;
 `;
+
+export default LandingPage;

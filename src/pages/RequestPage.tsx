@@ -22,7 +22,7 @@ export default function RequestPage(props: Props) {
         </SubTextRequest>
         <MainBtnRequest>써클 건의해보기</MainBtnRequest>
       </ContainerwithLeftRightMargin>
-      <BottomNavBar selectedItem="feed" />
+      <BottomNavBar selectedItem="places" />
     </Container>
   );
 }
@@ -32,9 +32,10 @@ const Heading = styled(ProcedureHeading)`
 `;
 
 const SubTextRequest = styled(SubText)`
-  margin-top: 40px;
+  margin-top: 19px;
+  font-size: 14px;
   width: 315px;
-  line-height: 1.5em;
+  line-height: 20px;
   font-weight: 500;
   font-size: 11px;
   b {

@@ -6,10 +6,19 @@ body {
   font-family: "Spoqa Han Sans Neo", "Spoqa Han Sans JP", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #FAFAFA;
+  background: #fafafa;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+
+
+:checked {
+  appearance: none;
+  background-color: #dde4f1;
+  border: 1px solid #d7dfec;
+
 }

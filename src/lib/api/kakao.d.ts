@@ -30,11 +30,11 @@ interface Profile {
   profile_needs_agreement?: boolean;
 }
 
-// Server
-export type SocialProfile = {
-  uid: number | string;
-  thumbnail: string | null;
-  email: string | null;
-  name: string;
+// Server interface
+export class SocialProfile {
+  uid?: number;
+  thumbnail?: string;
   username?: string;
-};
+  email?: string;
+  gender?: string;
+}

@@ -22,7 +22,10 @@ const HeaderText = styled.div`
 export default function Header(props: Props) {
   return (
     <SHeader>
-      <HeaderPic src={props.src} />
+      <HeaderPic
+        src={props.src}
+
+      />
       <HeaderText>{props.children}</HeaderText>
     </SHeader>
   );

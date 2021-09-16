@@ -34,8 +34,9 @@ export default function BookingConfirmPage(props: Props) {
         <MainBtnBookingConfirm>
           참여하는 친구들 프로필 보기
         </MainBtnBookingConfirm>
+        <HomeBtn>홈으로 가기</HomeBtn>
       </ContainerwithLeftRightMargin>
-      <BottomNavBar selectedItem="feed" />
+      <BottomNavBar selectedItem="places" />
     </Container>
   );
 }
@@ -54,4 +55,14 @@ const SubTextBookingBookingConfirm = styled(SubText)`
 const MainBtnBookingConfirm = styled(MainBtn)`
   margin-top: 100px;
   width: 300px;
+`;
+
+const HomeBtn = styled.div`
+  margin-top: 20px;
+  color: ${colors.LightGray};
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
 `;

@@ -67,6 +67,7 @@ const ModifyProfileBtn = styled(MainBtn)`
   color: ${colors.MidBlue};
   border: 1px solid ${colors.MidBlue};
   filter: none;
+  box-shadow: none;
   font-size: 15px;
   font-weight: 500;
   width: 100%;
