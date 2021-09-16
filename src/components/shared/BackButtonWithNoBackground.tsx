@@ -7,10 +7,19 @@ interface Props {
   onPrev: () => void;
 }
 
-export default function BackButtonWithNoBackground({ onPrev, ...props }: Props) {
-
+export default function BackButtonWithNoBackground({
+  onPrev,
+  ...props
+}: Props) {
   return (
-    <div style={{ fontSize: "12px", marginTop: "50px", marginLeft: "20px" }}>
+    <div
+      style={{
+        fontSize: "12px",
+        cursor: "pointer",
+        marginTop: "50px",
+        marginLeft: "20px",
+      }}
+    >
       <FontAwesomeIcon
         icon={faArrowLeft}
         color={colors.Black}

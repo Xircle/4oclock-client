@@ -42,29 +42,69 @@ export default function AuthPage2({
     "연세대학교 재학",
     "연세대학교 졸업",
   ];
+  const [nameError, SetNameError] = useState<boolean>(false);
+  const [univError, SetUnivError] = useState<boolean>(false);
+  const [ageError, SetAgeError] = useState<boolean>(false);
+  const [genderError, SetGenderError] = useState<boolean>(false);
+  const [titleError, SetTitleError] = useState<boolean>(false);
+  const [bioError, SetBioError] = useState<boolean>(false);
+
+  const SetErrorAll = (param: boolean) => {
+    SetNameError(param);
+    SetUnivError(param);
+    SetAgeError(param);
+    SetGenderError(param);
+    SetTitleError(param);
+    SetBioError(param);
+  };
+  const errorMessages: string[] = [
+    "20자 이하의 이름을 입력해주세요",
+    "학교를 선택해주세요",
+    "19 ~ 40 사이의 나이를 입력해주세요",
+    "성별을 선택해주세요",
+    "1자에서 8자 이내로 입력해주세요",
+    "1자 이상의 자기소개를 입력해주세요",
+  ];
+
   const CheckAge = (age: number) => {
     if (age >= 19 && age <= 40) {
       return true;
     }
     return false;
   };
-  const Validate = () => {
+  function Validate(
+    univ: string = state.university,
+    gender: string = state.gender
+  ): void {
     if (state.name.length <= 0 || state.name.length > 20) {
+      SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: false });
-    } else if (!univs.includes(state.university)) {
+      SetNameError(true);
+    } else if (!univs.includes(univ)) {
+      SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: false });
+      SetUnivError(true);
     } else if (!CheckAge(Number(state.age))) {
+      SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: false });
-    } else if (state.gender !== "male" && state.gender !== "female") {
+      SetAgeError(true);
+    } else if (gender !== "male" && gender !== "female") {
+      SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: false });
+      SetGenderError(true);
     } else if (state.title.length === 0 || state.title.length > 8) {
+      SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: false });
+      SetTitleError(true);
     } else if (state.bio.length < 1) {
+      SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: false });
+      SetBioError(true);
     } else {
+      SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: true });
     }
-  };
+  }
 
   return (
     <ContainerwithLeftRightMargin>
@@ -74,22 +114,31 @@ export default function AuthPage2({
         <MidInput
           name="name"
           placeholder="Username"
-          style={{ marginTop: "24px" }}
+          style={
+            nameError
+              ? { marginTop: "24px", borderColor: colors.Red }
+              : { marginTop: "24px", borderColor: colors.BareGray }
+          }
           type="text"
           value={state.name}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             dispatch({ type: "setName", payload: e.target.value })
           }
-          onKeyUp={Validate}
+          onKeyUp={() => Validate()}
         />
+        {nameError && <ErrorMessage>{errorMessages[0]}</ErrorMessage>}
         <select
           id=""
           name="University"
           value={state.university}
-          style={{ marginTop: "12px" }}
+          style={
+            univError
+              ? { marginTop: "12px", borderColor: colors.Red }
+              : { marginTop: "12px" }
+          }
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
             dispatch({ type: "setUniversity", payload: e.target.value });
-            Validate();
+            Validate(e.target.value);
           }}
         >
           <option value="" style={{ color: colors.BareGray }}>
@@ -108,17 +157,23 @@ export default function AuthPage2({
             연세대학교 졸업
           </option>
         </select>
+        {univError && <ErrorMessage>{errorMessages[1]}</ErrorMessage>}
         <MidInput
           placeholder="나이"
           type="number"
           name="Age"
-          style={{ marginTop: "12px" }}
+          style={
+            ageError
+              ? { marginTop: "12px", borderColor: colors.Red }
+              : { marginTop: "12px" }
+          }
           value={state.age}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             dispatch({ type: "setAge", payload: e.target.value })
           }
-          onKeyUp={Validate}
+          onKeyUp={() => Validate()}
         ></MidInput>
+        {ageError && <ErrorMessage>{errorMessages[2]}</ErrorMessage>}
         {/* <SubText>나이는 20초 20중 20후 30초 방식으로 표기가되요!</SubText> */}
         <FlexDiv style={{ justifyContent: "normal", marginTop: "20px" }}>
           <span
@@ -129,7 +184,7 @@ export default function AuthPage2({
             }}
             onClick={() => {
               dispatch({ type: "setGender", payload: "male" });
-              Validate();
+              Validate(state.university, "male");
             }}
           >
             {state.gender === "male" ? (
@@ -141,11 +196,19 @@ export default function AuthPage2({
             ) : (
               <FontAwesomeIcon
                 icon={faCircle}
-                color={colors.LightGray}
+                color={genderError ? colors.Red : colors.LightGray}
                 size="lg"
               />
             )}
-            <GenderText style={{ marginLeft: "5px" }}>남성</GenderText>
+            <GenderText
+              style={
+                genderError
+                  ? { marginLeft: "5px", color: colors.Red }
+                  : { marginLeft: "5px" }
+              }
+            >
+              남성
+            </GenderText>
           </span>
           <span
             style={{
@@ -156,7 +219,7 @@ export default function AuthPage2({
             }}
             onClick={() => {
               dispatch({ type: "setGender", payload: "female" });
-              Validate();
+              Validate(state.university, "female");
             }}
           >
             {state.gender === "female" ? (
@@ -168,36 +231,59 @@ export default function AuthPage2({
             ) : (
               <FontAwesomeIcon
                 icon={faCircle}
-                color={colors.LightGray}
+                color={genderError ? colors.Red : colors.LightGray}
                 size="lg"
               />
             )}
-            <GenderText style={{ marginLeft: "5px" }}>여성</GenderText>
+            <GenderText
+              style={
+                genderError
+                  ? { marginLeft: "5px", color: colors.Red }
+                  : { marginLeft: "5px" }
+              }
+            >
+              여성
+            </GenderText>
           </span>
         </FlexDiv>
+        {genderError && <ErrorMessage>{errorMessages[3]}</ErrorMessage>}
         <Label>계열이나 직업을 적어주세요</Label>
         <MidInput
           name="title"
           placeholder="ex. 공대생 / 미개봉 새내기 / 디자이너"
-          style={{ fontSize: "12px" }}
+          style={
+            titleError
+              ? { fontSize: "12px", borderColor: colors.Red }
+              : { fontSize: "12px" }
+          }
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             dispatch({ type: "setTitle", payload: e.target.value })
           }
           value={state.title}
-          onKeyUp={Validate}
+          onKeyUp={() => Validate()}
         />
+        {titleError && <ErrorMessage>{errorMessages[4]}</ErrorMessage>}
         <Label>간단한 자기소개</Label>
         <BigTextArea
           name="bio"
           value={state.bio}
           placeholder="ex. 미대에 다니는 다양한 삶을 살고 싶어하는 미개봉화석^^
            요즘 스타트업에 관심이 생겨서 관련하신 분들과 이야기하면 좋을 것 같아요ㅎㅎ"
-          style={{ fontSize: "12px", lineHeight: "18px" }}
+          style={
+            bioError
+              ? {
+                  fontSize: "12px",
+                  lineHeight: "18px",
+                  borderColor: colors.Red,
+                }
+              : { fontSize: "12px", lineHeight: "18px" }
+          }
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
             dispatch({ type: "setBio", payload: e.target.value })
           }
-          onKeyUp={Validate}
+          onKeyUp={() => Validate()}
         />
+        {bioError && <ErrorMessage>{errorMessages[5]}</ErrorMessage>}
       </form>
       <p
         style={{
@@ -227,3 +313,10 @@ export default function AuthPage2({
     </ContainerwithLeftRightMargin>
   );
 }
+
+const ErrorMessage = styled.p`
+  margin-top: 3px;
+  font-size: 8px;
+  margin-left: 5px;
+  color: ${colors.Red};
+`;

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import MainPicDummy from "../../dummyResources/MainPicDummy.jpg";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
-// import "./PlacesPage.css";
+import "./PlacesPage.css";
 import { Option } from "react-dropdown";
 import { colors, Container } from "../../styles";
 import Header from "../../components/shared/Header/Header";

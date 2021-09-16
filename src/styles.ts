@@ -10,6 +10,7 @@ interface Colors {
   MidGray: string;
   LightGray: string;
   BareGray: string;
+  Red: string;
 }
 
 export const GlobalStyles = createGlobalStyle`
@@ -69,6 +70,7 @@ export const colors: Colors = {
   MidGray: "#6F7789",
   LightGray: "#A7B0C0",
   BareGray: "#C4CBD8",
+  Red: "red",
 };
 
 export const AppContainer = styled.div`
@@ -82,7 +84,6 @@ export const AppContainer = styled.div`
 
 export const Container = styled.div`
   width: 100%;
-  min-height: 100vh;
 `;
 
 export const ProcedureHeading = styled.div`

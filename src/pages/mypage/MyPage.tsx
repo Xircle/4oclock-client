@@ -33,12 +33,13 @@ export default function MyPage(props: Props) {
             <UserDetail>고려대학교 / 20초반</UserDetail>
           </ProfileTextWrapper>
         </ProfileInfoDiv>
-        <Link
+        {/* <Link
           to={routes.myprofilemodifypage}
           style={{ textDecoration: "none" }}
         >
           <ModifyProfileBtn>프로필 수정하기</ModifyProfileBtn>
-        </Link>
+        </Link> */}
+        <div style={{ height: "30px" }}></div>
         <Link to={routes.myxirclepage} style={{ textDecoration: "none" }}>
           <MainSubContainer>
             <p>신청한 써클 8개</p>

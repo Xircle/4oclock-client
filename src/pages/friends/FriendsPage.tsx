@@ -10,8 +10,11 @@ import {
   ContainerFlexColumn,
   ContainerwithLeftRightMargin,
   FlexDiv,
+  MainBtn,
 } from "../../styles";
 import MainPicDummy from "../../dummyResources/MainPicDummy.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {}
 
@@ -19,7 +22,7 @@ export default function FriendsPage(props: Props) {
   return (
     <ContainerFlexColumn>
       <ContainerwithLeftRightMargin>
-        <Heading>
+        <Heading style={{ marginTop: "40px" }}>
           <b>강남구</b> 근처 친구
         </Heading>
         <FlexDiv>
@@ -75,11 +78,28 @@ export default function FriendsPage(props: Props) {
           </TagOnDetail>
         </TagInnerContainer> */}
       </ContainerwithLeftRightMargin>
+      <NextButtonFriend>
+        다른 친구 찾기{" "}
+        <FontAwesomeIcon
+          icon={faArrowRight}
+          style={{ marginLeft: "15px" }}
+          size="lg"
+        />
+      </NextButtonFriend>
 
       <BottomNavBar selectedItem="friends" />
     </ContainerFlexColumn>
   );
 }
+
+const NextButtonFriend = styled(MainBtn)`
+  position: fixed;
+  left: 50%;
+  bottom: 100px;
+  transform: translateX(-50%);
+  border-radius: 30px;
+  width: 200px;
+`;
 
 const Heading = styled(SubText)`
   margin-top: 60px;

@@ -14,11 +14,8 @@ code {
     monospace;
 }
 
-
-
 :checked {
   appearance: none;
   background-color: #dde4f1;
   border: 1px solid #d7dfec;
-
 }
