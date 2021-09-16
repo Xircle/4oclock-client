@@ -20,7 +20,7 @@ function App() {
       <AppContainer>
         <Router>
           <Switch>
-            <Route path={routes.root}>
+            <Route path={routes.root} exact>
               <LandingPage />
             </Route>
 
