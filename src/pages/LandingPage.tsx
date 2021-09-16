@@ -39,7 +39,7 @@ function LandingPage() {
     <ContainerWithBg>
       <ContainerwithLeftRightMargin>
         <FlexColumn>
-          <Row>
+          <Row style={{ paddingBottom: "100px" }}>
             <Heading>안암에서 만나는</Heading>
             <Heading>연대친구, 써클</Heading>
           </Row>
@@ -47,8 +47,8 @@ function LandingPage() {
             <p>Login</p>
             <form style={{ display: "flexColumn" }}>
               <InputBlock>
-                <InputWhite value={email} placeholder="이메일" />
-                <InputWhite value={password} placeholder="비밀번호" />
+                <InputIdPwd value={email} placeholder="이메일" />
+                <InputIdPwd value={password} placeholder="비밀번호" />
               </InputBlock>
             </form>
             <LoginBtn>로그인하기</LoginBtn>
@@ -73,6 +73,7 @@ function LandingPage() {
                 alignItems: "center",
                 marginLeft: "auto",
                 marginRight: "auto",
+                boxShadow: "rgba(75, 88, 208, 0.5) 0px 25px 20px -20px",
               }}
             />
           </Row>
@@ -82,9 +83,7 @@ function LandingPage() {
   );
 }
 
-const ContainerWithBg = styled(Container)`
-  background-color: lightgray;
-`;
+const ContainerWithBg = styled(Container)``;
 
 const Heading = styled(ProcedureHeading)`
   padding-top: 50px;
@@ -108,31 +107,18 @@ const InputBlock = styled.div`
 `;
 
 const LoginBtn = styled(MainBtn)`
-  background-color: #fff;
-  color: ${colors.Black};
   margin: 1.25rem 0;
   filter: none;
   margin-left: auto;
   margin-right: auto;
 `;
 
-const KakaoBtn = styled(MainBtn)`
-  background-color: #fff;
-  color: ${colors.Black};
-  margin: 1.25rem 0;
-  margin-left: auto;
-  margin-right: auto;
-`;
-
-const InputWhite = styled.input`
+const InputIdPwd = styled.input`
   padding: 10px;
-  width: 90%;
+  width: 100%;
   margin: 5px 0;
   background: none;
-  color: white;
-  border: 1px solid white;
   ::placeholder {
-    color: white;
   }
 `;
 

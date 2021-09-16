@@ -70,7 +70,7 @@ export const colors: Colors = {
   MidGray: "#6F7789",
   LightGray: "#A7B0C0",
   BareGray: "#C4CBD8",
-  Red: "red",
+  Red: "#FF2343",
 };
 
 export const AppContainer = styled.div`
