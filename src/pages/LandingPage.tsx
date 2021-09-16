@@ -1,21 +1,17 @@
 import { useState } from "react";
 import styled from "styled-components";
-import BottomNavBar from "../components/shared/BottomNavBar";
 import {
   Container,
   ProcedureHeading,
-  SubText,
   MainBtn,
   ContainerwithLeftRightMargin,
 } from "../styles";
 import KakaoLogin from "react-kakao-login";
-import { LoginResponse, SocialProfile, UserProfile } from "../lib/api/kakao";
+import { LoginResponse, UserProfile } from "../lib/kakao";
 import { useHistory } from "react-router-dom";
 
-interface Props {}
-
 function LandingPage() {
-  const history = useHistory<SocialProfile>();
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -23,8 +19,8 @@ function LandingPage() {
     response: LoginResponse;
     profile?: UserProfile | undefined;
   }) => {
-    console.log(response);
-    
+    console.log("kakao response : ", response);
+
     history.push("/social/redirect", {
       uid: response.profile?.id,
       thumbnail: response.profile?.properties.thumbnail_image_url,
@@ -69,7 +65,7 @@ function LandingPage() {
             <LoginBtn>로그인하기</LoginBtn>
             <p style={{ textAlign: "center", margin: "10px 0" }}>또는</p>
             <KakaoLogin
-              token="ce14d0c486ce0607ac90a14977d21f5b"
+              token={process.env.REACT_APP_KAKAO_KEY!}
               onSuccess={kakaoSuccessCallback}
               onFail={() => console.log("hi")}
               onLogout={() => console.log("hi")}
