@@ -1,13 +1,11 @@
 import styled from "styled-components";
 import {
-  ContainerFlexColumn,
   ContainerwithLeftRightMargin,
   Heading,
   SubText,
   colors,
-  NextButtonDisabled,
+  NextButton,
   SubTextSpan,
-  NextButtonEnabled,
 } from "../../styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -15,7 +13,6 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
 import { AuthState, AuthAction } from "./types";
@@ -26,18 +23,7 @@ interface Props {
   dispatch: React.Dispatch<AuthAction>;
 }
 
-export default function AuthPage4({
-  onNext,
-  state,
-  dispatch,
-  ...props
-}: Props) {
-  const [isSelected1, setIsSelected1] = useState<boolean>(false);
-  const [isSelected2, setIsSelected2] = useState<boolean>(false);
-  const [isSelected3, setIsSelected3] = useState<boolean>(false);
-  const [isSelected4, setIsSelected4] = useState<boolean>(false);
-  const [isSelected5, setIsSelected5] = useState<boolean>(false);
-
+export default function AuthPage4({ onNext, state, dispatch }: Props) {
   return (
     <ContainerwithLeftRightMargin>
       <Heading style={{ fontSize: "22px", lineHeight: "32px" }}>
@@ -162,16 +148,12 @@ export default function AuthPage4({
           style={{ position: "absolute", right: "0%" }}
         />
       </TextSpanDiv>
-      {state.agree1 && state.agree3 && state.agree3 ? (
-        <Link
-          to={routes.places}
-          style={{ textDecoration: "none", color: colors.Black }}
-        >
-          <NextButtonEnabled>시작하기</NextButtonEnabled>
-        </Link>
-      ) : (
-        <NextButtonDisabled>시작하기</NextButtonDisabled>
-      )}
+      <NextButton
+        onClick={onNext}
+        disabled={!(state.agree1 && state.agree3 && state.agree3)}
+      >
+        시작하기
+      </NextButton>
     </ContainerwithLeftRightMargin>
   );
 }

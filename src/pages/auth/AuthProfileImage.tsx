@@ -1,16 +1,17 @@
-import styled from "styled-components";
 import {
   ContainerwithLeftRightMargin,
   Heading,
   SubText,
   colors,
-  MainBtn,
-  NextButtonDisabled,
+  NextButton,
   Avartar,
   FlexDiv,
-  NextButtonEnabled,
+  FileLabel,
 } from "../../styles";
-import { DummyAvartar } from "../../dummyResources/dummyData";
+import {
+  DummyAvartar,
+  DummyDefaultAvatar,
+} from "../../dummyResources/dummyData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
@@ -22,13 +23,37 @@ interface Props {
   dispatch: React.Dispatch<AuthAction>;
 }
 
-export default function AuthPage3({
-  onNext,
-  state,
-  dispatch,
-  ...props
-}: Props) {
-  const [isSelected1, setIsSelected1] = useState<boolean>(false);
+export default function AuthPage3({ onNext, state, dispatch }: Props) {
+  const [localImageSrc, setLocalImageSrc] = useState<string | undefined>(
+    state.profileImgUrl
+  );
+
+  console.log(state.profileImgFile);
+
+  const handleFileOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return null;
+
+    const files = e.target.files;
+    const __file = files[0];
+    const __size = files[0]?.size;
+
+    if (__size > 10000000) {
+      return alert(
+        "사진 최대 용량을 초과했습니다. 사진 용량은 최대 10MB입니다. "
+      );
+    }
+
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(__file);
+    fileReader.onload = (e) => {
+      setLocalImageSrc(e.target!.result as string);
+      dispatch({
+        type: "setProfileImgUrl",
+        payload: e.target!.result as string,
+      });
+    };
+    dispatch({ type: "setProfileImgFile", payload: __file });
+  };
 
   return (
     <ContainerwithLeftRightMargin>
@@ -36,12 +61,18 @@ export default function AuthPage3({
       <SubText style={{ marginTop: "12px" }}>
         개성이 나타나는 사진을 업로드해주세요!
       </SubText>
-      <FlexDiv
-        style={{ marginTop: "29px" }}
-        onClick={() => setIsSelected1(true)}
-      >
-        <Avartar src={DummyAvartar} style={{ width: "78px", height: "78px" }} />
-      </FlexDiv>
+      <FileLabel htmlFor="input-file">
+        <Avartar
+          src={localImageSrc || DummyDefaultAvatar}
+          style={{ width: "78px", height: "78px" }}
+        />
+        <input
+          id="input-file"
+          type="file"
+          onChange={handleFileOnChange}
+          style={{ display: "none" }}
+        />
+      </FileLabel>
       <FlexDiv
         style={{
           marginTop: "11px",
@@ -104,11 +135,13 @@ export default function AuthPage3({
         <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
         <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
       </FlexDiv>
-      {isSelected1 ? (
-        <NextButtonEnabled onClick={onNext}>다음</NextButtonEnabled>
-      ) : (
-        <NextButtonDisabled>다음</NextButtonDisabled>
-      )}
+      <NextButton
+        disabled={!localImageSrc || !state.profileImgFile}
+        type="submit"
+        onClick={onNext}
+      >
+        다음
+      </NextButton>
     </ContainerwithLeftRightMargin>
   );
 }
