@@ -7,12 +7,16 @@ import PlacePage from "./pages/place/PlacePage";
 import routes from "./routes";
 import FriendsPage from "./pages/friends/FriendsPage";
 import MyPage from "./pages/mypage/MyPage";
-import BookingPage from "./pages/place/BookingPage";
-import BookingConfirmPage from "./pages/place/BookingConfirmPage";
+import BookingPage from "./pages/place/ReservationPage";
+import BookingConfirmPage from "./pages/place/ReservationConfirmPage";
 import MyXirclePage from "./pages/mypage/MyXirclePage";
 import ModifyProfilePage from "./pages/mypage/ModifyProfilePage";
 import LandingPage from "./pages/LandingPage";
-import AuthPage from "./pages/auth/AuthPage";
+import AuthPage from "./pages/auth/Auth";
+import { config } from "dotenv";
+import SocialRedirect from "./pages/RedirectPage";
+
+config();
 
 function App() {
   return (
@@ -23,6 +27,9 @@ function App() {
           <Switch>
             <Route path={routes.root} exact>
               <LandingPage />
+            </Route>
+            <Route path={routes.socialRedirect} exact>
+              <SocialRedirect />
             </Route>
             <Route path={routes.places}>
               <PlacesPage />
@@ -36,10 +43,10 @@ function App() {
             <Route path={routes.mypage}>
               <MyPage />
             </Route>
-            <Route path={routes.booking}>
+            <Route path={routes.reservation}>
               <BookingPage />
             </Route>
-            <Route path={routes.bookingconfirm}>
+            <Route path={routes.reservationConfirm}>
               <BookingConfirmPage />
             </Route>
             <Route path={routes.request}>
