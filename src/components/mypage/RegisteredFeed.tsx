@@ -3,9 +3,7 @@ import { colors } from "../../styles";
 
 interface Props {
   placeImgSrc: string;
-  feedClosed?: boolean;
   feedTag?: string;
-  feedParticipant: string[];
   feedLocation?: string;
   feedHeading: string;
   feedDetail?: string;

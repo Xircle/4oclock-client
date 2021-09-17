@@ -79,3 +79,28 @@ export interface PlaceData {
 export interface GetPlaceByIdOutput extends CoreOutput {
   placeData: PlaceData;
 }
+
+export interface UserData {
+  profileImageUrl: string;
+  username: string;
+  university: string;
+  age: number;
+  reservation_count: number;
+}
+
+export interface GetUserOutput extends CoreOutput {
+  data: Userdata;
+}
+
+export interface MyPlaceData {
+  id: string;
+  coverImage: string;
+  name: string;
+  tags: string;
+  recommendation: string;
+  startDateFromNow: string;
+}
+
+export interface GetMyPlaceOutput extends CoreOutput {
+  places: MyPlaceData[];
+}

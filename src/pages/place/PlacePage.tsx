@@ -17,6 +17,7 @@ import type { PlaceData } from "../../lib/api/types";
 import { AgeNumberToString } from "../../lib/utils";
 import Avatar from "../../components/shared/Avatar";
 
+
 const kakao = window.kakao;
 declare global {
   interface Window {
