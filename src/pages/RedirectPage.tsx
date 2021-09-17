@@ -28,7 +28,7 @@ export default function SocialRedirect() {
           "CURRENT_USER",
           JSON.stringify(res.data.data)
         );
-        history.push(routes.places);
+        history.push(routes.placeFeed);
       }
     } else {
       alert("Something went wrong.");

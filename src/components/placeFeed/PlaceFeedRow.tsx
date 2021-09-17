@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { colors } from "../../styles";
 import { useState } from "react";
-import type { PlaceData } from "../../lib/api/types";
-import PlaceAvatar from "./PlaceAvatar";
+import type { PlaceFeedData } from "../../lib/api/types";
+import Avatar from "../shared/Avatar";
 
-interface Props extends PlaceData {}
+interface Props extends PlaceFeedData {}
 
-export default function Place({
+export default function PlaceFeedRow({
   name,
   coverImage,
   deadline,
@@ -50,7 +50,9 @@ export default function Place({
         <ParticipantsContainer isParticipating={isParticipating}>
           {participants.map((parti, idx) => {
             if (idx < 4) {
-              return <PlaceAvatar key={parti.userId} {...parti} />;
+              return (
+                <Avatar key={parti.userId} rightOffset={"-8px"} {...parti} />
+              );
             }
           })}
           {participantsCount > 4 ? <p>+{participantsCount - 4}</p> : null}
@@ -65,6 +67,9 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 25px;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 const PlaceLeftContainer = styled.div`
   width: 100px;

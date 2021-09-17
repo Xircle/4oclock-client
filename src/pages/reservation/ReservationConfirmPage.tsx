@@ -2,7 +2,6 @@ import styled from "styled-components";
 import BottomNavBar from "../../components/shared/BottomNavBar";
 import {
   Container,
-  ProcedureHeading,
   SubText,
   colors,
   MainBtn,

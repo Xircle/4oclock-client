@@ -33,7 +33,7 @@ export interface Participants {
   gender: Gender;
   age: number;
 }
-export interface PlaceData {
+export interface PlaceFeedData {
   id: string;
   name: string;
   coverImage: string;
@@ -47,9 +47,37 @@ export interface PlaceData {
   isParticipating: boolean;
   deadline?: string;
 }
-
 export interface GetPlacesByLocationOutput extends CoreOutput {
-  places: PlaceData[];
+  places: PlaceFeedData[];
+}
+
+// Get Place By Id
+interface PlaceDataParticipantsProfile extends Participants {}
+
+export interface PlaceData {
+  name: string;
+  startDateFromNow: string;
+  recommendation: string;
+  coverImage: string;
+  isClosed: boolean;
+  isParticipating: boolean;
+  participants: PlaceDataParticipantsProfile[];
+  participantsCount: number;
+  participantsInfo: {
+    total_count: number;
+    male_count: number;
+    average_age: number;
+  };
+  placeDetail: {
+    title: string;
+    description: string;
+    categories: string;
+    detailAddress: string;
+    photos: string[];
+  };
+}
+export interface GetPlaceByIdOutput extends CoreOutput {
+  placeData: PlaceData;
 }
 
 export interface UserData {

@@ -2,12 +2,12 @@ import styled from "styled-components";
 import MainPicDummy from "../../dummyResources/MainPicDummy.jpg";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
-import "./PlacesPage.css";
+import "./PlaceFeedPage.css";
 import { Option } from "react-dropdown";
 import { colors, Container } from "../../styles";
-import Header from "../../components/shared/Header/Header";
-import HeaderTextHeading from "../../components/shared/Header/HeaderTextHeading";
-import HeaderTextDescription from "../../components/shared/Header/HeaderTextDescription";
+import Header from "../../components/shared/header/Header";
+import HeaderTextHeading from "../../components/shared/header/HeaderTextHeading";
+import HeaderTextDescription from "../../components/shared/header/HeaderTextDescription";
 import BottomNavBar from "../../components/shared/BottomNavBar";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
@@ -18,10 +18,10 @@ import {
   PlaceLocation,
 } from "../../lib/api/getPlacesByLocation";
 import { placeLocationoptions } from "../../components/shared/constants";
-import { PlaceData } from "../../lib/api/types";
-import PlaceContainer from "../../components/places/PlaceContainer";
+import { PlaceFeedData } from "../../lib/api/types";
+import PlaceFeedRowsContainer from "../../components/placeFeed/PlaceFeedContainer";
 
-export default function PlacesPage() {
+export default function PlaceFeedPage() {
   const [page, setPage] = useState(1);
   const [selectedPlaceLocation, setSelectedPlaceLocation] =
     useState<PlaceLocation>(placeLocationoptions[0].value as PlaceLocation);
@@ -30,7 +30,7 @@ export default function PlacesPage() {
     setSelectedPlaceLocation(option.value as PlaceLocation);
   };
 
-  const { data: placesData, isLoading } = useQuery<PlaceData[] | undefined>(
+  const { data: placeFeedDataArray } = useQuery<PlaceFeedData[] | undefined>(
     ["place", selectedPlaceLocation, page],
     () => getPlacesByLocation(selectedPlaceLocation, page),
     {
@@ -66,10 +66,10 @@ export default function PlacesPage() {
         </HeaderTextDescription>
       </Header>
 
-      {/* Places feed */}
-      <PlaceWrapper>
-        <PlaceContainer places={placesData} />
-      </PlaceWrapper>
+      {/* Places Feed Rows container */}
+      <PlaceFeedRowsWrapper>
+        <PlaceFeedRowsContainer placeFeedDataArray={placeFeedDataArray} />
+      </PlaceFeedRowsWrapper>
 
       <BottomNavBar selectedItem="places" />
     </Container>
@@ -107,4 +107,4 @@ const RequestP = styled.div`
   padding-top: 8px;
 `;
 
-const PlaceWrapper = styled.div``;
+const PlaceFeedRowsWrapper = styled.div``;

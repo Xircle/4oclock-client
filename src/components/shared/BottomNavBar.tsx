@@ -11,7 +11,7 @@ export default function BottomNavBar(props: Props) {
   return (
     <>
       <BottomNavBarContainer>
-        <Link to={routes.places} style={{ textDecoration: "none" }}>
+        <Link to={routes.placeFeed} style={{ textDecoration: "none" }}>
           {props.selectedItem === "places" ? (
             <BottomNavBarItem style={{ color: colors.MidBlue }}>
               써클
