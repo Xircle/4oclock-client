@@ -1,8 +1,8 @@
 const routes = {
   root: "/",
   socialRedirect: "/social/redirect",
-  places: "/places",
-  place: "/place/:id",
+  placeFeed: "/placeFeed",
+  place: "/place/:placeId",
   friends: "/friends",
   mypage: "/my-page",
   reservation: "/reservation",

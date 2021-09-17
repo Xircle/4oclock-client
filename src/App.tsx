@@ -1,14 +1,13 @@
-import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { GlobalStyles, AppContainer } from "./styles";
-import PlacesPage from "./pages/places/PlacesPage";
+import PlaceFeedPage from "./pages/placeFeed/PlaceFeedPage";
 import RequestPage from "./pages/RequestPage";
 import PlacePage from "./pages/place/PlacePage";
 import routes from "./routes";
 import FriendsPage from "./pages/friends/FriendsPage";
 import MyPage from "./pages/mypage/MyPage";
-import BookingPage from "./pages/place/ReservationPage";
-import BookingConfirmPage from "./pages/place/ReservationConfirmPage";
+import ReservationPage from "./pages/reservation/ReservationPage";
+import ReservationConfirmPage from "./pages/reservation/ReservationConfirmPage";
 import MyXirclePage from "./pages/mypage/MyXirclePage";
 import ModifyProfilePage from "./pages/mypage/ModifyProfilePage";
 import LandingPage from "./pages/LandingPage";
@@ -31,12 +30,10 @@ function App() {
             <Route path={routes.socialRedirect} exact>
               <SocialRedirect />
             </Route>
-            <Route path={routes.places}>
-              <PlacesPage />
+            <Route path={routes.placeFeed}>
+              <PlaceFeedPage />
             </Route>
-            <Route path={routes.place}>
-              <PlacePage />
-            </Route>
+            <Route path={routes.place} component={PlacePage} />
             <Route path={routes.friends}>
               <FriendsPage />
             </Route>
@@ -44,10 +41,10 @@ function App() {
               <MyPage />
             </Route>
             <Route path={routes.reservation}>
-              <BookingPage />
+              <ReservationPage />
             </Route>
             <Route path={routes.reservationConfirm}>
-              <BookingConfirmPage />
+              <ReservationConfirmPage />
             </Route>
             <Route path={routes.request}>
               <RequestPage />
