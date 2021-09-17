@@ -43,17 +43,17 @@ const kakao = window.kakao;
 
 export default function PlacePage(props: Props) {
   useEffect(() => {
-    var container = document.getElementById("map");
-    var options = {
+    let container = document.getElementById("map");
+    let options = {
       center: new kakao.maps.LatLng(37.365264512305174, 127.10676860117488),
       level: 5,
     };
-    var map = new kakao.maps.Map(container, options);
-    var markerPosition = new kakao.maps.LatLng(
+    let map = new kakao.maps.Map(container, options);
+    let markerPosition = new kakao.maps.LatLng(
       37.365264512305174,
       127.10676860117488
     );
-    var marker = new kakao.maps.Marker({
+    let marker = new kakao.maps.Marker({
       position: markerPosition,
     });
     marker.setMap(map);
