@@ -12,20 +12,22 @@ const SHeader = styled.div`
 `;
 
 const HeaderText = styled.div`
-  color: white;
   position: absolute;
   bottom: 8%;
   left: 3%;
   width: 65%;
+  h3 {
+    color: #ffffff;
+  }
+  p {
+    color: #ffffff;
+  }
 `;
 
 export default function Header(props: Props) {
   return (
     <SHeader>
-      <HeaderPic
-        src={props.src}
-
-      />
+      <HeaderPic src={props.src} />
       <HeaderText>{props.children}</HeaderText>
     </SHeader>
   );
