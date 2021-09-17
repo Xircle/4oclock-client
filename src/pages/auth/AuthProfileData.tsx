@@ -288,7 +288,7 @@ export default function AuthPage2({ onNext, state, dispatch }: Props) {
         {bioError && <ErrorMessage>{errorMessages[5]}</ErrorMessage>}
         <p
           style={{
-            justifyContent: "end",
+            justifyContent: "space-between",
             display: "flex",
             alignItems: "center",
             fontSize: "12px",
@@ -296,13 +296,16 @@ export default function AuthPage2({ onNext, state, dispatch }: Props) {
             marginTop: "5px",
           }}
         >
-          <FontAwesomeIcon
-            icon={faMapMarkerAlt}
-            color={colors.LightGray}
-            size="lg"
-            style={{ marginRight: "8px" }}
-          />
-          {state.location ? state.location : "대한민국 어딘가"}
+          <div></div>
+          <div>
+            <FontAwesomeIcon
+              icon={faMapMarkerAlt}
+              color={colors.LightGray}
+              size="lg"
+              style={{ marginRight: "8px" }}
+            />
+            {state.location ? state.location : "대한민국 어딘가"}
+          </div>
         </p>
         <NextButton
           type="submit"
