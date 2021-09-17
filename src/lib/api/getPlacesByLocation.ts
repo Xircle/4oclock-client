@@ -1,4 +1,4 @@
-import { GetPlacesByLocationOutput, PlaceData } from "./types.d";
+import { GetPlacesByLocationOutput, PlaceFeedData } from "./types.d";
 import AxiosClient from "../apiClient";
 
 export type PlaceLocation = "전체" | "안암" | "신촌";
@@ -6,7 +6,7 @@ export type PlaceLocation = "전체" | "안암" | "신촌";
 export const getPlacesByLocation = async (
   selectedLocation: PlaceLocation,
   page: number = 1
-): Promise<PlaceData[]> => {
+): Promise<PlaceFeedData[]> => {
   const { data } = await AxiosClient.get<GetPlacesByLocationOutput>(
     `/place?location=${selectedLocation}&page=${page}`
   );

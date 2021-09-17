@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 
@@ -300,4 +301,8 @@ export const FileLabel = styled.label`
   cursor: pointer;
   display: flex;
   justify-content: center;
+`;
+
+export const SLink = styled(Link)`
+  text-decoration: none;
 `;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { colors } from "../../styles";
-import Avartar from "../shared/Avartar";
+import Avartar from "../shared/Avatar";
 
 interface Props {
   placeImgSrc: string;
@@ -47,7 +47,7 @@ export default function Feed(props: Props) {
         <AvartarContainer>
           {props.feedParticipant.map((item, idx) => {
             if (idx < 4) {
-              return <Avartar src={item} marginRight={"-5px"} />;
+              return <Avartar profileImgUrl={item} rightOffset={"-5px"} />;
             }
           })}
 
