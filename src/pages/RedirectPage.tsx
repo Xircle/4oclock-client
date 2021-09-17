@@ -9,7 +9,8 @@ export default function SocialRedirect() {
   const history = useHistory();
 
   const socialRedirect = async () => {
-    const EMAIL_FROM_SOCIAL = location.state.email;
+    const EMAIL_FROM_SOCIAL = location.state?.email;
+    if (!EMAIL_FROM_SOCIAL) window.location.href = "/places";
     const res = await AxiosClient.get<SocialRedirectResponse>(
       `auth/social/redirect?email=${EMAIL_FROM_SOCIAL}`
     );
@@ -22,9 +23,11 @@ export default function SocialRedirect() {
         });
       } else if (res.data.code === 201) {
         // email  exists
-        localStorage.set("CURRENT_USER", {
-          ...res.data.data,
-        });
+        console.log(res.data.data);
+        window.localStorage.setItem(
+          "CURRENT_USER",
+          JSON.stringify(res.data.data)
+        );
         history.push(routes.places);
       }
     } else {
