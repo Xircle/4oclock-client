@@ -1,87 +1,66 @@
 import styled from "styled-components";
 import { colors } from "../../styles";
-import Avartar from "../shared/Avartar";
-import { Fragment } from "react";
+import { useState } from "react";
+import type { PlaceData } from "../../lib/api/types";
+import PlaceAvatar from "./PlaceAvatar";
 
-interface Props {
-  placeImgSrc: string;
-  placeClosed?: boolean;
-  placeTag?: string;
-  placeParticipant: string[];
-  placeLocation?: string;
-  placeHeading: string;
-  placeDetail?: string;
-  placeTime?: string;
-  placeCondition?: string;
-}
+interface Props extends PlaceData {}
 
-export default function Place(props: Props) {
-  //const tag: string | null | undefined = props.feedTag;
+export default function Place({
+  name,
+  coverImage,
+  deadline,
+  tags,
+  recommendation,
+  isClosed,
+  participantsCount,
+  startDateFromNow,
+  participants,
+  isParticipating,
+}: Props) {
+  const [parsedTags, _] = useState<string[]>(JSON.parse(tags));
 
   return (
-    <PlaceContainer>
+    <Container>
       <PlaceLeftContainer>
-        {props.placeClosed && (
+        {isClosed && (
           <>
-            <PlaceFull></PlaceFull>
+            <PlaceFull />
             <PlaceFullText>마감 되었어요</PlaceFullText>
           </>
         )}
-        {props.placeTag && (
-          <PlaceTag>
-            <p>{props.placeTag}</p>
-          </PlaceTag>
+        {deadline && (
+          <PlaceDeadline>
+            <p>{deadline}</p>
+          </PlaceDeadline>
         )}
-        <PlaceImg src={props.placeImgSrc} />
+        <PlaceCoverImage src={coverImage} />
       </PlaceLeftContainer>
-      <PlaceDescription>
-        <div
-          style={{
-            alignContent: "center",
-            display: "flex",
-            justifyContent: "start",
-          }}
-        >
-          <PlaceHeading>{props.placeHeading}</PlaceHeading>
-          <PlaceTimeSpan style={{ marginLeft: "7px" }}>
-            {props.placeTime}
-          </PlaceTimeSpan>
-          <PlaceTimeSpan
-            style={{
-              marginRight: "3px",
-              marginLeft: "3px",
-            }}
-          >
-            /
-          </PlaceTimeSpan>
-          <PlaceTimeSpan>{props.placeCondition}</PlaceTimeSpan>
-        </div>
 
-        <PlaceDetailP style={{ marginTop: "5px" }}>
-          {props.placeDetail}
-        </PlaceDetailP>
+      <PlaceRightContainer>
+        <PlaceRightWrapper>
+          <PlaceName>{name}</PlaceName>
+          <PlaceSpan>
+            {startDateFromNow} / {recommendation}
+          </PlaceSpan>
+        </PlaceRightWrapper>
 
-        <AvartarContainer>
-          {props.placeParticipant.map((item, idx) => {
+        <PlaceTags>#{parsedTags.join(" #")}</PlaceTags>
+
+        <ParticipantsContainer isParticipating={isParticipating}>
+          {participants.map((parti, idx) => {
             if (idx < 4) {
-              return (
-                <Fragment key={idx}>
-                  <Avartar src={item} marginRight={"-5px"} />
-                </Fragment>
-              );
+              return <PlaceAvatar key={parti.userId} {...parti} />;
             }
           })}
-
-          {props.placeParticipant.length > 4 ? (
-            <p>+{props.placeParticipant.length}</p>
-          ) : null}
-        </AvartarContainer>
-      </PlaceDescription>
-    </PlaceContainer>
+          {participantsCount > 4 ? <p>+{participantsCount - 4}</p> : null}
+        </ParticipantsContainer>
+      </PlaceRightContainer>
+    </Container>
   );
 }
 
-const PlaceContainer = styled.div`
+const Container = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
@@ -93,20 +72,26 @@ const PlaceLeftContainer = styled.div`
   padding: 0px;
   position: relative;
 `;
-const PlaceImg = styled.img`
+const PlaceCoverImage = styled.img`
   width: 100%;
   height: 100%;
   border-radius: 5px;
   object-fit: cover;
 `;
 
-const PlaceDescription = styled.div`
+const PlaceRightContainer = styled.div`
   width: 205px;
   padding-left: 16px;
   padding-top: 5px;
 `;
 
-const PlaceTag = styled.div`
+const PlaceRightWrapper = styled.div`
+  display: flex;
+  align-content: center;
+  justify-content: start;
+`;
+
+const PlaceDeadline = styled.div`
   position: absolute;
   background-color: ${colors.MidBlue};
   display: flex;
@@ -117,7 +102,6 @@ const PlaceTag = styled.div`
   padding: 0px 5px 0px 5px;
   top: -5px;
   left: 8px;
-
   p {
     color: white;
     font-weight: 700;
@@ -149,31 +133,34 @@ const PlaceFullText = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-const AvartarContainer = styled.div`
+const ParticipantsContainer = styled.div<{ isParticipating: boolean }>`
   display: flex;
   align-items: center;
   position: relative;
   margin-top: 17px;
+  filter: ${(props) => !props.isParticipating && "blur(1px)"};
   p {
     position: absolute;
     left: 110px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: bold;
     color: ${colors.LightGray};
   }
 `;
-const PlaceDetailP = styled.p`
-  margin-top: 3px;
+const PlaceTags = styled.p`
+  margin-top: 5px;
   font-size: 10px;
+  color: ${colors.MidGray};
 `;
 
-const PlaceTimeSpan = styled.span`
+const PlaceSpan = styled.span`
   margin-top: 3px;
+  margin-left: 10px;
   font-size: 10px;
-  color: ${colors.LightGray};
+  color: #8c94a4;
 `;
 
-const PlaceHeading = styled.span`
+const PlaceName = styled.span`
   color: ${colors.StrongBlue};
   font-size: 15px;
   font-weight: 500;
