@@ -18,6 +18,7 @@ import routes from "../../routes";
 import { Link } from "react-router-dom";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect } from "react";
 
 interface Props {
   // deadline: string;
@@ -32,7 +33,24 @@ interface Props {
   // isParticipating: boolean;
 }
 
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
+
+const kakao = window.kakao;
+
 export default function PlacePage(props: Props) {
+  useEffect(() => {
+    var container = document.getElementById("map");
+    var options = {
+      center: new kakao.maps.LatLng(37.365264512305174, 127.10676860117488),
+      level: 5,
+    };
+    var map = new kakao.maps.Map(container, options);
+  }, []);
+
   return (
     <>
       <Container>
@@ -105,6 +123,16 @@ export default function PlacePage(props: Props) {
             />
             서울 강남구 강남대로 152길 42 2층
           </DirText>
+          <div
+            id="map"
+            style={{
+              width: "295px",
+              height: "135px",
+              marginTop: "17px",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          ></div>
         </ParticipantContainer>
         <Link
           to={routes.reservation}

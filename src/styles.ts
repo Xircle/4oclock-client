@@ -184,6 +184,7 @@ export const BottomFixedButtonContainer = styled(BottomNavBarContainer)`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 5;
 `;
 
 export const BottomFixedButtoninContainer = styled(MainBtn)`
