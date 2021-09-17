@@ -51,3 +51,15 @@ export interface PlaceData {
 export interface GetPlacesByLocationOutput extends CoreOutput {
   places: PlaceData[];
 }
+
+export interface UserData {
+  profileImageUrl: string;
+  username: string;
+  university: string;
+  age: number;
+  reservation_count: number;
+}
+
+export interface GetUserOutput extends CoreOutput {
+  data: Userdata;
+}

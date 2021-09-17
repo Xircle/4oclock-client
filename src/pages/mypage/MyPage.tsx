@@ -18,19 +18,33 @@ import routes from "../../routes";
 import { DummyAvartar } from "../../dummyResources/dummyData";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import { UserData } from "../../lib/api/types";
+import { getUser } from "../../lib/api/getUser";
 
 interface Props {}
 
 export default function MyPage(props: Props) {
+  const { data: userData, isLoading } = useQuery<UserData | undefined>(
+    "userProfile",
+    () => getUser(),
+    {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    }
+  );
   return (
     <ContainerFlexColumn>
       <ContainerwithLeftRightMargin>
         <Heading>마이페이지</Heading>
         <ProfileInfoDiv>
-          <MyAvartarImg src={DummyAvartar} />
+          <MyAvartarImg src={userData?.profileImageUrl} />
           <ProfileTextWrapper>
-            <UserName>희원짱</UserName>
-            <UserDetail>고려대학교 / 20초반</UserDetail>
+            <UserName>{userData?.username}</UserName>
+            <UserDetail>
+              {userData?.university} / {userData?.age}
+            </UserDetail>
           </ProfileTextWrapper>
         </ProfileInfoDiv>
         {/* <Link
@@ -42,7 +56,7 @@ export default function MyPage(props: Props) {
         <div style={{ height: "30px" }}></div>
         <Link to={routes.myxirclepage} style={{ textDecoration: "none" }}>
           <MainSubContainer>
-            <p>신청한 써클 8개</p>
+            <p>신청한 써클 {userData?.reservation_count}개</p>
             <FontAwesomeIcon
               icon={faAngleRight}
               color={colors.LightGray}

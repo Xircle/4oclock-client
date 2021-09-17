@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
+import { debug } from "console";
 
 interface Props {
   // deadline: string;
