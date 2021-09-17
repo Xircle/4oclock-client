@@ -10,16 +10,24 @@ import { feedDummyData } from "../../dummyResources/dummyData";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
 import RegisteredFeed from "../../components/mypage/RegisteredFeed";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+import { useQuery } from "react-query";
+import { MyPlaceData } from "../../lib/api/types";
+import { getMyPlaces } from "../../lib/api/getMyPlaces";
 
 interface Props {}
 
 export default function MyXirclePage(props: Props) {
+  const { data: myPlacesData, isLoading } = useQuery<MyPlaceData[]>(
+    "myPlaces",
+    () => getMyPlaces(),
+    { retry: 1, refetchOnWindowFocus: false }
+  );
   return (
     <ContainerFlexColumn>
       <ContainerwithLeftRightMargin>
         <Heading>내가 신청한 써클</Heading>
-        {feedDummyData.map((item, idx) => {
+        {myPlacesData?.map((item, idx) => {
           return (
             <Fragment key={idx}>
               <Link
@@ -27,15 +35,11 @@ export default function MyXirclePage(props: Props) {
                 style={{ textDecoration: "none", color: colors.Black }}
               >
                 <RegisteredFeed
-                  placeImgSrc={item.placeImgSrc}
-                  feedParticipant={item.feedParticipant}
-                  feedClosed={item.feedClosed}
-                  feedHeading={item.feedHeading}
-                  feedDetail={item.feedDetail}
-                  feedLocation={item.feedLocation}
-                  feedTime={item.feedTime}
-                  feedCondition={item.feedCondition}
-                  feedTag={item.feedTag}
+                  placeImgSrc={item.coverImage}
+                  feedHeading={item.name}
+                  feedDetail={"#" + JSON.parse(item.tags).join(" #")}
+                  feedTime={item.startDateFromNow}
+                  feedCondition={item.recommendation}
                 ></RegisteredFeed>
               </Link>
             </Fragment>

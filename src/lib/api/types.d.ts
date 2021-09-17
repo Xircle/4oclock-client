@@ -63,3 +63,16 @@ export interface UserData {
 export interface GetUserOutput extends CoreOutput {
   data: Userdata;
 }
+
+export interface MyPlaceData {
+  id: string;
+  coverImage: string;
+  name: string;
+  tags: string;
+  recommendation: string;
+  startDateFromNow: string;
+}
+
+export interface GetMyPlaceOutput extends CoreOutput {
+  places: MyPlaceData[];
+}
