@@ -8,99 +8,75 @@ import { colors, Container } from "../../styles";
 import Header from "../../components/shared/Header/Header";
 import HeaderTextHeading from "../../components/shared/Header/HeaderTextHeading";
 import HeaderTextDescription from "../../components/shared/Header/HeaderTextDescription";
-import Place from "../../components/places/Place";
-import { feedDummyData } from "../../dummyResources/dummyData";
 import BottomNavBar from "../../components/shared/BottomNavBar";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
-import { useState, Fragment } from "react";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import {
+  getPlacesByLocation,
+  PlaceLocation,
+} from "../../lib/api/getPlacesByLocation";
+import { placeLocationoptions } from "../../components/shared/constants";
+import { PlaceData } from "../../lib/api/types";
+import PlaceContainer from "../../components/places/PlaceContainer";
 
-const options: Option[] = [
-  {
-    value: "전체",
-    label: "전체",
-    className: "drop-down-option",
-  },
-  {
-    value: "안암",
-    label: "안암근처",
-    className: "drop-down-option",
-  },
-  {
-    value: "신촌",
-    label: "신촌근처",
-    className: "drop-down-option",
-  },
-];
-
-interface Props {}
-
-export default function PlacesPage(this: any, props: Props) {
-  const [optionValue, SetOptionValue] = useState<string>(options[0].value);
+export default function PlacesPage() {
+  const [page, setPage] = useState(1);
+  const [selectedPlaceLocation, setSelectedPlaceLocation] =
+    useState<PlaceLocation>(placeLocationoptions[0].value as PlaceLocation);
 
   const HandleChangeLocation = (option: Option) => {
-    //console.log(option.value);
-    SetOptionValue(option.value);
+    setSelectedPlaceLocation(option.value as PlaceLocation);
   };
+
+  const { data: placesData, isLoading } = useQuery<PlaceData[] | undefined>(
+    ["place", selectedPlaceLocation, page],
+    () => getPlacesByLocation(selectedPlaceLocation, page),
+    {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   return (
     <Container>
-      <Top>
-        <TopWrapper>
-          <div style={{ display: "flex", alignItems: "center" }}>
+      {/* Drop down */}
+      <TopWrapper>
+        <Top>
+          <DropDownWrapper>
             <Dropdown
               controlClassName="drop-down-className"
-              options={options}
-              value={options[0]}
+              options={placeLocationoptions}
+              value={selectedPlaceLocation}
               onChange={HandleChangeLocation}
             />
-          </div>
+          </DropDownWrapper>
           <Link to={routes.request} style={{ textDecoration: "none" }}>
             <RequestP>서클 추가하기</RequestP>
           </Link>
-        </TopWrapper>
-      </Top>
+        </Top>
+      </TopWrapper>
+
+      {/* Cover image & description */}
       <Header src={MainPicDummy}>
         <HeaderTextHeading>친구들과 놀러가요!</HeaderTextHeading>
         <HeaderTextDescription>
           취향이 통하는 대학친구들과 즐기는 공간
         </HeaderTextDescription>
       </Header>
-      {optionValue === "전체" ? (
-        <>
-          {feedDummyData.map((item, idx) => {
-            return (
-              <Fragment key={idx}>
-                <Link
-                  to={routes.place}
-                  style={{ textDecoration: "none", color: colors.Black }}
-                >
-                  <Place
-                    placeImgSrc={item.placeImgSrc}
-                    placeParticipant={item.feedParticipant}
-                    placeClosed={item.feedClosed}
-                    placeHeading={item.feedHeading}
-                    placeDetail={item.feedDetail}
-                    placeLocation={item.feedLocation}
-                    placeTime={item.feedTime}
-                    placeCondition={item.feedCondition}
-                    placeTag={item.feedTag}
-                  ></Place>
-                </Link>
-              </Fragment>
-            );
-          })}
-        </>
-      ) : (
-        <></>
-      )}
+
+      {/* Places feed */}
+      <PlaceWrapper>
+        <PlaceContainer places={placesData} />
+      </PlaceWrapper>
 
       <BottomNavBar selectedItem="places" />
     </Container>
   );
 }
 
-const Top = styled.div`
+const TopWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -111,12 +87,17 @@ const Top = styled.div`
   background-color: white;
 `;
 
-const TopWrapper = styled.div`
+const Top = styled.div`
   display: flex;
   width: 100%;
   padding: 12px 12px 12px 0;
   justify-content: space-between;
   margin-top: 10px;
+`;
+
+const DropDownWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const RequestP = styled.div`
@@ -125,3 +106,5 @@ const RequestP = styled.div`
   color: ${colors.MidGray};
   padding-top: 8px;
 `;
+
+const PlaceWrapper = styled.div``;
