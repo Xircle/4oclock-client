@@ -80,6 +80,7 @@ export interface GetPlaceByIdOutput extends CoreOutput {
   placeData: PlaceData;
 }
 
+// My Page
 export interface UserData {
   profileImageUrl: string;
   username: string;
@@ -92,6 +93,7 @@ export interface GetUserOutput extends CoreOutput {
   data: Userdata;
 }
 
+// My Xircle I've registered
 export interface MyPlaceData {
   id: string;
   coverImage: string;
@@ -99,12 +101,14 @@ export interface MyPlaceData {
   tags: string;
   recommendation: string;
   startDateFromNow: string;
+  isClosed: boolean;
 }
 
 export interface GetMyPlaceOutput extends CoreOutput {
   places: MyPlaceData[];
 }
 
+// See Random Profile
 interface RandomProfileData {
   id: string;
   profileImageUrl: string;
@@ -119,3 +123,12 @@ interface RandomProfileData {
 export interface SeeRandomProfile extends CoreOutput {
   randomProfile: RandomProfileData;
 }
+
+// Make reservation
+export type StartTime = "Four" | "Seven";
+export interface MakeReservationInput {
+  placeId: string;
+  startTime: StartTime;
+}
+
+export interface MakeReservationOutput extends CoreOutput {}
