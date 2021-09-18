@@ -1,6 +1,7 @@
 import { CURRENT_USER } from "./../components/shared/constants";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import storage from "./storage";
+import routes from "../routes";
 
 const host =
   process.env.NODE_ENV === "development"
@@ -10,8 +11,27 @@ const host =
 const apiClient = axios.create({
   baseURL: host,
   headers: {
-    Authorization: `Bearer ${storage.getItem(CURRENT_USER)?.token}`,
+    Authorization: `Bearer ${storage.getItem(CURRENT_USER)?.token || ""}`,
   },
 });
 
 export default apiClient;
+
+const CancelToken = axios.CancelToken;
+export const source = CancelToken.source();
+
+const TargetUrl = ["/user/me", "/user/friend"];
+apiClient.interceptors.request.use((config: AxiosRequestConfig) => {
+  const rawToken = (config.headers.Authorization as string).split(" ");
+
+  if (
+    storage.getItem(CURRENT_USER)?.["token"] &&
+    !rawToken[1] &&
+    TargetUrl.includes(config.url!)
+  ) {
+    console.log("got you");
+    source.cancel("Request cancelled, Because token was not reflected");
+    window.location.reload();
+  }
+  return config;
+});
