@@ -1,5 +1,3 @@
-import { faFirstAid } from "@fortawesome/free-solid-svg-icons";
-
 export function AgeNumberToString(age: number): string {
   if (age >= 19 && age <= 24) {
     return "20초반";
@@ -16,5 +14,4 @@ export function AgeNumberToString(age: number): string {
   } else {
     return "비밀~^^";
   }
-
 }

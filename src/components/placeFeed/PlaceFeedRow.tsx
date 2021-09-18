@@ -47,14 +47,16 @@ export default function PlaceFeedRow({
 
         <PlaceTags>#{parsedTags.join(" #")}</PlaceTags>
 
-        <ParticipantsContainer isParticipating={isParticipating}>
-          {participants.map((parti, idx) => {
-            if (idx < 4) {
-              return (
-                <Avatar key={parti.userId} rightOffset={"-8px"} {...parti} />
-              );
-            }
-          })}
+        <ParticipantsContainer>
+          <ParticipantsWrapper isParticipating={isParticipating}>
+            {participants.map((parti, idx) => {
+              if (idx < 4) {
+                return (
+                  <Avatar key={parti.userId} rightOffset={"-8px"} {...parti} />
+                );
+              }
+            })}
+          </ParticipantsWrapper>
           {participantsCount > 4 ? <p>+{participantsCount - 4}</p> : null}
         </ParticipantsContainer>
       </PlaceRightContainer>
@@ -138,20 +140,25 @@ const PlaceFullText = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-const ParticipantsContainer = styled.div<{ isParticipating: boolean }>`
+const ParticipantsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 17px;
+  p {
+    font-size: 14px;
+    font-weight: bold;
+    color: ${colors.MidGray};
+    margin-left: 17px;
+  }
+`;
+
+const ParticipantsWrapper = styled.div<{ isParticipating: boolean }>`
   display: flex;
   align-items: center;
   position: relative;
-  margin-top: 17px;
   filter: ${(props) => !props.isParticipating && "blur(1px)"};
-  p {
-    position: absolute;
-    left: 110px;
-    font-size: 14px;
-    font-weight: bold;
-    color: ${colors.LightGray};
-  }
 `;
+
 const PlaceTags = styled.p`
   margin-top: 5px;
   font-size: 10px;

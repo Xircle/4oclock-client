@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { useState, Fragment, useReducer, useEffect } from "react";
 import { withRouter, useHistory, useLocation } from "react-router-dom";
-import AuthPhoneNumber from "./AuthPhoneNumber";
-import AuthProfileData from "./AuthProfileData";
-import AuthProfileImage from "./AuthProfileImage";
-import AuthAgree from "./AuthAgree";
+import AuthPhoneNumber from "../../components/auth/AuthPhoneNumber";
+import AuthProfileData from "../../components/auth/AuthProfileData";
+import AuthProfileImage from "../../components/auth//AuthProfileImage";
+import AuthAgree from "../../components/auth/AuthAgree";
 import { ContainerFlexColumn } from "../../styles";
 import BackButtonWithNoBackground from "../../components/shared/BackButtonWithNoBackground";
-import { AuthState, AuthAction } from "./types";
+import { AuthState, AuthAction } from "../../components/auth/types";
 import routes from "../../routes";
 import { SocialAuthResponse } from "../../lib/kakao";
 import { useQuery, useMutation } from "react-query";
