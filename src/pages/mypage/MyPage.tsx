@@ -15,17 +15,16 @@ import {
 } from "../../styles";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
-import { DummyAvartar } from "../../dummyResources/dummyData";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { UserData } from "../../lib/api/types";
 import { getUser } from "../../lib/api/getUser";
+import Storage from "../../lib/storage";
+import { CURRENT_USER } from "../../components/shared/constants";
 
-interface Props {}
-
-export default function MyPage(props: Props) {
+export default function MyPage() {
   const { data: userData, isLoading } = useQuery<UserData | undefined>(
     "userProfile",
     () => getUser(),
@@ -34,6 +33,24 @@ export default function MyPage(props: Props) {
       refetchOnWindowFocus: false,
     }
   );
+
+  useEffect(() => {
+    console.log(userData, isLoading);
+    if (!isLoading && !userData) {
+      alert("로그인이 필요합니다!");
+      window.location.href = "/";
+    }
+  }, [userData, isLoading]);
+
+  const logoutBtnClickHandler = () => {
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      Storage.removeItem(CURRENT_USER);
+      window.location.href = routes.placeFeed;
+    }
+  };
+
+  if (isLoading) return null;
+
   return (
     <ContainerFlexColumn>
       <ContainerwithLeftRightMargin>
@@ -47,12 +64,12 @@ export default function MyPage(props: Props) {
             </UserDetail>
           </ProfileTextWrapper>
         </ProfileInfoDiv>
-        {/* <Link
+        <Link
           to={routes.myprofilemodifypage}
           style={{ textDecoration: "none" }}
         >
           <ModifyProfileBtn>프로필 수정하기</ModifyProfileBtn>
-        </Link> */}
+        </Link>
         <div style={{ height: "30px" }}></div>
         <Link to={routes.myxirclepage} style={{ textDecoration: "none" }}>
           <MainSubContainer>
@@ -68,7 +85,32 @@ export default function MyPage(props: Props) {
         <SubContainer>써클에게 문의하기 / 피드백 하기</SubContainer>
         <SubContainer>써클 서비스 사용자 가이드</SubContainer>
         <SubContainer>유저 신고하기</SubContainer>
-        <SubContainer>로그아웃하기</SubContainer>
+        <SubContainer onClick={() => logoutBtnClickHandler()}>
+          로그아웃하기
+        </SubContainer>
+
+        <Footer>
+          <Row>
+            <a href="https://www.instagram.com/?hl=ko" target={"_blank"}>
+              <BrandImg src="/brands/instagram_logo.png" alt="instagram" />
+            </a>
+            <a
+              href="https://www.kakaocorp.com/page/service/service/KakaoTalk"
+              target={"_blank"}
+            >
+              <BrandImg src="/brands/kakao_logo.png" alt="kakao" />
+            </a>
+            <a href="https://www.youtube.com/" target={"_blank"}>
+              <BrandImg src="/brands/youtube_logo.png" alt="youtube" />
+            </a>
+          </Row>
+          <a>
+            <AgreeText>개인정보처리방침</AgreeText>
+          </a>
+          <a>
+            <AgreeText>마케팅 수신동의 이용약관</AgreeText>
+          </a>
+        </Footer>
       </ContainerwithLeftRightMargin>
       <BottomNavBar selectedItem="mypage"></BottomNavBar>
     </ContainerFlexColumn>
@@ -120,6 +162,7 @@ const SubContainer = styled(Container)`
   font-size: 16px;
   line-height: 28px;
   margin-top: 19px;
+  cursor: pointer;
 `;
 
 const MainSubContainer = styled(SubContainer)`
@@ -128,4 +171,23 @@ const MainSubContainer = styled(SubContainer)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const Footer = styled.div`
+  margin-top: 60px;
+`;
+
+const BrandImg = styled.img``;
+const AgreeText = styled.p`
+  color: #a7b0c0;
+  line-height: 20px;
+  font-size: 13px;
+  cursor: pointer;
+`;
+
+const Row = styled.div`
+  display: flex;
+  a {
+    margin: 10px 10px 10px 0;
+  }
 `;
