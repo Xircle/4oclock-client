@@ -15,70 +15,76 @@ import {
 import MainPicDummy from "../../dummyResources/MainPicDummy.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { useState, useEffect } from "react";
+import { useQuery } from "react-query";
+import { RandomProfileData } from "../../lib/api/types";
+import { seeRandomProfile } from "../../lib/api/seeRandomProfile";
+import moment from "moment";
+import "moment/locale/ko";
+import { AgeNumberToString } from "../../lib/utils";
 
 interface Props {}
 
 export default function FriendsPage(props: Props) {
+  const [age, SetAge] = useState<string>("비밀");
+  const {
+    data: randomProfileData,
+    refetch,
+    isLoading,
+  } = useQuery<RandomProfileData>(
+    ["randomProfile", moment().format("YYYY-MM-DD HH:mm:ss")],
+    () => seeRandomProfile(),
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
+  useEffect(() => {
+    if (randomProfileData) {
+      SetAge(AgeNumberToString(randomProfileData.age));
+    }
+  }, [randomProfileData?.age]);
+  const refetchRandomProfileData = () => {
+    refetch();
+  };
+
   return (
     <ContainerFlexColumn>
       <ContainerwithLeftRightMargin>
         <Heading style={{ marginTop: "40px" }}>
-          <b>강남구</b> 근처 친구
+          <b>
+            {randomProfileData?.location ? (
+              <>{randomProfileData?.location} 근처 친구</>
+            ) : (
+              "대한민국 어딘가"
+            )}
+          </b>
         </Heading>
         <FlexDiv>
-          <AvartarBig src={MainPicDummy} />
+          <AvartarBig src={randomProfileData?.profileImageUrl} />
         </FlexDiv>
         <FlexDiv style={{ marginTop: "15px" }}>
-          <Name>리안</Name>
+          <Name>{randomProfileData?.username}</Name>
           <TagOnName>
-            <p>개발자</p>
+            <p>{randomProfileData?.job}</p>
           </TagOnName>
         </FlexDiv>
         <InnerContainer style={{ marginTop: "45px" }}>
           <InnerSubject>학교</InnerSubject>
-          <InnerContent>고려대학교</InnerContent>
+          <InnerContent>{randomProfileData?.university}</InnerContent>
         </InnerContainer>
         <InnerContainer style={{ marginTop: "6px" }}>
           <InnerSubject>나이</InnerSubject>
-          <InnerContent>20대 초반</InnerContent>
+          <InnerContent>{age}</InnerContent>
         </InnerContainer>
         <InnerContainer style={{ marginTop: "25px" }}>
           <InnerContent
             style={{ marginLeft: "0px", fontWeight: 400, fontSize: "14px" }}
           >
-            수학을 너무 싫어하고... 요즘 너무 심심해요... 관련 있으신 분들과
-            이야기 나누고 싶네요
+            {randomProfileData?.shortBio}
           </InnerContent>
         </InnerContainer>
-        {/* <TagInnerContainer>
-          <TagOnDetail>
-            <div>
-              <p>스타트업</p>
-            </div>
-          </TagOnDetail>
-          <TagOnDetail>
-            <div>
-              <p>동네친구</p>
-            </div>
-          </TagOnDetail>
-          <TagOnDetail>
-            <div>
-              <p>요리</p>
-            </div>
-          </TagOnDetail>
-          <TagOnDetail>
-            <div>
-              <p>와인</p>
-            </div>
-          </TagOnDetail>
-          <TagOnDetail>
-            <div>
-              <p>패션</p>
-            </div>
-          </TagOnDetail>
-        </TagInnerContainer> */}
       </ContainerwithLeftRightMargin>
-      <NextButtonFriend>
+      <NextButtonFriend onClick={refetchRandomProfileData}>
         다른 친구 찾기{" "}
         <FontAwesomeIcon
           icon={faArrowRight}

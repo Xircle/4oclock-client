@@ -104,3 +104,18 @@ export interface MyPlaceData {
 export interface GetMyPlaceOutput extends CoreOutput {
   places: MyPlaceData[];
 }
+
+interface RandomProfileData {
+  id: string;
+  profileImageUrl: string;
+  location?: string;
+  username: string;
+  job: string;
+  university: string;
+  age: number;
+  shortBio: string;
+}
+
+export interface SeeRandomProfile extends CoreOutput {
+  randomProfile: RandomProfileData;
+}
