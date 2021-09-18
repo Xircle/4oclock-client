@@ -1,6 +1,7 @@
+import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
-import BackButtonLayout from "../../components/shared/BackButtonLayout";
 import BottomNavBar from "../../components/shared/BottomNavBar";
+import routes from "../../routes";
 import {
   Container,
   SubText,
@@ -10,9 +11,9 @@ import {
   ContainerwithLeftRightMargin,
 } from "../../styles";
 
-interface Props {}
+interface Props extends RouteComponentProps {}
 
-export default function ReservationConfirmPage(props: Props) {
+export default function ReservationConfirmPage({ history }: Props) {
   return (
     <Container>
       <ContainerwithLeftRightMargin>
@@ -31,10 +32,12 @@ export default function ReservationConfirmPage(props: Props) {
           무단으로 불참하거나 함께하는 친구들에게 피해를 주는 경우, 이용에
           제재를 받을 수 있습니다.
         </SubTextBookingBookingConfirm>
-        <MainBtnBookingConfirm>
+        <MainBtnBookingConfirm onClick={() => history.push(routes.friends)}>
           참여하는 친구들 프로필 보기
         </MainBtnBookingConfirm>
-        <HomeBtn>홈으로 가기</HomeBtn>
+        <HomeBtn onClick={() => history.push(routes.placeFeed)}>
+          홈으로 가기
+        </HomeBtn>
       </ContainerwithLeftRightMargin>
       <BottomNavBar selectedItem="places" />
     </Container>
@@ -65,4 +68,5 @@ const HomeBtn = styled.div`
   justify-content: center;
   align-items: center;
   font-weight: bold;
+  cursor: pointer;
 `;
