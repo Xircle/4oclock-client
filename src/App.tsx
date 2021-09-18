@@ -44,10 +44,7 @@ function App() {
             <Route path={routes.myPlace} component={MyPlacePage} />
             <Route path={routes.editProfilePage} component={EditProfilePage} />
             <Route path={routes.auth} component={AuthPage} />
-
-            <Route>
-              <NotFoundPage />
-            </Route>
+            <Route component={NotFoundPage} />
           </Switch>
         </Router>
       </AppContainer>

@@ -19,7 +19,18 @@ export interface CreateAccountInput {
   isMarketingAgree: boolean;
 }
 
-export interface CreateAccountOutput extends CoreOutput {}
+export interface CreateAccountOutput extends CoreOutput {
+  data?: {
+    uid: string;
+    username: string;
+    email: string;
+    token: string;
+    profile: {
+      id: string;
+      thumbnail: string;
+    };
+  };
+}
 
 // getPlacesByLocation fetcher types
 enum Gender {
