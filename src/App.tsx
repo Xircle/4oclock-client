@@ -4,16 +4,17 @@ import PlaceFeedPage from "./pages/placeFeed/PlaceFeedPage";
 import RequestPage from "./pages/RequestPage";
 import PlacePage from "./pages/place/PlacePage";
 import routes from "./routes";
-import FriendsPage from "./pages/friends/FriendsPage";
-import MyPage from "./pages/mypage/MyPage";
+import FriendsPage from "./pages/friend/FriendsPage";
+import MyPage from "./pages/my/MyPage";
 import ReservationPage from "./pages/reservation/ReservationPage";
 import ReservationConfirmPage from "./pages/reservation/ReservationConfirmPage";
-import MyXirclePage from "./pages/mypage/MyXirclePage";
-import ModifyProfilePage from "./pages/mypage/ModifyProfilePage";
+import MyPlacePage from "./pages/my/MyPlacePage";
+import EditProfilePage from "./pages/my/EditProfilePage";
 import LandingPage from "./pages/LandingPage";
 import AuthPage from "./pages/auth/Auth";
 import { config } from "dotenv";
 import SocialRedirect from "./pages/RedirectPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 config();
 
@@ -24,39 +25,28 @@ function App() {
       <AppContainer>
         <Router>
           <Switch>
-            <Route path={routes.root} exact>
-              <LandingPage />
-            </Route>
-            <Route path={routes.socialRedirect} exact>
-              <SocialRedirect />
-            </Route>
-            <Route path={routes.placeFeed}>
-              <PlaceFeedPage />
-            </Route>
+            <Route path={routes.root} component={LandingPage} exact />
+            <Route
+              path={routes.socialRedirect}
+              component={SocialRedirect}
+              exact
+            />
+            <Route path={routes.placeFeed} component={PlaceFeedPage} />
             <Route path={routes.place} component={PlacePage} />
-            <Route path={routes.friends}>
-              <FriendsPage />
-            </Route>
-            <Route path={routes.mypage}>
-              <MyPage />
-            </Route>
-            <Route path={routes.reservation}>
-              <ReservationPage />
-            </Route>
-            <Route path={routes.reservationConfirm}>
-              <ReservationConfirmPage />
-            </Route>
-            <Route path={routes.request}>
-              <RequestPage />
-            </Route>
-            <Route path={routes.myxirclepage}>
-              <MyXirclePage />
-            </Route>
-            <Route path={routes.myprofilemodifypage}>
-              <ModifyProfilePage />
-            </Route>
-            <Route path={routes.auth}>
-              <AuthPage />
+            <Route path={routes.friends} component={FriendsPage} />
+            <Route path={routes.mypage} component={MyPage}></Route>
+            <Route
+              path={routes.reservationConfirm}
+              component={ReservationConfirmPage}
+            />
+            <Route path={routes.reservation} component={ReservationPage} />
+            <Route path={routes.request} component={RequestPage} />
+            <Route path={routes.myPlace} component={MyPlacePage} />
+            <Route path={routes.editProfilePage} component={EditProfilePage} />
+            <Route path={routes.auth} component={AuthPage} />
+
+            <Route>
+              <NotFoundPage />
             </Route>
           </Switch>
         </Router>
