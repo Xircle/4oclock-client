@@ -5,18 +5,22 @@ import {
   SpaceForNavBar,
   BottomFixedButtonContainer,
   BottomFixedButtoninContainer,
+  Heading,
+  SLink,
 } from "../../styles";
-import routes from "../../routes";
-import { Link, RouteComponentProps } from "react-router-dom";
-import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { RouteComponentProps } from "react-router-dom";
+import { faMapMarkerAlt, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { getPlaceById } from "../../lib/api/getPlaceById";
 import type { PlaceData } from "../../lib/api/types";
-import { AgeNumberToString } from "../../lib/utils";
+import { AgeNumberToString, encodeUrlSlug } from "../../lib/utils";
 import Avatar from "../../components/shared/Avatar";
-
+import slugify from "slugify";
+import storage from "../../lib/storage";
+import { CURRENT_USER } from "../../components/shared/constants";
+import routes from "../../routes";
 
 const kakao = window.kakao;
 declare global {
@@ -27,8 +31,29 @@ declare global {
 
 interface Props extends RouteComponentProps<{ placeId: string }> {}
 
-export default function PlacePage({ match }: Props) {
+export default function PlacePage({ match, history }: Props) {
   const { placeId } = match.params;
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [placeId]);
+
+  const { data: placeData, isLoading } = useQuery<PlaceData | undefined>(
+    ["place-detail", placeId],
+    () => getPlaceById(placeId),
+    {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  useEffect(() => {
+    const mapTimer = setTimeout(() => {
+      displayMap();
+    }, 1500);
+    return () => {
+      clearTimeout(mapTimer);
+    };
+  }, []);
 
   const displayMap = () => {
     let container = document.getElementById("map");
@@ -49,26 +74,8 @@ export default function PlacePage({ match }: Props) {
     marker.setMap(map);
   };
 
-  useEffect(() => {
-    const mapTime = setTimeout(() => {
-      displayMap();
-    }, 1500);
-    return () => {
-      clearTimeout(mapTime);
-    };
-  }, []);
-
-  const { data: placeData, isLoading } = useQuery<PlaceData | undefined>(
-    ["place-detail", placeId],
-    () => getPlaceById(placeId),
-    {
-      retry: 1,
-      refetchOnWindowFocus: false,
-    }
-  );
-
-  if (isLoading) return <p>Loading...</p>;
-  if (!placeData) return <p>No data</p>;
+  if (isLoading) return <Heading>로딩중...</Heading>;
+  if (!placeData) return <Heading>장소 정보가 없습니다. </Heading>;
 
   return (
     <Container>
@@ -77,6 +84,9 @@ export default function PlacePage({ match }: Props) {
         <SHeaderPic src={placeData.coverImage} />
         <TempToBeDeleted></TempToBeDeleted>
         <HeaderText>
+          <BackButton onClick={() => history.goBack()}>
+            <FontAwesomeIcon icon={faArrowLeft} color="#fff" />
+          </BackButton>
           <SHeaderCategoryIndicator>
             {(JSON.parse(placeData.placeDetail.categories) as string[]).join(
               ", "
@@ -102,6 +112,7 @@ export default function PlacePage({ match }: Props) {
         </DetailDescription>
       </DescriptionContainer>
 
+      {/* Album  */}
       <GridContainer>
         {placeData.placeDetail.photos.map((photo) => (
           <GridPic key={photo} src={photo} />
@@ -133,7 +144,7 @@ export default function PlacePage({ match }: Props) {
         <PParticipant>참가 전 학교 인증은 필수입니다.</PParticipant>
       </ParticipantContainer>
 
-      {/* Location */}
+      {/* Kakao Map */}
       <ParticipantContainer style={{ marginTop: "25px" }}>
         <HeadingParticipant>찾아오는 길</HeadingParticipant>
         <DirText>
@@ -154,24 +165,47 @@ export default function PlacePage({ match }: Props) {
             marginLeft: "auto",
             marginRight: "auto",
           }}
-        ></div>
+        />
       </ParticipantContainer>
 
       {/* Reservation Button */}
-      <Link
-        to={routes.reservation}
-        style={{ textDecoration: "none", color: colors.Black }}
+
+
+      {/* 코드 너무 더룸.. Link 를 따로 컴포넌트로 뺴야할듯 */}
+      <SLink
+        to={{
+          pathname: storage.getItem(CURRENT_USER)
+            ? `/reservation/${encodeUrlSlug(placeData.name)}`
+            : routes.root,
+          state: { placeId },
+        }}
       >
         <BottomFixedButtonContainer>
-          <BottomFixedButtoninContainer>
-            <p>참여하기</p>
-          </BottomFixedButtoninContainer>
+          <CTABottomFixedButtoninContainer
+            isParticipating={placeData.isParticipating}
+            disabled={placeData.isParticipating}
+          >
+            <p>
+              {storage.getItem(CURRENT_USER)
+                ? placeData.isParticipating
+                  ? "이미 참여한 써클이예요"
+                  : "참여하기"
+                : "로그인하고 써클에 참여해요!"}
+            </p>
+          </CTABottomFixedButtoninContainer>
         </BottomFixedButtonContainer>
-      </Link>
+      </SLink>
       <SpaceForNavBar />
     </Container>
   );
 }
+
+const CTABottomFixedButtoninContainer = styled(BottomFixedButtoninContainer)<{
+  isParticipating: boolean;
+}>`
+  background-color: ${(props) =>
+    props.isParticipating ? "#A7B0C0" : "#18a0fb"};
+`;
 
 const DescriptionContainer = styled.div`
   margin: 27px 0 50px;
@@ -191,6 +225,19 @@ const DescriptionContainer = styled.div`
     color: ${colors.MidGray};
     white-space: pre-line;
   }
+`;
+
+const BackButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 38px;
+  height: 38px;
+  margin-bottom: 10px;
+  background: rgba(25, 27, 26, 0.08);
+  backdrop-filter: blur(24px);
+  border-radius: 14px;
+  cursor: pointer;
 `;
 
 const DetailDescription = styled.div`
