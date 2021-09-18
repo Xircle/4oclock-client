@@ -15,3 +15,27 @@ export function AgeNumberToString(age: number): string {
     return "비밀~^^";
   }
 }
+
+export const getScrollTop = () => {
+  if (!document.body) return 0;
+  const scrollTop = document.documentElement
+    ? document.documentElement.scrollTop || document.body.scrollTop
+    : document.body.scrollTop;
+  return scrollTop;
+};
+
+export const getScrollBottom = () => {
+  if (!document.body) return 0;
+  const { scrollHeight } = document.body;
+  const { innerHeight } = window;
+  const scrollTop = getScrollTop();
+  return scrollHeight - innerHeight - scrollTop;
+};
+
+export const encodeUrlSlug = (url: string): string => {
+  return url.replaceAll(" ", "-");
+};
+
+export const decodeUrlSlug = (url: string): string => {
+  return url.replaceAll("-", " ");
+};
