@@ -11,6 +11,10 @@ import { AuthState, AuthAction } from "../../components/auth/types";
 import { SocialAuthResponse } from "../../lib/kakao";
 import AxiosClient from "../../lib/apiClient";
 import { CreateAccountOutput } from "../../lib/api/types";
+import routes from "../../routes";
+import { toast, ToastContainer } from "react-toastify";
+import storage from "../../lib/storage";
+import { CURRENT_USER } from "../../components/shared/constants";
 
 function reducer(state: AuthState, action: AuthAction): AuthState {
   switch (action.type) {
@@ -192,10 +196,8 @@ function Auth() {
     const gender = location.state?.gender;
 
     if (localStorage.getItem("CURRENT_USER")) {
-      window.location.href =
-        process.env.NODE_ENV === "development"
-          ? "http://localhost:3000/places"
-          : process.env.REACT_APP_HOST + "/places";
+      window.location.href = routes.placeFeed;
+      return;
     }
     if (uid) dispatch({ type: "setUid", payload: uid });
     if (username) dispatch({ type: "setName", payload: username });
@@ -209,34 +211,46 @@ function Auth() {
       setStep((step) => step + 1);
     } else {
       setIsLoading(true);
-      const formData = new FormData();
-      console.log("image file : ", state.profileImgFile);
-      formData.append("profileImageFile", state.profileImgFile!);
-      // if (state.profileImgUrl) {
-      //   formData.append("profileImageUrl", state.profileImgUrl);
-      // } else {
-      // }
-      formData.append("socialId", state.uid + "");
-      formData.append("email", state.email);
-      formData.append("phoneNumber", state.phoneNumber);
-      formData.append("username", state.name);
-      formData.append("university", state.university);
-      formData.append("isGraduate", state.isGraduate + "");
-      formData.append("age", state.age);
-      formData.append("gender", state.gender);
-      formData.append("job", state.title);
-      formData.append("shortBio", state.bio);
-      formData.append("location", state.location + "");
-      formData.append("isMarketingAgree", state.agree4 + "");
+      try {
+        const formData = new FormData();
+        console.log("image file : ", state.profileImgFile);
+        formData.append("profileImageFile", state.profileImgFile!);
+        // if (state.profileImgUrl) {
+        //   formData.append("profileImageUrl", state.profileImgUrl);
+        // } else {
+        // }
+        formData.append("socialId", state.uid + "");
+        formData.append("email", state.email);
+        formData.append("phoneNumber", state.phoneNumber);
+        formData.append("username", state.name);
+        formData.append("university", state.university);
+        formData.append("isGraduate", state.isGraduate + "");
+        formData.append("age", state.age);
+        formData.append("gender", state.gender);
+        formData.append("job", state.title);
+        formData.append("shortBio", state.bio);
+        formData.append("location", state.location + "");
+        formData.append("isMarketingAgree", state.agree4 + "");
 
-      const { data } = await AxiosClient.post<CreateAccountOutput>(
-        "auth/social/register/kakao",
-        formData
-      );
-      if (data.ok) {
-        history.push("/places");
-      } else {
-        alert(data.error);
+        const { data } = await AxiosClient.post<CreateAccountOutput>(
+          "auth/social/register/kakao",
+          formData
+        );
+        if (!data.ok) {
+          toast.error(data.error, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          history.push(routes.root);
+        } else {
+          storage.setItem(CURRENT_USER, data.data!);
+          toast.success("가입이 완료되었습니다!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          history.push(routes.placeFeed);
+        }
+      } catch (err) {
+        console.log(err);
+        alert("일시적인 에러가 발생했습니다. 잠시 후 다시 시도해주세요.");
       }
       return () => {
         setIsLoading(false);
@@ -246,7 +260,7 @@ function Auth() {
 
   const prevStep = () => {
     if (step > 0) setStep((step) => step - 1);
-    else history.push("/");
+    else history.push(routes.root);
   };
 
   const components = [
