@@ -1,15 +1,15 @@
 const routes = {
   root: "/",
   socialRedirect: "/social/redirect",
-  placeFeed: "/placeFeed",
+  placeFeed: "/place-feed",
   place: "/place/:placeId",
   friends: "/friends",
   mypage: "/my-page",
-  reservation: "/reservation",
+  reservation: "/reservation/:name",
   reservationConfirm: "/reservation/confirm",
   request: "/request",
-  myxirclepage: "/MyXirclePage",
-  myprofilemodifypage: "/profileModifyPage",
+  myPlace: "/my-place",
+  editProfilePage: "/edit-profile-page",
   auth: "/auth",
 };
 
