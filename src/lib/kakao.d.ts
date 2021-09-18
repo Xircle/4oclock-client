@@ -35,7 +35,7 @@ export class SocialAuthResponse {
   uid?: number;
   thumbnail?: string;
   username?: string;
-  email?: string;
+  email: string;
   gender?: string;
 }
 
