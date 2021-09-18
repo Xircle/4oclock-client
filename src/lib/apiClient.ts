@@ -6,10 +6,10 @@ const tk = data && JSON.parse(data).token;
 console.log(tk);
 
 const apiClient = axios.create({
-  baseURL: "http://172.30.1.27:5000/",
+  baseURL: "http://172.30.1.46:5000/",
   timeout: 8000,
   headers: {
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OTEyMTllLTk1YmMtNDY0NS1hZDM2LTYxYzc3NzFhZWMyZSIsImlhdCI6MTYzMTg2Nzk3MSwiZXhwIjoxNjMxODc4NzcxfQ.fbPXKqWzSXHPKED3hOCsZpY27C79oe-Bwv83zixBy7w`,
+    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAwMDM4ODJhLTJiODQtNDAyMS1hNmI4LTg2NjYyZmI3ZjVkZSIsImlhdCI6MTYzMTk0NDY3OCwiZXhwIjoxNjMxOTU1NDc4fQ.J1iP3naishFq16pTRKqygATgWM5W5tI3Dpr9vNfWtkc`,
   },
 });
 
