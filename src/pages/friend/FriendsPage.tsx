@@ -24,15 +24,19 @@ import storage from "../../lib/storage";
 import { CURRENT_USER } from "../../components/shared/constants";
 
 export default function FriendsPage() {
-  const [age, SetAge] = useState<string>("비밀");
+  const [age, SetAge] = useState<string>("");
 
   const {
     data: randomProfileData,
     refetch,
     isLoading,
-  } = useQuery<RandomProfileData>(["randomProfile"], () => seeRandomProfile(), {
-    refetchOnWindowFocus: false,
-  });
+  } = useQuery<RandomProfileData | undefined>(
+    ["randomProfile"],
+    seeRandomProfile,
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
   useEffect(() => {
     if (!storage.getItem(CURRENT_USER)) {
@@ -65,29 +69,32 @@ export default function FriendsPage() {
         </Heading>
         <FlexDiv>
           <AvartarBig
-            src={randomProfileData?.profileImageUrl}
+            src={randomProfileData?.profileImageUrl || "/avatar/2donny.png"}
             alt="friend-profile"
           />
         </FlexDiv>
         <FlexDiv style={{ marginTop: "15px" }}>
-          <Name>{randomProfileData?.username}</Name>
+          <Name>{randomProfileData?.username || "써클개발자"}</Name>
           <TagOnName>
-            <p>{randomProfileData?.job}</p>
+            <p>{randomProfileData?.job || "18학번 헌내기"}</p>
           </TagOnName>
         </FlexDiv>
         <InnerContainer style={{ marginTop: "45px" }}>
           <InnerSubject>학교</InnerSubject>
-          <InnerContent>{randomProfileData?.university}</InnerContent>
+          <InnerContent>
+            {randomProfileData?.university || "고려대학교"}
+          </InnerContent>
         </InnerContainer>
         <InnerContainer style={{ marginTop: "6px" }}>
           <InnerSubject>나이</InnerSubject>
-          <InnerContent>{age}</InnerContent>
+          <InnerContent>{age || "23살"}</InnerContent>
         </InnerContainer>
         <InnerContainer style={{ marginTop: "25px" }}>
           <InnerContent
             style={{ marginLeft: "0px", fontWeight: 400, fontSize: "14px" }}
           >
-            {randomProfileData?.shortBio}
+            {randomProfileData?.shortBio ||
+              `가슴뛰는 청춘 새로운 네트워킹을 써클에서 경험하세요!`}
           </InnerContent>
         </InnerContainer>
       </ContainerwithLeftRightMargin>

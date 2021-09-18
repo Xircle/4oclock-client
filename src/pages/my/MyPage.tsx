@@ -24,12 +24,13 @@ import { getUser } from "../../lib/api/getUser";
 import Storage from "../../lib/storage";
 import { CURRENT_USER } from "../../components/shared/constants";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
+import { toast } from "react-toastify";
 
 export default function MyPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
+
   const { data: userData, isLoading } = useQuery<UserData | undefined>(
     "userProfile",
     () => getUser(),
@@ -41,8 +42,8 @@ export default function MyPage() {
 
   useEffect(() => {
     if (!isLoading && !userData) {
-      alert("로그인이 필요합니다!");
-      window.location.href = "/";
+      alert("로그인이 필요한 페이지입니다!");
+      window.location.href = routes.root;
     }
   }, [userData, isLoading]);
 
@@ -53,19 +54,19 @@ export default function MyPage() {
     }
   };
 
-  if (isLoading) return null;
-
   return (
     <ContainerFlexColumn>
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
           <Heading>마이페이지</Heading>
           <ProfileInfoDiv>
-            <MyAvartarImg src={userData?.profileImageUrl} />
+            <MyAvartarImg
+              src={userData?.profileImageUrl || "/avatar/anonymous_user.png"}
+            />
             <ProfileTextWrapper>
-              <UserName>{userData?.username}</UserName>
+              <UserName>{userData?.username || "유저1"}</UserName>
               <UserDetail>
-                {userData?.university} / {userData?.age}
+                {userData?.university || "고연대"} / {userData?.age || "새내기"}
               </UserDetail>
             </ProfileTextWrapper>
           </ProfileInfoDiv>
@@ -79,7 +80,7 @@ export default function MyPage() {
           <div style={{ height: "30px" }}></div>
           <Link to={routes.myPlace} style={{ textDecoration: "none" }}>
             <MainSubContainer>
-              <p>신청한 써클 {userData?.reservation_count}개</p>
+              <p>신청한 써클 {userData?.reservation_count || 0}개</p>
               <FontAwesomeIcon
                 icon={faAngleRight}
                 color={colors.LightGray}
