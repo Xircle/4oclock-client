@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import MainPicDummy from "../../dummyResources/MainPicDummy.jpg";
+import MainPicDummy from "../../static/MainPicDummy.jpg";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import "./PlaceFeedPage.css";
@@ -53,7 +53,7 @@ export default function PlaceFeedPage() {
             />
           </DropDownWrapper>
           <Link to={routes.request} style={{ textDecoration: "none" }}>
-            <RequestP>서클 추가하기</RequestP>
+            <RequestP>써클 추가하기</RequestP>
           </Link>
         </Top>
       </TopWrapper>

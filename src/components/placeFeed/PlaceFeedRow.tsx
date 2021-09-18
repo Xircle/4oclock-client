@@ -116,7 +116,7 @@ const PlaceDeadline = styled.div`
   }
 `;
 
-const PlaceFull = styled.div`
+export const PlaceFull = styled.div`
   position: absolute;
   background-color: ${colors.Black};
   width: 100%;
@@ -127,7 +127,8 @@ const PlaceFull = styled.div`
   display: flex;
   align-items: center;
 `;
-const PlaceFullText = styled.div`
+
+export const PlaceFullText = styled.div`
   color: white;
   width: 100%;
   display: flex;

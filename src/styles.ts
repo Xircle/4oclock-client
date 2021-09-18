@@ -75,8 +75,10 @@ export const colors: Colors = {
 };
 
 export const AppContainer = styled.div`
+  position: relative;
   width: 375px;
   min-height: 100vh;
+  height: 100%;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -226,6 +228,7 @@ export const Avartar = styled.img`
 
 export const ContainerFlexColumn = styled(Container)`
   width: 100%;
+  height: 100%;
   margin-left: auto;
   margin-right: auto;
   justify-content: center;
@@ -234,7 +237,7 @@ export const ContainerFlexColumn = styled(Container)`
 `;
 
 export const Heading = styled(ProcedureHeading)`
-  padding-top: 50px;
+  padding-top: 30px;
 `;
 
 export const ContainerwithLeftRightMargin = styled(Container)`

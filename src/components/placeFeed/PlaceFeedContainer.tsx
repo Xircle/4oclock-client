@@ -16,12 +16,6 @@ export default function PlaceFeedContainer({ placeFeedDataArray }: Props) {
           key={placeFeedData.id}
           to={{
             pathname: `/place/${placeFeedData.id}`,
-            state: {
-              name: placeFeedData.name,
-              startDateFromNow: placeFeedData.startDateFromNow,
-              recommendation: placeFeedData.recommendation,
-              coverImage: placeFeedData.coverImage,
-            },
           }}
         >
           <PlaceFeedRow {...placeFeedData} />

@@ -11,7 +11,7 @@ import {
 import {
   DummyAvartar,
   DummyDefaultAvatar,
-} from "../../dummyResources/dummyData";
+} from "../../static/dummyData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";

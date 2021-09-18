@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import BackButtonLayout from "../../components/shared/BackButtonLayout";
 import BottomNavBar from "../../components/shared/BottomNavBar";
 import {
   Container,
@@ -11,7 +12,7 @@ import {
 
 interface Props {}
 
-export default function BookingConfirmPage(props: Props) {
+export default function ReservationConfirmPage(props: Props) {
   return (
     <Container>
       <ContainerwithLeftRightMargin>

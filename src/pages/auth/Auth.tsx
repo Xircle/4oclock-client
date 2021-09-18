@@ -8,10 +8,7 @@ import AuthAgree from "../../components/auth/AuthAgree";
 import { ContainerFlexColumn } from "../../styles";
 import BackButtonWithNoBackground from "../../components/shared/BackButtonWithNoBackground";
 import { AuthState, AuthAction } from "../../components/auth/types";
-import routes from "../../routes";
 import { SocialAuthResponse } from "../../lib/kakao";
-import { useQuery, useMutation } from "react-query";
-import { createAccount } from "../../lib/api/createAccount";
 import AxiosClient from "../../lib/apiClient";
 import { CreateAccountOutput } from "../../lib/api/types";
 
@@ -211,9 +208,7 @@ function Auth() {
     if (step < components.length - 1) {
       setStep((step) => step + 1);
     } else {
-      console.log("axios");
       setIsLoading(true);
-      // need to be updated
       const formData = new FormData();
       console.log("image file : ", state.profileImgFile);
       formData.append("profileImageFile", state.profileImgFile!);
@@ -238,7 +233,6 @@ function Auth() {
         "auth/social/register/kakao",
         formData
       );
-      console.log(data);
       if (data.ok) {
         history.push("/places");
       } else {
