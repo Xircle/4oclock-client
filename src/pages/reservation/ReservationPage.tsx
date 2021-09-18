@@ -20,7 +20,6 @@ import routes from "../../routes";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
 import { useMutation } from "react-query";
 import { makeReservation } from "../../lib/api/makeReservation";
-import { useEffect } from "react";
 import { decodeUrlSlug } from "../../lib/utils";
 import { StartTime } from "../../lib/api/types";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";

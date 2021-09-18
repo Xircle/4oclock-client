@@ -17,7 +17,6 @@ import { getPlaceById } from "../../lib/api/getPlaceById";
 import type { PlaceData } from "../../lib/api/types";
 import { AgeNumberToString, encodeUrlSlug } from "../../lib/utils";
 import Avatar from "../../components/shared/Avatar";
-import slugify from "slugify";
 import storage from "../../lib/storage";
 import { CURRENT_USER } from "../../components/shared/constants";
 import routes from "../../routes";

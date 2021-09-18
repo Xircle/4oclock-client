@@ -8,6 +8,5 @@ export const getPlaceById = async (placeId: string): Promise<PlaceData> => {
   if (!data.ok) {
     alert(data.error);
   }
-  console.log(data.placeData);
   return data.placeData;
 };

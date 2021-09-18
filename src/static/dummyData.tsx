@@ -41,7 +41,7 @@ export const DummyProfileData: DummyProfile = {
 };
 
 export const DummyAvartar = Avartar1;
-export const DummyDefaultAvatar = DefaultAvatar;
+// export const DummyDefaultAvatar = DefaultAvatar;
 
 export const feedDummyData: DummyData[] = [
   {

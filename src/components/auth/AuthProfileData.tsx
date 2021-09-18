@@ -25,7 +25,7 @@ interface Props {
   dispatch: React.Dispatch<AuthAction>;
 }
 
-export default function AuthPage2({ onNext, state, dispatch }: Props) {
+export default function AuthProfileData({ onNext, state, dispatch }: Props) {
   const univs: string[] = ["고려대학교", "연세대학교"];
   const [nameError, SetNameError] = useState<boolean>(false);
   const [univError, SetUnivError] = useState<boolean>(false);

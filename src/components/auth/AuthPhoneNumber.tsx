@@ -15,7 +15,7 @@ interface Props {
   dispatch: React.Dispatch<AuthAction>;
 }
 
-export default function AuthPage1({ onNext, state, dispatch }: Props) {
+export default function AuthPhoneNumber({ onNext, state, dispatch }: Props) {
   const Validate = (data: string) => {
     if (data.length < 10 || data.length > 11) {
       dispatch({ type: "setStage1Valid", payload: false });

@@ -8,10 +8,7 @@ import {
   FlexDiv,
   FileLabel,
 } from "../../styles";
-import {
-  DummyAvartar,
-  DummyDefaultAvatar,
-} from "../../static/dummyData";
+import { DummyAvartar } from "../../static/dummyData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
@@ -23,7 +20,7 @@ interface Props {
   dispatch: React.Dispatch<AuthAction>;
 }
 
-export default function AuthPage3({ onNext, state, dispatch }: Props) {
+export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
   const [localImageSrc, setLocalImageSrc] = useState<string | undefined>(
     state.profileImgUrl
   );
@@ -63,7 +60,7 @@ export default function AuthPage3({ onNext, state, dispatch }: Props) {
       </SubText>
       <FileLabel htmlFor="input-file">
         <Avartar
-          src={localImageSrc || DummyDefaultAvatar}
+          src={localImageSrc || "/avatar/anonymous_user.png"}
           style={{ width: "78px", height: "78px" }}
         />
         <input
