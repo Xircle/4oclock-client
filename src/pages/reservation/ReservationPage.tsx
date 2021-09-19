@@ -44,7 +44,6 @@ export default function ReservationPage({ match, location, history }: Props) {
         placeId,
       });
       if (!data.ok) {
-        console.log("error");
         alert(data.error);
         window.location.href = routes.placeFeed;
         return;
