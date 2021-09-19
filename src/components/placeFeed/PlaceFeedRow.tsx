@@ -4,9 +4,12 @@ import { useState } from "react";
 import type { PlaceFeedData } from "../../lib/api/types";
 import Avatar from "../shared/Avatar";
 
-interface Props extends PlaceFeedData {}
+interface Props extends PlaceFeedData {
+  onClick: () => void;
+}
 
 export default function PlaceFeedRow({
+  onClick,
   name,
   coverImage,
   deadline,
@@ -21,7 +24,7 @@ export default function PlaceFeedRow({
   const [parsedTags, _] = useState<string[]>(JSON.parse(tags));
 
   return (
-    <Container>
+    <Container onClick={onClick}>
       <PlaceLeftContainer>
         {isClosed && (
           <>
@@ -72,6 +75,7 @@ const Container = styled.div`
   &:hover {
     opacity: 0.8;
   }
+  cursor: pointer;
 `;
 const PlaceLeftContainer = styled.div`
   width: 100px;
