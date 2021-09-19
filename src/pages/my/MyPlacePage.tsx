@@ -2,8 +2,8 @@ import {
   ContainerFlexColumn,
   ContainerwithLeftRightMargin,
   Heading,
-  colors,
   SLink,
+  Label,
 } from "../../styles";
 import BottomNavBar from "../../components/shared/BottomNavBar";
 import { Link } from "react-router-dom";
@@ -33,14 +33,14 @@ export default function MyPlacePage() {
   }, [myPlacesData, isLoading]);
 
   if (isLoading) return <p>로딩중...</p>;
-  if (!myPlacesData)
-    return <p>써클에서 가슴뛰는 새로운 네트워크를 경험하세요</p>;
+  if (!myPlacesData) return null;
 
   return (
     <ContainerFlexColumn>
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
           <Heading>내가 신청한 써클</Heading>
+          {myPlacesData.length === 0 && <Label>신청한 써클이 없어요 :(</Label>}
           {myPlacesData.map((item) => {
             return (
               <SLink
