@@ -1,5 +1,7 @@
 export function AgeNumberToString(age: number): string {
-  if (age >= 19 && age <= 24) {
+  if (age === 0) {
+    return "미정";
+  } else if (age >= 19 && age <= 24) {
     return "20초반";
   } else if (age >= 24 && age <= 27) {
     return "20중반";

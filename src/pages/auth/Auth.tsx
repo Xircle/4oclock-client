@@ -12,7 +12,7 @@ import { SocialAuthResponse } from "../../lib/kakao";
 import AxiosClient from "../../lib/apiClient";
 import { CreateAccountOutput } from "../../lib/api/types";
 import routes from "../../routes";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import storage from "../../lib/storage";
 import { CURRENT_USER } from "../../components/shared/constants";
 

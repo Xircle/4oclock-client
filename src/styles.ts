@@ -286,6 +286,7 @@ export const Label = styled.p`
   font-weight: normal;
   color: ${colors.MidGray};
   margin-top: 24px;
+  line-height: 20px;
 `;
 
 export const NextButton = styled(MainBtn)`

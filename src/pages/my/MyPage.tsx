@@ -50,7 +50,7 @@ export default function MyPage() {
   const logoutBtnClickHandler = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
       Storage.removeItem(CURRENT_USER);
-      window.location.href = routes.placeFeed;
+      window.location.href = routes.root;
     }
   };
 

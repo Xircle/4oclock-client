@@ -9,19 +9,26 @@ import Header from "../../components/shared/header/Header";
 import HeaderTextHeading from "../../components/shared/header/HeaderTextHeading";
 import HeaderTextDescription from "../../components/shared/header/HeaderTextDescription";
 import BottomNavBar from "../../components/shared/BottomNavBar";
-import { Link } from "react-router-dom";
+import { Link, RouteComponentProps } from "react-router-dom";
 import routes from "../../routes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import {
   getPlacesByLocation,
   PlaceLocation,
 } from "../../lib/api/getPlacesByLocation";
-import { placeLocationoptions } from "../../components/shared/constants";
+import {
+  CURRENT_USER,
+  placeLocationoptions,
+} from "../../components/shared/constants";
 import { PlaceFeedData } from "../../lib/api/types";
 import PlaceFeedRowsContainer from "../../components/placeFeed/PlaceFeedContainer";
+import storage from "../../lib/storage";
+import { toast } from "react-toastify";
 
-export default function PlaceFeedPage() {
+interface Props extends RouteComponentProps {}
+
+export default function PlaceFeedPage({ history }: Props) {
   const [page, setPage] = useState(1);
   const [selectedPlaceLocation, setSelectedPlaceLocation] =
     useState<PlaceLocation>(placeLocationoptions[0].value as PlaceLocation);
@@ -30,7 +37,9 @@ export default function PlaceFeedPage() {
     setSelectedPlaceLocation(option.value as PlaceLocation);
   };
 
-  const { data: placeFeedDataArray } = useQuery<PlaceFeedData[] | undefined>(
+  const { data: placeFeedDataArray, isError } = useQuery<
+    PlaceFeedData[] | undefined
+  >(
     ["place", selectedPlaceLocation, page],
     () => getPlacesByLocation(selectedPlaceLocation, page),
     {
@@ -38,6 +47,15 @@ export default function PlaceFeedPage() {
       refetchOnWindowFocus: false,
     }
   );
+
+  useEffect(() => {
+    if (!storage.getItem(CURRENT_USER)) {
+      toast.error("로그인하신 후에 이용해주세요.", {
+        position: toast.POSITION.BOTTOM_LEFT,
+      });
+      history.push(routes.root);
+    }
+  }, []);
 
   return (
     <Container>
@@ -68,7 +86,10 @@ export default function PlaceFeedPage() {
 
       {/* Places Feed Rows container */}
       <PlaceFeedRowsWrapper>
-        <PlaceFeedRowsContainer placeFeedDataArray={placeFeedDataArray} />
+        <PlaceFeedRowsContainer
+          hasError={isError}
+          placeFeedDataArray={placeFeedDataArray}
+        />
       </PlaceFeedRowsWrapper>
 
       <BottomNavBar selectedItem="places" />

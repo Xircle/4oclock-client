@@ -9,17 +9,18 @@ import {
   SLink,
 } from "../../styles";
 import { RouteComponentProps } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 import { faMapMarkerAlt, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect } from "react";
-import { useQuery } from "react-query";
+import { useEffect, useState } from "react";
 import { getPlaceById } from "../../lib/api/getPlaceById";
 import type { PlaceData } from "../../lib/api/types";
 import { AgeNumberToString, encodeUrlSlug } from "../../lib/utils";
 import Avatar from "../../components/shared/Avatar";
-import storage from "../../lib/storage";
-import { CURRENT_USER } from "../../components/shared/constants";
-import routes from "../../routes";
+import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
+import useUrlQuery from "../../hooks/useUrlQuery";
+import { useQuery } from "react-query";
+import queryString from "query-string";
 
 const kakao = window.kakao;
 declare global {
@@ -28,10 +29,18 @@ declare global {
   }
 }
 
-interface Props extends RouteComponentProps<{ placeId: string }> {}
+interface MatchParmas {
+  placeId: string;
+}
 
-export default function PlacePage({ match, history }: Props) {
+interface Props extends RouteComponentProps<MatchParmas> {}
+
+export default function PlacePage({ match, location, history }: Props) {
   const { placeId } = match.params;
+  const UrlSearch = location.search;
+  const isFinal = Boolean(queryString.parse(UrlSearch).isFinal === "true");
+  const isClosed = Boolean(queryString.parse(UrlSearch).isClosed === "true");
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [placeId]);
@@ -73,8 +82,7 @@ export default function PlacePage({ match, history }: Props) {
     marker.setMap(map);
   };
 
-  if (isLoading) return <Heading>로딩중...</Heading>;
-  if (!placeData) return <Heading>장소 정보가 없습니다. </Heading>;
+  if (!placeData) return null;
 
   return (
     <Container>
@@ -94,7 +102,7 @@ export default function PlacePage({ match, history }: Props) {
           <SHeaderTextHeading>{placeData.name}</SHeaderTextHeading>
           <HeaderSplit></HeaderSplit>
           <SHeaderTextDescription>
-            {placeData.startDateFromNow} / 오후 4시 / 오후 7시
+            {placeData.startDateFromNow} 오후 4시 / 오후 7시
             <br />
             {placeData.recommendation}
           </SHeaderTextDescription>
@@ -169,31 +177,49 @@ export default function PlacePage({ match, history }: Props) {
 
       {/* Reservation Button */}
 
-
       {/* 코드 너무 더룸.. Link 를 따로 컴포넌트로 뺴야할듯 */}
-      <SLink
-        to={{
-          pathname: storage.getItem(CURRENT_USER)
-            ? `/reservation/${encodeUrlSlug(placeData.name)}`
-            : routes.root,
-          state: { placeId },
-        }}
-      >
-        <BottomFixedButtonContainer>
-          <CTABottomFixedButtoninContainer
-            isParticipating={placeData.isParticipating}
-            disabled={placeData.isParticipating}
-          >
-            <p>
-              {storage.getItem(CURRENT_USER)
-                ? placeData.isParticipating
-                  ? "이미 참여한 써클이예요"
-                  : "참여하기"
-                : "로그인하고 써클에 참여해요!"}
-            </p>
-          </CTABottomFixedButtoninContainer>
-        </BottomFixedButtonContainer>
-      </SLink>
+      <BottomFixedButtonContainer>
+        <CTABottomFixedButtoninContainer
+          onClick={() =>
+            !placeData.isParticipating &&
+            history.push(`/reservation/${encodeUrlSlug(placeData.name)}`, {
+              placeId,
+            })
+          }
+          isParticipating={placeData.isParticipating}
+          isFinal={isFinal}
+          isClosed={isClosed}
+          disabled={placeData.isParticipating || isClosed}
+        >
+          <p>
+            {isClosed
+              ? "마감 되었어요"
+              : placeData.isParticipating
+              ? "이미 참여한 써클이예요"
+              : isFinal
+              ? "오늘 마감! 참여하기"
+              : "참여하기"}
+          </p>
+        </CTABottomFixedButtoninContainer>
+      </BottomFixedButtonContainer>
+
+      {isLoading && (
+        <>
+          <LoaderBackdrop />
+          <LoaderWrapper>
+            <ClipLoader
+              loading={isLoading}
+              color={colors.MidBlue}
+              css={{
+                name: "width",
+                styles: "border-width: 4px; z-index: 999;",
+              }}
+              size={40}
+            />
+          </LoaderWrapper>
+        </>
+      )}
+
       <SpaceForNavBar />
     </Container>
   );
@@ -201,9 +227,15 @@ export default function PlacePage({ match, history }: Props) {
 
 const CTABottomFixedButtoninContainer = styled(BottomFixedButtoninContainer)<{
   isParticipating: boolean;
+  isFinal: boolean;
+  isClosed: boolean;
 }>`
   background-color: ${(props) =>
-    props.isParticipating ? "#A7B0C0" : "#18a0fb"};
+    props.isParticipating || props.isClosed
+      ? "#A7B0C0"
+      : props.isFinal
+      ? "#FF2343"
+      : "#18a0fb"};
 `;
 
 const DescriptionContainer = styled.div`
