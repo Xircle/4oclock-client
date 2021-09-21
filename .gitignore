@@ -6,7 +6,6 @@
 /.pnp
 .pnp.js
 /.history/
-/package-lock.json
 
 /build
 
