@@ -162,6 +162,7 @@ const TextSpanDiv = styled.div`
   width: 100%;
   margin-top: 8px;
   position: relative;
+  cursor: pointer;
 `;
 
 const BlackTextSpan = styled(SubTextSpan)`

@@ -78,7 +78,7 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
           color: colors.MidBlue,
         }}
       >
-        <p>프로필사진 수정하러가기</p>
+        <p style={{ color: "#18A0FB" }}>프로필사진 수정하러가기</p>
       </FlexDiv>
       <SubText
         style={{ fontSize: "13px", fontWeight: "bold", marginTop: "36px" }}

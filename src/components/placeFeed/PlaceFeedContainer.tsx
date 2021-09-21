@@ -24,7 +24,7 @@ export default function PlaceFeedContainer({
           onClick={() =>
             history.push(
               `/place/${placeFeedData.id}?isFinal=${
-                placeFeedData.deadline === "D-1"
+                placeFeedData.deadline === "오늘 마감"
               }&isClosed=${placeFeedData.isClosed}`
             )
           }

@@ -3,10 +3,17 @@ import styled from "styled-components";
 interface Props {
   profileImgUrl: string;
   rightOffset?: string;
+  onClick?: () => void;
 }
 
-export default function Avatar({ profileImgUrl, rightOffset }: Props) {
-  return <AvartarImg src={profileImgUrl} rightOffset={rightOffset} />;
+export default function Avatar({ profileImgUrl, rightOffset, onClick }: Props) {
+  return (
+    <AvartarImg
+      src={profileImgUrl}
+      rightOffset={rightOffset}
+      onClick={onClick}
+    />
+  );
 }
 
 const AvartarImg = styled.img<{ rightOffset?: string }>`

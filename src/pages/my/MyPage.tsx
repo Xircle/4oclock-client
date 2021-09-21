@@ -25,6 +25,7 @@ import Storage from "../../lib/storage";
 import { CURRENT_USER } from "../../components/shared/constants";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
 import { toast } from "react-toastify";
+import PageTitle from "../../components/PageTitle";
 
 export default function MyPage() {
   useEffect(() => {
@@ -56,6 +57,7 @@ export default function MyPage() {
 
   return (
     <ContainerFlexColumn>
+      <PageTitle title="마이페이지"/>
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
           <Heading>마이페이지</Heading>

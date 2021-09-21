@@ -3,9 +3,12 @@ import { MyPlaceData } from "../../lib/api/types";
 import { colors } from "../../styles";
 import { PlaceFull, PlaceFullText } from "../placeFeed/PlaceFeedRow";
 
-interface Props extends Omit<MyPlaceData, "id"> {}
+interface Props extends Omit<MyPlaceData, "id"> {
+  onClick: () => void;
+}
 
 export default function RegisteredFeed({
+  onClick,
   isClosed,
   coverImage,
   name,
@@ -14,7 +17,7 @@ export default function RegisteredFeed({
   recommendation,
 }: Props) {
   return (
-    <FeedContainer>
+    <FeedContainer onClick={onClick}>
       <FeedLeftContainer>
         {isClosed && (
           <>
@@ -46,6 +49,7 @@ const FeedContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 25px;
+  cursor: pointer;
 `;
 
 const FeedLeftContainer = styled.div`
