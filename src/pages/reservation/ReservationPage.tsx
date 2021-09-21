@@ -18,20 +18,34 @@ import {
 } from "../../styles";
 import routes from "../../routes";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { makeReservation } from "../../lib/api/makeReservation";
 import { decodeUrlSlug } from "../../lib/utils";
 import { StartTime } from "../../lib/api/types";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
 import ClipLoader from "react-spinners/ClipLoader";
+import { getReservationParticipantNumber } from "../../lib/api/getReservationParticipantNumber";
+import PageTitle from "../../components/PageTitle";
 
 interface Props
-  extends RouteComponentProps<{ name: string }, {}, { placeId: string }> {}
+  extends RouteComponentProps<
+    { name: string },
+    {},
+    { placeId: string; startDateFromNow: string }
+  > {}
 
 export default function ReservationPage({ match, location, history }: Props) {
   const { name: placeName } = match.params;
-  const placeId = location.state?.placeId;
+  const { placeId, startDateFromNow } = location.state;
   const [selectedTime, setSelectedTime] = useState<StartTime | undefined>();
+
+  const { data: reservationInfo } = useQuery(
+    ["getReservationParticipantNumber", placeId],
+    () => getReservationParticipantNumber(placeId),
+    {
+      retry: 1,
+    }
+  );
 
   const { mutateAsync: mutateReservation, isLoading } =
     useMutation(makeReservation);
@@ -48,7 +62,10 @@ export default function ReservationPage({ match, location, history }: Props) {
         window.location.href = routes.placeFeed;
         return;
       }
-      history.push(routes.reservationConfirm);
+      history.push(routes.reservationConfirm, {
+        placeId,
+        startDateFromNow,
+      });
     } catch (err) {
       console.log(err);
       alert(err);
@@ -58,17 +75,20 @@ export default function ReservationPage({ match, location, history }: Props) {
 
   return (
     <Container>
+      <PageTitle title="써클 예약"/>
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
           <Heading>{decodeUrlSlug(placeName)}</Heading>
           <SelectionBoxBooking onClick={() => setSelectedTime("Four")}>
             <SelectionMainTextBooking>
-              다음주 수요일 오후 4시
+              {startDateFromNow} 오후 4시
               <TagBooking>
                 <p>4인 모임</p>
               </TagBooking>
             </SelectionMainTextBooking>
-            <SelectionSubTextBooking>5명 참가중</SelectionSubTextBooking>
+            <SelectionSubTextBooking>
+              {reservationInfo?.[0].participantNumber || "0"}명 참가중
+            </SelectionSubTextBooking>
             <CheckIcon>
               {selectedTime === "Four" ? (
                 <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
@@ -79,12 +99,14 @@ export default function ReservationPage({ match, location, history }: Props) {
           </SelectionBoxBooking>
           <SelectionBoxBooking onClick={() => setSelectedTime("Seven")}>
             <SelectionMainTextBooking>
-              다음주 수요일 오후 4시
+              {startDateFromNow} 오후 7시
               <TagBooking>
                 <p>2인 모임</p>
               </TagBooking>
             </SelectionMainTextBooking>
-            <SelectionSubTextBooking>7명 참가중</SelectionSubTextBooking>
+            <SelectionSubTextBooking>
+              {reservationInfo?.[1].participantNumber || "0"}명 참가중
+            </SelectionSubTextBooking>
             <CheckIcon>
               {selectedTime === "Seven" ? (
                 <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
