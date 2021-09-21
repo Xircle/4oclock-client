@@ -1,11 +1,10 @@
-import styled from "styled-components";
 import { useState, Fragment, useReducer, useEffect } from "react";
 import { withRouter, useHistory, useLocation } from "react-router-dom";
 import AuthPhoneNumber from "../../components/auth/AuthPhoneNumber";
 import AuthProfileData from "../../components/auth/AuthProfileData";
 import AuthProfileImage from "../../components/auth//AuthProfileImage";
 import AuthAgree from "../../components/auth/AuthAgree";
-import { ContainerFlexColumn } from "../../styles";
+import { colors, ContainerFlexColumn } from "../../styles";
 import BackButtonWithNoBackground from "../../components/shared/BackButtonWithNoBackground";
 import { AuthState, AuthAction } from "../../components/auth/types";
 import { SocialAuthResponse } from "../../lib/kakao";
@@ -15,6 +14,9 @@ import routes from "../../routes";
 import { toast } from "react-toastify";
 import storage from "../../lib/storage";
 import { CURRENT_USER } from "../../components/shared/constants";
+import PageTitle from "../../components/PageTitle";
+import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
+import ClipLoader from "react-spinners/ClipLoader";
 
 function reducer(state: AuthState, action: AuthAction): AuthState {
   switch (action.type) {
@@ -214,11 +216,12 @@ function Auth() {
       try {
         const formData = new FormData();
         console.log("image file : ", state.profileImgFile);
-        formData.append("profileImageFile", state.profileImgFile!);
-        // if (state.profileImgUrl) {
-        //   formData.append("profileImageUrl", state.profileImgUrl);
-        // } else {
-        // }
+        console.log("image url : ", state.profileImgUrl);
+        if (state.profileImgFile) {
+          formData.append("profileImageFile", state.profileImgFile!);
+        } else {
+          formData.append("profileImageUrl", state.profileImgUrl!);
+        }
         formData.append("socialId", state.uid + "");
         formData.append("email", state.email);
         formData.append("phoneNumber", state.phoneNumber);
@@ -250,7 +253,9 @@ function Auth() {
         }
       } catch (err) {
         console.log(err);
-        alert("일시적인 에러가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        throw new Error();
+      } finally {
+        setIsLoading(false);
       }
       return () => {
         setIsLoading(false);
@@ -272,11 +277,25 @@ function Auth() {
 
   return (
     <ContainerFlexColumn>
+      <PageTitle title="프로필 등록" />
       <BackButtonWithNoBackground onPrev={prevStep} />
       {components.map((component, index) => {
         if (index === step) return <Fragment key={index}>{component}</Fragment>;
         return null;
       })}
+      {isLoading && (
+        <>
+          <LoaderBackdrop />
+          <LoaderWrapper>
+            <ClipLoader
+              loading={isLoading}
+              color={colors.MidBlue}
+              css={{ name: "width", styles: "border-width: 4px;" }}
+              size={40}
+            />
+          </LoaderWrapper>
+        </>
+      )}
     </ContainerFlexColumn>
   );
 }
