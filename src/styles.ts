@@ -15,7 +15,10 @@ interface Colors {
 }
 
 export const GlobalStyles = createGlobalStyle`
-    ${reset}
+  ${reset}
+  html {
+    scroll-behavior: smooth;
+  }
    p, a, span, h3, h4, div, input, label, textarea {
      font-family: "Spoqa Han Sans Neo", "Spoqa Han Sans JP", sans-serif;
      color: #12121D;
@@ -29,11 +32,9 @@ export const GlobalStyles = createGlobalStyle`
      width: 301px;
      padding-left: 8px;
      padding-right: 8px;
-     
    }
    input::placeholder, textarea::placeholder, input:disabled, select, option {
       color: #C4CBD8;
-
    }
    select {
     background-color: white;
@@ -46,7 +47,6 @@ export const GlobalStyles = createGlobalStyle`
      height: 24px;
      border-radius: 50%;
      margin-top: 0px;
-
    }
    
    input[type=checkbox] {
@@ -187,7 +187,7 @@ export const BottomFixedButtonContainer = styled(BottomNavBarContainer)`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 5;
+  z-index: 1;
 `;
 
 export const BottomFixedButtoninContainer = styled(MainBtn)`
