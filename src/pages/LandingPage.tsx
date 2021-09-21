@@ -13,8 +13,8 @@ import { useHistory } from "react-router-dom";
 
 function LandingPage() {
   const history = useHistory();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
 
   const kakaoSuccessCallback = (response: {
     response: LoginResponse;
@@ -38,7 +38,7 @@ function LandingPage() {
             <Heading>연대친구, 써클</Heading>
           </Row>
           <Row>
-            <p>Login</p>
+            {/* <p>Login</p>
             <form style={{ display: "flexColumn" }}>
               <InputBlock>
                 <InputIdPwd value={email} placeholder="이메일" />
@@ -46,7 +46,7 @@ function LandingPage() {
               </InputBlock>
             </form>
             <LoginBtn>로그인하기</LoginBtn>
-            <p style={{ textAlign: "center", margin: "10px 0" }}>또는</p>
+            <p style={{ textAlign: "center", margin: "10px 0" }}>또는</p> */}
             <KakaoLogin
               token={process.env.REACT_APP_KAKAO_KEY!}
               onSuccess={kakaoSuccessCallback}
