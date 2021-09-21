@@ -8,6 +8,8 @@
 /.history/
 /package-lock.json
 
+/build
+
 # testing
 /coverage
 /.vscode

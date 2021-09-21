@@ -5,9 +5,9 @@ import "react-dropdown/style.css";
 import "./PlaceFeedPage.css";
 import { Option } from "react-dropdown";
 import { colors, Container } from "../../styles";
-import Header from "../../components/shared/header/Header";
-import HeaderTextHeading from "../../components/shared/header/HeaderTextHeading";
-import HeaderTextDescription from "../../components/shared/header/HeaderTextDescription";
+import Header from "../../components/shared/Header/Header";
+import HeaderTextHeading from "../../components/shared/Header/HeaderTextHeading";
+import HeaderTextDescription from "../../components/shared/Header/HeaderTextDescription";
 import BottomNavBar from "../../components/shared/BottomNavBar";
 import { Link, RouteComponentProps } from "react-router-dom";
 import routes from "../../routes";
@@ -60,7 +60,7 @@ export default function PlaceFeedPage({ history }: Props) {
 
   return (
     <Container>
-      <PageTitle title="네시 식탁"/>
+      <PageTitle title="네시 식탁" />
       {/* Drop down */}
       <TopWrapper>
         <Top>
