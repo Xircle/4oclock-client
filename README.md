@@ -1,5 +1,7 @@
 # 네시 식탁, Xircle
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/dd939a86-a7bf-4118-825c-fa0eb3bd9435/deploy-status)](https://app.netlify.com/sites/xircle/deploys)
+
 This project is source code of xircle v1. After v2 update, this project is now archived. For source code of v2, check out the links below:
 
 - https://github.com/Xircle/client
@@ -27,4 +29,3 @@ Following items are core backend technologies used in this project:
 - TypeScript
 - TypeORM
 - PostgreSQL
-
