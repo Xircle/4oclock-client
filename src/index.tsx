@@ -20,7 +20,7 @@ const queryClient = new QueryClient({
 
 ReactDOM.render(
   <QueryClientProvider client={queryClient}>
-    <Router basename={process.env.PUBLIC_URL}>
+    <Router basename={"https://614a4b30dd175f21d418855b--xircle.netlify.app/"}>
       <App />
       <ToastContainer />
       <ReactQueryDevtools initialIsOpen={false} />
