@@ -5,8 +5,7 @@ import {
   SpaceForNavBar,
   BottomFixedButtonContainer,
   BottomFixedButtoninContainer,
-  Heading,
-  SLink,
+  MainBtn,
 } from "../../styles";
 import { RouteComponentProps } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -18,9 +17,11 @@ import type { PlaceData } from "../../lib/api/types";
 import { AgeNumberToString, encodeUrlSlug } from "../../lib/utils";
 import Avatar from "../../components/shared/Avatar";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
-import useUrlQuery from "../../hooks/useUrlQuery";
 import { useQuery } from "react-query";
 import queryString from "query-string";
+import routes from "../../routes";
+import Modal from "../../components/UI/Modal";
+import PageTitle from "../../components/PageTitle";
 
 const kakao = window.kakao;
 declare global {
@@ -40,10 +41,11 @@ export default function PlacePage({ match, location, history }: Props) {
   const UrlSearch = location.search;
   const isFinal = Boolean(queryString.parse(UrlSearch).isFinal === "true");
   const isClosed = Boolean(queryString.parse(UrlSearch).isClosed === "true");
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [placeId]);
+  const scrollToProfile = Boolean(
+    queryString.parse(UrlSearch).scrollToProfile === "true"
+  );
+  const myPlace = Boolean(queryString.parse(UrlSearch).myPlace === "true");
+  const [reservationClicked, setReservationClicked] = useState(false);
 
   const { data: placeData, isLoading } = useQuery<PlaceData | undefined>(
     ["place-detail", placeId],
@@ -54,44 +56,69 @@ export default function PlacePage({ match, location, history }: Props) {
     }
   );
 
+  // Scroll Conditionally
   useEffect(() => {
-    const mapTimer = setTimeout(() => {
-      displayMap();
-    }, 1500);
-    return () => {
-      clearTimeout(mapTimer);
-    };
+    if (scrollToProfile) {
+      document.getElementById("participant")?.scrollIntoView();
+    } else {
+      window.scrollTo(0, 0);
+    }
   }, []);
 
-  const displayMap = () => {
-    let container = document.getElementById("map");
-    let options = {
-      center: new kakao.maps.LatLng(37.365264512305174, 127.10676860117488),
-      level: 5,
-    };
-    if (!container) return;
+  useEffect(() => {
+    searchAddress(placeData?.placeDetail.detailAddress);
+  }, [placeData?.placeDetail.detailAddress]);
 
-    let map = new kakao.maps.Map(container, options);
-    let markerPosition = new kakao.maps.LatLng(
-      37.365264512305174,
-      127.10676860117488
-    );
-    let marker = new kakao.maps.Marker({
+  const searchAddress = (address: string | undefined) => {
+    if (!address) return;
+    const geocoder = new kakao.maps.services.Geocoder();
+    const callback = function (result: any, status: any) {
+      if (status === kakao.maps.services.Status.OK) {
+        displayMap(result);
+      }
+    };
+    geocoder.addressSearch(address, callback);
+  };
+
+  const displayMap = (result: any) => {
+    if (!placeData?.placeDetail.detailAddress) return;
+    const latitude = result[0].y;
+    const longitude = result[0].x;
+    const markerPosition = new kakao.maps.LatLng(latitude, longitude);
+    const marker = {
       position: markerPosition,
-    });
-    marker.setMap(map);
+    };
+    const staticMapContainer = document.getElementById("staticMap"),
+      staticMapOption = {
+        center: new kakao.maps.LatLng(latitude, longitude),
+        level: 5,
+        marker: marker,
+      };
+    new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+  };
+
+  const toggleShowModal = () => {
+    setReservationClicked(!reservationClicked);
   };
 
   if (!placeData) return null;
 
+  console.log(myPlace);
+
   return (
     <Container>
+      <PageTitle title="식탁 정보" />
+
       {/* Cover Image */}
       <SHeader>
         <SHeaderPic src={placeData.coverImage} />
         <TempToBeDeleted></TempToBeDeleted>
         <HeaderText>
-          <BackButton onClick={() => history.goBack()}>
+          <BackButton
+            onClick={() =>
+              myPlace ? history.goBack() : history.replace(routes.placeFeed)
+            }
+          >
             <FontAwesomeIcon icon={faArrowLeft} color="#fff" />
           </BackButton>
           <SHeaderCategoryIndicator>
@@ -127,7 +154,7 @@ export default function PlacePage({ match, location, history }: Props) {
       </GridContainer>
 
       {/* Participants */}
-      <ParticipantContainer>
+      <ParticipantContainer id="participant">
         <HeadingParticipant>
           {placeData.participantsCount}명 참여중 / 이런 친구들이 참여했어요!
         </HeadingParticipant>
@@ -145,6 +172,12 @@ export default function PlacePage({ match, location, history }: Props) {
               key={participant.userId}
               profileImgUrl={participant.profileImgUrl}
               rightOffset={"5px"}
+              onClick={() =>
+                placeData.isParticipating &&
+                history.push(`${routes.participantProfile}`, {
+                  id: participant.userId,
+                })
+              }
             />
           ))}
         </AvartarImgContainerParticipant>
@@ -161,13 +194,13 @@ export default function PlacePage({ match, location, history }: Props) {
             size="lg"
             style={{ marginRight: "4px" }}
           />
-          서울 강남구 강남대로 152길 42 2층
+          {placeData.placeDetail.detailAddress}
         </DirText>
         <div
-          id="map"
+          id="staticMap"
           style={{
             width: "295px",
-            height: "135px",
+            height: "235px",
             marginTop: "17px",
             marginLeft: "auto",
             marginRight: "auto",
@@ -176,16 +209,10 @@ export default function PlacePage({ match, location, history }: Props) {
       </ParticipantContainer>
 
       {/* Reservation Button */}
-
       {/* 코드 너무 더룸.. Link 를 따로 컴포넌트로 뺴야할듯 */}
       <BottomFixedButtonContainer>
         <CTABottomFixedButtoninContainer
-          onClick={() =>
-            !placeData.isParticipating &&
-            history.push(`/reservation/${encodeUrlSlug(placeData.name)}`, {
-              placeId,
-            })
-          }
+          onClick={() => setReservationClicked(true)}
           isParticipating={placeData.isParticipating}
           isFinal={isFinal}
           isClosed={isClosed}
@@ -202,6 +229,38 @@ export default function PlacePage({ match, location, history }: Props) {
           </p>
         </CTABottomFixedButtoninContainer>
       </BottomFixedButtonContainer>
+
+      {reservationClicked && (
+        <Modal isClose={!reservationClicked} onClose={toggleShowModal}>
+          <ModalWrapper>
+            <h1>
+              현재는 특정 학교로만 <br /> 운영되고 있어요!
+            </h1>
+            <span>
+              학교인증이 되어야 모임을 참가하실 수 있어요! 참가신청을 하시면
+              개별적으로 학교 인증 연락을 드릴게요!
+            </span>
+            <MainBtn
+              onClick={() =>
+                !placeData.isParticipating &&
+                history.push(`/reservation/${encodeUrlSlug(placeData.name)}`, {
+                  placeId,
+                  startDateFromNow: placeData.startDateFromNow,
+                })
+              }
+              style={{ width: "150px" }}
+            >
+              계속하기
+            </MainBtn>
+            <p
+              onClick={() => setReservationClicked(false)}
+              className="cancleBtn"
+            >
+              취소하기
+            </p>
+          </ModalWrapper>
+        </Modal>
+      )}
 
       {isLoading && (
         <>
@@ -224,6 +283,34 @@ export default function PlacePage({ match, location, history }: Props) {
     </Container>
   );
 }
+
+const ModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  padding: 10px;
+  h1 {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 28px;
+    color: #12121d;
+  }
+  span {
+    font-size: 14px;
+    line-height: 22px;
+    color: #a7b0c0;
+    padding: 0 40px;
+  }
+  .cancleBtn {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 28px;
+    color: #a7b0c0;
+    cursor: pointer;
+  }
+`;
 
 const CTABottomFixedButtoninContainer = styled(BottomFixedButtoninContainer)<{
   isParticipating: boolean;
@@ -302,9 +389,7 @@ const GridPic = styled.img`
 
 const ParticipantContainer = styled.div`
   width: 345px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 31px;
+  margin: 31px auto 50px;
   line-height: 10px;
 `;
 
