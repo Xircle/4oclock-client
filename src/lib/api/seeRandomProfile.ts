@@ -1,11 +1,9 @@
-import { RandomProfileData, SeeRandomProfile } from "./types.d";
+import { UserProfile, SeeRandomProfile } from "./types.d";
 import AxiosClient from "../apiClient";
 
-export const seeRandomProfile = async (): Promise<
-  RandomProfileData | undefined
-> => {
+export const seeRandomProfile = async (): Promise<UserProfile | undefined> => {
   try {
-    const { data } = await AxiosClient.get<SeeRandomProfile>("/user/friend", {
+    const { data } = await AxiosClient.get<SeeRandomProfile>("/user/profile/random", {
       timeout: 6000,
     });
     if (!data.ok) {
