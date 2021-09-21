@@ -120,7 +120,7 @@ export interface GetMyPlaceOutput extends CoreOutput {
 }
 
 // See Random Profile
-interface RandomProfileData {
+interface UserProfile {
   id: string;
   profileImageUrl: string;
   location?: string;
@@ -132,7 +132,12 @@ interface RandomProfileData {
 }
 
 export interface SeeRandomProfile extends CoreOutput {
-  randomProfile: RandomProfileData;
+  randomProfile: UserProfile;
+}
+
+// See User By Id
+export interface SeeUserByIdOutput extends CoreOutput {
+  user: UserProfile;
 }
 
 // Make reservation
@@ -143,3 +148,19 @@ export interface MakeReservationInput {
 }
 
 export interface MakeReservationOutput extends CoreOutput {}
+
+// Get Reservation Participant number
+export type ReservationInfo = [
+  {
+    startTime: StartTime;
+    participantNumber: number;
+  },
+  {
+    startTime: StartTime;
+    participantNumber: number;
+  }
+];
+
+export interface GetReservationParticipantNumberOutput extends CoreOutput {
+  info?: ReservationInfo;
+}
