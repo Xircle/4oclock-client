@@ -7,10 +7,7 @@ interface Props {
   onPrev: () => void;
 }
 
-export default function BackButtonWithNoBackground({
-  onPrev,
-  ...props
-}: Props) {
+export default function BackButtonWithNoBackground({ onPrev }: Props) {
   return (
     <div
       style={{

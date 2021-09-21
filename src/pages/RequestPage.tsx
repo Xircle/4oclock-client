@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PageTitle from "../components/PageTitle";
 import BackButtonLayout from "../components/shared/BackButtonLayout";
 import BottomNavBar from "../components/shared/BottomNavBar";
 import {
@@ -9,11 +10,10 @@ import {
   ContainerwithLeftRightMargin,
 } from "../styles";
 
-interface Props {}
-
-export default function RequestPage(props: Props) {
+export default function RequestPage() {
   return (
     <Container>
+      <PageTitle title="건의" />
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
           <Heading>이런 써클 만들어주세요!</Heading>

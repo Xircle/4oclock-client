@@ -25,6 +25,7 @@ import { PlaceFeedData } from "../../lib/api/types";
 import PlaceFeedRowsContainer from "../../components/placeFeed/PlaceFeedContainer";
 import storage from "../../lib/storage";
 import { toast } from "react-toastify";
+import PageTitle from "../../components/PageTitle";
 
 interface Props extends RouteComponentProps {}
 
@@ -59,6 +60,7 @@ export default function PlaceFeedPage({ history }: Props) {
 
   return (
     <Container>
+      <PageTitle title="네시 식탁"/>
       {/* Drop down */}
       <TopWrapper>
         <Top>

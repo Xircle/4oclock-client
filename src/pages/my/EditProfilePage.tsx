@@ -19,12 +19,14 @@ import { DummyAvartar, DummyProfileData } from "../../static/dummyData";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
+import PageTitle from "../../components/PageTitle";
 
 interface Props {}
 
 export default function EditProfilePage(props: Props) {
   return (
     <ContainerFlexColumn>
+      <PageTitle title="프로필 수정"/>
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
           <Heading>프로필 수정하기</Heading>

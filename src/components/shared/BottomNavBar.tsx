@@ -37,7 +37,7 @@ export default function BottomNavBar(props: Props) {
           )}
         </Link>
         <Link
-          to={routes.mypage}
+          to={routes.myPage}
           style={{ textDecoration: "none", color: colors.Black }}
         >
           {props.selectedItem === "mypage" ? (
@@ -55,8 +55,6 @@ export default function BottomNavBar(props: Props) {
     </>
   );
 }
-
-
 
 const BottomNavBarItem = styled.div`
   width: 125px;
