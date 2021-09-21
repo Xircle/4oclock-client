@@ -18,7 +18,7 @@ export default apiClient;
 
 const CancelToken = axios.CancelToken;
 export const source = CancelToken.source();
-const reload_target_url = ["/user/me", "/user/friend"];
+const RELOAD_TARGET_URL = ["/user/me", "/user/friend"];
 
 apiClient.interceptors.request.use((config: AxiosRequestConfig) => {
   const rawToken = (config.headers.Authorization as string).split(" ");
@@ -26,7 +26,7 @@ apiClient.interceptors.request.use((config: AxiosRequestConfig) => {
   if (
     storage.getItem(CURRENT_USER)?.["token"] &&
     !rawToken[1] &&
-    reload_target_url.includes(config.url!)
+    RELOAD_TARGET_URL.includes(config.url!)
   ) {
     console.log("got you");
     source.cancel("Request cancelled, Because token was not reflected");
