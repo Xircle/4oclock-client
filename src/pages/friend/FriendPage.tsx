@@ -33,6 +33,7 @@ export default function FriendsPage() {
     isLoading,
   } = useQuery<UserProfile | undefined>(["randomProfile"], seeRandomProfile, {
     refetchOnWindowFocus: false,
+    retry: 1,
   });
 
   useEffect(() => {
@@ -54,7 +55,7 @@ export default function FriendsPage() {
 
   return (
     <ContainerFlexColumn>
-      <PageTitle title="랜덤 프로필"/>
+      <PageTitle title="랜덤 프로필" />
       <ContainerwithLeftRightMargin>
         <Heading style={{ marginTop: "40px" }}>
           <b>
