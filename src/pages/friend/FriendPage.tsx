@@ -9,6 +9,7 @@ import {
   ContainerwithLeftRightMargin,
   FlexDiv,
   MainBtn,
+  SpaceForNavBar,
 } from "../../styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -27,11 +28,9 @@ import PageTitle from "../../components/PageTitle";
 export default function FriendsPage() {
   const [age, SetAge] = useState<string>("");
 
-  const {
-    data: randomProfileData,
-    refetch,
-    isLoading,
-  } = useQuery<UserProfile | undefined>(["randomProfile"], seeRandomProfile, {
+  const { data: randomProfileData, refetch, isLoading } = useQuery<
+    UserProfile | undefined
+  >(["randomProfile"], seeRandomProfile, {
     refetchOnWindowFocus: false,
     retry: 1,
   });
@@ -74,6 +73,8 @@ export default function FriendsPage() {
         </FlexDiv>
         <FlexDiv style={{ marginTop: "15px" }}>
           <Name>{randomProfileData?.username || "써클개발자"}</Name>
+        </FlexDiv>
+        <FlexDiv>
           <TagOnName>
             <p>{randomProfileData?.job || "18학번 헌내기"}</p>
           </TagOnName>
@@ -97,8 +98,9 @@ export default function FriendsPage() {
           </InnerContent>
         </InnerContainer>
       </ContainerwithLeftRightMargin>
+      <SpaceForNavBar> </SpaceForNavBar>
       <NextButtonFriend onClick={refetchRandomProfileData}>
-        다른 친구 찾기{" "}
+        다른 친구 찾기
         <FontAwesomeIcon
           icon={faArrowRight}
           style={{ marginLeft: "15px" }}
@@ -155,12 +157,15 @@ const Name = styled.span`
 `;
 
 const TagOnName = styled(InterestTag)`
-  margin-left: 10px;
+  /* margin-left: 10px; */
   padding: 7px 16px;
-  border-radius: 6px;
+  /* border-radius: 6px; */
+  background-color: transparent;
+
   p {
     font-size: 14px;
     font-weight: normal;
+    color: ${colors.BareGray};
   }
 `;
 
