@@ -73,7 +73,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
       SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: false });
       SetAgeError(true);
-    } else if (gender !== "Male" && gender !== "Female") {
+    } else if (gender !== "male" && gender !== "Female") {
       SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: false });
       SetGenderError(true);
@@ -184,11 +184,11 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
               cursor: "pointer",
             }}
             onClick={() => {
-              dispatch({ type: "setGender", payload: "Male" });
-              Validate(state.university, "Male");
+              dispatch({ type: "setGender", payload: "male" });
+              Validate(state.university, "male");
             }}
           >
-            {state.gender === "Male" ? (
+            {state.gender === "male" ? (
               <FontAwesomeIcon
                 icon={faCheckCircle}
                 color={colors.MidBlue}
