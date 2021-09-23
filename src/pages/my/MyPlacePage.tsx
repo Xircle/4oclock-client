@@ -3,7 +3,6 @@ import {
   ContainerFlexColumn,
   ContainerwithLeftRightMargin,
   Heading,
-  SLink,
   Label,
   colors,
 } from "../../styles";
@@ -36,33 +35,17 @@ export default function MyPlacePage() {
     }
   }, [myPlacesData, isLoading]);
 
-  if (isLoading)
-    return (
-      <>
-        <LoaderBackdrop />
-        <LoaderWrapper>
-          <ClipLoader
-            loading={isLoading}
-            color={colors.MidBlue}
-            css={{
-              name: "width",
-              styles: "border-width: 4px; z-index: 999;",
-            }}
-            size={40}
-          />
-        </LoaderWrapper>
-      </>
-    );
-  if (!myPlacesData) return null;
-
   return (
     <ContainerFlexColumn>
       <PageTitle title="My Xircle" />
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
           <Heading>내가 신청한 써클</Heading>
-          {myPlacesData.length === 0 && <Label>신청한 써클이 없어요 :(</Label>}
-          {myPlacesData.map((item) => {
+          {!myPlacesData ||
+            (myPlacesData.length === 0 && (
+              <Label>신청한 써클이 없어요 :(</Label>
+            ))}
+          {myPlacesData?.map((item) => {
             return (
               <RegisteredFeed
                 key={item.id}
@@ -79,6 +62,22 @@ export default function MyPlacePage() {
         </ContainerwithLeftRightMargin>
         <BottomNavBar selectedItem="mypage"></BottomNavBar>
       </BackButtonLayout>
+      {isLoading && (
+        <>
+          <LoaderBackdrop />
+          <LoaderWrapper>
+            <ClipLoader
+              loading={isLoading}
+              color={colors.MidBlue}
+              css={{
+                name: "width",
+                styles: "border-width: 4px; z-index: 999;",
+              }}
+              size={40}
+            />
+          </LoaderWrapper>
+        </>
+      )}
     </ContainerFlexColumn>
   );
 }
