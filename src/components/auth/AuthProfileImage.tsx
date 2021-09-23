@@ -25,8 +25,6 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
     state.profileImgUrl
   );
 
-  console.log(state.profileImgFile);
-
   const handleFileOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return null;
 
@@ -133,7 +131,7 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
         <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
       </FlexDiv>
       <NextButton
-        disabled={!localImageSrc || !state.profileImgFile}
+        disabled={!localImageSrc && !state.profileImgFile}
         type="submit"
         onClick={onNext}
       >
