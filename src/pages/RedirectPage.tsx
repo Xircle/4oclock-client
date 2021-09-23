@@ -5,7 +5,7 @@ import AxiosClient from "../lib/apiClient";
 import routes from "../routes";
 import Storage from "../lib/storage";
 import { CURRENT_USER } from "../components/shared/constants";
-import { toast } from "react-toastify";
+import { Heading } from "../styles";
 
 export default function SocialRedirect() {
   const location = useLocation<SocialAuthResponse>();
@@ -24,11 +24,8 @@ export default function SocialRedirect() {
         });
       } else if (res.data.code === 201) {
         // email  exists
-        toast.success("다시 돌아오신 것을 환영합니다!", {
-          position: toast.POSITION.TOP_CENTER,
-        });
         Storage.setItem(CURRENT_USER, res.data.data);
-        history.push(routes.placeFeed);
+        window.location.href = `${routes.placeFeed}?isLoggedIn=true`;
       }
     } else {
       alert("Something went wrong.");
@@ -40,5 +37,18 @@ export default function SocialRedirect() {
     socialRedirect();
   }, []);
 
-  return <div></div>;
+  return (
+    <div
+      style={{
+        height: "80vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Heading>Xircle에서 새로운</Heading>
+      <Heading> 네트워킹을 경험하세요</Heading>
+    </div>
+  );
 }
