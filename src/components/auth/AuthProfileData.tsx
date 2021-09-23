@@ -9,6 +9,7 @@ import {
   Label,
   BigTextArea,
   NextButton,
+  SpaceForNavBar,
 } from "../../styles";
 import {
   faCheckCircle,
@@ -307,6 +308,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
             {state.location ? state.location : "대한민국 어딘가"}
           </div>
         </p>
+        <SpaceForNavBar> </SpaceForNavBar>
         <NextButton
           type="submit"
           disabled={!state.stage2Valid}
