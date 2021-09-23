@@ -26,21 +26,29 @@ import PlaceFeedRowsContainer from "../../components/placeFeed/PlaceFeedContaine
 import storage from "../../lib/storage";
 import { toast } from "react-toastify";
 import PageTitle from "../../components/PageTitle";
+import queryString from "query-string";
 
 interface Props extends RouteComponentProps {}
 
-export default function PlaceFeedPage({ history }: Props) {
+export default function PlaceFeedPage({ history, location }: Props) {
+  const UrlSearch = location.search;
   const [page, setPage] = useState(1);
   const [selectedPlaceLocation, setSelectedPlaceLocation] =
     useState<PlaceLocation>(placeLocationoptions[0].value as PlaceLocation);
+  const isLoggedIn = Boolean(
+    queryString.parse(UrlSearch).isLoggedIn === "true"
+  );
+  const isSignup = Boolean(queryString.parse(UrlSearch).isSignup === "true");
 
   const HandleChangeLocation = (option: Option) => {
     setSelectedPlaceLocation(option.value as PlaceLocation);
   };
 
-  const { data: placeFeedDataArray, isError } = useQuery<
-    PlaceFeedData[] | undefined
-  >(
+  const {
+    data: placeFeedDataArray,
+    isLoading,
+    isError,
+  } = useQuery<PlaceFeedData[] | undefined>(
     ["place", selectedPlaceLocation, page],
     () => getPlacesByLocation(selectedPlaceLocation, page),
     {
@@ -55,6 +63,16 @@ export default function PlaceFeedPage({ history }: Props) {
         position: toast.POSITION.BOTTOM_LEFT,
       });
       history.push(routes.root);
+    }
+
+    if (isLoggedIn) {
+      toast.success("다시 돌아오신 것을 환영합니다!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else if (isSignup) {
+      toast.success("가입이 완료되었습니다!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   }, []);
 
@@ -90,6 +108,7 @@ export default function PlaceFeedPage({ history }: Props) {
       <PlaceFeedRowsWrapper>
         <PlaceFeedRowsContainer
           hasError={isError}
+          isLoading={isLoading}
           placeFeedDataArray={placeFeedDataArray}
         />
       </PlaceFeedRowsWrapper>
