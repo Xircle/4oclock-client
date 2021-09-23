@@ -18,7 +18,7 @@ export default apiClient;
 
 const CancelToken = axios.CancelToken;
 export const source = CancelToken.source();
-const RELOAD_TARGET_URL = ["/user/me", "/user/friend"];
+const RELOAD_TARGET_URL = ["/user/me", "/user/profile/random"];
 
 apiClient.interceptors.request.use((config: AxiosRequestConfig) => {
   const rawToken = (config.headers.Authorization as string).split(" ");

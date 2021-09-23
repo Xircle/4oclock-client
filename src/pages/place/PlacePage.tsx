@@ -101,9 +101,24 @@ export default function PlacePage({ match, location, history }: Props) {
     setReservationClicked(!reservationClicked);
   };
 
+  if (isLoading)
+    return (
+      <>
+        <LoaderBackdrop />
+        <LoaderWrapper>
+          <ClipLoader
+            loading={isLoading}
+            color={colors.MidBlue}
+            css={{
+              name: "width",
+              styles: "border-width: 4px; z-index: 999;",
+            }}
+            size={40}
+          />
+        </LoaderWrapper>
+      </>
+    );
   if (!placeData) return null;
-
-  console.log(myPlace);
 
   return (
     <Container>
@@ -260,23 +275,6 @@ export default function PlacePage({ match, location, history }: Props) {
             </p>
           </ModalWrapper>
         </Modal>
-      )}
-
-      {isLoading && (
-        <>
-          <LoaderBackdrop />
-          <LoaderWrapper>
-            <ClipLoader
-              loading={isLoading}
-              color={colors.MidBlue}
-              css={{
-                name: "width",
-                styles: "border-width: 4px; z-index: 999;",
-              }}
-              size={40}
-            />
-          </LoaderWrapper>
-        </>
       )}
 
       <SpaceForNavBar />
