@@ -83,21 +83,6 @@ function Auth() {
     <AuthAgree onNext={handleNext} state={state} dispatch={dispatch} />,
   ];
 
-  if (isLoading)
-    return (
-      <>
-        <LoaderBackdrop />
-        <LoaderWrapper>
-          <ClipLoader
-            loading={isLoading}
-            color={colors.MidBlue}
-            css={{ name: "width", styles: "border-width: 4px;" }}
-            size={40}
-          />
-        </LoaderWrapper>
-      </>
-    );
-
   return (
     <ContainerFlexColumn>
       <PageTitle title="프로필 등록" />
@@ -106,6 +91,19 @@ function Auth() {
         if (index === step) return <Fragment key={index}>{component}</Fragment>;
         return null;
       })}
+      {isLoading && (
+        <>
+          <LoaderBackdrop />
+          <LoaderWrapper>
+            <ClipLoader
+              loading={isLoading}
+              color={colors.MidBlue}
+              css={{ name: "width", styles: "border-width: 4px;" }}
+              size={40}
+            />
+          </LoaderWrapper>
+        </>
+      )}
     </ContainerFlexColumn>
   );
 }
