@@ -270,15 +270,18 @@ export const GenderText = styled(SubText)`
 export const BigTextArea = styled.textarea`
   margin-top: 12px;
   height: 105px;
+  box-shadow: none;
 `;
 
 export const MidInput = styled.input`
   margin-top: 12px;
+  box-shadow: none;
 `;
 
 export const SmallInput = styled.input`
   margin-top: 12px;
   width: 65%;
+  box-shadow: none;
 `;
 
 export const Label = styled.p`
