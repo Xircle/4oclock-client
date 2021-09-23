@@ -28,12 +28,9 @@ import PageTitle from "../../components/PageTitle";
 export default function FriendsPage() {
   const [age, SetAge] = useState<string>("");
 
-  const {
-    data: randomProfileData,
-    refetch,
-    isLoading,
-    isFetching,
-  } = useQuery<UserProfile | undefined>(["randomProfile"], seeRandomProfile, {
+  const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
+    UserProfile | undefined
+  >(["randomProfile"], seeRandomProfile, {
     refetchOnWindowFocus: false,
     retry: 1,
   });
@@ -70,7 +67,9 @@ export default function FriendsPage() {
         </Heading>
         <FlexDiv>
           <AvartarBig
-            src={randomProfileData?.profileImageUrl || "/avatar/2donny.png"}
+            src={
+              randomProfileData?.profileImageUrl || "/avatar/anonymous_user.png"
+            }
             alt="friend-profile"
           />
         </FlexDiv>
