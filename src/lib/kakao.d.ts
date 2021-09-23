@@ -25,7 +25,7 @@ interface KakaoAccount {
 }
 interface Profile {
   nickname: string;
-  profile_image: string;
+  profile_image_url: string;
   thumbnail_image_url: string;
   profile_needs_agreement?: boolean;
 }
