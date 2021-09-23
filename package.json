@@ -2,7 +2,7 @@
   "name": "xircle-client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://614a4b30dd175f21d418855b--xircle.netlify.app/",
+  "homepage": "https://xircle.org",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
@@ -70,6 +70,7 @@
   "devDependencies": {
     "@types/react-collapse": "^5.0.1",
     "@types/react-helmet": "^6.1.2",
-    "@types/react-router-dom": "^5.1.9"
+    "@types/react-router-dom": "^5.1.9",
+    "patch-package": "^6.4.7"
   }
 }
