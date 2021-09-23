@@ -1,9 +1,11 @@
+import ClipLoader from "react-spinners/ClipLoader";
 import {
   ContainerFlexColumn,
   ContainerwithLeftRightMargin,
   Heading,
   SLink,
   Label,
+  colors,
 } from "../../styles";
 import BottomNavBar from "../../components/shared/BottomNavBar";
 import RegisteredFeed from "../../components/my/RegisteredFeed";
@@ -14,6 +16,7 @@ import { getMyPlaces } from "../../lib/api/getMyPlaces";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
 import PageTitle from "../../components/PageTitle";
 import { useHistory } from "react-router-dom";
+import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
 
 export default function MyPlacePage() {
   const history = useHistory();
@@ -33,7 +36,23 @@ export default function MyPlacePage() {
     }
   }, [myPlacesData, isLoading]);
 
-  if (isLoading) return <p>로딩중...</p>;
+  if (isLoading)
+    return (
+      <>
+        <LoaderBackdrop />
+        <LoaderWrapper>
+          <ClipLoader
+            loading={isLoading}
+            color={colors.MidBlue}
+            css={{
+              name: "width",
+              styles: "border-width: 4px; z-index: 999;",
+            }}
+            size={40}
+          />
+        </LoaderWrapper>
+      </>
+    );
   if (!myPlacesData) return null;
 
   return (
