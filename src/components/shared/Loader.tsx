@@ -12,10 +12,10 @@ export const LoaderBackdrop = styled.div`
   z-index: 900;
 `;
 
-export const LoaderWrapper = styled.div`
+export const LoaderWrapper = styled.div<{ top?: string }>`
   position: absolute;
   left: 50%;
-  top: 30%;
+  top: ${(props) => props.top || "40%"};
   transform: translate(-50%, -50%);
   z-index: 999;
 `;
