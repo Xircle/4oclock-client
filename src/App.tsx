@@ -35,7 +35,7 @@ function App() {
             />
             <Route path={routes.placeFeed} component={PlaceFeedPage} />
             <Route path={routes.place} component={PlacePage} />
-            <Route path={routes.friends} component={FriendsPage} />
+            <Route path={routes.friend} component={FriendsPage} />
             <Route
               path={routes.participantProfile}
               component={ParticipantProfilePage}
