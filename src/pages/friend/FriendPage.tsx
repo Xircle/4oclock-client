@@ -31,6 +31,7 @@ export default function FriendsPage() {
     data: randomProfileData,
     refetch,
     isLoading,
+    isFetching,
   } = useQuery<UserProfile | undefined>(["randomProfile"], seeRandomProfile, {
     refetchOnWindowFocus: false,
     retry: 1,
@@ -52,6 +53,8 @@ export default function FriendsPage() {
   const refetchRandomProfileData = () => {
     refetch();
   };
+
+  console.log(isLoading, isFetching);
 
   return (
     <ContainerFlexColumn>
@@ -106,19 +109,20 @@ export default function FriendsPage() {
         />
       </NextButtonFriend>
 
-      {isLoading && (
-        <>
-          <LoaderBackdrop />
-          <LoaderWrapper>
-            <ClipLoader
-              loading={isLoading}
-              color={colors.MidBlue}
-              css={{ name: "width", styles: "border-width: 4px;" }}
-              size={40}
-            />
-          </LoaderWrapper>
-        </>
-      )}
+      {isLoading ||
+        (isFetching && (
+          <>
+            <LoaderBackdrop />
+            <LoaderWrapper>
+              <ClipLoader
+                loading={isLoading || isFetching}
+                color={colors.MidBlue}
+                css={{ name: "width", styles: "border-width: 4px;" }}
+                size={40}
+              />
+            </LoaderWrapper>
+          </>
+        ))}
 
       <BottomNavBar selectedItem="friends" />
     </ContainerFlexColumn>
