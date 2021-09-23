@@ -23,7 +23,7 @@ export default function BottomNavBar(props: Props) {
           )}
         </Link>
         <Link
-          to={routes.friends}
+          to={routes.friend}
           style={{ textDecoration: "none", color: colors.Black }}
         >
           {props.selectedItem === "friends" ? (
