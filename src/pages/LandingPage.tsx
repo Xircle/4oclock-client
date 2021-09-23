@@ -22,7 +22,7 @@ function LandingPage() {
   }) => {
     history.push("/social/redirect", {
       uid: response.profile?.id,
-      thumbnail: response.profile?.properties.thumbnail_image_url,
+      thumbnail: response.profile?.kakao_account.profile.thumbnail_image_url,
       username: response.profile?.properties.nickname,
       email: response.profile?.kakao_account.email,
       gender: response.profile?.kakao_account.gender,
