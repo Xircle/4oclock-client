@@ -20,9 +20,10 @@ function LandingPage() {
     response: LoginResponse;
     profile?: UserProfile | undefined;
   }) => {
+    console.log(response);
     history.push("/social/redirect", {
       uid: response.profile?.id,
-      thumbnail: response.profile?.kakao_account.profile.thumbnail_image_url,
+      thumbnail: response.profile?.kakao_account.profile.profile_image_url,
       username: response.profile?.properties.nickname,
       email: response.profile?.kakao_account.email,
       gender: response.profile?.kakao_account.gender,
@@ -50,7 +51,7 @@ function LandingPage() {
             <KakaoLogin
               token={process.env.REACT_APP_KAKAO_KEY!}
               onSuccess={kakaoSuccessCallback}
-              onFail={() => console.log("hi")}
+              onFail={() => console.log("kakao login fail")}
               onLogout={() => console.log("hi")}
               style={{
                 width: "300px",
