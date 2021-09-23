@@ -19,17 +19,11 @@ export default function AuthPhoneNumber({ onNext, state, dispatch }: Props) {
   const Validate = (data: string) => {
     if (data.length < 10 || data.length > 11) {
       dispatch({ type: "setStage1Valid", payload: false });
-      return;
     } else if (data[0] !== "0" || data[1] !== "1" || data[2] !== "0") {
       dispatch({ type: "setStage1Valid", payload: false });
-      return;
+    } else if (isNaN(Number(data)) || Number(data) < 0) {
+      dispatch({ type: "setStage1Valid", payload: false });
     } else {
-      for (var i = 3; i < data.length; i++) {
-        if (data[i] < "0" || data[i] > "9") {
-          dispatch({ type: "setStage1Valid", payload: false });
-          return;
-        }
-      }
       dispatch({ type: "setStage1Valid", payload: true });
     }
   };
