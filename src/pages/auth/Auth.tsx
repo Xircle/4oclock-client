@@ -4,7 +4,7 @@ import AuthPhoneNumber from "../../components/auth/AuthPhoneNumber";
 import AuthProfileData from "../../components/auth/AuthProfileData";
 import AuthProfileImage from "../../components/auth//AuthProfileImage";
 import AuthAgree from "../../components/auth/AuthAgree";
-import { colors, ContainerFlexColumn } from "../../styles";
+import { colors, ContainerFlexColumn } from "../../styles/styles";
 import BackButtonWithNoBackground from "../../components/shared/BackButtonWithNoBackground";
 import { SocialAuthResponse } from "../../lib/kakao";
 import { CreateAccountOutput } from "../../lib/api/types";

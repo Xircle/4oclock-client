@@ -11,7 +11,7 @@ import {
   MainBtn,
   Heading,
   ContainerwithLeftRightMargin,
-} from "../../styles";
+} from "../../styles/styles";
 
 interface Props extends RouteComponentProps<{}, {}, { placeId: string }> {}
 

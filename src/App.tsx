@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 import React, { Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
-import { GlobalStyles, AppContainer } from "./styles";
+import { GlobalStyles, AppContainer } from "./styles/styles";
 import routes from "./routes";
 import { PortalProvider } from "./providers/PortalProvider";
 import { HelmetProvider } from "react-helmet-async";

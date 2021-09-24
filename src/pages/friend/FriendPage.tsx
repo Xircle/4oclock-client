@@ -10,7 +10,7 @@ import {
   FlexDiv,
   MainBtn,
   SpaceForNavBar,
-} from "../../styles";
+} from "../../styles/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";

@@ -6,7 +6,7 @@ import {
   SubText,
   colors,
   NextButton,
-} from "../../styles";
+} from "../../styles/styles";
 import { AuthState, AuthAction } from "./types";
 
 interface Props {

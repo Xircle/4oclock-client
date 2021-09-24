@@ -6,7 +6,7 @@ import {
   MainBtn,
   ContainerwithLeftRightMargin,
   colors,
-} from "../styles";
+} from "../styles/styles";
 import KakaoLogin from "react-kakao-login";
 import { LoginResponse, UserProfile } from "../lib/kakao";
 import { useHistory } from "react-router-dom";

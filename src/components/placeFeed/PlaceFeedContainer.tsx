@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import type { PlaceFeedData } from "../../lib/api/types";
-import { colors, Heading, SLink } from "../../styles";
+import { colors, Heading, SLink } from "../../styles/styles";
 import { LoaderBackdrop, LoaderWrapper } from "../shared/Loader";
 import PlaceFeedRow from "./PlaceFeedRow";
 import ClipLoader from "react-spinners/ClipLoader";

@@ -6,7 +6,7 @@ import {
   BottomFixedButtonContainer,
   BottomFixedButtoninContainer,
   MainBtn,
-} from "../../styles";
+} from "../../styles/styles";
 import { RouteComponentProps } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import { faMapMarkerAlt, faArrowLeft } from "@fortawesome/free-solid-svg-icons";

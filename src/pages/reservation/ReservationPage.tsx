@@ -15,7 +15,7 @@ import {
   Tag,
   Heading,
   ContainerwithLeftRightMargin,
-} from "../../styles";
+} from "../../styles/styles";
 import routes from "../../routes";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
 import { useMutation, useQuery } from "react-query";

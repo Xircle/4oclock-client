@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import routes from "../routes";
-import { Heading } from "../styles";
+import { Heading } from "../styles/styles";
 
 export default function NotFoundPage() {
   const history = useHistory();

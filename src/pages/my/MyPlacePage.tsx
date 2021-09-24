@@ -5,7 +5,7 @@ import {
   Heading,
   Label,
   colors,
-} from "../../styles";
+} from "../../styles/styles";
 import BottomNavBar from "../../components/shared/BottomNavBar";
 import RegisteredFeed from "../../components/my/RegisteredFeed";
 import { Fragment, useEffect } from "react";

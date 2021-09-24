@@ -10,7 +10,7 @@ import {
   BigTextArea,
   NextButton,
   SpaceForNavBar,
-} from "../../styles";
+} from "../../styles/styles";
 import {
   faCheckCircle,
   faMapMarkerAlt,

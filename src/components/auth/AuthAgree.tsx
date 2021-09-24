@@ -6,7 +6,7 @@ import {
   colors,
   NextButton,
   SubTextSpan,
-} from "../../styles";
+} from "../../styles/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,

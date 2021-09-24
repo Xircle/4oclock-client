@@ -12,7 +12,7 @@ import {
   SubText,
   MainBtn,
   colors,
-} from "../../styles";
+} from "../../styles/styles";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";

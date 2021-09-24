@@ -8,7 +8,7 @@ import {
   SubText,
   MainBtn,
   ContainerwithLeftRightMargin,
-} from "../styles";
+} from "../styles/styles";
 
 export default function RequestPage() {
   return (

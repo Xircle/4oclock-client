@@ -7,7 +7,7 @@ import {
   Avartar,
   FlexDiv,
   FileLabel,
-} from "../../styles";
+} from "../../styles/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";

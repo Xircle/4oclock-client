@@ -4,7 +4,7 @@ import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import "./PlaceFeedPage.css";
 import { Option } from "react-dropdown";
-import { colors, Container } from "../../styles";
+import { colors, Container } from "../../styles/styles";
 import Header from "../../components/shared/Header/Header";
 import HeaderTextHeading from "../../components/shared/Header/HeaderTextHeading";
 import HeaderTextDescription from "../../components/shared/Header/HeaderTextDescription";

@@ -5,7 +5,7 @@ import AxiosClient from "../lib/apiClient";
 import routes from "../routes";
 import Storage from "../lib/storage";
 import { CURRENT_USER } from "../components/shared/constants";
-import { Heading } from "../styles";
+import { Heading } from "../styles/styles";
 
 export default function SocialRedirect() {
   const location = useLocation<SocialAuthResponse>();

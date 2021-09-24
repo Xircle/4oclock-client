@@ -9,7 +9,7 @@ import {
   ContainerwithLeftRightMargin,
   FlexDiv,
   MainBtn,
-} from "../../styles";
+} from "../../styles/styles";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { UserProfile } from "../../lib/api/types";

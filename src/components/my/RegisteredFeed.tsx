@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { MyPlaceData } from "../../lib/api/types";
-import { colors } from "../../styles";
+import { colors } from "../../styles/styles";
 import { PlaceFull, PlaceFullText } from "../placeFeed/PlaceFeedRow";
 
 interface Props extends Omit<MyPlaceData, "id"> {
