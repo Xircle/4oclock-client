@@ -94,7 +94,6 @@ export default function EditProfilePage({ history }: Props) {
       {}
     );
     const editedProfileData: ProfileData = diff(userData, trimedProfileData);
-    console.log(_.isEqual(editedProfileData, {}));
     if (_.isEqual(editedProfileData, {}))
       return toast.info("프로필을 수정해주세요");
     const { data } = await mutateUserProfile({

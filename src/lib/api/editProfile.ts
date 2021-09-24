@@ -9,7 +9,7 @@ export const editProfile = async (
 ): Promise<AxiosResponse<CoreOutput>> => {
   const formData = new FormData();
   editedProfileData.profileImageFile &&
-    formData.append("profileImagefile", editedProfileData.profileImageFile);
+    formData.append("profileImageFile", editedProfileData.profileImageFile);
   editedProfileData.username &&
     formData.append("username", editedProfileData.username);
   editedProfileData.shortBio &&
