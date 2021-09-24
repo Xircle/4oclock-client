@@ -28,10 +28,12 @@ import PageTitle from "../../components/PageTitle";
 export default function FriendsPage() {
   const [age, SetAge] = useState<string>("");
 
-  const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
-    UserProfile | undefined
-  >(["randomProfile"], seeRandomProfile, {
-    refetchOnWindowFocus: false,
+  const {
+    data: randomProfileData,
+    refetch,
+    isLoading,
+    isFetching,
+  } = useQuery<UserProfile | undefined>(["randomProfile"], seeRandomProfile, {
     retry: 1,
   });
 
@@ -132,8 +134,9 @@ const NextButtonFriend = styled(MainBtn)`
   border-radius: 50%;
   width: 50px;
   height: 50px;
-  background-color: ${colors.BareGray};
-  color: ${colors.Black};
+  box-shadow: -10px -10px 30px #ffffff, 10px 10px 20px rgba(174, 174, 192, 0.3);
+  background-color: #f9f9f9;
+  color: #000;
 `;
 
 const Heading = styled(SubText)`
