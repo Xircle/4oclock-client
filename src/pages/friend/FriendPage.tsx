@@ -99,7 +99,7 @@ export default function FriendsPage() {
             style={{ marginLeft: "0px", fontWeight: 400, fontSize: "14px" }}
           >
             {randomProfileData?.shortBio ||
-              `가슴뛰는 청춘 새로운 네트워킹을 써클에서 경험하세요!`}
+              `안녕하세요!`}
           </InnerContent>
         </InnerContainer>
       </ContainerwithLeftRightMargin>
