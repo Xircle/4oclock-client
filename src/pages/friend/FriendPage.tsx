@@ -70,7 +70,9 @@ export default function FriendsPage() {
         </Heading>
         <FlexDiv>
           <AvartarBig
-            src={randomProfileData?.profileImageUrl}
+            src={
+              randomProfileData?.profileImageUrl || "/avatar/anonymous_user.png"
+            }
             alt="friend-profile"
           />
         </FlexDiv>
