@@ -102,7 +102,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
           placeholder="Username"
           style={
             nameError
-              ? { marginTop: "24px", borderColor: colors.Red }
+              ? { marginTop: "24px", borderColor: colors.MidBlue }
               : { marginTop: "24px", borderColor: colors.BareGray }
           }
           type="text"
@@ -125,7 +125,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
             univError
               ? {
                   marginTop: "12px",
-                  borderColor: colors.Red,
+                  borderColor: colors.MidBlue,
                   color: colors.Black,
                 }
               : { marginTop: "12px", color: colors.Black }
@@ -165,7 +165,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
           name="Age"
           style={
             ageError
-              ? { marginTop: "12px", borderColor: colors.Red }
+              ? { marginTop: "12px", borderColor: colors.MidBlue }
               : { marginTop: "12px" }
           }
           value={state.age}
@@ -198,14 +198,14 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
             ) : (
               <FontAwesomeIcon
                 icon={faCircle}
-                color={genderError ? colors.Red : colors.LightGray}
+                color={genderError ? colors.MidBlue : colors.LightGray}
                 size="lg"
               />
             )}
             <GenderText
               style={
                 genderError
-                  ? { marginLeft: "5px", color: colors.Red }
+                  ? { marginLeft: "5px", color: colors.MidBlue }
                   : { marginLeft: "5px" }
               }
             >
@@ -234,14 +234,14 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
             ) : (
               <FontAwesomeIcon
                 icon={faCircle}
-                color={genderError ? colors.Red : colors.LightGray}
+                color={genderError ? colors.MidBlue : colors.LightGray}
                 size="lg"
               />
             )}
             <GenderText
               style={
                 genderError
-                  ? { marginLeft: "5px", color: colors.Red }
+                  ? { marginLeft: "5px", color: colors.MidBlue }
                   : { marginLeft: "5px" }
               }
             >
@@ -256,7 +256,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
           placeholder="ex. 공대생 / 미개봉 새내기 / 디자이너"
           style={
             titleError
-              ? { fontSize: "12px", borderColor: colors.Red }
+              ? { fontSize: "12px", borderColor: colors.MidBlue }
               : { fontSize: "12px" }
           }
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -277,7 +277,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
               ? {
                   fontSize: "12px",
                   lineHeight: "18px",
-                  borderColor: colors.Red,
+                  borderColor: colors.MidBlue,
                 }
               : { fontSize: "12px", lineHeight: "18px" }
           }
@@ -325,5 +325,5 @@ const ErrorMessage = styled.p`
   margin-top: 3px;
   font-size: 8px;
   margin-left: 5px;
-  color: ${colors.Red};
+  color: ${colors.MidBlue};
 `;
