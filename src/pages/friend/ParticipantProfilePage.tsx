@@ -60,7 +60,9 @@ export default function ParticipantProfilePage() {
           </Heading>
           <FlexDiv>
             <AvartarBig
-              src={userProfileData?.profileImageUrl || "/avatar/anonymous_user.png"}
+              src={
+                userProfileData?.profileImageUrl || "/avatar/anonymous_user.png"
+              }
               alt="friend-profile"
             />
           </FlexDiv>
@@ -84,6 +86,16 @@ export default function ParticipantProfilePage() {
                 : "23살"}
             </InnerContent>
           </InnerContainer>
+          <InnerContainer style={{ marginTop: "6px" }}>
+            <InnerSubject>성별</InnerSubject>
+            <InnerContent>
+              {userProfileData
+                ? userProfileData.gender === "Male"
+                  ? "남"
+                  : "여"
+                : "남"}
+            </InnerContent>
+          </InnerContainer>
           <InnerContainer style={{ marginTop: "25px" }}>
             <InnerContent
               style={{ marginLeft: "0px", fontWeight: 400, fontSize: "14px" }}
@@ -103,7 +115,7 @@ export default function ParticipantProfilePage() {
               loading={isLoading}
               color={colors.MidBlue}
               css={{ name: "width", styles: "border-width: 4px;" }}
-              size={40}
+              size={30}
             />
           </LoaderWrapper>
         </>

@@ -113,6 +113,7 @@ interface UserProfile {
   username: string;
   job: string;
   university: string;
+  gender: Gender;
   age: number;
   shortBio: string;
 }
