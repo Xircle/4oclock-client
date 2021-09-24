@@ -8,7 +8,6 @@ import {
   FlexDiv,
   FileLabel,
 } from "../../styles";
-import { DummyAvartar } from "../../static/dummyData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
@@ -96,25 +95,25 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
       <FlexDiv style={{ justifyContent: "space-around", marginTop: "16px" }}>
         <div>
           <Avartar
-            src={DummyAvartar}
+            src="/avatar/2donny.png"
             style={{ width: "50px", height: "50px" }}
           />
         </div>
         <div>
           <Avartar
-            src={DummyAvartar}
+            src="/avatar/2donny.png"
             style={{ width: "50px", height: "50px" }}
           />
         </div>
         <div>
           <Avartar
-            src={DummyAvartar}
+            src="/avatar/2donny.png"
             style={{ width: "50px", height: "50px" }}
           />
         </div>
         <div>
           <Avartar
-            src={DummyAvartar}
+            src="/avatar/2donny.png"
             style={{ width: "50px", height: "50px" }}
           />
         </div>

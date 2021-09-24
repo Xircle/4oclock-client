@@ -53,16 +53,14 @@ export default function ParticipantProfilePage() {
               그룹 구성은 랜덤이에요! 이 친구와 될 수 도 있고 안될 수도 있어요
             </Indicator>
             <b>
-              {userProfileData?.location ? (
-                <>{userProfileData?.location} 근처 친구</>
-              ) : (
-                "대한민국 어딘가"
-              )}
+              {userProfileData?.location
+                ? userProfileData?.location + " 근처 친구"
+                : "대한민국 어딘가"}
             </b>
           </Heading>
           <FlexDiv>
             <AvartarBig
-              src={userProfileData?.profileImageUrl || "/avatar/2donny.png"}
+              src={userProfileData?.profileImageUrl || "/avatar/anonymous_user.png"}
               alt="friend-profile"
             />
           </FlexDiv>

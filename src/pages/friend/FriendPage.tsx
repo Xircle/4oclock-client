@@ -70,7 +70,9 @@ export default function FriendsPage() {
             <FontAwesomeIcon icon={faArrowRight} size="lg" />
           </NextButtonFriend>
           <AvartarBig
-            src={randomProfileData?.profileImageUrl}
+            src={
+              randomProfileData?.profileImageUrl || "/avatar/anonymous_user.png"
+            }
             alt="friend-profile"
           />
         </FlexDiv>
