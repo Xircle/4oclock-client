@@ -17,8 +17,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AuthState, AuthAction } from "./types";
+import ClipLoader from "react-spinners/ClipLoader";
 
 interface Props {
   onNext: () => void;
@@ -34,6 +35,63 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
   const [genderError, SetGenderError] = useState<boolean>(false);
   const [titleError, SetTitleError] = useState<boolean>(false);
   const [bioError, SetBioError] = useState<boolean>(false);
+  const [detailAddress, setDetailAddress] = useState(state.location);
+  const [locationLoading, setLocationLoading] = useState(false);
+
+  useEffect(() => {
+    if (!detailAddress) currentLocationScript();
+    return () => setLocationLoading(false);
+  }, []);
+
+  const searchDetailAddressFromCoords = (
+    coords: {
+      latitude: number;
+      longitude: number;
+    },
+    callback: (result: any, status: boolean) => void
+  ) => {
+    const geocoder = new window.kakao.maps.services.Geocoder();
+
+    console.log(coords);
+    // 좌표로 법정동 상세 주소 정보를 요청합니다
+    if (coords.longitude && coords.latitude)
+      geocoder.coord2Address(coords.longitude, coords.latitude, callback);
+  };
+
+  // 마운트 될 때 실행
+  const currentLocationScript = () => {
+    if (navigator.geolocation) {
+      setLocationLoading(true);
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          searchDetailAddressFromCoords(
+            { latitude, longitude },
+            function (result: any, status: boolean) {
+              if (status === window.kakao.maps.services.Status.OK) {
+                const fullAddr = result[0].address.address_name;
+                const newAddr = fullAddr.split(" ");
+                console.log(fullAddr, newAddr);
+                setDetailAddress(
+                  newAddr[0] + " " + newAddr[1] + " " + newAddr[2]
+                );
+                setLocationLoading(false);
+                dispatch({
+                  type: "setLocation",
+                  payload: newAddr[0] + " " + newAddr[1] + " " + newAddr[2],
+                });
+              }
+            }
+          );
+        },
+        (err) => {
+          if (err.code === err.PERMISSION_DENIED) setLocationLoading(false);
+        }
+      );
+    }
+  };
 
   const SetErrorAll = (param: boolean) => {
     SetNameError(param);
@@ -53,11 +111,10 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
   ];
 
   const CheckAge = (age: number) => {
-    if (age >= 19 && age <= 40) {
-      return true;
-    }
+    if (age >= 19 && age <= 40) return true;
     return false;
   };
+
   function Validate(
     univ: string = state.university,
     gender: string = state.gender
@@ -298,14 +355,22 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
           }}
         >
           <div></div>
-          <div>
+          <div style={{ display: "flex", alignItems: "center" }}>
             <FontAwesomeIcon
               icon={faMapMarkerAlt}
               color={colors.LightGray}
               size="lg"
               style={{ marginRight: "8px" }}
             />
-            {state.location ? state.location : "대한민국 어딘가"}
+            {locationLoading ? (
+              <ClipLoader
+                color={colors.MidBlue}
+                size={15}
+                loading={locationLoading}
+              />
+            ) : (
+              detailAddress || "대한민국 어딘가"
+            )}
           </div>
         </p>
         <SpaceForNavBar> </SpaceForNavBar>
