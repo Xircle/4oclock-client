@@ -8,6 +8,12 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus:
+        process.env.NODE_ENV === "development" ? false : true,
+    },
+  },
   queryCache: new QueryCache({
     onError: () => {
       toast.error("에러가 발생했습니다. 잠시후 이용해주세요.", {
