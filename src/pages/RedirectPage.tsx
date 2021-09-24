@@ -12,10 +12,11 @@ export default function SocialRedirect() {
   const history = useHistory();
 
   const socialRedirect = async () => {
-    const SOCIAL_ID = location.state.uid;
+    const EMAIL_FROM_KAKAO = location.state.email;
     const res = await AxiosClient.get<SocialRedirectResponse>(
-      `auth/social/redirect/kakao?socialId=${SOCIAL_ID}`
+      `auth/social/redirect/kakao?email=${EMAIL_FROM_KAKAO}`
     );
+    console.log(res);
     if (res.data.ok) {
       if (res.data.code === 401) {
         // email does not exists

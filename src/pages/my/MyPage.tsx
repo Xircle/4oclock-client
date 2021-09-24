@@ -57,7 +57,7 @@ export default function MyPage() {
 
   return (
     <ContainerFlexColumn>
-      <PageTitle title="마이페이지"/>
+      <PageTitle title="마이페이지" />
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
           <Heading>마이페이지</Heading>
@@ -72,13 +72,10 @@ export default function MyPage() {
               </UserDetail>
             </ProfileTextWrapper>
           </ProfileInfoDiv>
-          <ModifyProfileBtn onClick={() => alert("준비중입니다")}>
-            프로필 수정하기
-          </ModifyProfileBtn>
-          {/* <Link
-            to={routes.editProfilePage}
-            style={{ textDecoration: "none" }}
-          ></Link> */}
+
+          <Link to={routes.editProfilePage} style={{ textDecoration: "none" }}>
+            <ModifyProfileBtn>프로필 수정하기</ModifyProfileBtn>
+          </Link>
           <div style={{ height: "30px" }}></div>
           <Link to={routes.myPlace} style={{ textDecoration: "none" }}>
             <MainSubContainer>

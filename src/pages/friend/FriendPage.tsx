@@ -70,14 +70,7 @@ export default function FriendsPage() {
         </Heading>
         <FlexDiv>
           <AvartarBig
-            src={
-              randomProfileData?.profileImageUrl ||
-              (randomProfileData?.profileImageUrl?.includes(
-                "https://api.xircle.org"
-              ) &&
-                "/avatar/anonymous_user.png") ||
-              "/avatar/anonymous_user.png"
-            }
+            src={randomProfileData?.profileImageUrl}
             alt="friend-profile"
           />
         </FlexDiv>

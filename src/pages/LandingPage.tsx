@@ -20,7 +20,7 @@ function LandingPage() {
     response: LoginResponse;
     profile?: UserProfile | undefined;
   }) => {
-    console.log(response);
+    process.env.NODE_ENV === "development" && console.log(response);
     history.push("/social/redirect", {
       uid: response.profile?.id,
       thumbnail: response.profile?.kakao_account.profile.profile_image_url,
