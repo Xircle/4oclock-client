@@ -16,7 +16,6 @@ import {
   Label,
   FileLabel,
 } from "../../styles/styles";
-import { DummyProfileData } from "../../static/dummyData";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
@@ -255,7 +254,7 @@ export default function EditProfilePage({ history }: Props) {
               color: colors.MidBlue,
             }}
           >
-            <p>프로필사진 수정하러가기</p>
+            <p style={{ color: colors.MidBlue }}>프로필사진 수정하러가기</p>
           </FlexDiv>
           <WarningText>
             학교와 나이, 성별 변경은 불가능해요. 수정을 원하실 경우{" "}
@@ -376,7 +375,7 @@ export default function EditProfilePage({ history }: Props) {
                 loading={isLoading || isUpdating}
                 color={colors.MidBlue}
                 css={{ name: "width", styles: "border-width: 4px;" }}
-                size={40}
+                size={30}
               />
             </LoaderWrapper>
           </>
@@ -386,10 +385,11 @@ export default function EditProfilePage({ history }: Props) {
 }
 
 const WarningText = styled.p`
-  margin-top: 18px;
+  margin: 18px 0 22px;
   font-weight: normal;
   font-size: 10px;
   color: ${colors.MidGray};
+  line-height: 15px;
   b {
     font-weight: 900;
   }
@@ -397,7 +397,7 @@ const WarningText = styled.p`
 
 const LocationText = styled.p`
   font-size: 14px;
-  margin-top: 12px;
+  margin: 12px 0 10px;
   color: ${colors.LightGray};
 `;
 

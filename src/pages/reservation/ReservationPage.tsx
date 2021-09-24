@@ -47,9 +47,8 @@ export default function ReservationPage({ match, location, history }: Props) {
     }
   );
 
-  const { mutateAsync: mutateReservation, isLoading } = useMutation(
-    makeReservation
-  );
+  const { mutateAsync: mutateReservation, isLoading } =
+    useMutation(makeReservation);
 
   const makeReservationHandler = async () => {
     if (!selectedTime || !placeId) return;
@@ -148,7 +147,7 @@ export default function ReservationPage({ match, location, history }: Props) {
               loading={isLoading}
               color={colors.MidBlue}
               css={{ name: "width", styles: "border-width: 4px;" }}
-              size={40}
+              size={30}
             />
           </LoaderWrapper>
         </>
