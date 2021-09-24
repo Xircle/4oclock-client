@@ -156,7 +156,7 @@ export const SubText = styled.div`
   margin-top: 8px;
   color: #a7b0c0;
   font-weight: 400;
-  font-size: 13px;
+  font-size: 15px;
 `;
 export const SubTextSpan = styled.span`
   margin-top: 8px;

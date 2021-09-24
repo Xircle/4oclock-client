@@ -17,8 +17,8 @@ export default function Avatar({ profileImgUrl, rightOffset, onClick }: Props) {
 }
 
 const AvartarImg = styled.img<{ rightOffset?: string }>`
-  width: 30px;
-  height: 30px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   object-fit: cover;
   margin-right: ${(props) => props.rightOffset || "0px"};

@@ -28,12 +28,9 @@ import PageTitle from "../../components/PageTitle";
 export default function FriendsPage() {
   const [age, SetAge] = useState<string>("");
 
-  const {
-    data: randomProfileData,
-    refetch,
-    isLoading,
-    isFetching,
-  } = useQuery<UserProfile | undefined>(["randomProfile"], seeRandomProfile, {
+  const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
+    UserProfile | undefined
+  >(["randomProfile"], seeRandomProfile, {
     refetchOnWindowFocus: false,
     retry: 1,
   });
@@ -68,7 +65,10 @@ export default function FriendsPage() {
             )}
           </b>
         </Heading>
-        <FlexDiv>
+        <FlexDiv style={{ position: "relative" }}>
+          <NextButtonFriend onClick={refetchRandomProfileData}>
+            <FontAwesomeIcon icon={faArrowRight} size="lg" />
+          </NextButtonFriend>
           <AvartarBig
             src={
               randomProfileData?.profileImageUrl || "/avatar/anonymous_user.png"
@@ -98,20 +98,11 @@ export default function FriendsPage() {
           <InnerContent
             style={{ marginLeft: "0px", fontWeight: 400, fontSize: "14px" }}
           >
-            {randomProfileData?.shortBio ||
-              `안녕하세요!`}
+            {randomProfileData?.shortBio || `안녕하세요!`}
           </InnerContent>
         </InnerContainer>
       </ContainerwithLeftRightMargin>
       <SpaceForNavBar> </SpaceForNavBar>
-      <NextButtonFriend onClick={refetchRandomProfileData}>
-        다른 친구 찾기
-        <FontAwesomeIcon
-          icon={faArrowRight}
-          style={{ marginLeft: "15px" }}
-          size="lg"
-        />
-      </NextButtonFriend>
 
       {isLoading ||
         (isFetching && (
@@ -134,15 +125,19 @@ export default function FriendsPage() {
 }
 
 const NextButtonFriend = styled(MainBtn)`
-  position: fixed;
+  position: absolute;
   left: 50%;
-  bottom: 100px;
-  transform: translateX(-50%);
-  border-radius: 30px;
-  width: 200px;
+  top: 50%;
+  transform: translateX(115px);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background-color: ${colors.BareGray};
+  color: ${colors.Black};
 `;
 
 const Heading = styled(SubText)`
+  color: ${colors.Black};
   margin-top: 60px;
   font-weight: 500;
   font-size: 18px;
