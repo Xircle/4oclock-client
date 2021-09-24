@@ -153,8 +153,10 @@ export default function PlacePage({ match, location, history }: Props) {
 
       {/* Desccription  */}
       <DescriptionContainer>
-        <h3>{placeData.placeDetail.title}</h3>
-        <p> {placeData.placeDetail.description}</p>
+        <h3 style={{ fontSize: "14px", lineHeight: "23px" }}>
+          {placeData.placeDetail.title}
+        </h3>
+        <p style={{ fontSize: "14px" }}> {placeData.placeDetail.description}</p>
 
         <DetailDescription>
           <p>가게 정보 더보기</p>
@@ -349,7 +351,7 @@ const BackButton = styled.div`
   align-items: center;
   width: 38px;
   height: 38px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   background: rgba(25, 27, 26, 0.08);
   backdrop-filter: blur(24px);
   border-radius: 14px;
@@ -365,7 +367,7 @@ const DetailDescription = styled.div`
 `;
 
 const SHeaderTextHeading = styled.h3`
-  padding-bottom: 13px;
+  padding-bottom: 11px;
   font-size: 20px;
   font-weight: 800;
 `;
@@ -373,10 +375,11 @@ const SHeaderTextHeading = styled.h3`
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 10px;
+  grid-gap: 4px;
   background-color: #fff;
   color: #444;
-  padding: 10px;
+  padding: 16px;
+  padding-top: 10px;
 `;
 
 const GridPic = styled.img`
@@ -422,7 +425,7 @@ const DirText = styled.p`
 const TempToBeDeleted = styled.div`
   position: absolute;
   width: 375px;
-  height: 250px;
+  height: 200px;
 
   background: linear-gradient(
     180deg,
@@ -445,12 +448,12 @@ const SHeaderCategoryIndicator = styled.div`
   font-weight: 500;
   line-height: 13px;
   padding: 5px 10px;
-  margin: 15px 0;
+  margin: 12px 0;
   display: inline-block;
 `;
 
 const SHeaderTextDescription = styled.p`
-  margin-top: 13px;
+  margin-top: 11px;
   font-size: 10px;
   font-weight: 500;
   line-height: 150%;
@@ -468,14 +471,14 @@ const SHeader = styled.div`
 
 const SHeaderPic = styled.img`
   width: 100%;
-  height: 250px;
+  height: 200px;
   object-fit: cover;
 `;
 
 const HeaderText = styled.div`
   color: #fff;
   position: absolute;
-  bottom: 25px;
+  bottom: 20px;
   left: 20px;
   width: 65%;
   h3,

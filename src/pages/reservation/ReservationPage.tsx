@@ -47,8 +47,9 @@ export default function ReservationPage({ match, location, history }: Props) {
     }
   );
 
-  const { mutateAsync: mutateReservation, isLoading } =
-    useMutation(makeReservation);
+  const { mutateAsync: mutateReservation, isLoading } = useMutation(
+    makeReservation
+  );
 
   const makeReservationHandler = async () => {
     if (!selectedTime || !placeId) return;
@@ -75,7 +76,7 @@ export default function ReservationPage({ match, location, history }: Props) {
 
   return (
     <Container>
-      <PageTitle title="써클 예약"/>
+      <PageTitle title="써클 예약" />
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
           <Heading>{decodeUrlSlug(placeName)}</Heading>
@@ -190,7 +191,7 @@ const Instruction = styled.div`
   margin-left: auto;
   margin-right: auto;
   margin-top: 30px;
-  min-height: 200px;
+  min-height: 150px;
   background-color: #f8fafd;
   border-radius: 5px;
   display: content;

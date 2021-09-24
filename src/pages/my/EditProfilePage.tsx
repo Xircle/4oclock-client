@@ -225,7 +225,7 @@ export default function EditProfilePage({ history }: Props) {
               style={
                 localValidation[0]
                   ? { borderColor: colors.BareGray }
-                  : { borderColor: colors.Red }
+                  : { borderColor: colors.MidBlue }
               }
             />
             {!localValidation[0] && (
@@ -272,7 +272,7 @@ export default function EditProfilePage({ history }: Props) {
               style={
                 localValidation[1]
                   ? { borderColor: colors.BareGray }
-                  : { borderColor: colors.Red }
+                  : { borderColor: colors.MidBlue }
               }
             />
             {!localValidation[1] && (
@@ -287,7 +287,7 @@ export default function EditProfilePage({ history }: Props) {
               style={
                 localValidation[2]
                   ? { borderColor: colors.BareGray }
-                  : { borderColor: colors.Red }
+                  : { borderColor: colors.MidBlue }
               }
             />
             {!localValidation[2] && (
@@ -349,5 +349,5 @@ const ErrorMessage = styled.p`
   margin-top: 3px;
   font-size: 8px;
   margin-left: 5px;
-  color: ${colors.Red};
+  color: ${colors.MidBlue};
 `;
