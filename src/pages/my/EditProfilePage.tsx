@@ -41,6 +41,7 @@ export interface ProfileData {
   profileImageFile?: File;
   profileImageUrl?: string;
   job?: string;
+  location?: string;
 }
 
 interface Props extends RouteComponentProps {}
@@ -49,12 +50,14 @@ export default function EditProfilePage({ history }: Props) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const [locationLoading, setLocationLoading] = useState(false);
   const [localProfileData, setLocalProfileData] = useState<ProfileData>({});
   const [localValidation, setLocalValidation] = useState<boolean[]>([
     true,
     true,
     true,
   ]);
+  const [detailAddress, setDetailAddress] = useState(localProfileData.location);
 
   const {
     data: userData,
@@ -74,9 +77,61 @@ export default function EditProfilePage({ history }: Props) {
         shortBio: userData?.shortBio,
         job: userData?.job,
         profileImageUrl: userData?.profileImageUrl,
+        location: userData?.location,
       });
     }
   }, [isSuccess]);
+
+  // 카카오 맵, 현재 위치
+  const searchDetailAddressFromCoords = (
+    coords: {
+      latitude: number;
+      longitude: number;
+    },
+    callback: (result: any, status: boolean) => void
+  ) => {
+    const geocoder = new window.kakao.maps.services.Geocoder();
+
+    console.log(coords);
+    // 좌표로 법정동 상세 주소 정보를 요청합니다
+    if (coords.longitude && coords.latitude)
+      geocoder.coord2Address(coords.longitude, coords.latitude, callback);
+  };
+
+  // 마운트 될 때 실행
+  const currentLocationScript = () => {
+    if (navigator.geolocation) {
+      setLocationLoading(true);
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          searchDetailAddressFromCoords(
+            { latitude, longitude },
+            function (result: any, status: boolean) {
+              if (status === window.kakao.maps.services.Status.OK) {
+                const fullAddr = result[0].address.address_name;
+                const newAddr = fullAddr.split(" ");
+                console.log(fullAddr, newAddr);
+                setDetailAddress(
+                  newAddr[0] + " " + newAddr[1] + " " + newAddr[2]
+                );
+                setLocationLoading(false);
+              }
+            }
+          );
+        },
+        (err) => {
+          if (err.code === err.PERMISSION_DENIED) setLocationLoading(false);
+        }
+      );
+    }
+  };
+
+  useEffect(() => {
+    currentLocationScript();
+  }, []);
 
   const updateProfile = async () => {
     const trimedProfileData = Object.keys(localProfileData).reduce(
@@ -213,7 +268,15 @@ export default function EditProfilePage({ history }: Props) {
               size="lg"
               style={{ marginRight: "8px" }}
             />
-            {DummyProfileData.location ? DummyProfileData.location : "대한민국"}
+            {locationLoading ? (
+              <ClipLoader
+                color={colors.MidBlue}
+                size={15}
+                loading={locationLoading}
+              />
+            ) : (
+              detailAddress || "대한민국 어딘가"
+            )}
           </LocationText>
           <form>
             <MidInput
