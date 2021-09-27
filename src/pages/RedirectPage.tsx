@@ -19,11 +19,11 @@ export default function SocialRedirect() {
     console.log(res);
     if (res.data.ok) {
       if (res.data.code === 401) {
-        // email does not exists
+        // email does not exist
         history.push("/auth", {
           ...location.state,
         });
-      } else if (res.data.code === 201) {
+      } else if (res.data.code === 200) {
         // email  exists
         Storage.setItem(CURRENT_USER, res.data.data);
         window.location.href = `${routes.placeFeed}?isLoggedIn=true`;
