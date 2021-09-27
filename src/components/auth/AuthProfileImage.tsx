@@ -90,30 +90,31 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
           lineHeight: "17px",
         }}
       >
-        관심사를 즐기는 사진 / 좋아하는 공간에서 찍은 사진 / 모임을 즐기고 있는 사진
+        관심사를 즐기는 사진 / 좋아하는 공간에서 찍은 사진 / 모임을 즐기고 있는
+        사진
       </SubText>
       <FlexDiv style={{ justifyContent: "space-around", marginTop: "16px" }}>
         <div>
           <Avartar
-            src="/avatar/2donny.png"
+            src="/avatar/Avartar001.jpeg"
             style={{ width: "50px", height: "50px" }}
           />
         </div>
         <div>
           <Avartar
-            src="/avatar/2donny.png"
+            src="/avatar/Avartar002.jpeg"
             style={{ width: "50px", height: "50px" }}
           />
         </div>
         <div>
           <Avartar
-            src="/avatar/2donny.png"
+            src="/avatar/Avartar003.jpeg"
             style={{ width: "50px", height: "50px" }}
           />
         </div>
         <div>
           <Avartar
-            src="/avatar/2donny.png"
+            src="/avatar/Avartar004.jpeg"
             style={{ width: "50px", height: "50px" }}
           />
         </div>
