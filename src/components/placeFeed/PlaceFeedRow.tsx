@@ -178,7 +178,7 @@ const PlaceSpan = styled.span`
 `;
 
 const PlaceName = styled.span`
-  color: ${colors.StrongBlue};
+  color: #18A0FB;
   font-size: 15px;
   font-weight: 500;
 `;

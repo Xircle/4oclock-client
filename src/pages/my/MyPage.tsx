@@ -59,66 +59,66 @@ export default function MyPage() {
     <ContainerFlexColumn>
       <PageTitle title="마이페이지" />
       <BackButtonLayout>
-        <ContainerwithLeftRightMargin>
-          <Heading>마이페이지</Heading>
-          <ProfileInfoDiv>
-            <MyAvartarImg
-              src={userData?.profileImageUrl || "/avatar/anonymous_user.png"}
+      <ContainerwithLeftRightMargin>
+        <Heading>마이페이지</Heading>
+        <ProfileInfoDiv>
+          <MyAvartarImg
+            src={userData?.profileImageUrl || "/avatar/anonymous_user.png"}
+          />
+          <ProfileTextWrapper>
+            <UserName>{userData?.username || "유저1"}</UserName>
+            <UserDetail>
+              {userData?.university || "고연대"} / {userData?.age || "새내기"}
+            </UserDetail>
+          </ProfileTextWrapper>
+        </ProfileInfoDiv>
+
+        <Link to={routes.editProfilePage} style={{ textDecoration: "none" }}>
+          <ModifyProfileBtn>프로필 수정하기</ModifyProfileBtn>
+        </Link>
+        <div style={{ height: "30px" }}></div>
+        <Link to={routes.myPlace} style={{ textDecoration: "none" }}>
+          <MainSubContainer>
+            <p>신청한 써클 {userData?.reservation_count || 0}개</p>
+            <FontAwesomeIcon
+              icon={faAngleRight}
+              color={colors.LightGray}
+              size="lg"
             />
-            <ProfileTextWrapper>
-              <UserName>{userData?.username || "유저1"}</UserName>
-              <UserDetail>
-                {userData?.university || "고연대"} / {userData?.age || "새내기"}
-              </UserDetail>
-            </ProfileTextWrapper>
-          </ProfileInfoDiv>
+          </MainSubContainer>
+        </Link>
+        <SubContainer>써클 가게 건의하기</SubContainer>
+        <SubContainer>써클에게 문의하기 / 피드백 하기</SubContainer>
+        <SubContainer>써클 서비스 사용자 가이드</SubContainer>
+        <SubContainer>유저 신고하기</SubContainer>
+        <SubContainer onClick={() => logoutBtnClickHandler()}>
+          로그아웃하기
+        </SubContainer>
 
-          <Link to={routes.editProfilePage} style={{ textDecoration: "none" }}>
-            <ModifyProfileBtn>프로필 수정하기</ModifyProfileBtn>
-          </Link>
-          <div style={{ height: "30px" }}></div>
-          <Link to={routes.myPlace} style={{ textDecoration: "none" }}>
-            <MainSubContainer>
-              <p>신청한 써클 {userData?.reservation_count || 0}개</p>
-              <FontAwesomeIcon
-                icon={faAngleRight}
-                color={colors.LightGray}
-                size="lg"
-              />
-            </MainSubContainer>
-          </Link>
-          <SubContainer>써클 가게 건의하기</SubContainer>
-          <SubContainer>써클에게 문의하기 / 피드백 하기</SubContainer>
-          <SubContainer>써클 서비스 사용자 가이드</SubContainer>
-          <SubContainer>유저 신고하기</SubContainer>
-          <SubContainer onClick={() => logoutBtnClickHandler()}>
-            로그아웃하기
-          </SubContainer>
-
-          <Footer>
-            <Row>
-              <a href="https://www.instagram.com/?hl=ko" target={"_blank"}>
-                <BrandImg src="/brands/instagram_logo.png" alt="instagram" />
-              </a>
-              <a
-                href="https://www.kakaocorp.com/page/service/service/KakaoTalk"
-                target={"_blank"}
-              >
-                <BrandImg src="/brands/kakao_logo.png" alt="kakao" />
-              </a>
-              <a href="https://www.youtube.com/" target={"_blank"}>
-                <BrandImg src="/brands/youtube_logo.png" alt="youtube" />
-              </a>
-            </Row>
-            <a>
-              <AgreeText>개인정보처리방침</AgreeText>
+        <Footer>
+          <Row>
+            <a href="https://www.instagram.com/?hl=ko" target={"_blank"}>
+              <BrandImg src="/brands/instagram_logo.png" alt="instagram" />
             </a>
-            <a>
-              <AgreeText>마케팅 수신동의 이용약관</AgreeText>
+            <a
+              href="https://www.kakaocorp.com/page/service/service/KakaoTalk"
+              target={"_blank"}
+            >
+              <BrandImg src="/brands/kakao_logo.png" alt="kakao" />
             </a>
-          </Footer>
-        </ContainerwithLeftRightMargin>
-        <BottomNavBar selectedItem="mypage"></BottomNavBar>
+            <a href="https://www.youtube.com/" target={"_blank"}>
+              <BrandImg src="/brands/youtube_logo.png" alt="youtube" />
+            </a>
+          </Row>
+          <a>
+            <AgreeText>개인정보처리방침</AgreeText>
+          </a>
+          <a>
+            <AgreeText>마케팅 수신동의 이용약관</AgreeText>
+          </a>
+        </Footer>
+      </ContainerwithLeftRightMargin>
+      <BottomNavBar selectedItem="mypage"></BottomNavBar>
       </BackButtonLayout>
     </ContainerFlexColumn>
   );

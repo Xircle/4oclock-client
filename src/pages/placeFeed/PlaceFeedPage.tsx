@@ -33,8 +33,10 @@ interface Props extends RouteComponentProps {}
 export default function PlaceFeedPage({ history, location }: Props) {
   const UrlSearch = location.search;
   const [page, setPage] = useState(1);
-  const [selectedPlaceLocation, setSelectedPlaceLocation] =
-    useState<PlaceLocation>(placeLocationoptions[0].value as PlaceLocation);
+  const [
+    selectedPlaceLocation,
+    setSelectedPlaceLocation,
+  ] = useState<PlaceLocation>(placeLocationoptions[0].value as PlaceLocation);
   const isLoggedIn = Boolean(
     queryString.parse(UrlSearch).isLoggedIn === "true"
   );
@@ -44,11 +46,9 @@ export default function PlaceFeedPage({ history, location }: Props) {
     setSelectedPlaceLocation(option.value as PlaceLocation);
   };
 
-  const {
-    data: placeFeedDataArray,
-    isLoading,
-    isError,
-  } = useQuery<PlaceFeedData[] | undefined>(
+  const { data: placeFeedDataArray, isLoading, isError } = useQuery<
+    PlaceFeedData[] | undefined
+  >(
     ["place", selectedPlaceLocation, page],
     () => getPlacesByLocation(selectedPlaceLocation, page),
     {
@@ -97,12 +97,17 @@ export default function PlaceFeedPage({ history, location }: Props) {
       </TopWrapper>
 
       {/* Cover image & description */}
-      <Header src={MainPicDummy}>
+      {/* <Header src={MainPicDummy}>
         <HeaderTextHeading>친구들과 놀러가요!</HeaderTextHeading>
         <HeaderTextDescription>
           취향이 통하는 대학친구들과 즐기는 공간
         </HeaderTextDescription>
-      </Header>
+      </Header> */}
+      <Heading>
+        현재 열린 대학가 근처 맛집 모임들이에요{"!"} <br />
+        신청을 하시면 모임 전날에 <b>4인 or 2인 매칭해서 단톡</b>을 만들어드려요{" "}
+        {":)"} {"("}혼성, 동성{")"}
+      </Heading>
 
       {/* Places Feed Rows container */}
       <PlaceFeedRowsWrapper>
@@ -117,6 +122,23 @@ export default function PlaceFeedPage({ history, location }: Props) {
     </Container>
   );
 }
+
+const Heading = styled.div`
+  width: 308px;
+  border-radius: 4px;
+  background: #DBEDFF;
+  margin-left: auto;
+  margin-right: auto;
+  color: #18a0fb;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+  padding: 12px 18px;
+
+  b {
+    font-weight: 900;
+  }
+`;
 
 const TopWrapper = styled.div`
   width: 100%;
