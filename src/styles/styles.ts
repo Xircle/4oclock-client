@@ -241,7 +241,7 @@ export const Heading = styled(ProcedureHeading)`
 `;
 
 export const ContainerwithLeftRightMargin = styled(Container)`
-  width: 85%;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
 `;
