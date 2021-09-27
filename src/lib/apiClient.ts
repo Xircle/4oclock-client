@@ -2,14 +2,14 @@ import { CURRENT_USER } from "./../components/shared/constants";
 import axios, { AxiosRequestConfig } from "axios";
 import storage from "./storage";
 
-// "http://localhost:3080/"
 const host =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:3080/"
+    ? "http://localhost:3080"
     : process.env.REACT_APP_API_SERVER || "/";
 
 const apiClient = axios.create({
   baseURL: host,
+  withCredentials: true,
   headers: {
     Authorization: `Bearer ${storage.getItem(CURRENT_USER)?.token || ""}`,
   },
