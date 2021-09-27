@@ -56,16 +56,15 @@ export default function EditProfilePage({ history }: Props) {
     true,
   ]);
 
-  const {
-    data: userData,
-    isLoading,
-    isSuccess,
-  } = useQuery<UserData | undefined>("userProfile", () => getUser(), {
+  const { data: userData, isLoading, isSuccess } = useQuery<
+    UserData | undefined
+  >("userProfile", () => getUser(), {
     retry: 2,
   });
 
-  const { mutateAsync: mutateUserProfile, isLoading: isUpdating } =
-    useMutation(editProfile);
+  const { mutateAsync: mutateUserProfile, isLoading: isUpdating } = useMutation(
+    editProfile
+  );
 
   useEffect(() => {
     if (isSuccess) {

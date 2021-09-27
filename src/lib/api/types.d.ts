@@ -40,6 +40,15 @@ export interface PlaceFeedData {
   isParticipating: boolean;
   deadline?: string;
 }
+
+export interface ParticipantsListData {
+  id: string;
+  job: string;
+  profileImg?: string;
+  shortBio?: string;
+
+}
+
 export interface GetPlacesByLocationOutput extends CoreOutput {
   places: PlaceFeedData[];
 }
