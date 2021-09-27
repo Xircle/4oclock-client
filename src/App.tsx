@@ -30,6 +30,10 @@ const EditProfilePage = React.lazy(() => import("./pages/my/EditProfilePage"));
 const AuthPage = React.lazy(() => import("./pages/auth/Auth"));
 const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage"));
 
+const ParticipantsListPage = React.lazy(
+  () => import("./pages/participantsList/ParticipantsListPage")
+);
+
 function App() {
   return (
     <PortalProvider>
@@ -81,6 +85,10 @@ function App() {
                 component={EditProfilePage}
               />
               <Route path={routes.auth} component={AuthPage} />
+              <Route
+                path={routes.participantsList}
+                component={ParticipantsListPage}
+              />
               <Route component={NotFoundPage} />
             </Switch>
           </Suspense>

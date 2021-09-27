@@ -117,7 +117,7 @@ export default function ReservationPage({ match, location, history }: Props) {
           </SelectionBoxBooking>
           <Instruction>
             <InstructionHeading>
-              식탁 모임은 이렇게 진행돼요!
+              네시모해는 이렇게 진행돼요!
             </InstructionHeading>
             <InstructionDetail>
               1. 같은 시간을 신청한 친구들과 4인/2인 랜덤 그룹을 만들어 드려요
@@ -191,14 +191,14 @@ const Instruction = styled.div`
   margin-right: auto;
   margin-top: 30px;
   min-height: 150px;
-  background-color: #f8fafd;
+  background-color: #dbedff;
   border-radius: 5px;
   display: content;
   justify-content: center;
   align-items: center;
   color: ${colors.MidGray};
   p {
-    color: #8c94a4;
+    color: #18a0fb;
   }
 `;
 
