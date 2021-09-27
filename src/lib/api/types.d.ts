@@ -92,6 +92,7 @@ export interface UserData {
   job: string;
   gender: string;
   shortBio: string;
+  location: string;
 }
 
 export interface GetUserOutput extends CoreOutput {
@@ -121,6 +122,7 @@ interface UserProfile {
   username: string;
   job: string;
   university: string;
+  gender: Gender;
   age: number;
   shortBio: string;
 }

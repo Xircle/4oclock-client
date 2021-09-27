@@ -16,7 +16,6 @@ import {
   Label,
   FileLabel,
 } from "../../styles/styles";
-import { DummyProfileData } from "../../static/dummyData";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
@@ -41,6 +40,7 @@ export interface ProfileData {
   profileImageFile?: File;
   profileImageUrl?: string;
   job?: string;
+  location?: string;
 }
 
 interface Props extends RouteComponentProps {}
@@ -49,12 +49,14 @@ export default function EditProfilePage({ history }: Props) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const [locationLoading, setLocationLoading] = useState(false);
   const [localProfileData, setLocalProfileData] = useState<ProfileData>({});
   const [localValidation, setLocalValidation] = useState<boolean[]>([
     true,
     true,
     true,
   ]);
+  const [detailAddress, setDetailAddress] = useState(localProfileData.location);
 
   const { data: userData, isLoading, isSuccess } = useQuery<
     UserData | undefined
@@ -73,9 +75,61 @@ export default function EditProfilePage({ history }: Props) {
         shortBio: userData?.shortBio,
         job: userData?.job,
         profileImageUrl: userData?.profileImageUrl,
+        location: userData?.location,
       });
     }
   }, [isSuccess]);
+
+  // 카카오 맵, 현재 위치
+  const searchDetailAddressFromCoords = (
+    coords: {
+      latitude: number;
+      longitude: number;
+    },
+    callback: (result: any, status: boolean) => void
+  ) => {
+    const geocoder = new window.kakao.maps.services.Geocoder();
+
+    console.log(coords);
+    // 좌표로 법정동 상세 주소 정보를 요청합니다
+    if (coords.longitude && coords.latitude)
+      geocoder.coord2Address(coords.longitude, coords.latitude, callback);
+  };
+
+  // 마운트 될 때 실행
+  const currentLocationScript = () => {
+    if (navigator.geolocation) {
+      setLocationLoading(true);
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          searchDetailAddressFromCoords(
+            { latitude, longitude },
+            function (result: any, status: boolean) {
+              if (status === window.kakao.maps.services.Status.OK) {
+                const fullAddr = result[0].address.address_name;
+                const newAddr = fullAddr.split(" ");
+                console.log(fullAddr, newAddr);
+                setDetailAddress(
+                  newAddr[0] + " " + newAddr[1] + " " + newAddr[2]
+                );
+                setLocationLoading(false);
+              }
+            }
+          );
+        },
+        (err) => {
+          if (err.code === err.PERMISSION_DENIED) setLocationLoading(false);
+        }
+      );
+    }
+  };
+
+  useEffect(() => {
+    currentLocationScript();
+  }, []);
 
   const updateProfile = async () => {
     const trimedProfileData = Object.keys(localProfileData).reduce(
@@ -93,7 +147,6 @@ export default function EditProfilePage({ history }: Props) {
       {}
     );
     const editedProfileData: ProfileData = diff(userData, trimedProfileData);
-    console.log(_.isEqual(editedProfileData, {}));
     if (_.isEqual(editedProfileData, {}))
       return toast.info("프로필을 수정해주세요");
     const { data } = await mutateUserProfile({
@@ -200,7 +253,7 @@ export default function EditProfilePage({ history }: Props) {
               color: colors.MidBlue,
             }}
           >
-            <p>프로필사진 수정하러가기</p>
+            <p style={{ color: colors.MidBlue }}>프로필사진 수정하러가기</p>
           </FlexDiv>
           <WarningText>
             학교와 나이, 성별 변경은 불가능해요. 수정을 원하실 경우{" "}
@@ -213,7 +266,15 @@ export default function EditProfilePage({ history }: Props) {
               size="lg"
               style={{ marginRight: "8px" }}
             />
-            {DummyProfileData.location ? DummyProfileData.location : "대한민국"}
+            {locationLoading ? (
+              <ClipLoader
+                color={colors.MidBlue}
+                size={15}
+                loading={locationLoading}
+              />
+            ) : (
+              detailAddress || "대한민국 어딘가"
+            )}
           </LocationText>
           <form>
             <MidInput
@@ -313,7 +374,7 @@ export default function EditProfilePage({ history }: Props) {
                 loading={isLoading || isUpdating}
                 color={colors.MidBlue}
                 css={{ name: "width", styles: "border-width: 4px;" }}
-                size={40}
+                size={30}
               />
             </LoaderWrapper>
           </>
@@ -323,10 +384,11 @@ export default function EditProfilePage({ history }: Props) {
 }
 
 const WarningText = styled.p`
-  margin-top: 18px;
+  margin: 18px 0 22px;
   font-weight: normal;
   font-size: 10px;
   color: ${colors.MidGray};
+  line-height: 15px;
   b {
     font-weight: 900;
   }
@@ -334,7 +396,7 @@ const WarningText = styled.p`
 
 const LocationText = styled.p`
   font-size: 14px;
-  margin-top: 12px;
+  margin: 12px 0 10px;
   color: ${colors.LightGray};
 `;
 

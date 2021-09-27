@@ -29,7 +29,7 @@ export default function PlaceFeedContainer({
               name: "width",
               styles: "border-width: 4px; z-index: 999;",
             }}
-            size={40}
+            size={30}
           />
         </LoaderWrapper>
       </>

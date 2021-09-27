@@ -113,7 +113,7 @@ export default function PlacePage({ match, location, history }: Props) {
               name: "width",
               styles: "border-width: 4px; z-index: 999;",
             }}
-            size={40}
+            size={30}
           />
         </LoaderWrapper>
       </>
@@ -153,7 +153,7 @@ export default function PlacePage({ match, location, history }: Props) {
 
       {/* Desccription  */}
       <DescriptionContainer>
-        <h3 style={{ fontSize: "14px", lineHeight: "23px" }}>
+        <h3 style={{ fontSize: "14px", margin: "3px 0", lineHeight: "23px" }}>
           {placeData.placeDetail.title}
         </h3>
         <p style={{ fontSize: "14px" }}> {placeData.placeDetail.description}</p>
@@ -327,7 +327,7 @@ const CTABottomFixedButtoninContainer = styled(BottomFixedButtoninContainer)<{
 `;
 
 const DescriptionContainer = styled.div`
-  margin: 27px 0 50px;
+  margin: 23px 0 50px;
   width: 345px;
   margin-left: auto;
   margin-right: auto;
@@ -404,7 +404,7 @@ const HeadingParticipant = styled.p`
 const PParticipant = styled.p`
   margin: 17px 0;
   color: #8c94a4;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 14px;
   font-weight: 400;
 `;
@@ -426,14 +426,14 @@ const DirText = styled.p`
 const TempToBeDeleted = styled.div`
   position: absolute;
   width: 375px;
-  height: 200px;
+  height: 230px;
 
   background: linear-gradient(
     180deg,
     rgba(8, 8, 8, 0) 0%,
     rgba(8, 8, 8, 0.1) 23.94%,
     rgba(8, 8, 8, 0.24) 34.55%,
-    #191b1a 100%
+    #191b1a 110%
   );
   border-radius: 0px;
 
@@ -455,7 +455,7 @@ const SHeaderCategoryIndicator = styled.div`
 
 const SHeaderTextDescription = styled.p`
   margin-top: 11px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 500;
   line-height: 150%;
 `;
@@ -472,7 +472,7 @@ const SHeader = styled.div`
 
 const SHeaderPic = styled.img`
   width: 100%;
-  height: 200px;
+  height: 230px;
   object-fit: cover;
 `;
 

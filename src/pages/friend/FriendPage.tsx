@@ -28,11 +28,14 @@ import PageTitle from "../../components/PageTitle";
 export default function FriendsPage() {
   const [age, SetAge] = useState<string>("");
 
-  const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
-    UserProfile | undefined
-  >(["randomProfile"], seeRandomProfile, {
-    refetchOnWindowFocus: false,
+  const {
+    data: randomProfileData,
+    refetch,
+    isLoading,
+    isFetching,
+  } = useQuery<UserProfile | undefined>(["randomProfile"], seeRandomProfile, {
     retry: 1,
+    refetchOnMount: false,
   });
 
   useEffect(() => {
@@ -94,6 +97,16 @@ export default function FriendsPage() {
           <InnerSubject>나이</InnerSubject>
           <InnerContent>{age || "23살"}</InnerContent>
         </InnerContainer>
+        <InnerContainer style={{ marginTop: "6px" }}>
+          <InnerSubject>성별</InnerSubject>
+          <InnerContent>
+            {randomProfileData
+              ? randomProfileData.gender === "Male"
+                ? "남"
+                : "여"
+              : "남"}
+          </InnerContent>
+        </InnerContainer>
         <InnerContainer style={{ marginTop: "25px" }}>
           <InnerContent
             style={{ marginLeft: "0px", fontWeight: 400, fontSize: "14px" }}
@@ -113,7 +126,7 @@ export default function FriendsPage() {
                 loading={isLoading || isFetching}
                 color={colors.MidBlue}
                 css={{ name: "width", styles: "border-width: 4px;" }}
-                size={40}
+                size={30}
               />
             </LoaderWrapper>
           </>
@@ -132,8 +145,9 @@ const NextButtonFriend = styled(MainBtn)`
   border-radius: 50%;
   width: 50px;
   height: 50px;
-  background-color: ${colors.BareGray};
-  color: ${colors.Black};
+  box-shadow: -10px -10px 30px #ffffff, 10px 10px 20px rgba(174, 174, 192, 0.3);
+  background-color: #f9f9f9;
+  color: #000;
 `;
 
 const Heading = styled(SubText)`

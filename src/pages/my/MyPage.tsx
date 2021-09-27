@@ -24,7 +24,6 @@ import { getUser } from "../../lib/api/getUser";
 import Storage from "../../lib/storage";
 import { CURRENT_USER } from "../../components/shared/constants";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
-import { toast } from "react-toastify";
 import PageTitle from "../../components/PageTitle";
 
 export default function MyPage() {
