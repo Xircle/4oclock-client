@@ -1,9 +1,15 @@
 import { useHistory } from "react-router-dom";
 import type { PlaceFeedData } from "../../lib/api/types";
-import { colors, Heading, SLink } from "../../styles/styles";
+import {
+  colors,
+  ContainerFlexColumn,
+  Heading,
+  SLink,
+} from "../../styles/styles";
 import { LoaderBackdrop, LoaderWrapper } from "../shared/Loader";
 import PlaceFeedRow from "./PlaceFeedRow";
 import ClipLoader from "react-spinners/ClipLoader";
+import styled from "styled-components";
 
 interface Props {
   placeFeedDataArray?: PlaceFeedData[];
@@ -36,7 +42,8 @@ export default function PlaceFeedContainer({
     );
 
   if (placeFeedDataArray?.length === 0)
-    return <Heading>열려있는 식탁이 없어요 :( </Heading>;
+    return <NothingHeading>열려있는 식탁이 없어요 :( </NothingHeading>;
+
   return (
     <>
       {placeFeedDataArray?.map((placeFeedData) => (
@@ -55,3 +62,12 @@ export default function PlaceFeedContainer({
     </>
   );
 }
+
+const NothingHeading = styled(Heading)`
+  height: 100%;
+  text-align: center;
+  width: 200px;
+  margin: 0 auto;
+  padding-top: 100px;
+  line-height: 40px;
+`;

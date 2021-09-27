@@ -23,7 +23,11 @@ export default function Avatar({
   );
 }
 
-const AvartarImg = styled.img<{ rightOffset?: string; topOffset?: string }>`
+const AvartarImg = styled.img<{
+  rightOffset?: string;
+  width?: string;
+  topOffset?: string;
+}>`
   width: ${(props) => props.width || "38px"};
   height: ${(props) => props.width || "38px"};
   border-radius: 50%;
