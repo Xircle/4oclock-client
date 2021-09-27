@@ -51,6 +51,10 @@ export default function PlacePage({ match, location, history }: Props) {
     ["place-detail", placeId],
     () => getPlaceById(placeId),
     {
+      onError: (err: any) => {
+        alert(err);
+        return;
+      },
       retry: 1,
       refetchOnWindowFocus: false,
     }
@@ -84,17 +88,21 @@ export default function PlacePage({ match, location, history }: Props) {
     if (!placeData?.placeDetail.detailAddress) return;
     const latitude = result[0].y;
     const longitude = result[0].x;
-    const markerPosition = new kakao.maps.LatLng(latitude, longitude);
-    const marker = {
-      position: markerPosition,
-    };
-    const staticMapContainer = document.getElementById("staticMap"),
-      staticMapOption = {
+    const mapContainer = document.getElementById("map"),
+      mapOption = {
         center: new kakao.maps.LatLng(latitude, longitude),
-        level: 5,
-        marker: marker,
+        level: 4,
       };
-    new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+    const map = new kakao.maps.Map(mapContainer, mapOption);
+    const coords = new kakao.maps.LatLng(latitude, longitude);
+
+    // 결과값으로 받은 위치를 마커로 표시합니다
+    new kakao.maps.Marker({
+      map,
+      position: coords,
+    });
+
+    map.setCenter(coords);
   };
 
   const toggleShowModal = () => {
@@ -214,7 +222,7 @@ export default function PlacePage({ match, location, history }: Props) {
           {placeData.placeDetail.detailAddress}
         </DirText>
         <div
-          id="staticMap"
+          id="map"
           style={{
             width: "295px",
             height: "135px",

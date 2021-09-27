@@ -13,7 +13,7 @@ export const getPlaceById = async (placeId: string): Promise<PlaceData> => {
     }
   );
   if (!data.ok) {
-    alert(data.error);
+    throw new Error(data.error);
   }
   return data.placeData;
 };

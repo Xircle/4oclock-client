@@ -59,10 +59,11 @@ export default function PlaceFeedPage({ history, location }: Props) {
 
   useEffect(() => {
     if (!storage.getItem(CURRENT_USER)) {
-      toast.error("로그인하신 후에 이용해주세요.", {
-        position: toast.POSITION.BOTTOM_LEFT,
+      toast.info("로그인하신 후에 이용해주세요.", {
+        position: toast.POSITION.TOP_CENTER,
       });
       history.push(routes.root);
+      return;
     }
 
     if (isLoggedIn) {
