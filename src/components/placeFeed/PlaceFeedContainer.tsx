@@ -21,7 +21,7 @@ export default function PlaceFeedContainer({
   if (isLoading)
     return (
       <>
-        <LoaderWrapper top={"60%"}>
+        <LoaderWrapper top={"40%"}>
           <ClipLoader
             loading={isLoading}
             color={colors.MidBlue}

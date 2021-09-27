@@ -225,7 +225,7 @@ export default function PlacePage({ match, location, history }: Props) {
           id="map"
           style={{
             width: "295px",
-            height: "135px",
+            height: "175px",
             marginTop: "17px",
             marginLeft: "auto",
             marginRight: "auto",
