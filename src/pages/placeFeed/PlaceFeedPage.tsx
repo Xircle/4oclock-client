@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import MainPicDummy from "../../static/MainPicDummy.jpg";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import "./PlaceFeedPage.css";
 import { Option } from "react-dropdown";
-import { colors, Container } from "../../styles/styles";
+import { colors, Container, SubText } from "../../styles/styles";
 import Header from "../../components/shared/Header/Header";
 import HeaderTextHeading from "../../components/shared/Header/HeaderTextHeading";
 import HeaderTextDescription from "../../components/shared/Header/HeaderTextDescription";
@@ -27,6 +26,7 @@ import storage from "../../lib/storage";
 import { toast } from "react-toastify";
 import PageTitle from "../../components/PageTitle";
 import queryString from "query-string";
+import InfoBox from "../../components/UI/InfoBox";
 
 interface Props extends RouteComponentProps {}
 
@@ -91,7 +91,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
             />
           </DropDownWrapper>
           <Link to={routes.request} style={{ textDecoration: "none" }}>
-            <RequestP>써클 추가하기</RequestP>
+            <RequestP>맛집 모임 만들기 {"+"}</RequestP>
           </Link>
         </Top>
       </TopWrapper>
@@ -103,11 +103,16 @@ export default function PlaceFeedPage({ history, location }: Props) {
           취향이 통하는 대학친구들과 즐기는 공간
         </HeaderTextDescription>
       </Header> */}
-      <Heading>
+      <InfoBox>
         현재 열린 대학가 근처 맛집 모임들이에요{"!"} <br />
         신청을 하시면 모임 전날에 <b>4인 or 2인 매칭해서 단톡</b>을 만들어드려요{" "}
         {":)"} {"("}혼성, 동성{")"}
-      </Heading>
+      </InfoBox>
+      <TopInfoTextContainer>
+        <TopInfoText>
+          {"※"} 네시모해의 모임은 오후 4시와 7시에 열려요
+        </TopInfoText>
+      </TopInfoTextContainer>
 
       {/* Places Feed Rows container */}
       <PlaceFeedRowsWrapper>
@@ -118,25 +123,54 @@ export default function PlaceFeedPage({ history, location }: Props) {
         />
       </PlaceFeedRowsWrapper>
 
+      <BottomInfoTextContainer>
+        <BottomInfoText>
+          {"'"}네시모해{"'"}는 대학친구들과 따뜻한 밥 한끼, 술 한잔 할 수 있는
+          문화를 여러분들과 함께 만들어나갔으면 좋겠어요{"😊"}
+          <br /> <br />
+          아직 베타 서비스 단계로 여러분들의 피드백이 간절해요.
+          <br />
+          많이 많이 부탁드리겠습니다{"🙌"}
+        </BottomInfoText>
+      </BottomInfoTextContainer>
       <BottomNavBar selectedItem="places" />
     </Container>
   );
 }
 
+const TopInfoTextContainer = styled.div`
+  margin: 16px 25px 15px;
+`;
+
+const TopInfoText = styled(SubText)`
+  font-size: 12px;
+`;
+
+const BottomInfoTextContainer = styled.div`
+  margin: 16px 25px 15px;
+  width: 330px;
+`;
+
+const BottomInfoText = styled(SubText)`
+  color: ${colors.MidGray};
+  font-size: 12px;
+  line-height: 16px;
+`;
+
 const Heading = styled.div`
   width: 308px;
   border-radius: 4px;
-  background: #DBEDFF;
+  background: #dbedff;
   margin-left: auto;
   margin-right: auto;
   color: #18a0fb;
   font-size: 13px;
   line-height: 18px;
-  font-weight: 500;
+  font-weight: normal;
   padding: 12px 18px;
 
   b {
-    font-weight: 900;
+    font-weight: bold;
   }
 `;
 
@@ -166,7 +200,7 @@ const DropDownWrapper = styled.div`
 
 const RequestP = styled.div`
   font-size: 14px;
-  font-weight: 600;
+  font-weight: normal;
   color: ${colors.MidGray};
   padding-top: 8px;
 `;
