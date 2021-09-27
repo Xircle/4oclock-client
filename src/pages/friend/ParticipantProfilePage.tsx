@@ -49,9 +49,10 @@ export default function ParticipantProfilePage() {
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
           <Heading style={{ marginTop: "20px" }}>
-            <Indicator>
-              그룹 구성은 랜덤이에요! 이 친구와 될 수 도 있고 안될 수도 있어요
-            </Indicator>
+            <IndicatorBox>
+              원하는 친구와 매칭이 되고 싶나요? 개발자에게 연락을 주시면
+              도와드릴게요 :)
+            </IndicatorBox>
             <b>
               {userProfileData?.location
                 ? userProfileData?.location + " 근처 친구"
@@ -66,18 +67,25 @@ export default function ParticipantProfilePage() {
               alt="friend-profile"
             />
           </FlexDiv>
+
           <FlexDiv style={{ marginTop: "15px" }}>
             <Name>{userProfileData?.username || "써클개발자"}</Name>
-            <TagOnName>
-              <p>{userProfileData?.job || "18학번 헌내기"}</p>
-            </TagOnName>
+            <Job>{userProfileData?.job || "18학번 헌내기"}</Job>
           </FlexDiv>
+
+          <FlexDiv style={{ marginTop: "15px" }}>
+            <ChattingButton onClick={() => alert("채팅하기는 개발중이예요!")}>
+              <p>채팅하기</p>
+            </ChattingButton>
+          </FlexDiv>
+
           <InnerContainer style={{ marginTop: "45px" }}>
             <InnerSubject>학교</InnerSubject>
             <InnerContent>
               {userProfileData?.university || "고려대학교"}
             </InnerContent>
           </InnerContainer>
+
           <InnerContainer style={{ marginTop: "6px" }}>
             <InnerSubject>나이</InnerSubject>
             <InnerContent>
@@ -86,6 +94,7 @@ export default function ParticipantProfilePage() {
                 : "23살"}
             </InnerContent>
           </InnerContainer>
+
           <InnerContainer style={{ marginTop: "6px" }}>
             <InnerSubject>성별</InnerSubject>
             <InnerContent>
@@ -132,6 +141,7 @@ const Heading = styled(SubText)`
   font-size: 18px;
   b {
     font-weight: 1000;
+    color: #12121d;
   }
 `;
 const AvartarBig = styled(Avartar)`
@@ -144,16 +154,6 @@ const Name = styled.span`
   color: ${colors.Black};
   font-weight: bold;
   font-size: 20px;
-`;
-
-const TagOnName = styled(InterestTag)`
-  margin-left: 10px;
-  padding: 7px 16px;
-  border-radius: 6px;
-  p {
-    font-size: 14px;
-    font-weight: normal;
-  }
 `;
 
 const InnerContainer = styled.div``;
@@ -171,9 +171,29 @@ const InnerContent = styled.span`
   margin-left: 30px;
 `;
 
-const Indicator = styled.p`
+const IndicatorBox = styled.div`
+  background-color: #dbedff;
+  border-radius: 4px;
+  color: #18a0fb;
+  font-size: 13px;
+  line-height: 20px;
+  padding: 13px 15px;
+  margin: 20px 0;
+`;
+
+const Job = styled.div`
+  margin-left: 10px;
   color: #8c94a4;
   font-weight: 500;
-  font-size: 11px;
-  line-height: 34px;
+`;
+
+const ChattingButton = styled(InterestTag)`
+  margin-left: 10px;
+  padding: 7px 16px;
+  border-radius: 6px;
+  p {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  cursor: pointer;
 `;

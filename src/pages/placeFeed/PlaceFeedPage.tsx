@@ -33,10 +33,8 @@ interface Props extends RouteComponentProps {}
 export default function PlaceFeedPage({ history, location }: Props) {
   const UrlSearch = location.search;
   const [page, setPage] = useState(1);
-  const [
-    selectedPlaceLocation,
-    setSelectedPlaceLocation,
-  ] = useState<PlaceLocation>(placeLocationoptions[0].value as PlaceLocation);
+  const [selectedPlaceLocation, setSelectedPlaceLocation] =
+    useState<PlaceLocation>(placeLocationoptions[0].value as PlaceLocation);
   const isLoggedIn = Boolean(
     queryString.parse(UrlSearch).isLoggedIn === "true"
   );
@@ -46,9 +44,11 @@ export default function PlaceFeedPage({ history, location }: Props) {
     setSelectedPlaceLocation(option.value as PlaceLocation);
   };
 
-  const { data: placeFeedDataArray, isLoading, isError } = useQuery<
-    PlaceFeedData[] | undefined
-  >(
+  const {
+    data: placeFeedDataArray,
+    isLoading,
+    isError,
+  } = useQuery<PlaceFeedData[] | undefined>(
     ["place", selectedPlaceLocation, page],
     () => getPlacesByLocation(selectedPlaceLocation, page),
     {
@@ -97,13 +97,6 @@ export default function PlaceFeedPage({ history, location }: Props) {
         </Top>
       </TopWrapper>
 
-      {/* Cover image & description */}
-      {/* <Header src={MainPicDummy}>
-        <HeaderTextHeading>친구들과 놀러가요!</HeaderTextHeading>
-        <HeaderTextDescription>
-          취향이 통하는 대학친구들과 즐기는 공간
-        </HeaderTextDescription>
-      </Header> */}
       <InfoBox>
         현재 열린 대학가 근처 맛집 모임들이에요{"!"} <br />
         신청을 하시면 모임 전날에 <b>4인 or 2인 매칭해서 단톡</b>을 만들어드려요{" "}
@@ -148,13 +141,13 @@ const TopInfoText = styled(SubText)`
 `;
 
 const BottomInfoTextContainer = styled.div`
-  margin: 16px 25px 15px;
+  margin: 36px auto;
   width: 330px;
 `;
 
 const BottomInfoText = styled(SubText)`
   color: ${colors.MidGray};
-  font-size: 12px;
+  font-size: 13px;
   line-height: 16px;
 `;
 
@@ -189,7 +182,7 @@ const TopWrapper = styled.div`
 const Top = styled.div`
   display: flex;
   width: 100%;
-  padding: 12px 12px 12px 0;
+  padding: 12px 22px 12px 0;
   justify-content: space-between;
   margin-top: 10px;
 `;
@@ -197,6 +190,7 @@ const Top = styled.div`
 const DropDownWrapper = styled.div`
   display: flex;
   align-items: center;
+  padding: 0 10px;
 `;
 
 const RequestP = styled.div`
@@ -206,4 +200,6 @@ const RequestP = styled.div`
   padding-top: 8px;
 `;
 
-const PlaceFeedRowsWrapper = styled.div``;
+const PlaceFeedRowsWrapper = styled.div`
+  min-height: 50vh;
+`;

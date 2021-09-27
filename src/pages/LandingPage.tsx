@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
 import {
-  Container,
   ProcedureHeading,
   MainBtn,
   ContainerwithLeftRightMargin,
@@ -31,7 +30,7 @@ function LandingPage() {
   };
 
   return (
-    <ContainerWithBg>
+    <Container>
       <MainBox>
         <img src="/landingPage/LandingPageMain.jpeg" />
         <Row>
@@ -61,6 +60,101 @@ function LandingPage() {
           <MainDetail>
             {"※ "}현재는 고려대{"/"}연세대{"/"}이화여대 학교로만 운영중이에요
           </MainDetail>
+          <div style={{ position: "relative" }}>
+            <img
+              src="/landingPage/kakao.svg"
+              style={{
+                position: "absolute",
+                left: "4.25rem",
+                top: "50%",
+                transform: "translate(0, -50%)",
+              }}
+            />
+            <KakaoLogin
+              token={process.env.REACT_APP_KAKAO_KEY!}
+              onSuccess={kakaoSuccessCallback}
+              onFail={() => console.log("kakao login fail")}
+              onLogout={() => console.log("hi")}
+              style={{
+                width: "333px",
+                height: "50px",
+                padding: "1.25rem 0",
+                background: "#FFE812",
+                border: "none",
+                borderRadius: "5px",
+                fontWeight: "bolder",
+                cursor: "pointer",
+                color: colors.Black,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                boxShadow: "rgba(75, 88, 208, 0.5) 0px 25px 20px -20px",
+              }}
+            />
+          </div>
+        </Row>
+      </MainBox>
+      <SubBox>
+        <FlexDiv>
+          <HeadingSubBox>
+            맛집 모임으로
+            <br />
+            <b>대학친구</b> 사귀기
+          </HeadingSubBox>
+        </FlexDiv>
+        <FlexDiv>
+          <TextSubBox>철수는 여기서 연대생 동네 친구 사귀었대{"!"}</TextSubBox>
+        </FlexDiv>
+        <FlexDiv>
+          <img src="/landingPage/SubPic1.png" />
+        </FlexDiv>
+      </SubBox>
+      <SubBox style={{ height: "1000px" }}>
+        <FlexDiv>
+          <HeadingSubBox>
+            함께할 친구들
+            <br />
+            <b>프로필</b> 둘러보기
+          </HeadingSubBox>
+        </FlexDiv>
+        <FlexDiv>
+          <TextSubBox>
+            네시모해에 가입한 친구들과 소통을 즐겨보아요{"!"}
+          </TextSubBox>
+        </FlexDiv>
+        <ContainerwithLeftRightMargin>
+          <img src="/landingPage/SubPic2.png" />
+          <img src="/landingPage/SubPic3.png" />
+        </ContainerwithLeftRightMargin>
+      </SubBox>
+      <SubBox>
+        <FlexDiv>
+          <HeadingSubBox>
+            좋은 친구들과
+            <br />
+            <b>맛있는 음식</b> 먹으며
+            <br />
+            모임 즐기기
+          </HeadingSubBox>
+        </FlexDiv>
+        <FlexDiv>
+          <TextSubBox>남은 2021년 청춘 여기서 불태우자{"!"}</TextSubBox>
+        </FlexDiv>
+        <FlexDiv>
+          <img src="/landingPage/SubPic4.png" />
+        </FlexDiv>
+      </SubBox>
+      <FlexDiv>
+        <div style={{ position: "relative", margin: "2.25rem 0 7rem" }}>
+          <img
+            src="/landingPage/kakao.svg"
+            style={{
+              position: "absolute",
+              left: "4.5rem",
+              top: "50%",
+              transform: "translate(0, -50%)",
+            }}
+          />
           <KakaoLogin
             token={process.env.REACT_APP_KAKAO_KEY!}
             onSuccess={kakaoSuccessCallback}
@@ -70,7 +164,7 @@ function LandingPage() {
               width: "333px",
               height: "50px",
               padding: "1.25rem 0",
-              background: "rgb(255, 235, 0)",
+              background: "#FFE812",
               border: "none",
               borderRadius: "5px",
               fontWeight: "bolder",
@@ -82,65 +176,15 @@ function LandingPage() {
               boxShadow: "rgba(75, 88, 208, 0.5) 0px 25px 20px -20px",
             }}
           />
-        </Row>
-      </MainBox>
-      <ContainerwithLeftRightMargin>
-        <SubBox>
-          <FlexDiv>
-            <HeadingSubBox>
-              맛집 모임으로
-              <br />
-              <b>대학친구</b> 사귀기
-            </HeadingSubBox>
-          </FlexDiv>
-          <FlexDiv>
-            <TextSubBox>
-              철수는 여기서 연대생 동네 친구 사귀었대{"!"}
-            </TextSubBox>
-          </FlexDiv>
-          <FlexDiv>
-            <img src="/landingPage/SubPic1.png" />
-          </FlexDiv>
-        </SubBox>
-        <SubBox style={{ height: "1000px" }}>
-          <FlexDiv>
-            <HeadingSubBox>
-              함께할 친구들
-              <br />
-              <b>프로필</b> 둘러보기
-            </HeadingSubBox>
-          </FlexDiv>
-          <FlexDiv>
-            <TextSubBox>
-              네시모해에 가입한 친구들과 소통을 즐겨보아요{"!"}
-            </TextSubBox>
-          </FlexDiv>
-          <ContainerwithLeftRightMargin>
-            <img src="/landingPage/SubPic2.png" />
-            <img src="/landingPage/SubPic3.png" />
-          </ContainerwithLeftRightMargin>
-        </SubBox>
-        <SubBox>
-          <FlexDiv>
-            <HeadingSubBox>
-              좋은 친구들과
-              <br />
-              <b>맛있는 음식</b> 먹으며
-              <br />
-              모임 즐기기
-            </HeadingSubBox>
-          </FlexDiv>
-          <FlexDiv>
-            <TextSubBox>남은 2021년 청춘 여기서 불태우자{"!"}</TextSubBox>
-          </FlexDiv>
-          <FlexDiv>
-            <img src="/landingPage/SubPic4.png" />
-          </FlexDiv>
-        </SubBox>
-      </ContainerwithLeftRightMargin>
-    </ContainerWithBg>
+        </div>
+      </FlexDiv>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  width: 100%;
+`;
 const FlexColumn = styled.div`
   display: flex;
   flex-direction: column;
@@ -175,7 +219,9 @@ const MainBox = styled.div`
 `;
 const MainDetail = styled(SubText)`
   font-size: 13px;
+  margin: 5px 0;
   line-height: 20px;
+  text-align: center;
 `;
 const MainInfo = styled.p`
   padding-top: 0.5vh;
@@ -188,8 +234,6 @@ const MainInfo = styled.p`
     color: ${colors.MidBlue};
   }
 `;
-
-const ContainerWithBg = styled(Container)``;
 
 const Heading = styled(ProcedureHeading)`
   padding-top: 8vh;

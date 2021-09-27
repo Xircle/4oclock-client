@@ -44,8 +44,6 @@ export default function PlacePage({ match, location, history }: Props) {
   const scrollToProfile = Boolean(
     queryString.parse(UrlSearch).scrollToProfile === "true"
   );
-  const myPlace = Boolean(queryString.parse(UrlSearch).myPlace === "true");
-  const [reservationClicked, setReservationClicked] = useState(false);
 
   const { data: placeData, isLoading } = useQuery<PlaceData | undefined>(
     ["place-detail", placeId],
@@ -105,10 +103,6 @@ export default function PlacePage({ match, location, history }: Props) {
     map.setCenter(coords);
   };
 
-  const toggleShowModal = () => {
-    setReservationClicked(!reservationClicked);
-  };
-
   if (isLoading)
     return (
       <>
@@ -137,37 +131,36 @@ export default function PlacePage({ match, location, history }: Props) {
         <SHeaderPic src={placeData.coverImage} />
         <TempToBeDeleted></TempToBeDeleted>
         <HeaderText>
-          <BackButton
-            onClick={() =>
-              myPlace ? history.goBack() : history.replace(routes.placeFeed)
-            }
-          >
-            <FontAwesomeIcon icon={faArrowLeft} color="#fff" />
-          </BackButton>
           <SHeaderCategoryIndicator>
-            {(JSON.parse(placeData.placeDetail.categories) as string[]).join(
-              ", "
-            )}
+            {placeData.participantsCount}명 신천중
           </SHeaderCategoryIndicator>
           <SHeaderTextHeading>{placeData.name}</SHeaderTextHeading>
-          <HeaderSplit></HeaderSplit>
           <SHeaderTextDescription>
-            {placeData.startDateFromNow} 오후 4시 / 오후 7시
-            <br />
-            {placeData.recommendation}
+            {placeData.oneLineIntroText}
           </SHeaderTextDescription>
         </HeaderText>
       </SHeader>
 
+      {/* Recommendation */}
+      <PlaceSummaryInformation>
+        <span>{placeData.recommendation}</span> 나이만 참여가능해요.
+        <br />
+        <span>{placeData.startDateFromNow} 오후 5시와 7시에</span> 열리는 모임이
+        있어요.
+      </PlaceSummaryInformation>
+
       {/* Desccription  */}
       <DescriptionContainer>
-        <h3 style={{ fontSize: "14px", margin: "3px 0", lineHeight: "23px" }}>
+        <h3 style={{ fontSize: "13px", margin: "3px 0", lineHeight: "18px" }}>
           {placeData.placeDetail.title}
         </h3>
-        <p style={{ fontSize: "14px" }}> {placeData.placeDetail.description}</p>
+        <p style={{ fontSize: "13px", lineHeight: "18px" }}>
+          {" "}
+          {placeData.placeDetail.description}
+        </p>
 
         <DetailDescription>
-          <p>가게 정보 더보기</p>
+          <p>맛집 정보 더보기</p>
         </DetailDescription>
       </DescriptionContainer>
 
@@ -179,10 +172,11 @@ export default function PlacePage({ match, location, history }: Props) {
       </GridContainer>
 
       {/* Participants */}
-      <ParticipantContainer id="participant">
-        <HeadingParticipant>
-          {placeData.participantsCount}명 참여중 / 이런 친구들이 참여했어요!
-        </HeadingParticipant>
+      <Section id="participant">
+        <PrimaryText>
+          현재 {placeData.participantsCount}명의 친구들이 신청했어요!
+          <p>프로필을 클릭해서 신청한 친구들의 정보를 구경해보세요!</p>
+        </PrimaryText>
         <PParticipant>
           남 {placeData.participantsInfo.male_count} 여{" "}
           {placeData.participantsInfo.total_count -
@@ -196,6 +190,7 @@ export default function PlacePage({ match, location, history }: Props) {
             <Avatar
               key={participant.userId}
               profileImgUrl={participant.profileImgUrl}
+              width="46px"
               rightOffset={"5px"}
               onClick={() =>
                 placeData.isParticipating &&
@@ -206,12 +201,48 @@ export default function PlacePage({ match, location, history }: Props) {
             />
           ))}
         </AvartarImgContainerParticipant>
-        <PParticipant>참가 전 학교 인증은 필수입니다.</PParticipant>
-      </ParticipantContainer>
+      </Section>
+
+      {/* 모임 안내 */}
+
+      <Section>
+        <PrimaryText>#모임안내</PrimaryText>
+        <Row>
+          <span className="Top01">자세한 정보를 알려드릴게요</span>
+        </Row>
+        <Row>
+          <span className="bold">시간</span>
+          <span>
+            {placeData.startDateFromNow} 오후 5시(4인) / 오후 7시(2인) 모임
+          </span>
+        </Row>
+        <Row>
+          <span className="bold">장소</span>
+          <span>{placeData.placeDetail.detailAddress}</span>
+        </Row>
+
+        <Row>
+          <span className="bold">나이</span>
+          <span>{placeData.recommendation}</span>
+        </Row>
+
+        <Row>
+          <span className="bold">참가비</span>
+          <span>무료</span>
+        </Row>
+
+        <Row>
+          <span className="Info">
+            <strong>(중요)</strong> 같은 시간대를 신청한 친구들과{" "}
+            <strong> 4인/2인 매칭해서 단톡</strong>을 만들어드려요! 단톡링크는
+            모임 전날 적어주신 전화번호로 보내드릴게요 :)
+          </span>
+        </Row>
+      </Section>
 
       {/* Kakao Map */}
-      <ParticipantContainer style={{ marginTop: "25px" }}>
-        <HeadingParticipant>찾아오는 길</HeadingParticipant>
+      <Section style={{ marginTop: "25px", border: "none" }}>
+        <PrimaryText>찾아오는 길</PrimaryText>
         <DirText>
           <FontAwesomeIcon
             icon={faMapMarkerAlt}
@@ -232,13 +263,22 @@ export default function PlacePage({ match, location, history }: Props) {
             borderRadius: "10px",
           }}
         />
-      </ParticipantContainer>
+      </Section>
 
       {/* Reservation Button */}
       {/* 코드 너무 더룸.. Link 를 따로 컴포넌트로 뺴야할듯 */}
       <BottomFixedButtonContainer>
         <CTABottomFixedButtoninContainer
-          onClick={() => setReservationClicked(true)}
+          onClick={() =>
+            !placeData.isParticipating &&
+            history.push(`/reservation/${encodeUrlSlug(placeData.name)}`, {
+              placeId,
+              startDateFromNow: placeData.startDateFromNow,
+              detailAddress: placeData.placeDetail.detailAddress,
+              recommendation: placeData.recommendation,
+              participationFee: placeData.participationFee,
+            })
+          }
           isParticipating={placeData.isParticipating}
           isFinal={isFinal}
           isClosed={isClosed}
@@ -256,70 +296,10 @@ export default function PlacePage({ match, location, history }: Props) {
         </CTABottomFixedButtoninContainer>
       </BottomFixedButtonContainer>
 
-      {reservationClicked && (
-        <Modal isClose={!reservationClicked} onClose={toggleShowModal}>
-          <ModalWrapper>
-            <h1>
-              현재는 특정 학교로만 <br /> 운영되고 있어요!
-            </h1>
-            <span>
-              학교인증이 되어야 모임을 참가하실 수 있어요! 참가신청을 하시면
-              개별적으로 학교 인증 연락을 드릴게요!
-            </span>
-            <MainBtn
-              onClick={() =>
-                !placeData.isParticipating &&
-                history.push(`/reservation/${encodeUrlSlug(placeData.name)}`, {
-                  placeId,
-                  startDateFromNow: placeData.startDateFromNow,
-                })
-              }
-              style={{ width: "150px" }}
-            >
-              계속하기
-            </MainBtn>
-            <p
-              onClick={() => setReservationClicked(false)}
-              className="cancleBtn"
-            >
-              취소하기
-            </p>
-          </ModalWrapper>
-        </Modal>
-      )}
-
       <SpaceForNavBar />
     </Container>
   );
 }
-
-const ModalWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  height: 100%;
-  padding: 10px;
-  h1 {
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 28px;
-    color: #12121d;
-  }
-  span {
-    font-size: 14px;
-    line-height: 22px;
-    color: #a7b0c0;
-    padding: 0 40px;
-  }
-  .cancleBtn {
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 28px;
-    color: #a7b0c0;
-    cursor: pointer;
-  }
-`;
 
 const CTABottomFixedButtoninContainer = styled(BottomFixedButtoninContainer)<{
   isParticipating: boolean;
@@ -376,8 +356,8 @@ const DetailDescription = styled.div`
 `;
 
 const SHeaderTextHeading = styled.h3`
-  padding-bottom: 11px;
-  font-size: 20px;
+  padding-bottom: 5px;
+  font-size: 24px;
   font-weight: 800;
 `;
 
@@ -397,21 +377,29 @@ const GridPic = styled.img`
   object-fit: cover;
 `;
 
-const ParticipantContainer = styled.div`
-  width: 345px;
-  margin: 31px auto 50px;
+export const Section = styled.div`
+  margin: 0 auto;
+  padding: 31px 20px 20px;
   line-height: 10px;
+  border-bottom: 0.5px solid #e7ecf3;
 `;
 
-const HeadingParticipant = styled.p`
+export const PrimaryText = styled.p`
   color: #18a0fb;
   font-weight: 700;
   font-size: 15px;
+  p {
+    color: #8c94a4;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 16px;
+    margin: 15px 0 0;
+  }
 `;
 
 const PParticipant = styled.p`
-  margin: 17px 0;
-  color: #8c94a4;
+  margin: 15px 0;
+  color: #6f7789;
   font-size: 12px;
   line-height: 14px;
   font-weight: 400;
@@ -462,8 +450,7 @@ const SHeaderCategoryIndicator = styled.div`
 `;
 
 const SHeaderTextDescription = styled.p`
-  margin-top: 11px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   line-height: 150%;
 `;
@@ -474,7 +461,7 @@ const HeaderSplit = styled.div`
 `;
 
 const SHeader = styled.div`
-  width: 100%;
+  height: 230px;
   position: relative;
 `;
 
@@ -493,5 +480,46 @@ const HeaderText = styled.div`
   h3,
   p {
     color: #fff;
+  }
+`;
+
+const PlaceSummaryInformation = styled.div`
+  background-color: #dbedff;
+  color: #18a0fb;
+  padding: 15px 20px;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 500;
+  border-radius: 5px 5px 0 0;
+  transform: translate(0, -5px);
+  span {
+    font-weight: 700;
+    color: #18a0fb;
+  }
+`;
+
+export const Row = styled.div`
+  display: flex;
+  span {
+    color: #6f7789;
+    font-size: 13px;
+    line-height: 19px;
+  }
+  .bold {
+    font-weight: 700;
+    margin-right: 8px;
+  }
+  .Top01 {
+    font-size: 13px;
+    line-height: 16px;
+    color: #8c94a4;
+    margin: 12px 0 10px;
+  }
+  .Info {
+    color: #18a0fb;
+    margin: 18px 0;
+  }
+  strong {
+    font-weight: 700;
   }
 `;

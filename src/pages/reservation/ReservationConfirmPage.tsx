@@ -12,32 +12,74 @@ import {
   Heading,
   ContainerwithLeftRightMargin,
 } from "../../styles/styles";
+import { PrimaryText, Row, Section } from "../place/PlacePage";
 
-interface Props extends RouteComponentProps<{}, {}, { placeId: string }> {}
+interface Props
+  extends RouteComponentProps<
+    {},
+    {},
+    {
+      placeId: string;
+      startDateFromNow: string;
+      detailAddress: string;
+      recommendation: string;
+      participationFee: number;
+    }
+  > {}
 
 export default function ReservationConfirmPage({ history, location }: Props) {
-  const { placeId } = location.state;
+  const {
+    placeId,
+    startDateFromNow,
+    detailAddress,
+    recommendation,
+    participationFee,
+  } = location.state;
 
   return (
     <Container>
-      <PageTitle title="예약 확인"/>
+      <PageTitle title="예약 확인" />
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
-          <Heading>참여 신청 완료</Heading>
+          <Heading>맛집 모임 참여 신청 완료</Heading>
+
           <SubTextBookingBookingConfirm>
-            단톡이 만들어지면 적어주신 전화번호로 연락을 드릴게요!
+            네시 모해 맛집 모임을 신청해주셔서 정말 감사합니다 :)
             <br />
             <br />
-            모임 시작 전 참여가 어려워진 경우, 반드시 미리
-            <b> 마이페이지 {">"} 문의하기</b>를 통해서 알려주세요.
+            <strong>
+              같이 참여하는 친구들의 자세한 프로필을 확인해보세요! 모임에
+              참여하는 친구들을 존중하고 따뜻한 문화를 함께 만들어나가요😊
+            </strong>
             <br />
             <br />
-            모임에 참여하는 친구들을 존중하고 따뜻한 문화를 함께 만들어나가요.
-            <br />
-            <br />
-            무단으로 불참하거나 함께하는 친구들에게 피해를 주는 경우, 이용에
-            제재를 받을 수 있습니다.
           </SubTextBookingBookingConfirm>
+
+          <SSection>
+            <PrimaryText>#모임안내</PrimaryText>
+            <Row>
+              <span className="Top01">자세한 정보를 알려드릴게요</span>
+            </Row>
+            <Row>
+              <span className="bold">시간</span>
+              <span>{startDateFromNow} 오후 5시(4인) / 오후 7시(2인) 모임</span>
+            </Row>
+            <Row>
+              <span className="bold">장소</span>
+              <span>{detailAddress}</span>
+            </Row>
+
+            <Row>
+              <span className="bold">나이</span>
+              <span>{recommendation}</span>
+            </Row>
+
+            <Row>
+              <span className="bold">참가비</span>
+              <span>무료</span>
+            </Row>
+          </SSection>
+
           <MainBtnBookingConfirm
             onClick={() =>
               history.push(`/place/${placeId}?scrollToProfile=true`)
@@ -45,6 +87,7 @@ export default function ReservationConfirmPage({ history, location }: Props) {
           >
             참여하는 친구들 프로필 보기
           </MainBtnBookingConfirm>
+
           <HomeBtn onClick={() => history.push(routes.placeFeed)}>
             홈으로 가기
           </HomeBtn>
@@ -54,15 +97,20 @@ export default function ReservationConfirmPage({ history, location }: Props) {
     </Container>
   );
 }
-
+const SSection = styled(Section)`
+  margin: 50px 0 10px;
+  padding: 30px 0;
+  border-top: 1px solid #e7ecf3;
+`;
 const SubTextBookingBookingConfirm = styled(SubText)`
   margin-top: 40px;
   width: 315px;
   line-height: 1.2em;
-  font-weight: 500;
-  font-size: 11px;
-  b {
-    font-weight: 900;
+  font-size: 14px;
+  color: #8c94a4;
+  strong {
+    line-height: 20px;
+    font-weight: bold;
   }
 `;
 

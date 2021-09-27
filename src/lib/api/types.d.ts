@@ -30,8 +30,7 @@ export interface PlaceFeedData {
   id: string;
   name: string;
   coverImage: string;
-  tags: string;
-  recommendation: string;
+  oneLineIntroText: string;
   startDateAt: string;
   isClosed: boolean;
   participantsCount: number;
@@ -46,7 +45,6 @@ export interface ParticipantsListData {
   job: string;
   profileImg?: string;
   shortBio?: string;
-
 }
 
 export interface GetPlacesByLocationOutput extends CoreOutput {
@@ -58,13 +56,15 @@ interface PlaceDataParticipantsProfile extends Participants {}
 
 export interface PlaceData {
   name: string;
-  startDateFromNow: string;
+  oneLineIntroText: string;
   recommendation: string;
+  startDateFromNow: string;
   coverImage: string;
   isClosed: boolean;
   isParticipating: boolean;
   participants: PlaceDataParticipantsProfile[];
   participantsCount: number;
+  participationFee: number;
   participantsInfo: {
     total_count: number;
     male_count: number;
@@ -104,7 +104,6 @@ export interface MyPlaceData {
   id: string;
   coverImage: string;
   name: string;
-  tags: string;
   recommendation: string;
   startDateFromNow: string;
   isClosed: boolean;
@@ -141,6 +140,7 @@ export type StartTime = "Four" | "Seven";
 export interface MakeReservationInput {
   placeId: string;
   startTime: StartTime;
+  isVaccinated: boolean;
 }
 
 export interface MakeReservationOutput extends CoreOutput {}

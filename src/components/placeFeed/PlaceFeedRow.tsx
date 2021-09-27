@@ -13,16 +13,13 @@ export default function PlaceFeedRow({
   name,
   coverImage,
   deadline,
-  tags,
-  recommendation,
+  oneLineIntroText,
   isClosed,
   participantsCount,
   startDateFromNow,
   participants,
   isParticipating,
 }: Props) {
-  const [parsedTags, _] = useState<string[]>(JSON.parse(tags));
-
   return (
     <Container onClick={onClick}>
       <PlaceLeftContainer>
@@ -41,14 +38,12 @@ export default function PlaceFeedRow({
       </PlaceLeftContainer>
 
       <PlaceRightContainer>
-        <PlaceRightWrapper>
-          <PlaceName>{name}</PlaceName>
-          <PlaceSpan>
-            {startDateFromNow} / {recommendation}
-          </PlaceSpan>
-        </PlaceRightWrapper>
-
-        <PlaceTags>#{parsedTags.join(" #")}</PlaceTags>
+        <PlaceName>{name}</PlaceName>
+        <PlaceOneLineIntroText>{oneLineIntroText}</PlaceOneLineIntroText>
+        <PlaceSummary>
+          {startDateFromNow} / {participantsCount}명의
+          <span className="bold"> 친구들 신청중</span>
+        </PlaceSummary>
 
         <ParticipantsContainer>
           <ParticipantsWrapper isParticipating={isParticipating}>
@@ -71,15 +66,15 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 25px;
+  padding: 18px 0;
+  cursor: pointer;
   &:hover {
     opacity: 0.8;
   }
-  cursor: pointer;
 `;
 const PlaceLeftContainer = styled.div`
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   padding: 0px;
   position: relative;
 `;
@@ -108,11 +103,11 @@ const PlaceDeadline = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
-  height: 18px;
-  padding: 0px 5px 0px 5px;
-  top: -5px;
-  left: 8px;
+  border-radius: 3px;
+  width: 52px;
+  height: 21px;
+  top: -10px;
+  left: 5px;
   p {
     color: white;
     font-weight: 700;
@@ -130,6 +125,16 @@ export const PlaceFull = styled.div`
   justify-content: center;
   display: flex;
   align-items: center;
+`;
+
+const PlaceSummary = styled.p`
+  font-weight: 500;
+  font-size: 10.5px;
+  line-height: 13px;
+  color: #12121d;
+  .bold {
+    color: #8c94a4;
+  }
 `;
 
 export const PlaceFullText = styled.div`
@@ -170,15 +175,14 @@ const PlaceTags = styled.p`
   color: ${colors.MidGray};
 `;
 
-const PlaceSpan = styled.span`
-  margin-top: 3px;
-  margin-left: 10px;
-  font-size: 10px;
+const PlaceOneLineIntroText = styled.p`
+  margin: 8px 0 6px;
+  font-size: 10.5px;
   color: #8c94a4;
 `;
 
 const PlaceName = styled.span`
-  color: #18A0FB;
+  color: #1c43b7;
   font-size: 15px;
   font-weight: 500;
 `;

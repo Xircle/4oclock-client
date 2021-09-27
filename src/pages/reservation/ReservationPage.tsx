@@ -26,18 +26,33 @@ import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
 import ClipLoader from "react-spinners/ClipLoader";
 import { getReservationParticipantNumber } from "../../lib/api/getReservationParticipantNumber";
 import PageTitle from "../../components/PageTitle";
+import Modal from "../../components/UI/Modal";
 
 interface Props
   extends RouteComponentProps<
     { name: string },
     {},
-    { placeId: string; startDateFromNow: string }
+    {
+      placeId: string;
+      startDateFromNow: string;
+      detailAddress: string;
+      recommendation: string;
+      participationFee: number;
+    }
   > {}
 
 export default function ReservationPage({ match, location, history }: Props) {
   const { name: placeName } = match.params;
-  const { placeId, startDateFromNow } = location.state;
+  const {
+    placeId,
+    startDateFromNow,
+    detailAddress,
+    recommendation,
+    participationFee,
+  } = location.state;
   const [selectedTime, setSelectedTime] = useState<StartTime | undefined>();
+  const [isVaccinated, setIsVaccinated] = useState(false);
+  const [reservationClicked, setReservationClicked] = useState(false);
 
   const { data: reservationInfo } = useQuery(
     ["getReservationParticipantNumber", placeId],
@@ -47,6 +62,10 @@ export default function ReservationPage({ match, location, history }: Props) {
     }
   );
 
+  const toggleReservation = () => {
+    setReservationClicked((prev) => !prev);
+  };
+
   const { mutateAsync: mutateReservation, isLoading } =
     useMutation(makeReservation);
 
@@ -55,6 +74,7 @@ export default function ReservationPage({ match, location, history }: Props) {
     try {
       const { data } = await mutateReservation({
         startTime: selectedTime,
+        isVaccinated,
         placeId,
       });
       if (!data.ok) {
@@ -65,6 +85,9 @@ export default function ReservationPage({ match, location, history }: Props) {
       history.push(routes.reservationConfirm, {
         placeId,
         startDateFromNow,
+        detailAddress,
+        recommendation,
+        participationFee,
       });
     } catch (err) {
       console.log(err);
@@ -79,9 +102,14 @@ export default function ReservationPage({ match, location, history }: Props) {
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
           <Heading>{decodeUrlSlug(placeName)}</Heading>
+
+          <p style={{ margin: "30px 0", color: "#8C94A4" }}>
+            대학친구들과 함께하는 꿀잼 맛집모임!
+          </p>
+
           <SelectionBoxBooking onClick={() => setSelectedTime("Four")}>
             <SelectionMainTextBooking>
-              {startDateFromNow} 오후 4시
+              {startDateFromNow} 오후 5시
               <TagBooking>
                 <p>4인 모임</p>
               </TagBooking>
@@ -97,6 +125,7 @@ export default function ReservationPage({ match, location, history }: Props) {
               )}
             </CheckIcon>
           </SelectionBoxBooking>
+
           <SelectionBoxBooking onClick={() => setSelectedTime("Seven")}>
             <SelectionMainTextBooking>
               {startDateFromNow} 오후 7시
@@ -115,10 +144,21 @@ export default function ReservationPage({ match, location, history }: Props) {
               )}
             </CheckIcon>
           </SelectionBoxBooking>
+
+          <Row onClick={() => setIsVaccinated((prev) => !prev)}>
+            {isVaccinated ? (
+              <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
+            ) : (
+              <FontAwesomeIcon icon={faCircle} color={colors.LightGray} />
+            )}
+            <span>
+              [백신 접종 여부 체크] 2차 <span className="info"> 백신 접종</span>
+              을 받았습니다.
+            </span>
+          </Row>
+
           <Instruction>
-            <InstructionHeading>
-              네시모해는 이렇게 진행돼요!
-            </InstructionHeading>
+            <InstructionHeading>네시모해는 이렇게 진행돼요!</InstructionHeading>
             <InstructionDetail>
               1. 같은 시간을 신청한 친구들과 4인/2인 랜덤 그룹을 만들어 드려요
               <br />
@@ -133,7 +173,7 @@ export default function ReservationPage({ match, location, history }: Props) {
           </Instruction>
           <EnabledMainBtnBooking
             disabled={!selectedTime}
-            onClick={makeReservationHandler}
+            onClick={toggleReservation}
           >
             놀러가기
           </EnabledMainBtnBooking>
@@ -152,13 +192,60 @@ export default function ReservationPage({ match, location, history }: Props) {
           </LoaderWrapper>
         </>
       )}
+      {reservationClicked && (
+        <Modal isClose={!reservationClicked} onClose={toggleReservation}>
+          <ModalWrapper>
+            <h1>모임 신청 전에 읽어주세요</h1>
+            <span>
+              1. 모임 전날 적어주신 전화번호로{" "}
+              <strong>오픈카카오톡 단톡 링크</strong>를 보내드릴게요.
+              <br />
+              <br />
+              2. 모임 시작 전 참여가 어려워진 경우, 반드시{" "}
+              <strong>문의하기를 통해서 미리 </strong>알려주세요!
+              <br />
+              <br />
+              3. <strong>존중하는 문화로</strong> ‘대학친구와 더 가까워지는
+              따뜻한 대학가’ 를 만들 수 있게 도와주세요
+            </span>
+            <MainBtn onClick={makeReservationHandler} style={{ width: "90%" }}>
+              확인하고 놀러가기
+            </MainBtn>
+            <p
+              onClick={() => setReservationClicked(false)}
+              className="cancleBtn"
+            >
+              뒤로가기
+            </p>
+          </ModalWrapper>
+        </Modal>
+      )}
       <BottomNavBar selectedItem="places" />
     </Container>
   );
 }
 
+const Row = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 24px;
+  cursor: pointer;
+  margin: 20px 0;
+  span {
+    color: #6f7789;
+    text-align: center;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 28px;
+    .info {
+      color: ${colors.MidBlue};
+    }
+  }
+`;
+
 const SelectionBoxBooking = styled(SelectionBox)`
-  margin-top: 30px;
+  margin: 15px 0;
   position: relative;
   font-size: 24px;
   cursor: pointer;
@@ -228,4 +315,34 @@ const TagBooking = styled(Tag)`
 const CheckIcon = styled.div`
   position: absolute;
   right: 10%;
+`;
+
+const ModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  padding: 10px 30px;
+  h1 {
+    color: #12121d;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 28px;
+  }
+  span {
+    color: #18a0fb;
+    font-size: 14px;
+    line-height: 18px;
+  }
+  strong {
+    font-weight: 700;
+  }
+  .cancleBtn {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 28px;
+    color: #a7b0c0;
+    cursor: pointer;
+  }
 `;

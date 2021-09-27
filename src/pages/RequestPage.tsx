@@ -16,13 +16,14 @@ export default function RequestPage() {
       <PageTitle title="건의" />
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
-          <Heading>이런 써클 만들어주세요!</Heading>
+          <Heading>맛집 모임을 만들어주세요!</Heading>
           <SubTextRequest>
-            친구들과 같이 가고 싶은 가계가 없나요?
-            <br />
-            건의해주시면 최대한 빠르게 만들어 드리겠습니다.
+            <b>
+              앗! 가고 싶은 맛집모임이 없나요? 구글폼으로 건의해주시면 최대한
+              빠르게 만들어 드리겠습니다 :)
+            </b>
           </SubTextRequest>
-          <MainBtnRequest>써클 건의해보기</MainBtnRequest>
+          <MainBtnRequest>맛집 모임 건의하기</MainBtnRequest>
         </ContainerwithLeftRightMargin>
         <BottomNavBar selectedItem="places" />
       </BackButtonLayout>
@@ -39,11 +40,7 @@ const SubTextRequest = styled(SubText)`
   font-size: 14px;
   width: 315px;
   line-height: 20px;
-  font-weight: 500;
-  font-size: 11px;
-  b {
-    font-weight: 900;
-  }
+  color: #8c94a4;
 `;
 
 const MainBtnRequest = styled(MainBtn)`
