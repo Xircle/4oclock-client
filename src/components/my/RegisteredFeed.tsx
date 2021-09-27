@@ -12,7 +12,6 @@ export default function RegisteredFeed({
   isClosed,
   coverImage,
   name,
-  tags,
   startDateFromNow,
   recommendation,
 }: Props) {
@@ -29,7 +28,6 @@ export default function RegisteredFeed({
       </FeedLeftContainer>
       <FeedDescription>
         <FeedHeading>{name}</FeedHeading>
-        <FeedDetailP>{tags}</FeedDetailP>
 
         <FeedTimeSpan>{"강남"}</FeedTimeSpan>
         <FeedTimeSpan style={{ marginRight: "3px", marginLeft: "3px" }}>

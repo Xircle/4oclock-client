@@ -12,12 +12,11 @@ export default function BackButtonWithNoBackground({ onPrev }: Props) {
     <div
       style={{
         fontSize: "12px",
-        cursor: "pointer",
-        marginTop: "50px",
-        marginLeft: "20px",
+        margin: "2rem 1.5rem 1rem",
       }}
     >
       <FontAwesomeIcon
+        style={{ cursor: "pointer" }}
         icon={faArrowLeft}
         color={colors.Black}
         size="2x"

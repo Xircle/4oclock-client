@@ -5,8 +5,6 @@ import { AuthState } from "../../components/auth/types";
 export const createAccount = async (
   state: AuthState
 ): Promise<CreateAccountOutput> => {
-  console.log("state : ", state);
-
   const formData = new FormData();
   state.profileImgFile
     ? formData.append("profileImageFile", state.profileImgFile!)

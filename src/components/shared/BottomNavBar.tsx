@@ -1,5 +1,9 @@
 import styled from "styled-components";
-import { BottomNavBarContainer, colors, SpaceForNavBar } from "../../styles/styles";
+import {
+  BottomNavBarContainer,
+  colors,
+  SpaceForNavBar,
+} from "../../styles/styles";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
 

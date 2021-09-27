@@ -52,7 +52,6 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
   ) => {
     const geocoder = new window.kakao.maps.services.Geocoder();
 
-    console.log(coords);
     // 좌표로 법정동 상세 주소 정보를 요청합니다
     if (coords.longitude && coords.latitude)
       geocoder.coord2Address(coords.longitude, coords.latitude, callback);
@@ -73,7 +72,6 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
               if (status === window.kakao.maps.services.Status.OK) {
                 const fullAddr = result[0].address.address_name;
                 const newAddr = fullAddr.split(" ");
-                console.log(fullAddr, newAddr);
                 setDetailAddress(
                   newAddr[0] + " " + newAddr[1] + " " + newAddr[2]
                 );

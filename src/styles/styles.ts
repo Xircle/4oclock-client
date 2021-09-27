@@ -103,7 +103,7 @@ export const MainBtn = styled.button`
   height: 50px;
   background-color: #18a0fb;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -241,7 +241,7 @@ export const Heading = styled(ProcedureHeading)`
 `;
 
 export const ContainerwithLeftRightMargin = styled(Container)`
-  width: 100%;
+  width: 85%;
   margin-left: auto;
   margin-right: auto;
 `;

@@ -52,7 +52,6 @@ export default function MyPlacePage() {
                 isClosed={item.isClosed}
                 coverImage={item.coverImage}
                 name={item.name}
-                tags={"#" + JSON.parse(item.tags).join(" #")}
                 startDateFromNow={item.startDateFromNow}
                 recommendation={item.recommendation}
                 onClick={() => history.push(`/place/${item.id}?myPlace=true`)}

@@ -25,7 +25,7 @@ export default function Modal({ children, isClose, onClose }: Props) {
 
 const blur = keyframes`
     0% {
-        opacity: 0.5;
+        opacity: 0;
     }
     100% {
         opacity: 1;
@@ -53,7 +53,7 @@ const ModalContainer = styled.div<{ close: boolean }>`
   background-color: rgba(0, 0, 0, 0.75);
   transition: ${(props) => (props.close ? "opacity 0.1s" : "opacity 0.1s")};
   opacity: ${(props) => (props.close ? 0.5 : 1)};
-  animation: ${blur} 0.5s;
+  animation: ${blur} 0.1s;
   z-index: ${(props) =>
     props.close ? -Number(BACKDROP_Z_INDEX) : Number(BACKDROP_Z_INDEX)};
 `;
@@ -61,7 +61,7 @@ const ModalContainer = styled.div<{ close: boolean }>`
 const ModalWrapper = styled.div<{ close: boolean }>`
   position: relative;
   width: 314px;
-  animation: ${up} 250ms linear;
+  animation: ${up} 150ms linear;
   top: 0px;
   max-height: calc(100% - 30px);
   height: 400px;

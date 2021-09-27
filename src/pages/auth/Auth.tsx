@@ -31,11 +31,6 @@ function Auth() {
     const username = location.state?.username;
     const email = location.state?.email;
     const gender = location.state?.gender;
-
-    if (localStorage.getItem("CURRENT_USER")) {
-      window.location.href = routes.placeFeed;
-      return;
-    }
     if (uid) dispatch({ type: "setUid", payload: uid });
     if (username) dispatch({ type: "setName", payload: username });
     if (gender) dispatch({ type: "setGender", payload: gender });
