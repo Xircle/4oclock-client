@@ -225,10 +225,11 @@ export default function PlacePage({ match, location, history }: Props) {
           id="map"
           style={{
             width: "295px",
-            height: "190px",
+            height: "135px",
             marginTop: "17px",
             marginLeft: "auto",
             marginRight: "auto",
+            borderRadius: "10px",
           }}
         />
       </ParticipantContainer>
