@@ -7,6 +7,7 @@ import {
   ContainerwithLeftRightMargin,
   colors,
   SubText,
+  FlexDiv,
 } from "../styles/styles";
 import KakaoLogin from "react-kakao-login";
 import { LoginResponse, UserProfile } from "../lib/kakao";
@@ -83,10 +84,90 @@ function LandingPage() {
           />
         </Row>
       </MainBox>
-      <ContainerwithLeftRightMargin></ContainerwithLeftRightMargin>
+      <ContainerwithLeftRightMargin>
+        <SubBox>
+          <FlexDiv>
+            <HeadingSubBox>
+              맛집 모임으로
+              <br />
+              <b>대학친구</b> 사귀기
+            </HeadingSubBox>
+          </FlexDiv>
+          <FlexDiv>
+            <TextSubBox>
+              철수는 여기서 연대생 동네 친구 사귀었대{"!"}
+            </TextSubBox>
+          </FlexDiv>
+          <FlexDiv>
+            <img src="/landingPage/SubPic1.png" />
+          </FlexDiv>
+        </SubBox>
+        <SubBox style={{ height: "1000px" }}>
+          <FlexDiv>
+            <HeadingSubBox>
+              함께할 친구들
+              <br />
+              <b>프로필</b> 둘러보기
+            </HeadingSubBox>
+          </FlexDiv>
+          <FlexDiv>
+            <TextSubBox>
+              네시모해에 가입한 친구들과 소통을 즐겨보아요{"!"}
+            </TextSubBox>
+          </FlexDiv>
+          <ContainerwithLeftRightMargin>
+            <img src="/landingPage/SubPic2.png" />
+            <img src="/landingPage/SubPic3.png" />
+          </ContainerwithLeftRightMargin>
+        </SubBox>
+        <SubBox>
+          <FlexDiv>
+            <HeadingSubBox>
+              좋은 친구들과
+              <br />
+              <b>맛있는 음식</b> 먹으며
+              <br />
+              모임 즐기기
+            </HeadingSubBox>
+          </FlexDiv>
+          <FlexDiv>
+            <TextSubBox>남은 2021년 청춘 여기서 불태우자{"!"}</TextSubBox>
+          </FlexDiv>
+          <FlexDiv>
+            <img src="/landingPage/SubPic4.png" />
+          </FlexDiv>
+        </SubBox>
+      </ContainerwithLeftRightMargin>
     </ContainerWithBg>
   );
 }
+const FlexColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100vh;
+`;
+
+const SubBox = styled(FlexColumn)`
+  height: 650px;
+`;
+
+const HeadingSubBox = styled.p`
+  color: ${colors.Black};
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 42px;
+  text-align: center;
+  b {
+    color: ${colors.MidBlue};
+  }
+`;
+
+const TextSubBox = styled.p`
+  color: ${colors.MidGray};
+  font-size: 17px;
+  text-align: center;
+`;
 
 const MainBox = styled.div`
   height: 100vh;
@@ -119,12 +200,6 @@ const Heading = styled(ProcedureHeading)`
   }
 `;
 
-const FlexColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  height: 100vh;
-`;
 const Row = styled.div``;
 
 const InputBlock = styled.div`
