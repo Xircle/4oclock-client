@@ -64,7 +64,6 @@ export interface PlaceData {
   isParticipating: boolean;
   participants: PlaceDataParticipantsProfile[];
   participantsCount: number;
-  participationFee: number;
   participantsInfo: {
     total_count: number;
     male_count: number;
@@ -76,6 +75,7 @@ export interface PlaceData {
     categories: string;
     detailAddress: string;
     photos: string[];
+    participationFee: number;
   };
 }
 export interface GetPlaceByIdOutput extends CoreOutput {

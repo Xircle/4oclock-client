@@ -82,6 +82,7 @@ function LandingPage() {
                 background: "#FFE812",
                 border: "none",
                 borderRadius: "5px",
+                fontSize: "16px",
                 fontWeight: "bolder",
                 cursor: "pointer",
                 color: colors.Black,
@@ -150,7 +151,7 @@ function LandingPage() {
             src="/landingPage/kakao.svg"
             style={{
               position: "absolute",
-              left: "4.5rem",
+              left: "4.25rem",
               top: "50%",
               transform: "translate(0, -50%)",
             }}
@@ -168,6 +169,7 @@ function LandingPage() {
               border: "none",
               borderRadius: "5px",
               fontWeight: "bolder",
+              fontSize: "16px",
               cursor: "pointer",
               color: colors.Black,
               display: "flex",

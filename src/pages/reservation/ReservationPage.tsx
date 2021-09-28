@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import BottomNavBar from "../../components/shared/BottomNavBar";
 import { RouteComponentProps } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
@@ -42,6 +42,9 @@ interface Props
   > {}
 
 export default function ReservationPage({ match, location, history }: Props) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { name: placeName } = match.params;
   const {
     placeId,
@@ -245,7 +248,7 @@ const Row = styled.div`
 `;
 
 const SelectionBoxBooking = styled(SelectionBox)`
-  margin: 15px 0;
+  margin: 22px 0;
   position: relative;
   font-size: 24px;
   cursor: pointer;
@@ -323,7 +326,7 @@ const ModalWrapper = styled.div`
   justify-content: space-evenly;
   align-items: center;
   height: 100%;
-  padding: 10px 30px;
+  padding: 10px 40px;
   h1 {
     color: #12121d;
     font-weight: bold;

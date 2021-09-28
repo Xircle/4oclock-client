@@ -26,6 +26,9 @@ import { CURRENT_USER } from "../../components/shared/constants";
 import PageTitle from "../../components/PageTitle";
 
 export default function FriendsPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [age, SetAge] = useState<string>("");
 
   const {

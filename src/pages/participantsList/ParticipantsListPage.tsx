@@ -11,10 +11,15 @@ import {
 } from "../../styles/styles";
 import ParticipantsListContainer from "../../components/participantsList/ParticipantsListContainer";
 import { AgeNumberToString } from "../../lib/utils";
+import { useEffect } from "react";
 
 interface Props {}
 
-export default function participantsListPage(props: Props) {
+export default function ParticipantsListPage(props: Props) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Container>
       <PageTitle title="참가자 리스트" />

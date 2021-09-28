@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import PageTitle from "../../components/PageTitle";
@@ -35,6 +36,10 @@ export default function ReservationConfirmPage({ history, location }: Props) {
     recommendation,
     participationFee,
   } = location.state;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Container>
@@ -76,7 +81,7 @@ export default function ReservationConfirmPage({ history, location }: Props) {
 
             <Row>
               <span className="bold">참가비</span>
-              <span>무료</span>
+              <span>{participationFee === 0 ? "무료" : participationFee}</span>
             </Row>
           </SSection>
 

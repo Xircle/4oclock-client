@@ -63,8 +63,7 @@ const ModalWrapper = styled.div<{ close: boolean }>`
   width: 314px;
   animation: ${up} 150ms linear;
   top: 0px;
-  max-height: calc(100% - 30px);
-  height: 400px;
+  height: 430px;
   background: #fff;
   border-radius: 30px;
   overflow-y: hidden;

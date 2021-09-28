@@ -28,6 +28,9 @@ interface LocationState {
   id: string;
 }
 export default function ParticipantProfilePage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const location = useLocation<LocationState>();
 
   const { data: userProfileData, isLoading } = useQuery<

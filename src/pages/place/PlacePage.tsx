@@ -276,7 +276,7 @@ export default function PlacePage({ match, location, history }: Props) {
               startDateFromNow: placeData.startDateFromNow,
               detailAddress: placeData.placeDetail.detailAddress,
               recommendation: placeData.recommendation,
-              participationFee: placeData.participationFee,
+              participationFee: placeData.placeDetail.participationFee,
             })
           }
           isParticipating={placeData.isParticipating}
@@ -380,7 +380,7 @@ const GridPic = styled.img`
 export const Section = styled.div`
   margin: 0 auto;
   padding: 31px 20px 20px;
-  line-height: 10px;
+  line-height: 19px;
   border-bottom: 0.5px solid #e7ecf3;
 `;
 
