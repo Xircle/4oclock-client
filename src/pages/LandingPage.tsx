@@ -188,7 +188,7 @@ function LandingPage() {
       </FlexDiv>
       <Footer>
         <FooterInnerContainer>
-          <b>팀 GO인물</b>
+          <b>대학생 고인물(팀)</b>이 운영하는 프로젝트입니다.
           <br />
           <SNSIconContainer>
             <a href={links.LInstagram} target={"_blank"}>
@@ -209,14 +209,15 @@ function LandingPage() {
               />
             </a>
           </SNSIconContainer>
-          각종 문의 <b>네시모임 카카오톡 채널 / 인스타그램</b>
+          각종 문의 <a href={links.LOpenKakaoChat} target={"_blank"}>네시모임 카카오톡 채널</a> /{" "}
+          <a href={links.LInstagram} target={"_blank"}>인스타그램</a>
+          <br />
+          <GrayLink href={links.LLocationAgree} target={"_blank"}>
+            이용약괸
+          </GrayLink>
           <br />
           <GrayLink href={links.LPrivacyAgree} target={"_blank"}>
             개인정보처리방침
-          </GrayLink>
-          <br />
-          <GrayLink href={links.LMarketingAgree} target={"_blank"}>
-            마케팅 수신동의 이용약관
           </GrayLink>
         </FooterInnerContainer>
       </Footer>
@@ -237,17 +238,19 @@ const SNSIconContainer = styled.div``;
 const Footer = styled.div`
   background-color: #e7ecf3;
   width: 100%;
-  height: 200px;
+  height: 250px;
 `;
 
 const FooterInnerContainer = styled.div`
   padding-left: 21px;
   padding-top: 28px;
   font-size: 14px;
-  line-height: 25px;
+  line-height: 23px;
   color: #a7b0c0;
-  b {
+  a {
     font-weight: bold;
+    text-decoration: none;
+    color: #a7b0c0;
   }
 `;
 

@@ -14,10 +14,10 @@ export const LInstagram = "https://www.instagram.com/4in_clock_mohe/";
 export const LServiceGuide =
   "https://sixth-lace-751.notion.site/_-1-9-28-96dc4cb4b66d4df6a23bed7b6f93d1d9";
 
-export const LYoutube = "https://www.youtube.com/";
+export const LYoutube =
+  "https://www.youtube.com/channel/UCNIwL_pCvrAt_hTp0ysZo-Q";
 
-export const LKakao =
-  "https://www.kakaocorp.com/page/service/service/KakaoTalk";
+export const LKakao = "https://pf.kakao.com/_DNgQs/chat";
 
 export const LPrivacyAgree =
   "https://sixth-lace-751.notion.site/42731dbfe376424193c93d3468c56674";
