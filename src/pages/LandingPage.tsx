@@ -182,9 +182,69 @@ function LandingPage() {
           />
         </div>
       </FlexDiv>
+      <Footer>
+        <FooterInnerContainer>
+          <b>팀 GO인물</b>
+          <br />
+          <SNSIconContainer>
+            <a href="https://www.instagram.com/?hl=ko" target={"_blank"}>
+              <BrandIcon src="/brands/instagram_logo.png" alt="instagram" />
+            </a>
+            <a
+              href="https://www.kakaocorp.com/page/service/service/KakaoTalk"
+              target={"_blank"}
+            >
+              <BrandIcon
+                marginLeft={"10px"}
+                src="/brands/kakao_logo.png"
+                alt="kakao"
+              />
+            </a>
+            <a href="https://www.youtube.com/" target={"_blank"}>
+              <BrandIcon
+                marginLeft={"10px"}
+                src="/brands/youtube_logo.png"
+                alt="youtube"
+              />
+            </a>
+          </SNSIconContainer>
+          각종 문의 <b>네시모임 카카오톡 채널 / 인스타그램</b>
+          <br />
+          개인정보처리방침
+          <br />
+          마케팅 수신동의 이용약관
+        </FooterInnerContainer>
+      </Footer>
     </Container>
   );
 }
+
+const BrandIcon = styled.img<{ marginLeft?: string }>`
+  width: 30px;
+  height: 30px;
+  margin-left: ${(props) => props?.marginLeft || "0px"};
+  margin-top: 10px;
+  margin-bottom: 7px;
+`;
+
+const SNSIconContainer = styled.div``;
+
+const Footer = styled.div`
+  background-color: #e7ecf3;
+  width: 100%;
+  height: 200px;
+`;
+
+const FooterInnerContainer = styled.div`
+  padding-left: 21px;
+  padding-top: 28px;
+  font-size: 14px;
+  line-height: 25px;
+  color: #a7b0c0;
+  b {
+    font-weight: bold;
+  }
+`;
 
 const FullContainerWithLeftAndRightMargin = styled(
   ContainerwithLeftRightMargin
