@@ -62,6 +62,10 @@ export const GlobalStyles = createGlobalStyle`
 }
 `;
 
+export const LinkWithoutUnderLine = styled.a`
+  text-decoration: none;
+`;
+
 export const colors: Colors = {
   StrongBlue: "#1C43B7",
   MidBlue: "#18A0FB",

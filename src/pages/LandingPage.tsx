@@ -7,6 +7,7 @@ import {
   colors,
   SubText,
   FlexDiv,
+  LinkWithoutUnderLine,
 } from "../styles/styles";
 import KakaoLogin from "react-kakao-login";
 import { LoginResponse, UserProfile } from "../lib/kakao";
@@ -210,9 +211,19 @@ function LandingPage() {
           </SNSIconContainer>
           각종 문의 <b>네시모임 카카오톡 채널 / 인스타그램</b>
           <br />
-          개인정보처리방침
+          <GrayLink
+            href="https://sixth-lace-751.notion.site/42731dbfe376424193c93d3468c56674"
+            target={"_blank"}
+          >
+            개인정보처리방침
+          </GrayLink>
           <br />
-          마케팅 수신동의 이용약관
+          <GrayLink
+            href="https://sixth-lace-751.notion.site/03e0c647bef34396a24b230927a55b4f"
+            target={"_blank"}
+          >
+            마케팅 수신동의 이용약관
+          </GrayLink>
         </FooterInnerContainer>
       </Footer>
     </Container>
@@ -336,6 +347,10 @@ const InputIdPwd = styled.input`
   background: none;
   ::placeholder {
   }
+`;
+
+const GrayLink = styled(LinkWithoutUnderLine)`
+  color: #a7b0c0;
 `;
 
 export default LandingPage;
