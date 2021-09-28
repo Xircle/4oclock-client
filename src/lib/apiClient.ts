@@ -4,7 +4,7 @@ import storage from "./storage";
 
 const host =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:3080"
+    ? process.env.REACT_APP_API_SERVER
     : process.env.REACT_APP_API_SERVER || "/";
 
 const apiClient = axios.create({

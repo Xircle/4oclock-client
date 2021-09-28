@@ -67,7 +67,7 @@ export default function ReservationConfirmPage({ history, location }: Props) {
             </Row>
             <Row>
               <span className="bold">시간</span>
-              <span>{startDateFromNow} 오후 5시(4인) / 오후 7시(2인) 모임</span>
+              <span>{startDateFromNow} 오후 4시(4인) / 오후 7시(2인) 모임</span>
             </Row>
             <Row>
               <span className="bold">장소</span>
