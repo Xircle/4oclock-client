@@ -13,7 +13,8 @@ export default function RegisteredFeed({
   coverImage,
   name,
   startDateFromNow,
-  recommendation,
+  oneLineIntroText,
+  participantsCount,
 }: Props) {
   return (
     <FeedContainer onClick={onClick}>
@@ -29,8 +30,11 @@ export default function RegisteredFeed({
       <FeedDescription>
         <FeedHeading>{name}</FeedHeading>
         <FeedInfoP>
-          {recommendation} <br />
-          <b>{startDateFromNow} / X명의</b> 친구들 신청중
+          {oneLineIntroText} <br />
+          <b>
+            {startDateFromNow} / {participantsCount}명의
+          </b>{" "}
+          친구들 신청중
         </FeedInfoP>
       </FeedDescription>
     </FeedContainer>

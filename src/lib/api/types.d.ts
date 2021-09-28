@@ -104,7 +104,8 @@ export interface MyPlaceData {
   id: string;
   coverImage: string;
   name: string;
-  recommendation: string;
+  oneLineIntroText: string;
+  participantsCount: number;
   startDateFromNow: string;
   isClosed: boolean;
 }
