@@ -29,3 +29,9 @@ Following items are core backend technologies used in this project:
 - TypeScript
 - TypeORM
 - PostgreSQL
+
+### Infra
+- Netlify for clinet
+- Heroku for server 
+- AWS S3 for static image
+- (Upcoming) AWS Lambda for thumbnail image 

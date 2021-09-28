@@ -5,6 +5,8 @@ import {
   SpaceForNavBar,
 } from "../../styles/styles";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUtensils } from "@fortawesome/free-solid-svg-icons";
 import routes from "../../routes";
 
 interface Props {
@@ -18,6 +20,7 @@ export default function BottomNavBar(props: Props) {
         <Link to={routes.placeFeed} style={{ textDecoration: "none" }}>
           {props.selectedItem === "places" ? (
             <BottomNavBarItem style={{ color: colors.MidBlue }}>
+              <FontAwesomeIcon icon={faUtensils} />
               써클
             </BottomNavBarItem>
           ) : (
@@ -64,6 +67,7 @@ const BottomNavBarItem = styled.div`
   width: 125px;
   height: 75px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   &:hover {

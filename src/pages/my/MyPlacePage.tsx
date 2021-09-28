@@ -35,6 +35,8 @@ export default function MyPlacePage() {
     }
   }, [myPlacesData, isLoading]);
 
+  console.log(myPlacesData);
+
   return (
     <ContainerFlexColumn>
       <PageTitle title="My Xircle" />
@@ -54,7 +56,8 @@ export default function MyPlacePage() {
               coverImage={item.coverImage}
               name={item.name}
               startDateFromNow={item.startDateFromNow}
-              recommendation={item.recommendation}
+              oneLineIntroText={item.oneLineIntroText}
+              participantsCount={item.participantsCount}
               onClick={() => history.push(`/place/${item.id}?myPlace=true`)}
             />
           );
