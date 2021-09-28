@@ -5,6 +5,7 @@ import {
   Heading,
   Label,
   colors,
+  SubText,
 } from "../../styles/styles";
 import BottomNavBar from "../../components/shared/BottomNavBar";
 import RegisteredFeed from "../../components/my/RegisteredFeed";
@@ -16,6 +17,7 @@ import BackButtonLayout from "../../components/shared/BackButtonLayout";
 import PageTitle from "../../components/PageTitle";
 import { useHistory } from "react-router-dom";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
+import styled from "styled-components";
 
 export default function MyPlacePage() {
   const history = useHistory();
@@ -43,6 +45,7 @@ export default function MyPlacePage() {
       <BackButtonLayout>
         <ContainerwithLeftRightMargin style={{ width: "90%" }}>
           <Heading>내가 신청한 써클</Heading>
+          <SSubText>신청한 네시모해모임 정보를 확인해보세요</SSubText>
           {!myPlacesData ||
             (myPlacesData.length === 0 && (
               <Label>신청한 써클이 없어요 :(</Label>
@@ -83,3 +86,7 @@ export default function MyPlacePage() {
     </ContainerFlexColumn>
   );
 }
+
+const SSubText = styled(SubText)`
+  margin: 15px 0;
+`;

@@ -84,11 +84,11 @@ const FeedTimeSpan = styled.span`
 `;
 
 const FeedInfoP = styled.p`
-  margin-top: 3px;
+  margin-top: 5px;
   font-size: 10.5px;
   color: ${colors.MidGray};
   font-weight: normal;
-  line-height: 13px;
+  line-height: 17px;
   b {
     font-weight: normal;
     color: ${colors.Black};

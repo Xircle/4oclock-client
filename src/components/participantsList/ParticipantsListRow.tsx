@@ -3,23 +3,18 @@ import { colors, Heading, Avartar, SubText } from "../../styles/styles";
 import type { ParticipantsListData } from "../../lib/api/types";
 import { normalize } from "path";
 
-interface Props extends ParticipantsListData {
-  // onClick: () => void;
-}
-
-interface Props {}
+interface Props extends ParticipantsListData {}
 
 export default function ParticipantsListRow({
-  id,
   job,
   shortBio,
-  profileImg,
+  profileImgUrl,
 }: Props) {
   return (
     <Container>
       <ParticipantLeftContainer>
         <Avartar
-          src={profileImg ? profileImg : "/avatar/anonymous_user.png"}
+          src={profileImgUrl || "/avatar/anonymous_user.png"}
           style={{
             width: "50px",
             height: "50px",
