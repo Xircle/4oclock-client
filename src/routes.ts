@@ -12,7 +12,7 @@ const routes = {
   myPlace: "/my-place",
   editProfilePage: "/edit-profile-page",
   auth: "/auth",
-  participantsList: "/participants-list",
+  participantsList: "/participants-list/:name",
 };
 
 export default routes;
