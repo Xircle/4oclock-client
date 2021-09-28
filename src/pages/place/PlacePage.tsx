@@ -175,8 +175,10 @@ export default function PlacePage({ match, location, history }: Props) {
       <Section id="participant">
         <PrimaryText>
           현재 {placeData.participantsCount}명의 친구들이 신청했어요!
-          <p>프로필을 클릭해서 신청한 친구들의 정보를 구경해보세요!</p>
         </PrimaryText>
+        <DescriptionText>
+          <b>프로필을 클릭</b>해서 신청한 친구들의 정보를 구경해보세요!
+        </DescriptionText>
         <PParticipant>
           남 {placeData.participantsInfo.male_count} 여{" "}
           {placeData.participantsInfo.total_count -
@@ -388,12 +390,16 @@ export const PrimaryText = styled.p`
   color: #18a0fb;
   font-weight: 700;
   font-size: 15px;
-  p {
-    color: #8c94a4;
+`;
+
+const DescriptionText = styled.p`
+  color: #8c94a4;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  margin: 15px 0 0;
+  b {
     font-weight: bold;
-    font-size: 13px;
-    line-height: 16px;
-    margin: 15px 0 0;
   }
 `;
 
