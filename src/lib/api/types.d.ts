@@ -25,6 +25,8 @@ export interface Participants {
   profileImgUrl: string;
   gender: Gender;
   age: number;
+  job: string;
+  shortBio: string;
 }
 export interface PlaceFeedData {
   id: string;
@@ -40,12 +42,7 @@ export interface PlaceFeedData {
   deadline?: string;
 }
 
-export interface ParticipantsListData {
-  id: string;
-  job: string;
-  profileImg?: string;
-  shortBio?: string;
-}
+export interface ParticipantsListData extends Participants {}
 
 export interface GetPlacesByLocationOutput extends CoreOutput {
   places: PlaceFeedData[];
@@ -160,4 +157,18 @@ export type ReservationInfo = [
 
 export interface GetReservationParticipantNumberOutput extends CoreOutput {
   info?: ReservationInfo;
+}
+
+// Get ParticipantList
+export interface PlaceParticipantListData {
+  participantListProfiles: MainFeedPlaceParticipantsProfile[];
+  participantsInfo: {
+    total_count: number;
+    male_count: number;
+    average_age: number;
+  };
+}
+
+export interface GetPlaceParticipantListOutput extends CoreOutput {
+  participants?: PlaceParticipantListData;
 }
