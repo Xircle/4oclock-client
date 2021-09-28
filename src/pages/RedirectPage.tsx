@@ -5,7 +5,8 @@ import AxiosClient from "../lib/apiClient";
 import routes from "../routes";
 import Storage from "../lib/storage";
 import { CURRENT_USER } from "../components/shared/constants";
-import { Heading } from "../styles/styles";
+import { Heading, colors } from "../styles/styles";
+import styled from "styled-components";
 
 export default function SocialRedirect() {
   const location = useLocation<SocialAuthResponse>();
@@ -41,15 +42,37 @@ export default function SocialRedirect() {
   return (
     <div
       style={{
-        height: "80vh",
+        height: "90vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <Heading>Xircle에서 새로운</Heading>
-      <Heading> 네트워킹을 경험하세요</Heading>
+      <MainText>네시모해?</MainText>
+      <SubText>
+        좋은 친구들과 <b>맛있는 음식</b> 먹으러 가자!
+      </SubText>
+      <Emoji>🍚</Emoji>
     </div>
   );
 }
+
+const MainText = styled(Heading)`
+  font-weight: bold;
+  font-size: 32px;
+  color: #6f7789;
+`;
+
+const SubText = styled(Heading)`
+  font-weight: 500;
+  font-size: 18px;
+  color: #6f7789;
+  b {
+    color: ${colors.MidBlue};
+  }
+`;
+
+const Emoji = styled(Heading)`
+  font-size: 125px;
+`;
