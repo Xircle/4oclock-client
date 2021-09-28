@@ -2,7 +2,6 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import { QueryCache, QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 import { toast, ToastContainer } from "react-toastify";
 import { BrowserRouter as Router } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
