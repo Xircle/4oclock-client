@@ -68,7 +68,7 @@ export default function AuthPhoneNumber({ onNext, state, dispatch }: Props) {
 const PhoneNumberInput = styled.input`
   margin-top: 40px;
   padding: 0 10px;
-  width: 100%;
+  width: 300px;
   height: 56px;
   border-radius: 0;
   border: 0px;
