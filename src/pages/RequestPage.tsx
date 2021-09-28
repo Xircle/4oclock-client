@@ -8,7 +8,9 @@ import {
   SubText,
   MainBtn,
   ContainerwithLeftRightMargin,
+  LinkWithoutUnderLine,
 } from "../styles/styles";
+import * as links from "../components/shared/Links";
 
 export default function RequestPage() {
   return (
@@ -23,7 +25,9 @@ export default function RequestPage() {
               빠르게 만들어 드리겠습니다 :)
             </b>
           </SubTextRequest>
-          <MainBtnRequest>맛집 모임 건의하기</MainBtnRequest>
+          <LinkWithoutUnderLine href={links.LOpenKakaoChat} target={"_blank"}>
+            <MainBtnRequest>맛집 모임 건의하기</MainBtnRequest>
+          </LinkWithoutUnderLine>
         </ContainerwithLeftRightMargin>
         <BottomNavBar selectedItem="places" />
       </BackButtonLayout>
