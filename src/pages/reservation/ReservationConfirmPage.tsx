@@ -101,6 +101,7 @@ const SSection = styled(Section)`
   margin: 50px 0 10px;
   padding: 30px 0;
   border-top: 1px solid #e7ecf3;
+  border-bottom: none;
 `;
 const SubTextBookingBookingConfirm = styled(SubText)`
   margin-top: 40px;
