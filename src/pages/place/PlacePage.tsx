@@ -201,12 +201,18 @@ export default function PlacePage({ match, location, history }: Props) {
               key={participant.userId}
               profileImgUrl={participant.profileImgUrl}
               width="46px"
-              rightOffset={"5px"}
+              rightOffset={"8px"}
               onClick={() =>
-                placeData.isParticipating &&
-                history.push(`${routes.participantProfile}`, {
-                  id: participant.userId,
-                })
+                placeData.isParticipating
+                  ? history.push(`${routes.participantProfile}`, {
+                      id: participant.userId,
+                    })
+                  : history.push(
+                      `/participants-list/${encodeUrlSlug(placeData.name)}`,
+                      {
+                        placeId,
+                      }
+                    )
               }
             />
           ))}

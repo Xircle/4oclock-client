@@ -5,7 +5,6 @@ import {
   Container,
   ProcedureHeading,
   SubText,
-  MainBtn,
   ContainerwithLeftRightMargin,
   colors,
   BottomFixedButtonContainer,
@@ -13,15 +12,74 @@ import {
   BottomFixedButtoninContainer,
 } from "../../styles/styles";
 import ParticipantsListContainer from "../../components/participantsList/ParticipantsListContainer";
-import { AgeNumberToString } from "../../lib/utils";
+import {
+  AgeNumberToString,
+  decodeUrlSlug,
+  encodeUrlSlug,
+} from "../../lib/utils";
 import { useEffect } from "react";
+import { RouteComponentProps } from "react-router-dom";
+import { PlaceData, PlaceParticipantListData } from "../../lib/api/types";
+import { useQuery } from "react-query";
+import { getPlaceParticipantList } from "../../lib/api/getParticipantList";
+import { getPlaceById } from "../../lib/api/getPlaceById";
 
-interface Props {}
+interface MatchParmas {
+  name: string;
+}
 
-export default function ParticipantsListPage(props: Props) {
+interface Props
+  extends RouteComponentProps<
+    MatchParmas,
+    {},
+    {
+      placeId: string;
+      startDateFromNow: string;
+      detailAddress: string;
+      recommendation: string;
+      participationFee: number;
+    }
+  > {}
+
+export default function ParticipantsListPage({
+  history,
+  match,
+  location,
+}: Props) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  // 캐시된 placeData 정보 가져오기
+  const { placeId } = location.state;
+  const { data: placeData } = useQuery<PlaceData | undefined>(
+    ["place-detail", placeId],
+    () => getPlaceById(placeId),
+    {
+      onError: (err: any) => {
+        alert(err);
+        return;
+      },
+      retry: 1,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  const {
+    data: participantListData,
+    isLoading,
+    isError,
+  } = useQuery<PlaceParticipantListData | undefined>(
+    ["participants-list", placeId],
+    () => getPlaceParticipantList(placeId),
+    {
+      onError: (err: any) => {
+        alert(err);
+        return;
+      },
+      retry: 1,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   return (
     <Container>
@@ -29,7 +87,8 @@ export default function ParticipantsListPage(props: Props) {
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
           <Heading>
-            장소 이름 모임을 <br /> 신청한 친구들
+            {placeData && decodeUrlSlug(placeData.name)} 모임을 <br /> 신청한
+            친구들
           </Heading>
           <SubTextParticipantsList>
             현재 모임을 신청한 친구들의 소개 정보예요 {":)"} <br />
@@ -37,24 +96,51 @@ export default function ParticipantsListPage(props: Props) {
             가능해요{"."}
           </SubTextParticipantsList>
           <InfoDiv>
-            <InfoText>남 X</InfoText>
-            <InfoText style={{ marginLeft: "15px" }}>여 X</InfoText>
+            <InfoText>
+              남 {participantListData?.participantsInfo.male_count}
+            </InfoText>
             <InfoText style={{ marginLeft: "15px" }}>
-              평균 나이 {AgeNumberToString(22)}
+              여{" "}
+              {participantListData &&
+                participantListData?.participantsInfo?.total_count -
+                  participantListData?.participantsInfo?.male_count}
+            </InfoText>
+            <InfoText style={{ marginLeft: "15px" }}>
+              평균 나이{" "}
+              {participantListData &&
+                AgeNumberToString(
+                  participantListData?.participantsInfo?.average_age
+                )}
             </InfoText>
           </InfoDiv>
           <ParticipantsListRowWrapper>
             <ParticipantsListContainer
-              hasError={false}
-              isLoading={false}
-              ParticipantsListData={[]}
+              hasError={isError}
+              isLoading={isLoading}
+              ParticipantsListData={
+                participantListData?.participantListProfiles
+              }
             />
           </ParticipantsListRowWrapper>
         </ContainerwithLeftRightMargin>
         <SpaceForNavBar></SpaceForNavBar>
       </BackButtonLayout>
       <BottomFixedButtonContainer>
-        <BottomFixedButtoninContainer>참여하기</BottomFixedButtoninContainer>
+        <BottomFixedButtoninContainer
+          onClick={() => {
+            placeData &&
+              !placeData.isParticipating &&
+              history.push(`/reservation/${encodeUrlSlug(placeData.name)}`, {
+                placeId,
+                startDateFromNow: placeData.startDateFromNow,
+                detailAddress: placeData.placeDetail.detailAddress,
+                recommendation: placeData.recommendation,
+                participationFee: placeData.placeDetail.participationFee,
+              });
+          }}
+        >
+          참여하기
+        </BottomFixedButtoninContainer>
       </BottomFixedButtonContainer>
     </Container>
   );
