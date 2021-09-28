@@ -9,6 +9,7 @@ import {
   ContainerwithLeftRightMargin,
   FlexDiv,
   MainBtn,
+  SpaceForNavBar,
 } from "../../styles/styles";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
@@ -108,6 +109,12 @@ export default function ParticipantProfilePage() {
                 : "남"}
             </InnerContent>
           </InnerContainer>
+          {userProfileData?.activities && (
+            <InnerContainer style={{ marginTop: "6px" }}>
+              <InnerSubject>활동</InnerSubject>
+              <InnerContent>{userProfileData?.activities}</InnerContent>
+            </InnerContainer>
+          )}
           <InnerContainer style={{ marginTop: "25px" }}>
             <InnerContent
               style={{ marginLeft: "0px", fontWeight: 400, fontSize: "14px" }}
@@ -117,6 +124,7 @@ export default function ParticipantProfilePage() {
             </InnerContent>
           </InnerContainer>
         </ContainerwithLeftRightMargin>
+        <SpaceForNavBar></SpaceForNavBar>
       </BackButtonLayout>
 
       {isLoading && (
