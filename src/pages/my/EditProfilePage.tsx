@@ -41,6 +41,7 @@ export interface ProfileData {
   profileImageUrl?: string;
   job?: string;
   location?: string;
+  activities?: string;
 }
 
 interface Props extends RouteComponentProps {}
@@ -76,6 +77,7 @@ export default function EditProfilePage({ history }: Props) {
         job: userData?.job,
         profileImageUrl: userData?.profileImageUrl,
         location: userData?.location,
+        activities: userData?.activities,
       });
     }
   }, [isSuccess]);
@@ -189,6 +191,14 @@ export default function EditProfilePage({ history }: Props) {
       ...prev,
       job: e.target.value,
     }));
+  };
+
+  const handleActivitiesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocalProfileData((prev) => ({
+      ...prev,
+      activities: e.target.value,
+    }));
+    console.log(userData);
   };
 
   const handleFileOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -351,10 +361,18 @@ export default function EditProfilePage({ history }: Props) {
             {!localValidation[2] && (
               <ErrorMessage>{errorMessages[2]}</ErrorMessage>
             )}
+            <Label>활동이력</Label>
+            <MidInput
+              name="activities"
+              placeholder="ex. 식탁팟/인사이더스/멋쟁이사자처럼"
+              value={localProfileData.activities || ""}
+              onChange={handleActivitiesChange}
+            />
           </form>
+          <SpaceForNavBar></SpaceForNavBar>
         </ContainerwithLeftRightMargin>
       </BackButtonLayout>
-      <SpaceForNavBar></SpaceForNavBar>
+
       <BottomFixedButtonContainer>
         <BottomFixedButtoninContainer
           disabled={diff(userData, localProfileData) === {}}

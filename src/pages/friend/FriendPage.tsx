@@ -31,12 +31,9 @@ export default function FriendsPage() {
   }, []);
   const [age, SetAge] = useState<string>("");
 
-  const {
-    data: randomProfileData,
-    refetch,
-    isLoading,
-    isFetching,
-  } = useQuery<UserProfile | undefined>(["randomProfile"], seeRandomProfile, {
+  const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
+    UserProfile | undefined
+  >(["randomProfile"], seeRandomProfile, {
     retry: 1,
     refetchOnMount: false,
   });
@@ -110,6 +107,13 @@ export default function FriendsPage() {
               : "남"}
           </InnerContent>
         </InnerContainer>
+        {randomProfileData?.activities && (
+          <InnerContainer style={{ marginTop: "6px" }}>
+            <InnerSubject>활동</InnerSubject>
+            <InnerContent>{randomProfileData?.activities}</InnerContent>
+          </InnerContainer>
+        )}
+
         <InnerContainer style={{ marginTop: "25px" }}>
           <InnerContent
             style={{ marginLeft: "0px", fontWeight: 400, fontSize: "14px" }}

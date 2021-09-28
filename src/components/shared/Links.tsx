@@ -9,7 +9,7 @@ export const LServiceAgree =
 export const LLocationAgree =
   "https://www.notion.so/b1af099753014df0a6ff7d442dd3e501";
 
-export const LInstagram = "https://www.instagram.com/?hl=ko";
+export const LInstagram = "https://www.instagram.com/4in_clock_mohe/";
 
 export const LServiceGuide =
   "https://sixth-lace-751.notion.site/_-1-9-28-96dc4cb4b66d4df6a23bed7b6f93d1d9";

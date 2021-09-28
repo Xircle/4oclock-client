@@ -15,6 +15,8 @@ export const editProfile = async (
   editedProfileData.shortBio &&
     formData.append("shortBio", editedProfileData.shortBio);
   editedProfileData.job && formData.append("job", editedProfileData.job);
+  editedProfileData.activities &&
+    formData.append("activities", editedProfileData.activities);
 
   return AxiosClient.put<CreateAccountOutput>("user", formData);
 };
