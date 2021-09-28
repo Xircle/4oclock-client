@@ -69,8 +69,9 @@ export default function ReservationPage({ match, location, history }: Props) {
     setReservationClicked((prev) => !prev);
   };
 
-  const { mutateAsync: mutateReservation, isLoading } =
-    useMutation(makeReservation);
+  const { mutateAsync: mutateReservation, isLoading } = useMutation(
+    makeReservation
+  );
 
   const makeReservationHandler = async () => {
     if (!selectedTime || !placeId) return;
@@ -112,7 +113,7 @@ export default function ReservationPage({ match, location, history }: Props) {
 
           <SelectionBoxBooking onClick={() => setSelectedTime("Four")}>
             <SelectionMainTextBooking>
-              {startDateFromNow} 오후 5시
+              {startDateFromNow} 오후 4시
               <TagBooking>
                 <p>4인 모임</p>
               </TagBooking>

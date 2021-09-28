@@ -28,7 +28,7 @@ interface Props {
 }
 
 export default function AuthProfileData({ onNext, state, dispatch }: Props) {
-  const univs: string[] = ["고려대학교", "연세대학교"];
+  const univs: string[] = ["고려대학교", "연세대학교", "이화여자대학교"];
   const [nameError, SetNameError] = useState<boolean>(false);
   const [univError, SetUnivError] = useState<boolean>(false);
   const [ageError, SetAgeError] = useState<boolean>(false);
@@ -211,6 +211,12 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
           </option>
           <option value="연세대학교 졸업" style={{ color: colors.Black }}>
             연세대학교 졸업
+          </option>
+          <option value="이화여자대학교 재학" style={{ color: colors.Black }}>
+            이화여자대학교 재학
+          </option>
+          <option value="이화여자대학교 졸업" style={{ color: colors.Black }}>
+            이화여자대학교 졸업
           </option>
         </select>
         {univError && <ErrorMessage>{errorMessages[1]}</ErrorMessage>}

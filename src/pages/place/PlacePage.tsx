@@ -145,7 +145,7 @@ export default function PlacePage({ match, location, history }: Props) {
       <PlaceSummaryInformation>
         <span>{placeData.recommendation}</span> 나이만 참여가능해요.
         <br />
-        <span>{placeData.startDateFromNow} 오후 5시와 7시에</span> 열리는 모임이
+        <span>{placeData.startDateFromNow} 오후 4시와 7시에</span> 열리는 모임이
         있어요.
       </PlaceSummaryInformation>
 
@@ -229,7 +229,7 @@ export default function PlacePage({ match, location, history }: Props) {
         <Row>
           <span className="bold">시간</span>
           <span>
-            {placeData.startDateFromNow} 오후 5시(4인) / 오후 7시(2인) 모임
+            {placeData.startDateFromNow} 오후 4시(4인) / 오후 7시(2인) 모임
           </span>
         </Row>
         <Row>
