@@ -50,11 +50,7 @@ function App() {
                   alignItems: "center",
                 }}
               >
-                <img
-                  width={200}
-                  height={300}
-                  src="https://raw.githubusercontent.com/Xircle/xircle-client/master/public/Logo/Xircle_Logo.svg"
-                />
+                <img src="/fallback_icon.png" />
               </div>
             }
           >
