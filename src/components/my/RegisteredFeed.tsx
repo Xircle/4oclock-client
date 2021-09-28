@@ -28,15 +28,10 @@ export default function RegisteredFeed({
       </FeedLeftContainer>
       <FeedDescription>
         <FeedHeading>{name}</FeedHeading>
-
-        <FeedTimeSpan>{"강남"}</FeedTimeSpan>
-        <FeedTimeSpan style={{ marginRight: "3px", marginLeft: "3px" }}>
-          /
-        </FeedTimeSpan>
-        <FeedTimeSpan>{startDateFromNow}</FeedTimeSpan>
-        <FeedTimeSpan style={{ marginLeft: "8px" }}>
-          {recommendation}
-        </FeedTimeSpan>
+        <FeedInfoP>
+          {recommendation} <br />
+          <b>{startDateFromNow} / X명의</b> 친구들 신청중
+        </FeedInfoP>
       </FeedDescription>
     </FeedContainer>
   );
@@ -46,13 +41,16 @@ const FeedContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 25px;
+  padding: 18px 0;
   cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const FeedLeftContainer = styled.div`
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   padding: 0px;
   position: relative;
 `;
@@ -65,8 +63,8 @@ const FeedImg = styled.img`
 `;
 
 const FeedDescription = styled.div`
-  width: 200px;
-  padding-left: 10px;
+  width: 205px;
+  padding-left: 16px;
   padding-top: 5px;
 `;
 
@@ -79,6 +77,18 @@ const FeedTimeSpan = styled.span`
   margin-top: 3px;
   font-size: 10px;
   color: ${colors.LightGray};
+`;
+
+const FeedInfoP = styled.p`
+  margin-top: 3px;
+  font-size: 10.5px;
+  color: ${colors.MidGray};
+  font-weight: normal;
+  line-height: 13px;
+  b {
+    font-weight: normal;
+    color: ${colors.Black};
+  }
 `;
 
 const FeedHeading = styled.h4`

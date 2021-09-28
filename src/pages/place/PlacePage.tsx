@@ -175,14 +175,24 @@ export default function PlacePage({ match, location, history }: Props) {
       <Section id="participant">
         <PrimaryText>
           현재 {placeData.participantsCount}명의 친구들이 신청했어요!
-          <p>프로필을 클릭해서 신청한 친구들의 정보를 구경해보세요!</p>
         </PrimaryText>
-        <PParticipant>
-          남 {placeData.participantsInfo.male_count} 여{" "}
-          {placeData.participantsInfo.total_count -
-            placeData.participantsInfo.male_count}{" "}
-          평균 나이 {AgeNumberToString(placeData.participantsInfo.average_age)}
-        </PParticipant>
+        <DescriptionText>
+          <b>프로필을 클릭</b>해서 신청한 친구들의 정보를 구경해보세요!
+        </DescriptionText>
+        <PParticipantContainer>
+          <PParticipant>
+            남 {placeData.participantsInfo.male_count}{" "}
+          </PParticipant>
+          <PParticipant MarginLeft={"10px"}>
+            여{" "}
+            {placeData.participantsInfo.total_count -
+              placeData.participantsInfo.male_count}
+          </PParticipant>
+          <PParticipant MarginLeft={"10px"}>
+            평균 나이{" "}
+            {AgeNumberToString(placeData.participantsInfo.average_age)}
+          </PParticipant>
+        </PParticipantContainer>
         <AvartarImgContainerParticipant
           isParticipating={placeData.isParticipating}
         >
@@ -388,21 +398,29 @@ export const PrimaryText = styled.p`
   color: #18a0fb;
   font-weight: 700;
   font-size: 15px;
-  p {
-    color: #8c94a4;
+`;
+
+const DescriptionText = styled.p`
+  color: #8c94a4;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  margin: 15px 0 0;
+  b {
     font-weight: bold;
-    font-size: 13px;
-    line-height: 16px;
-    margin: 15px 0 0;
   }
 `;
 
-const PParticipant = styled.p`
-  margin: 15px 0;
+const PParticipantContainer = styled.div`
+  margin-top: 15px;
+`;
+
+const PParticipant = styled.span<{ MarginLeft?: string }>`
+  margin-left: ${(props) => props.MarginLeft || "0"};
   color: #6f7789;
-  font-size: 12px;
-  line-height: 14px;
-  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 500;
 `;
 
 const AvartarImgContainerParticipant = styled.div<{ isParticipating: boolean }>`

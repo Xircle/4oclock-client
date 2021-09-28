@@ -7,10 +7,12 @@ import {
   colors,
   SubText,
   FlexDiv,
+  LinkWithoutUnderLine,
 } from "../styles/styles";
 import KakaoLogin from "react-kakao-login";
 import { LoginResponse, UserProfile } from "../lib/kakao";
 import { useHistory } from "react-router-dom";
+import * as links from "../components/shared/Links";
 
 function LandingPage() {
   const history = useHistory();
@@ -123,10 +125,14 @@ function LandingPage() {
             네시모해에 가입한 친구들과 소통을 즐겨보아요{"!"}
           </TextSubBox>
         </FlexDiv>
-        <ContainerwithLeftRightMargin>
-          <img src="/landingPage/SubPic2.png" />
-          <img src="/landingPage/SubPic3.png" />
-        </ContainerwithLeftRightMargin>
+        <FullContainerWithLeftAndRightMargin>
+          <FlexDiv>
+            <img src="/landingPage/SubPic2.png" />
+          </FlexDiv>
+          <FlexDiv>
+            <img src="/landingPage/SubPic3.png" />
+          </FlexDiv>
+        </FullContainerWithLeftAndRightMargin>
       </SubBox>
       <SubBox>
         <FlexDiv>
@@ -180,9 +186,76 @@ function LandingPage() {
           />
         </div>
       </FlexDiv>
+      <Footer>
+        <FooterInnerContainer>
+          <b>팀 GO인물</b>
+          <br />
+          <SNSIconContainer>
+            <a href={links.LInstagram} target={"_blank"}>
+              <BrandIcon src="/brands/instagram_logo.png" alt="instagram" />
+            </a>
+            <a href={links.LKakao} target={"_blank"}>
+              <BrandIcon
+                marginLeft={"10px"}
+                src="/brands/kakao_logo.png"
+                alt="kakao"
+              />
+            </a>
+            <a href={links.LYoutube} target={"_blank"}>
+              <BrandIcon
+                marginLeft={"10px"}
+                src="/brands/youtube_logo.png"
+                alt="youtube"
+              />
+            </a>
+          </SNSIconContainer>
+          각종 문의 <b>네시모임 카카오톡 채널 / 인스타그램</b>
+          <br />
+          <GrayLink href={links.LPrivacyAgree} target={"_blank"}>
+            개인정보처리방침
+          </GrayLink>
+          <br />
+          <GrayLink href={links.LMarketingAgree} target={"_blank"}>
+            마케팅 수신동의 이용약관
+          </GrayLink>
+        </FooterInnerContainer>
+      </Footer>
     </Container>
   );
 }
+
+const BrandIcon = styled.img<{ marginLeft?: string }>`
+  width: 30px;
+  height: 30px;
+  margin-left: ${(props) => props?.marginLeft || "0px"};
+  margin-top: 10px;
+  margin-bottom: 7px;
+`;
+
+const SNSIconContainer = styled.div``;
+
+const Footer = styled.div`
+  background-color: #e7ecf3;
+  width: 100%;
+  height: 200px;
+`;
+
+const FooterInnerContainer = styled.div`
+  padding-left: 21px;
+  padding-top: 28px;
+  font-size: 14px;
+  line-height: 25px;
+  color: #a7b0c0;
+  b {
+    font-weight: bold;
+  }
+`;
+
+const FullContainerWithLeftAndRightMargin = styled(
+  ContainerwithLeftRightMargin
+)`
+  width: 100%;
+`;
 
 const Container = styled.div`
   width: 100%;
@@ -268,6 +341,10 @@ const InputIdPwd = styled.input`
   background: none;
   ::placeholder {
   }
+`;
+
+const GrayLink = styled(LinkWithoutUnderLine)`
+  color: #a7b0c0;
 `;
 
 export default LandingPage;

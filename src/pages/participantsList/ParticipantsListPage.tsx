@@ -8,6 +8,9 @@ import {
   MainBtn,
   ContainerwithLeftRightMargin,
   colors,
+  BottomFixedButtonContainer,
+  SpaceForNavBar,
+  BottomFixedButtoninContainer,
 } from "../../styles/styles";
 import ParticipantsListContainer from "../../components/participantsList/ParticipantsListContainer";
 import { AgeNumberToString } from "../../lib/utils";
@@ -48,7 +51,11 @@ export default function ParticipantsListPage(props: Props) {
             />
           </ParticipantsListRowWrapper>
         </ContainerwithLeftRightMargin>
+        <SpaceForNavBar></SpaceForNavBar>
       </BackButtonLayout>
+      <BottomFixedButtonContainer>
+        <BottomFixedButtoninContainer>참여하기</BottomFixedButtoninContainer>
+      </BottomFixedButtonContainer>
     </Container>
   );
 }
