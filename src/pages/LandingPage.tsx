@@ -12,6 +12,7 @@ import {
 import KakaoLogin from "react-kakao-login";
 import { LoginResponse, UserProfile } from "../lib/kakao";
 import { useHistory } from "react-router-dom";
+import * as links from "../components/shared/Links";
 
 function LandingPage() {
   const history = useHistory();
@@ -188,20 +189,17 @@ function LandingPage() {
           <b>팀 GO인물</b>
           <br />
           <SNSIconContainer>
-            <a href="https://www.instagram.com/?hl=ko" target={"_blank"}>
+            <a href={links.LInstagram} target={"_blank"}>
               <BrandIcon src="/brands/instagram_logo.png" alt="instagram" />
             </a>
-            <a
-              href="https://www.kakaocorp.com/page/service/service/KakaoTalk"
-              target={"_blank"}
-            >
+            <a href={links.LKakao} target={"_blank"}>
               <BrandIcon
                 marginLeft={"10px"}
                 src="/brands/kakao_logo.png"
                 alt="kakao"
               />
             </a>
-            <a href="https://www.youtube.com/" target={"_blank"}>
+            <a href={links.LYoutube} target={"_blank"}>
               <BrandIcon
                 marginLeft={"10px"}
                 src="/brands/youtube_logo.png"
@@ -211,17 +209,11 @@ function LandingPage() {
           </SNSIconContainer>
           각종 문의 <b>네시모임 카카오톡 채널 / 인스타그램</b>
           <br />
-          <GrayLink
-            href="https://sixth-lace-751.notion.site/42731dbfe376424193c93d3468c56674"
-            target={"_blank"}
-          >
+          <GrayLink href={links.LPrivacyAgree} target={"_blank"}>
             개인정보처리방침
           </GrayLink>
           <br />
-          <GrayLink
-            href="https://sixth-lace-751.notion.site/03e0c647bef34396a24b230927a55b4f"
-            target={"_blank"}
-          >
+          <GrayLink href={links.LMarketingAgree} target={"_blank"}>
             마케팅 수신동의 이용약관
           </GrayLink>
         </FooterInnerContainer>

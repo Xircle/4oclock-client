@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import * as links from "../shared/Links";
 import {
   ContainerwithLeftRightMargin,
   Heading,
@@ -73,10 +74,7 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
             {"("}필수{")"}
           </BlueTextSpan>
         </span>
-        <a
-          href="https://sixth-lace-751.notion.site/6bd87dd19ac54da182cbd49bdf66f675"
-          target={"_blank"}
-        >
+        <a href={links.LServiceAgree} target={"_blank"}>
           <span style={{ position: "absolute", right: "0%" }}>
             <FontAwesomeIcon icon={faChevronRight} color={colors.LightGray} />
           </span>
@@ -100,10 +98,7 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
             {"("}필수{")"}
           </BlueTextSpan>
         </span>
-        <a
-          href="https://sixth-lace-751.notion.site/42731dbfe376424193c93d3468c56674"
-          target={"_blank"}
-        >
+        <a href={links.LPrivacyAgree} target={"_blank"}>
           <span style={{ position: "absolute", right: "0%" }}>
             <FontAwesomeIcon icon={faChevronRight} color={colors.LightGray} />
           </span>
@@ -127,10 +122,7 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
             {"("}필수{")"}
           </BlueTextSpan>
         </span>
-        <a
-          href="https://sixth-lace-751.notion.site/b1af099753014df0a6ff7d442dd3e501"
-          target={"_blank"}
-        >
+        <a href={links.LLocationAgree} target={"_blank"}>
           <span style={{ position: "absolute", right: "0%" }}>
             <FontAwesomeIcon icon={faChevronRight} color={colors.LightGray} />
           </span>
@@ -154,10 +146,7 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
             {"("}선택{")"}
           </GrayTextSpan>
         </span>
-        <a
-          href="https://sixth-lace-751.notion.site/03e0c647bef34396a24b230927a55b4f"
-          target={"_blank"}
-        >
+        <a href={links.LMarketingAgree} target={"_blank"}>
           <span style={{ position: "absolute", right: "0%" }}>
             <FontAwesomeIcon icon={faChevronRight} color={colors.LightGray} />
           </span>

@@ -26,6 +26,7 @@ import Storage from "../../lib/storage";
 import { CURRENT_USER } from "../../components/shared/constants";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
 import PageTitle from "../../components/PageTitle";
+import * as links from "../../components/shared/Links";
 
 export default function MyPage() {
   useEffect(() => {
@@ -87,22 +88,13 @@ export default function MyPage() {
               />
             </MainSubContainer>
           </Link>
-          <LinkWithoutUnderLine
-            href="https://open.kakao.com/o/sPyWuGBd"
-            target={"_blank"}
-          >
+          <LinkWithoutUnderLine href={links.LOpenKakaoChat} target={"_blank"}>
             <SubContainer>맛집 건의하기</SubContainer>
           </LinkWithoutUnderLine>
-          <LinkWithoutUnderLine
-            href="https://open.kakao.com/o/sPyWuGBd"
-            target={"_blank"}
-          >
+          <LinkWithoutUnderLine href={links.LOpenKakaoChat} target={"_blank"}>
             <SubContainer>네시모해에게 문의하기 / 피드백 하기</SubContainer>
           </LinkWithoutUnderLine>
-          <LinkWithoutUnderLine
-            href="https://open.kakao.com/o/https://sixth-lace-751.notion.site/_-1-9-28-96dc4cb4b66d4df6a23bed7b6f93d1d9"
-            target={"_blank"}
-          >
+          <LinkWithoutUnderLine href={links.LServiceGuide} target={"_blank"}>
             <SubContainer>네시모해 서비스 사용자 가이드</SubContainer>
           </LinkWithoutUnderLine>
           <SubContainer>유저 신고하기</SubContainer>
@@ -112,27 +104,21 @@ export default function MyPage() {
 
           <Footer>
             <Row>
-              <a href="https://www.instagram.com/?hl=ko" target={"_blank"}>
+              <a href={links.LInstagram} target={"_blank"}>
                 <BrandImg src="/brands/instagram_logo.png" alt="instagram" />
               </a>
-              <a
-                href="https://www.kakaocorp.com/page/service/service/KakaoTalk"
-                target={"_blank"}
-              >
+              <a href={links.LKakao} target={"_blank"}>
                 <BrandImg src="/brands/kakao_logo.png" alt="kakao" />
               </a>
-              <a href="https://www.youtube.com/" target={"_blank"}>
+              <a href={links.LYoutube} target={"_blank"}>
                 <BrandImg src="/brands/youtube_logo.png" alt="youtube" />
               </a>
             </Row>
-            <LinkWithoutUnderLine
-              href="https://sixth-lace-751.notion.site/42731dbfe376424193c93d3468c56674"
-              target={"_blank"}
-            >
+            <LinkWithoutUnderLine href={links.LPrivacyAgree} target={"_blank"}>
               <AgreeText>개인정보처리방침</AgreeText>
             </LinkWithoutUnderLine>
             <LinkWithoutUnderLine
-              href="https://sixth-lace-751.notion.site/03e0c647bef34396a24b230927a55b4f"
+              href={links.LMarketingAgree}
               target={"_blank"}
             >
               <AgreeText>마케팅 수신동의 이용약관</AgreeText>
