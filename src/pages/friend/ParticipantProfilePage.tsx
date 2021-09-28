@@ -182,7 +182,7 @@ const InnerContent = styled.span`
   margin-left: 30px;
 `;
 
-const IndicatorBox = styled.div`
+export const IndicatorBox = styled.div`
   background-color: #dbedff;
   border-radius: 4px;
   color: #18a0fb;

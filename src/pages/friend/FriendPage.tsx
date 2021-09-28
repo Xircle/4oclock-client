@@ -24,6 +24,7 @@ import routes from "../../routes";
 import storage from "../../lib/storage";
 import { CURRENT_USER } from "../../components/shared/constants";
 import PageTitle from "../../components/PageTitle";
+import { IndicatorBox } from "./ParticipantProfilePage";
 
 export default function FriendsPage() {
   useEffect(() => {
@@ -31,9 +32,12 @@ export default function FriendsPage() {
   }, []);
   const [age, SetAge] = useState<string>("");
 
-  const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
-    UserProfile | undefined
-  >(["randomProfile"], seeRandomProfile, {
+  const {
+    data: randomProfileData,
+    refetch,
+    isLoading,
+    isFetching,
+  } = useQuery<UserProfile | undefined>(["randomProfile"], seeRandomProfile, {
     retry: 1,
     refetchOnMount: false,
   });
@@ -60,6 +64,10 @@ export default function FriendsPage() {
       <PageTitle title="랜덤 프로필" />
       <ContainerwithLeftRightMargin>
         <Heading style={{ marginTop: "40px" }}>
+          <IndicatorBox>
+            네시모해를 가입한 친구들과 소통할 수 있는 탭이에요! 채팅기능을 개발
+            중입니다 🔥
+          </IndicatorBox>
           <b>
             {randomProfileData?.location ? (
               <>{randomProfileData?.location} 근처 친구</>
@@ -73,14 +81,12 @@ export default function FriendsPage() {
             <FontAwesomeIcon icon={faArrowRight} size="lg" />
           </NextButtonFriend>
           <AvartarBig
-            src={
-              randomProfileData?.profileImageUrl || "/avatar/anonymous_user.png"
-            }
+            src={randomProfileData?.profileImageUrl || "/avatar/2donny.png"}
             alt="friend-profile"
           />
         </FlexDiv>
         <FlexDiv style={{ marginTop: "15px" }}>
-          <Name>{randomProfileData?.username || "써클개발자"}</Name>
+          <Name>{randomProfileData?.username || "써클 개발자"}</Name>
         </FlexDiv>
         <FlexDiv>
           <TagOnName>
