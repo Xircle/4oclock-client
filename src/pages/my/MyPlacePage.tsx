@@ -39,26 +39,26 @@ export default function MyPlacePage() {
     <ContainerFlexColumn>
       <PageTitle title="My Xircle" />
       <BackButtonLayout>
-        <ContainerwithLeftRightMargin>
+        <ContainerwithLeftRightMargin style={{ width: "90%" }}>
           <Heading>내가 신청한 써클</Heading>
           {!myPlacesData ||
             (myPlacesData.length === 0 && (
               <Label>신청한 써클이 없어요 :(</Label>
             ))}
-          {myPlacesData?.map((item) => {
-            return (
-              <RegisteredFeed
-                key={item.id}
-                isClosed={item.isClosed}
-                coverImage={item.coverImage}
-                name={item.name}
-                startDateFromNow={item.startDateFromNow}
-                recommendation={item.recommendation}
-                onClick={() => history.push(`/place/${item.id}?myPlace=true`)}
-              />
-            );
-          })}
         </ContainerwithLeftRightMargin>
+        {myPlacesData?.map((item) => {
+          return (
+            <RegisteredFeed
+              key={item.id}
+              isClosed={item.isClosed}
+              coverImage={item.coverImage}
+              name={item.name}
+              startDateFromNow={item.startDateFromNow}
+              recommendation={item.recommendation}
+              onClick={() => history.push(`/place/${item.id}?myPlace=true`)}
+            />
+          );
+        })}
         <BottomNavBar selectedItem="mypage"></BottomNavBar>
       </BackButtonLayout>
       {isLoading && (
