@@ -122,10 +122,14 @@ function LandingPage() {
             네시모해에 가입한 친구들과 소통을 즐겨보아요{"!"}
           </TextSubBox>
         </FlexDiv>
-        <ContainerwithLeftRightMargin>
-          <img src="/landingPage/SubPic2.png" />
-          <img src="/landingPage/SubPic3.png" />
-        </ContainerwithLeftRightMargin>
+        <FullContainerWithLeftAndRightMargin>
+          <FlexDiv>
+            <img src="/landingPage/SubPic2.png" />
+          </FlexDiv>
+          <FlexDiv>
+            <img src="/landingPage/SubPic3.png" />
+          </FlexDiv>
+        </FullContainerWithLeftAndRightMargin>
       </SubBox>
       <SubBox>
         <FlexDiv>
@@ -181,6 +185,12 @@ function LandingPage() {
     </Container>
   );
 }
+
+const FullContainerWithLeftAndRightMargin = styled(
+  ContainerwithLeftRightMargin
+)`
+  width: 100%;
+`;
 
 const Container = styled.div`
   width: 100%;
