@@ -124,7 +124,7 @@ export default function PlacePage({ match, location, history }: Props) {
 
   return (
     <Container>
-      <PageTitle title="식탁 정보" />
+      <PageTitle title="맛집 정보" />
 
       {/* Cover Image */}
       <SHeader>

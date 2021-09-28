@@ -83,7 +83,7 @@ export default function ParticipantsListPage({
 
   return (
     <Container>
-      <PageTitle title="참가자 리스트" />
+      <PageTitle title="참여한 친구들" />
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
           <Heading>

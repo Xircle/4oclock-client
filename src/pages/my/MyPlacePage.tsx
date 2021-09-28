@@ -41,11 +41,11 @@ export default function MyPlacePage() {
 
   return (
     <ContainerFlexColumn>
-      <PageTitle title="My Xircle" />
+      <PageTitle title="신청 정보" />
       <BackButtonLayout>
         <ContainerwithLeftRightMargin style={{ width: "90%" }}>
-          <Heading>내가 신청한 써클</Heading>
-          <SSubText>신청한 네시모해모임 정보를 확인해보세요</SSubText>
+          <Heading>내가 신청한 네모해</Heading>
+          <SSubText>신청한 네모해 정보를 확인해보세요</SSubText>
           {!myPlacesData ||
             (myPlacesData.length === 0 && (
               <Label>신청한 써클이 없어요 :(</Label>
