@@ -93,6 +93,7 @@ export interface UserData {
   gender: string;
   shortBio: string;
   location: string;
+  activities?: string;
 }
 
 export interface GetUserOutput extends CoreOutput {
@@ -125,6 +126,7 @@ interface UserProfile {
   gender: Gender;
   age: number;
   shortBio: string;
+  activities?: string;
 }
 
 export interface SeeRandomProfile extends CoreOutput {
