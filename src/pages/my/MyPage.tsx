@@ -105,13 +105,13 @@ export default function MyPage() {
           <Footer>
             <Row>
               <a href={links.LInstagram} target={"_blank"}>
-                <BrandImg src="/brands/instagram_logo.png" alt="instagram" />
+                <BrandImg src="/brands/instagram_logo.svg" alt="instagram" />
               </a>
               <a href={links.LKakao} target={"_blank"}>
-                <BrandImg src="/brands/kakao_logo.png" alt="kakao" />
+                <BrandImg src="/brands/kakao_logo.svg" alt="kakao" />
               </a>
               <a href={links.LYoutube} target={"_blank"}>
-                <BrandImg src="/brands/youtube_logo.png" alt="youtube" />
+                <BrandImg src="/brands/youtube_logo.svg" alt="youtube" />
               </a>
             </Row>
             <LinkWithoutUnderLine href={links.LPrivacyAgree} target={"_blank"}>

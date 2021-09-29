@@ -37,8 +37,6 @@ export default function MyPlacePage() {
     }
   }, [myPlacesData, isLoading]);
 
-  console.log(myPlacesData);
-
   return (
     <ContainerFlexColumn>
       <PageTitle title="신청 정보" />
