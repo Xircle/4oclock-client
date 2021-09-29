@@ -3,6 +3,7 @@ const routes = {
   socialRedirect: "/social/redirect",
   placeFeed: "/place-feed",
   place: "/place/:placeId",
+  imageGallery: "/image/:index",
   friend: "/friend",
   participantProfile: "/participant-profile",
   myPage: "/my-page",

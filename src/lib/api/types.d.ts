@@ -71,6 +71,7 @@ export interface PlaceData {
     description: string;
     categories: string;
     detailAddress: string;
+    detailLink: string;
     photos: string[];
     participationFee: number;
   };

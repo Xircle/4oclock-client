@@ -199,7 +199,6 @@ export default function EditProfilePage({ history }: Props) {
       ...prev,
       activities: e.target.value,
     }));
-    console.log(userData);
   };
 
   const handleFileOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -64,16 +64,22 @@ export default function ParticipantsListPage({
     }
   );
 
-  const { data: participantListData, isLoading, isError } = useQuery<
-    PlaceParticipantListData | undefined
-  >(["participants-list", placeId], () => getPlaceParticipantList(placeId), {
-    onError: (err: any) => {
-      alert(err);
-      return;
-    },
-    retry: 1,
-    refetchOnWindowFocus: false,
-  });
+  const {
+    data: participantListData,
+    isLoading,
+    isError,
+  } = useQuery<PlaceParticipantListData | undefined>(
+    ["participants-list", placeId],
+    () => getPlaceParticipantList(placeId),
+    {
+      onError: (err: any) => {
+        alert(err);
+        return;
+      },
+      retry: 1,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   return (
     <Container>
@@ -107,7 +113,11 @@ export default function ParticipantsListPage({
                 )}
             </InfoText>
           </InfoDiv>
-          <ParticipantsListRowWrapper>
+          <ParticipantsListRowWrapper
+            onClick={() =>
+              alert("전체 프로필 조회는 신청완료를 하시면 가능해요!")
+            }
+          >
             <ParticipantsListContainer
               hasError={isError}
               isLoading={isLoading}

@@ -21,14 +21,16 @@ import routes from "../../routes";
 import storage from "../../lib/storage";
 import { CURRENT_USER } from "../../components/shared/constants";
 import { seeUserById } from "../../lib/api/seeUserById";
-import { useLocation } from "react-router-dom";
+import { RouteComponentProps, useLocation } from "react-router-dom";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
 import PageTitle from "../../components/PageTitle";
 
 interface LocationState {
   id: string;
 }
-export default function ParticipantProfilePage() {
+
+interface Props extends RouteComponentProps {}
+export default function ParticipantProfilePage({ history }: Props) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -69,6 +71,11 @@ export default function ParticipantProfilePage() {
                 userProfileData?.profileImageUrl || "/avatar/anonymous_user.png"
               }
               alt="friend-profile"
+              onClick={() =>
+                history.push("image/0", {
+                  profileImageUrls: [userProfileData?.profileImageUrl],
+                })
+              }
             />
           </FlexDiv>
 
