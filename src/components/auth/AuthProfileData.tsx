@@ -383,7 +383,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
           disabled={!state.stage2Valid}
           onClick={onNext}
         >
-          다음
+          가입하기
         </NextButton>
       </form>
     </ContainerwithLeftRightMargin>
