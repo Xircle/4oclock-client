@@ -69,9 +69,8 @@ export default function ReservationPage({ match, location, history }: Props) {
     setReservationClicked((prev) => !prev);
   };
 
-  const { mutateAsync: mutateReservation, isLoading } = useMutation(
-    makeReservation
-  );
+  const { mutateAsync: mutateReservation, isLoading } =
+    useMutation(makeReservation);
 
   const makeReservationHandler = async () => {
     if (!selectedTime || !placeId) return;
@@ -172,7 +171,7 @@ export default function ReservationPage({ match, location, history }: Props) {
               <br />
             </InstructionDetail>
             <InstructionDetail style={{ marginTop: "9px" }}>
-              {"※"}단톡이 만들어지면 적어주신 전화번호로 연락을 드릴게요!
+              {"※"}단톡링크는 모임 전날 적어주신 전화번호로 보내드릴게요!
             </InstructionDetail>
           </Instruction>
           <EnabledMainBtnBooking

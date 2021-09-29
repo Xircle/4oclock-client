@@ -55,10 +55,7 @@ export default function ParticipantProfilePage({ history }: Props) {
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
           <Heading style={{ marginTop: "20px" }}>
-            <IndicatorBox>
-              원하는 친구와 매칭이 되고 싶나요? 개발자에게 연락을 주시면
-              도와드릴게요 :)
-            </IndicatorBox>
+            <IndicatorBox>원하는 친구와 함께하고 싶나요?</IndicatorBox>
             <b>
               {userProfileData?.location
                 ? userProfileData?.location + " 근처 친구"

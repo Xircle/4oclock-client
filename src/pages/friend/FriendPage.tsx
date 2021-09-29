@@ -69,7 +69,7 @@ export default function FriendsPage({ history }: Props) {
       <ContainerwithLeftRightMargin>
         <Heading style={{ marginTop: "40px" }}>
           <IndicatorBox>
-            네시모해를 가입한 친구들과 소통할 수 있는 탭이에요! 채팅기능을 개발
+            네시모해를 가입한 친구들과 소통할 수 있는 탭이에요! 채팅기능은 개발
             중입니다 🔥
           </IndicatorBox>
           <b>

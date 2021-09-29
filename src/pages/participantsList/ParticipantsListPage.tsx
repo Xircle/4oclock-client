@@ -43,7 +43,6 @@ interface Props
 
 export default function ParticipantsListPage({
   history,
-  match,
   location,
 }: Props) {
   useEffect(() => {

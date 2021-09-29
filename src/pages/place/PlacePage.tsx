@@ -500,13 +500,8 @@ const SHeaderTextDescription = styled.p`
   line-height: 150%;
 `;
 
-const HeaderSplit = styled.div`
-  width: 180px;
-  border-bottom: 1px solid white;
-`;
-
 const SHeader = styled.div`
-  height: 230px;
+  height: 217px;
   position: relative;
   cursor: pointer;
 `;
