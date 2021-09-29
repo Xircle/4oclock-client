@@ -13,7 +13,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { getPlaceById } from "../../lib/api/getPlaceById";
 import type { PlaceData } from "../../lib/api/types";
-import { AgeNumberToString, encodeUrlSlug } from "../../lib/utils";
+import {
+  AgeNumberToString,
+  CalculateCloseDate,
+  encodeUrlSlug,
+} from "../../lib/utils";
 import Avatar from "../../components/shared/Avatar";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
 import { useQuery } from "react-query";
@@ -139,6 +143,11 @@ export default function PlacePage({ match, location, history }: Props) {
           <SHeaderCategoryIndicator>
             {placeData.participantsCount}명 신청중
           </SHeaderCategoryIndicator>
+          {placeData.startDateFromNow != "NA" && (
+            <SHeaderCategoryIndicator style={{ marginLeft: "10px" }}>
+              {CalculateCloseDate(placeData.startDateFromNow)}
+            </SHeaderCategoryIndicator>
+          )}
           <SHeaderTextHeading>{placeData.name}</SHeaderTextHeading>
           <SHeaderTextDescription>
             {placeData.oneLineIntroText}
