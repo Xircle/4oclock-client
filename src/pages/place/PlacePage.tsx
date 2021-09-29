@@ -144,7 +144,7 @@ export default function PlacePage({ match, location, history }: Props) {
             {placeData.participantsCount}명 신청중
           </SHeaderCategoryIndicator>
           {placeData.startDateFromNow != "NA" && (
-            <SHeaderCategoryIndicator style={{ marginLeft: "10px" }}>
+            <SHeaderCategoryIndicator>
               {CalculateCloseDate(placeData.startDateFromNow)}
             </SHeaderCategoryIndicator>
           )}
@@ -295,6 +295,9 @@ export default function PlacePage({ match, location, history }: Props) {
         </DirText>
         <div
           id="map"
+          onClick={() =>
+            window.open(placeData?.placeDetail?.detailLink, "_blank")
+          }
           style={{
             width: "295px",
             height: "175px",
@@ -501,6 +504,9 @@ const SHeaderCategoryIndicator = styled.div`
   padding: 5px 10px;
   margin: 12px 0;
   display: inline-block;
+  & + & {
+    margin-left: 6px;
+  }
 `;
 
 const SHeaderTextDescription = styled.p`

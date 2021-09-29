@@ -50,7 +50,7 @@ export default function PlaceFeedRow({
             {participants.map((parti, idx) => {
               if (idx < 4) {
                 return (
-                  <Avatar key={parti.userId} rightOffset={"-8px"} {...parti} />
+                  <Avatar key={parti.userId} rightOffset={"-10px"} {...parti} />
                 );
               }
             })}
