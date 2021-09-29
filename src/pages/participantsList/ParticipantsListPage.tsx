@@ -64,22 +64,16 @@ export default function ParticipantsListPage({
     }
   );
 
-  const {
-    data: participantListData,
-    isLoading,
-    isError,
-  } = useQuery<PlaceParticipantListData | undefined>(
-    ["participants-list", placeId],
-    () => getPlaceParticipantList(placeId),
-    {
-      onError: (err: any) => {
-        alert(err);
-        return;
-      },
-      retry: 1,
-      refetchOnWindowFocus: false,
-    }
-  );
+  const { data: participantListData, isLoading, isError } = useQuery<
+    PlaceParticipantListData | undefined
+  >(["participants-list", placeId], () => getPlaceParticipantList(placeId), {
+    onError: (err: any) => {
+      alert(err);
+      return;
+    },
+    retry: 1,
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <Container>
@@ -156,7 +150,7 @@ const SubTextParticipantsList = styled(SubText)`
   width: 315px;
   line-height: 20px;
   font-weight: 500;
-  font-size: 11px;
+  font-size: 13px;
   b {
     font-weight: 900;
   }

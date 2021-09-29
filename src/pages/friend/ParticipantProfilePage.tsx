@@ -79,7 +79,7 @@ export default function ParticipantProfilePage() {
 
           <FlexDiv style={{ marginTop: "15px" }}>
             {userProfileData?.id !== storage.getItem(CURRENT_USER)["uid"] && (
-              <ChattingButton onClick={() => alert("채팅하기는 개발중이예요!")}>
+              <ChattingButton onClick={() => alert("개발중")}>
                 <p>채팅하기</p>
               </ChattingButton>
             )}

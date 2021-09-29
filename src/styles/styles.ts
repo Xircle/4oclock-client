@@ -313,8 +313,6 @@ export const NextButton = styled(MainBtn)`
 
 export const FileLabel = styled.label`
   cursor: pointer;
-  display: flex;
-  justify-content: center;
 `;
 
 export const SLink = styled(Link)`

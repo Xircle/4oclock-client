@@ -164,15 +164,15 @@ export default function ReservationPage({ match, location, history }: Props) {
           <Instruction>
             <InstructionHeading>네시모해는 이렇게 진행돼요!</InstructionHeading>
             <InstructionDetail>
-              1. 같은 시간을 신청한 친구들과 4인/2인 랜덤 그룹을 만들어 드려요
+              1. 같은 시간을 신청한 친구들과 4인/2인 단톡을 만들어 드려요
               <br />
-              2. 모임 당일 단톡을 만들어드려요! 친해지는 시간을 가져보세요
+              2. 모임 전날 단톡을 만들어드려요! 친해지는 시간을 가져보세요
               <br />
               3. 지정된 장소와 시간에 만나서 놀아요.
               <br />
             </InstructionDetail>
             <InstructionDetail style={{ marginTop: "9px" }}>
-              단톡이 만들어지기전에 적어주신 전화번호로 연락을 드릴게요!
+              {"※"}단톡이 만들어지기전에 적어주신 전화번호로 연락을 드릴게요!
             </InstructionDetail>
           </Instruction>
           <EnabledMainBtnBooking
@@ -213,7 +213,7 @@ export default function ReservationPage({ match, location, history }: Props) {
               따뜻한 대학가’ 를 만들 수 있게 도와주세요
             </span>
             <MainBtn onClick={makeReservationHandler} style={{ width: "90%" }}>
-              확인하고 놀러가기
+              OK{"!"} 놀러가기
             </MainBtn>
             <p
               onClick={() => setReservationClicked(false)}

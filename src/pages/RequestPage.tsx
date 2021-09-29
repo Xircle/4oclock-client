@@ -18,11 +18,11 @@ export default function RequestPage() {
       <PageTitle title="건의" />
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
-          <Heading>맛집 모임을 만들어주세요!</Heading>
+          <Heading>네시모해 맛집모임 만들기</Heading>
           <SubTextRequest>
             <b>
-              앗! 가고 싶은 맛집모임이 없나요? 구글폼으로 건의해주시면 최대한
-              빠르게 만들어 드리겠습니다 :)
+              앗! 가고 싶은 맛집 모임이 없나요? 카카오 채널로 말씀해 주시면
+              초스피드로 만들어드릴게요!
             </b>
           </SubTextRequest>
           <LinkWithoutUnderLine href={links.LOpenKakaoChat} target={"_blank"}>

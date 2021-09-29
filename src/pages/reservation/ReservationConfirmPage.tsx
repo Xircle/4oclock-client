@@ -121,7 +121,7 @@ const SubTextBookingBookingConfirm = styled(SubText)`
 `;
 
 const MainBtnBookingConfirm = styled(MainBtn)`
-  margin-top: 100px;
+  margin-top: 50px;
   width: 300px;
 `;
 
