@@ -4,10 +4,10 @@ export const LMarketingAgree =
   "https://sixth-lace-751.notion.site/03e0c647bef34396a24b230927a55b4f";
 
 export const LServiceAgree =
-  "https://sixth-lace-751.notion.site/6bd87dd19ac54da182cbd49bdf66f675";
+  "https://sixth-lace-751.notion.site/578c7e0e670845ab9de63ad54edf4fc8";
 
 export const LLocationAgree =
-  "https://www.notion.so/b1af099753014df0a6ff7d442dd3e501";
+  "https://sixth-lace-751.notion.site/b9f30a5063944628b104f19ad479b4f6";
 
 export const LInstagram = "https://www.instagram.com/4in_clock_mohe/";
 
@@ -20,4 +20,4 @@ export const LYoutube =
 export const LKakao = "https://pf.kakao.com/_DNgQs/chat";
 
 export const LPrivacyAgree =
-  "https://sixth-lace-751.notion.site/42731dbfe376424193c93d3468c56674";
+  "https://sixth-lace-751.notion.site/91c032eabd624b3a8744f8d699b40787";
