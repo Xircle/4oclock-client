@@ -90,7 +90,7 @@ export default function ReservationConfirmPage({ history, location }: Props) {
               history.push(`/place/${placeId}?scrollToProfile=true`)
             }
           >
-            참여하는 친구들 프로필 보기
+            신청한 친구들 프로필 구경하기
           </MainBtnBookingConfirm>
 
           <HomeBtn onClick={() => history.push(routes.placeFeed)}>

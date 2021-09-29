@@ -133,7 +133,7 @@ export default function ParticipantsListPage({
               });
           }}
         >
-          참여하기
+          맛집 놀러가기
         </BottomFixedButtoninContainer>
       </BottomFixedButtonContainer>
     </Container>
