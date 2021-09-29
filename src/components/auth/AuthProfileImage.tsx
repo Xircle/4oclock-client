@@ -55,28 +55,32 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
       <SubText style={{ marginTop: "12px" }}>
         개성이 나타나는 사진을 업로드해주세요!
       </SubText>
-      <FileLabel htmlFor="input-file">
-        <Avartar
-          src={localImageSrc || "/avatar/anonymous_user.png"}
-          style={{ width: "78px", height: "78px" }}
-        />
-        <input
-          id="input-file"
-          type="file"
-          onChange={handleFileOnChange}
-          style={{ display: "none" }}
-        />
-      </FileLabel>
-      <FlexDiv
-        style={{
-          marginTop: "11px",
-          fontSize: "13px",
-          fontWeight: 700,
-          color: colors.MidBlue,
-        }}
-      >
-        <p style={{ color: "#18A0FB" }}>프로필사진 수정하러가기</p>
-      </FlexDiv>
+      <div>
+        <FileLabel htmlFor="input-file">
+          <FlexDiv>
+            <Avartar
+              src={localImageSrc || "/avatar/anonymous_user.png"}
+              style={{ width: "78px", height: "78px" }}
+            />
+          </FlexDiv>
+          <input
+            id="input-file"
+            type="file"
+            onChange={handleFileOnChange}
+            style={{ display: "none" }}
+          />
+          <FlexDiv
+            style={{
+              marginTop: "11px",
+              fontSize: "14px",
+              fontWeight: 700,
+              color: colors.MidBlue,
+            }}
+          >
+            <p style={{ color: "#18A0FB" }}>프로필사진 업로드하기</p>
+          </FlexDiv>
+        </FileLabel>
+      </div>
       <SubText
         style={{ fontSize: "13px", fontWeight: "bold", marginTop: "36px" }}
       >
@@ -90,8 +94,8 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
           lineHeight: "17px",
         }}
       >
-        관심사를 즐기는 사진 / 좋아하는 공간에서 찍은 사진 / 모임을 즐기고 있는
-        사진
+        관심사를 즐기는 사진 / 좋아하는 공간에서 찍은 사진 / 라이프 스타일이
+        보여지는 사진 / 모임을 즐기고 있는 사진
       </SubText>
       <FlexDiv style={{ justifyContent: "space-around", marginTop: "16px" }}>
         <div>
@@ -135,7 +139,7 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
         type="submit"
         onClick={onNext}
       >
-        다음
+        가입하기
       </NextButton>
     </ContainerwithLeftRightMargin>
   );

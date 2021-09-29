@@ -1,4 +1,4 @@
-export const LOpenKakaoChat = "https://open.kakao.com/o/sPyWuGBd";
+export const LOpenKakaoChat = "http://pf.kakao.com/_DNgQs/chat";
 
 export const LMarketingAgree =
   "https://sixth-lace-751.notion.site/03e0c647bef34396a24b230927a55b4f";

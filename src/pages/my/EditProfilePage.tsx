@@ -242,28 +242,32 @@ export default function EditProfilePage({ history }: Props) {
         <ContainerwithLeftRightMargin>
           <Heading>프로필 수정하기</Heading>
           <FileLabel htmlFor="input-file">
-            <AvartarProfile
-              src={
-                localProfileData.profileImageUrl || "/avatar/anonymous_user.png"
-              }
-            />
+            <FlexDiv>
+              <AvartarProfile
+                src={
+                  localProfileData.profileImageUrl ||
+                  "/avatar/anonymous_user.png"
+                }
+              />
+            </FlexDiv>
             <input
               id="input-file"
               type="file"
               onChange={handleFileOnChange}
               style={{ display: "none" }}
             />
+            <FlexDiv
+              style={{
+                marginTop: "11px",
+                fontSize: "13px",
+                fontWeight: 700,
+                color: colors.MidBlue,
+              }}
+            >
+              <p style={{ color: colors.MidBlue }}>프로필사진 수정하러가기</p>
+            </FlexDiv>
           </FileLabel>
-          <FlexDiv
-            style={{
-              marginTop: "11px",
-              fontSize: "13px",
-              fontWeight: 700,
-              color: colors.MidBlue,
-            }}
-          >
-            <p style={{ color: colors.MidBlue }}>프로필사진 수정하러가기</p>
-          </FlexDiv>
+
           <WarningText>
             학교와 나이, 성별 변경은 불가능해요. 수정을 원하실 경우{" "}
             <b>마이페이지 {">"} 문의하기</b>에서 상담원에게 문의해주세요!
