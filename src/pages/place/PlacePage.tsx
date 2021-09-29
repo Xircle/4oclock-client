@@ -5,7 +5,6 @@ import {
   SpaceForNavBar,
   BottomFixedButtonContainer,
   BottomFixedButtoninContainer,
-  MainBtn,
 } from "../../styles/styles";
 import { RouteComponentProps } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -22,6 +21,7 @@ import queryString from "query-string";
 import routes from "../../routes";
 import Modal from "../../components/UI/Modal";
 import PageTitle from "../../components/PageTitle";
+import useFullscreen from "../../hooks/useFullscreen";
 
 const kakao = window.kakao;
 declare global {
@@ -44,7 +44,6 @@ export default function PlacePage({ match, location, history }: Props) {
   const scrollToProfile = Boolean(
     queryString.parse(UrlSearch).scrollToProfile === "true"
   );
-
   const { data: placeData, isLoading } = useQuery<PlaceData | undefined>(
     ["place-detail", placeId],
     () => getPlaceById(placeId),
@@ -127,8 +126,14 @@ export default function PlacePage({ match, location, history }: Props) {
       <PageTitle title="맛집 정보" />
 
       {/* Cover Image */}
-      <SHeader>
-        <SHeaderPic src={placeData.coverImage} />
+      <SHeader
+        onClick={() => {
+          history.push(`/image/${0}`, {
+            profileImageUrls: [placeData.coverImage],
+          });
+        }}
+      >
+        <SHeaderPic src={placeData.coverImage} alt={placeData.name + "사진"} />
         <TempToBeDeleted></TempToBeDeleted>
         <HeaderText>
           <SHeaderCategoryIndicator>
@@ -166,8 +171,16 @@ export default function PlacePage({ match, location, history }: Props) {
 
       {/* Album  */}
       <GridContainer>
-        {placeData.placeDetail.photos.map((photo) => (
-          <GridPic key={photo} src={photo} />
+        {placeData.placeDetail.photos.map((photo, index) => (
+          <GridPic
+            key={photo}
+            src={photo}
+            onClick={() =>
+              history.push(`/image/${index}`, {
+                profileImageUrls: placeData.placeDetail.photos,
+              })
+            }
+          />
         ))}
       </GridContainer>
 
@@ -391,6 +404,7 @@ const GridPic = styled.img`
   width: 112px;
   height: 112px;
   object-fit: cover;
+  cursor: pointer;
 `;
 
 export const Section = styled.div`
@@ -487,6 +501,7 @@ const HeaderSplit = styled.div`
 const SHeader = styled.div`
   height: 230px;
   position: relative;
+  cursor: pointer;
 `;
 
 const SHeaderPic = styled.img`

@@ -25,8 +25,11 @@ import storage from "../../lib/storage";
 import { CURRENT_USER } from "../../components/shared/constants";
 import PageTitle from "../../components/PageTitle";
 import { IndicatorBox } from "./ParticipantProfilePage";
+import { RouteComponentProps } from "react-router-dom";
 
-export default function FriendsPage() {
+interface Props extends RouteComponentProps {}
+
+export default function FriendsPage({ history }: Props) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -83,6 +86,11 @@ export default function FriendsPage() {
           <AvartarBig
             src={randomProfileData?.profileImageUrl || "/avatar/2donny.png"}
             alt="friend-profile"
+            onClick={() => {
+              history.push(`/image/${0}`, {
+                profileImageUrls: [randomProfileData?.profileImageUrl],
+              });
+            }}
           />
         </FlexDiv>
         <FlexDiv style={{ marginTop: "15px" }}>
