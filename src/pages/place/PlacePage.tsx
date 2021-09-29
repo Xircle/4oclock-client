@@ -204,15 +204,13 @@ export default function PlacePage({ match, location, history }: Props) {
               rightOffset={"8px"}
               onClick={() =>
                 placeData.isParticipating
-                  ? history.push(`${routes.participantProfile}`, {
-                      id: participant.userId,
-                    })
-                  : history.push(
-                      `/participants-list/${encodeUrlSlug(placeData.name)}`,
-                      {
-                        placeId,
-                      }
-                    )
+                  ? history.push(
+                    `/participants-list/${encodeUrlSlug(placeData.name)}`,
+                    {
+                      placeId,
+                    }
+                  )
+                  : alert("전체 프로필 조회는 신청완료를 하시면 가능해요!")
               }
             />
           ))}
@@ -229,7 +227,7 @@ export default function PlacePage({ match, location, history }: Props) {
         <Row>
           <span className="bold">시간</span>
           <span>
-            {placeData.startDateFromNow} 오후 4시(4인) / 오후 7시(2인) 모임
+            {placeData.startDateFromNow} 오후 4시(4인) / 오후 7시(2인) 모임 중 택1
           </span>
         </Row>
         <Row>
@@ -304,7 +302,7 @@ export default function PlacePage({ match, location, history }: Props) {
             {isClosed
               ? "마감 되었어요"
               : placeData.isParticipating
-              ? "이미 참여한 써클이예요"
+              ? "이미 참여신청된 모임이예요"
               : isFinal
               ? "오늘 마감! 참여하기"
               : "참여하기"}

@@ -13,6 +13,8 @@ import KakaoLogin from "react-kakao-login";
 import { LoginResponse, UserProfile } from "../lib/kakao";
 import { useHistory } from "react-router-dom";
 import * as links from "../components/shared/Links";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 function LandingPage() {
   const history = useHistory();
@@ -68,10 +70,11 @@ function LandingPage() {
               style={{
                 position: "absolute",
                 left: "4.25rem",
-                top: "50%",
+                top: "25%",
                 transform: "translate(0, -50%)",
               }}
             />
+
             <KakaoLogin
               token={process.env.REACT_APP_KAKAO_KEY!}
               onSuccess={kakaoSuccessCallback}
@@ -94,6 +97,14 @@ function LandingPage() {
                 boxShadow: "rgba(75, 88, 208, 0.5) 0px 25px 20px -20px",
               }}
             />
+            <FlexDiv style={{ paddingTop: "30px" }}>
+              네시모해 소개
+              <FontAwesomeIcon
+                icon={faChevronDown}
+                color={colors.Black}
+                style={{ paddingLeft: "5px" }}
+              />
+            </FlexDiv>
           </div>
         </Row>
       </MainBox>
@@ -121,9 +132,7 @@ function LandingPage() {
           </HeadingSubBox>
         </FlexDiv>
         <FlexDiv>
-          <TextSubBox>
-            네시모해에 가입한 친구들과 소통을 즐겨보아요{"!"}
-          </TextSubBox>
+          <TextSubBox>모임을 함께 할 친구의 취향을 확인하기 ❤️</TextSubBox>
         </FlexDiv>
         <FullContainerWithLeftAndRightMargin>
           <FlexDiv>
@@ -209,8 +218,14 @@ function LandingPage() {
               />
             </a>
           </SNSIconContainer>
-          각종 문의 <a href={links.LOpenKakaoChat} target={"_blank"}>네시모임 카카오톡 채널</a> /{" "}
-          <a href={links.LInstagram} target={"_blank"}>인스타그램</a>
+          각종 문의{" "}
+          <a href={links.LOpenKakaoChat} target={"_blank"}>
+            네시모임 카카오톡 채널
+          </a>{" "}
+          /{" "}
+          <a href={links.LInstagram} target={"_blank"}>
+            인스타그램
+          </a>
           <br />
           <GrayLink href={links.LLocationAgree} target={"_blank"}>
             이용약괸

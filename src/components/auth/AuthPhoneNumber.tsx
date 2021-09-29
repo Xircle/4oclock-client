@@ -39,7 +39,7 @@ export default function AuthPhoneNumber({ onNext, state, dispatch }: Props) {
         <br /> 맛있는 밥 먹으러 갈까요?
       </Heading>
       <SubText style={{ lineHeight: "20px", marginTop: "12px" }}>
-        단톡방을 만들어드리는 용도로 사용되기에 꼭! 사용하시는 전화번호를
+        모임 단톡방을 만들어드리는 용도로 사용되기에 꼭! 사용하시는 전화번호를
         적어주셔야 해요.
       </SubText>
       <form onSubmit={preventDefaultAction}>

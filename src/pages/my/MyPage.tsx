@@ -92,12 +92,14 @@ export default function MyPage() {
             <SubContainer>맛집 건의하기</SubContainer>
           </LinkWithoutUnderLine>
           <LinkWithoutUnderLine href={links.LOpenKakaoChat} target={"_blank"}>
-            <SubContainer>네시모해에게 문의하기 / 피드백 하기</SubContainer>
+            <SubContainer>문의하기 / 피드백 하기</SubContainer>
           </LinkWithoutUnderLine>
-          <LinkWithoutUnderLine href={links.LServiceGuide} target={"_blank"}>
-            <SubContainer>네시모해 서비스 사용자 가이드</SubContainer>
+          <LinkWithoutUnderLine href={links.LServiceAgree} target={"_blank"}>
+            <SubContainer>서비스 사용약관</SubContainer>
           </LinkWithoutUnderLine>
-          <SubContainer>유저 신고하기</SubContainer>
+          <LinkWithoutUnderLine href={links.LOpenKakaoChat} target={"_blank"}>
+            <SubContainer>유저 신고하기</SubContainer>
+          </LinkWithoutUnderLine>
           <SubContainer onClick={() => logoutBtnClickHandler()}>
             로그아웃하기
           </SubContainer>
@@ -180,7 +182,7 @@ const SubContainer = styled(Container)`
   font-weight: normal;
   font-size: 16px;
   line-height: 28px;
-  margin-top: 19px;
+  margin-top: 21px;
   cursor: pointer;
 `;
 

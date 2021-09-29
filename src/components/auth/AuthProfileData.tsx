@@ -101,10 +101,10 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
   };
   const errorMessages: string[] = [
     "20자 이하의 이름을 입력해주세요",
-    "학교를 선택해주세요",
-    "19 ~ 40 사이의 나이를 입력해주세요",
+    "현재는 고려대/연세대/이화여대 학교만 운영되고 있어요",
+    "19-40사이의 나이를 입력해주세요. 20초 20중 20후 30초로 보여져요!",
     "성별을 선택해주세요",
-    "1자에서 8자 이내로 입력해주세요",
+    "계열이나 직업을 활용해서 적으시면 좋아요",
     "1자 이상의 자기소개를 입력해주세요",
   ];
 
@@ -327,7 +327,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
           onKeyUp={() => Validate()}
         />
         {titleError && <ErrorMessage>{errorMessages[4]}</ErrorMessage>}
-        <Label>간단한 자기소개</Label>
+        <Label>개성있는 한줄소개</Label>
         <BigTextArea
           name="bio"
           value={state.bio}
