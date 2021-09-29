@@ -34,6 +34,8 @@ const ParticipantsListPage = React.lazy(
   () => import("./pages/participantsList/ParticipantsListPage")
 );
 
+const ImageGalleryPage = React.lazy(() => import("./pages/ImageGalleryPage"));
+
 function App() {
   return (
     <PortalProvider>
@@ -63,6 +65,7 @@ function App() {
               />
               <Route path={routes.placeFeed} component={PlaceFeedPage} />
               <Route path={routes.place} component={PlacePage} />
+              <Route path={routes.imageGallery} component={ImageGalleryPage} />
               <Route path={routes.friend} component={FriendsPage} />
               <Route
                 path={routes.participantProfile}
