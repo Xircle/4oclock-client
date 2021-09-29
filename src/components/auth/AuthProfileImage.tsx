@@ -139,7 +139,7 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
         type="submit"
         onClick={onNext}
       >
-        다음
+        가입하기
       </NextButton>
     </ContainerwithLeftRightMargin>
   );
