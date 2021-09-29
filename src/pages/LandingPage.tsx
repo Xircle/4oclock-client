@@ -19,7 +19,7 @@ function LandingPage() {
 
   const kakaoSuccessCallback = (response: {
     response: LoginResponse;
-    profile?: UserProfile | undefined;
+    profile?: any;
   }) => {
     process.env.NODE_ENV === "development" && console.log(response);
     history.push("/social/redirect", {
