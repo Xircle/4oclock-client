@@ -79,7 +79,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
 
   return (
     <Container>
-      <PageTitle title="네시 식탁" />
+      <PageTitle title="맛집 피드" />
       {/* Drop down */}
       <TopWrapper>
         <Top>

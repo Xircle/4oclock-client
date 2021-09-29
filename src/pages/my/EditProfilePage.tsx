@@ -44,7 +44,7 @@ export interface ProfileData {
   activities?: string;
 }
 
-interface Props extends RouteComponentProps {}
+interface Props extends RouteComponentProps<any> {}
 
 export default function EditProfilePage({ history }: Props) {
   useEffect(() => {
@@ -59,15 +59,16 @@ export default function EditProfilePage({ history }: Props) {
   ]);
   const [detailAddress, setDetailAddress] = useState(localProfileData.location);
 
-  const { data: userData, isLoading, isSuccess } = useQuery<
-    UserData | undefined
-  >("userProfile", () => getUser(), {
+  const {
+    data: userData,
+    isLoading,
+    isSuccess,
+  } = useQuery<UserData | undefined>("userProfile", () => getUser(), {
     retry: 2,
   });
 
-  const { mutateAsync: mutateUserProfile, isLoading: isUpdating } = useMutation(
-    editProfile
-  );
+  const { mutateAsync: mutateUserProfile, isLoading: isUpdating } =
+    useMutation(editProfile);
 
   useEffect(() => {
     if (isSuccess) {

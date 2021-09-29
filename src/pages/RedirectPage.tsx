@@ -51,7 +51,7 @@ export default function SocialRedirect() {
     >
       <MainText>네시모해?</MainText>
       <SubText>
-        좋은 친구들과 <b>맛있는 음식</b> 먹으러 가자!
+        좋은 친구들과 &nbsp; <b>맛있는 음식</b> 먹으러 가자!
       </SubText>
       <Emoji>🍚</Emoji>
     </div>

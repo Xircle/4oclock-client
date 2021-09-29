@@ -39,13 +39,11 @@ export default function ParticipantProfilePage() {
   >(["User", location.state.id], () => seeUserById(location.state.id), {
     refetchOnWindowFocus: false,
   });
-  let myId;
+
   useEffect(() => {
     if (!storage.getItem(CURRENT_USER)) {
       alert("친구 프로필은 로그인을 하셔야 볼 수 있어요!");
       window.location.href = routes.root;
-    } else {
-      myId = storage.getItem(CURRENT_USER).uid;
     }
   }, []);
 
@@ -80,7 +78,7 @@ export default function ParticipantProfilePage() {
           </FlexDiv>
 
           <FlexDiv style={{ marginTop: "15px" }}>
-            {myId === userProfileData?.id && (
+            {userProfileData?.id !== storage.getItem(CURRENT_USER)["uid"] && (
               <ChattingButton onClick={() => alert("개발중")}>
                 <p>채팅하기</p>
               </ChattingButton>

@@ -21,7 +21,7 @@ function LandingPage() {
 
   const kakaoSuccessCallback = (response: {
     response: LoginResponse;
-    profile?: UserProfile | undefined;
+    profile?: any;
   }) => {
     process.env.NODE_ENV === "development" && console.log(response);
     history.push("/social/redirect", {
@@ -201,19 +201,19 @@ function LandingPage() {
           <br />
           <SNSIconContainer>
             <a href={links.LInstagram} target={"_blank"}>
-              <BrandIcon src="/brands/instagram_logo.png" alt="instagram" />
+              <BrandIcon src="/brands/instagram_logo.svg" alt="instagram" />
             </a>
             <a href={links.LKakao} target={"_blank"}>
               <BrandIcon
                 marginLeft={"10px"}
-                src="/brands/kakao_logo.png"
+                src="/brands/kakao_logo.svg"
                 alt="kakao"
               />
             </a>
             <a href={links.LYoutube} target={"_blank"}>
               <BrandIcon
                 marginLeft={"10px"}
-                src="/brands/youtube_logo.png"
+                src="/brands/youtube_logo.svg"
                 alt="youtube"
               />
             </a>

@@ -16,9 +16,10 @@ export default function ParticipantsListRow({
         <Avartar
           src={profileImgUrl || "/avatar/anonymous_user.png"}
           style={{
-            width: "50px",
-            height: "50px",
+            width: "56px",
+            height: "56px",
             margin: "0px",
+            filter: "blur(1px)",
           }}
         />
       </ParticipantLeftContainer>
@@ -50,7 +51,7 @@ const ParticipantLeftContainer = styled.div`
 
 const ParticipantRightContainer = styled.div`
   width: 265px;
-  padding-left: 16px;
+  padding-left: 20px;
 `;
 
 const JobText = styled(SubText)`

@@ -42,7 +42,7 @@ export default function PlaceFeedContainer({
     );
 
   if (placeFeedDataArray?.length === 0)
-    return <NothingHeading>열려있는 식탁이 없어요 :( </NothingHeading>;
+    return <NothingHeading>열려있는 맛집이 없어요 :( </NothingHeading>;
 
   return (
     <>
