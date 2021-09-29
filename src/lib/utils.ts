@@ -41,3 +41,13 @@ export const encodeUrlSlug = (url: string): string => {
 export const decodeUrlSlug = (url: string): string => {
   return url.replaceAll("-", " ");
 };
+
+export const CalculateCloseDate = (startDateFromNow: string): string => {
+  if (startDateFromNow.includes("일요일")) {
+    return "토요일 자정 신청 마감";
+  } else if (startDateFromNow.includes("토요일")) {
+    return "금요일 자정 신청 마감";
+  } else {
+    return "NA";
+  }
+};
