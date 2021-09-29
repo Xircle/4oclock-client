@@ -304,8 +304,8 @@ export default function PlacePage({ match, location, history }: Props) {
               : placeData.isParticipating
               ? "이미 참여신청된 모임이예요"
               : isFinal
-              ? "오늘 마감! 참여하기"
-              : "참여하기"}
+              ? "오늘 마감! 맛집 놀러가기"
+              : "맛집 놀러가기"}
           </p>
         </CTABottomFixedButtoninContainer>
       </BottomFixedButtonContainer>
