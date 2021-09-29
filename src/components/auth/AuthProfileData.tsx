@@ -311,10 +311,10 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
           </span>
         </FlexDiv>
         {genderError && <ErrorMessage>{errorMessages[3]}</ErrorMessage>}
-        <Label>계열이나 직업을 적어주세요</Label>
+        <Label>개성있는 한줄소개</Label>
         <MidInput
           name="title"
-          placeholder="ex. 공대생 / 미개봉 새내기 / 디자이너"
+          placeholder="ex. 개발자를 준비하는 미대생 / entp 새내기..."
           style={
             titleError
               ? { fontSize: "12px", borderColor: colors.MidBlue }
@@ -327,7 +327,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
           onKeyUp={() => Validate()}
         />
         {titleError && <ErrorMessage>{errorMessages[4]}</ErrorMessage>}
-        <Label>개성있는 한줄소개</Label>
+        <Label>자기소개</Label>
         <BigTextArea
           name="bio"
           value={state.bio}

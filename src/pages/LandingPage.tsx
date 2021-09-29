@@ -69,7 +69,7 @@ function LandingPage() {
               src="/landingPage/kakao.svg"
               style={{
                 position: "absolute",
-                left: "4.25rem",
+                left: "2.25rem",
                 top: "25%",
                 transform: "translate(0, -50%)",
               }}
@@ -80,21 +80,32 @@ function LandingPage() {
               onSuccess={kakaoSuccessCallback}
               onFail={() => console.log("kakao login fail")}
               onLogout={() => console.log("hi")}
-              style={{
-                width: "333px",
-                height: "50px",
-                padding: "1.25rem 0",
-                background: "#FFE812",
-                border: "none",
-                borderRadius: "5px",
-                fontSize: "16px",
-                fontWeight: "bolder",
-                cursor: "pointer",
-                color: colors.Black,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                boxShadow: "rgba(75, 88, 208, 0.5) 0px 25px 20px -20px",
+              render={({ onClick }) => {
+                return (
+                  <a
+                    onClick={(e: any) => {
+                      e.preventDefault();
+                      onClick();
+                    }}
+                    style={{
+                      width: "333px",
+                      height: "50px",
+                      background: "#FFE812",
+                      border: "none",
+                      borderRadius: "5px",
+                      fontSize: "14px",
+                      fontWeight: "bolder",
+                      cursor: "pointer",
+                      color: "#1A1C2D",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      boxShadow: "rgba(75, 88, 208, 0.5) 0px 25px 20px -20px",
+                    }}
+                  >
+                    카카오톡으로 1초만에 시작하기
+                  </a>
+                );
               }}
             />
             <FlexDiv style={{ paddingTop: "30px" }}>
@@ -166,7 +177,7 @@ function LandingPage() {
             src="/landingPage/kakao.svg"
             style={{
               position: "absolute",
-              left: "4.25rem",
+              left: "2.25rem",
               top: "50%",
               transform: "translate(0, -50%)",
             }}
@@ -176,21 +187,32 @@ function LandingPage() {
             onSuccess={kakaoSuccessCallback}
             onFail={() => console.log("kakao login fail")}
             onLogout={() => console.log("hi")}
-            style={{
-              width: "333px",
-              height: "50px",
-              padding: "1.25rem 0",
-              background: "#FFE812",
-              border: "none",
-              borderRadius: "5px",
-              fontWeight: "bolder",
-              fontSize: "16px",
-              cursor: "pointer",
-              color: colors.Black,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              boxShadow: "rgba(75, 88, 208, 0.5) 0px 25px 20px -20px",
+            render={({ onClick }) => {
+              return (
+                <a
+                  onClick={(e: any) => {
+                    e.preventDefault();
+                    onClick();
+                  }}
+                  style={{
+                    width: "333px",
+                    height: "50px",
+                    background: "#FFE812",
+                    border: "none",
+                    borderRadius: "5px",
+                    fontSize: "14px",
+                    fontWeight: "bolder",
+                    cursor: "pointer",
+                    color: "#1A1C2D",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    boxShadow: "rgba(75, 88, 208, 0.5) 0px 25px 20px -20px",
+                  }}
+                >
+                  카카오톡으로 1초만에 시작하기
+                </a>
+              );
             }}
           />
         </div>
