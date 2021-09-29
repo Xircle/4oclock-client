@@ -132,7 +132,7 @@ export default function PlacePage({ match, location, history }: Props) {
         <TempToBeDeleted></TempToBeDeleted>
         <HeaderText>
           <SHeaderCategoryIndicator>
-            {placeData.participantsCount}명 신천중
+            {placeData.participantsCount}명 신청중
           </SHeaderCategoryIndicator>
           <SHeaderTextHeading>{placeData.name}</SHeaderTextHeading>
           <SHeaderTextDescription>
@@ -205,11 +205,11 @@ export default function PlacePage({ match, location, history }: Props) {
               onClick={() =>
                 placeData.isParticipating
                   ? history.push(
-                    `/participants-list/${encodeUrlSlug(placeData.name)}`,
-                    {
-                      placeId,
-                    }
-                  )
+                      `/participants-list/${encodeUrlSlug(placeData.name)}`,
+                      {
+                        placeId,
+                      }
+                    )
                   : alert("전체 프로필 조회는 신청완료를 하시면 가능해요!")
               }
             />
@@ -227,7 +227,8 @@ export default function PlacePage({ match, location, history }: Props) {
         <Row>
           <span className="bold">시간</span>
           <span>
-            {placeData.startDateFromNow} 오후 4시(4인) / 오후 7시(2인) 모임 중 택1
+            {placeData.startDateFromNow} 오후 4시(4인) / 오후 7시(2인) 모임 중
+            택1
           </span>
         </Row>
         <Row>
