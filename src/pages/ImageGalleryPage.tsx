@@ -3,8 +3,8 @@ import ImageGallery, { ReactImageGalleryItem } from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import React from "react";
 import { RouteComponentProps } from "react-router-dom";
-import routes from "../routes";
 import { useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Props
   extends RouteComponentProps<
@@ -43,6 +43,9 @@ export default function ImageGalleryPage({ match, history, location }: Props) {
           e.stopPropagation();
         }}
       >
+        <CloseBtn>
+          <img src="/icons/close.svg" alt="close" onClick={HistoryPop} />
+        </CloseBtn>
         <ImageGallery
           items={images}
           startIndex={+index}
@@ -62,6 +65,7 @@ export default function ImageGalleryPage({ match, history, location }: Props) {
 }
 
 const Container = styled.div`
+  position: relative;
   width: 100%;
   height: 100vh;
   display: flex;
@@ -72,7 +76,6 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  position: relative;
   margin: 0 auto;
   width: 100%;
   img {
@@ -86,4 +89,37 @@ const Wrapper = styled.div`
     left: 50%;
     transform: translate(-50%, 0);
   }
+  .image-gallery-left-nav .image-gallery-svg,
+  .image-gallery-right-nav .image-gallery-svg {
+    width: 30px;
+    height: 120px;
+  }
+
+  .image-gallery-bullets .image-gallery-bullets-container {
+    top: 50px;
+  }
+
+  .image-gallery-bullets .image-gallery-bullet {
+    padding: 3px;
+    border: 0.5px solid rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .image-gallery-index {
+    span {
+      color: #fff;
+    }
+  }
+`;
+
+const CloseBtn = styled.button`
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
 `;
