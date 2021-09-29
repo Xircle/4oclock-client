@@ -33,7 +33,6 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
   const [univError, SetUnivError] = useState<boolean>(false);
   const [ageError, SetAgeError] = useState<boolean>(false);
   const [genderError, SetGenderError] = useState<boolean>(false);
-  const [titleError, SetTitleError] = useState<boolean>(false);
   const [bioError, SetBioError] = useState<boolean>(false);
   const [detailAddress, setDetailAddress] = useState(state.location);
   const [locationLoading, setLocationLoading] = useState(false);
@@ -96,7 +95,6 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
     SetUnivError(param);
     SetAgeError(param);
     SetGenderError(param);
-    SetTitleError(param);
     SetBioError(param);
   };
   const errorMessages: string[] = [
@@ -133,10 +131,6 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
       SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: false });
       SetGenderError(true);
-    } else if (state.title.length === 0 || state.title.length > 15) {
-      SetErrorAll(false);
-      dispatch({ type: "setStage2Valid", payload: false });
-      SetTitleError(true);
     } else if (state.bio.length < 1) {
       SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: false });
@@ -315,18 +309,16 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
         <MidInput
           name="title"
           placeholder="ex. 개발자를 준비하는 미대생 / entp 새내기..."
-          style={
-            titleError
-              ? { fontSize: "12px", borderColor: colors.MidBlue }
-              : { fontSize: "12px" }
-          }
+          style={{ fontSize: "12px" }}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             dispatch({ type: "setTitle", payload: e.target.value })
           }
           value={state.title}
           onKeyUp={() => Validate()}
         />
-        {titleError && <ErrorMessage>{errorMessages[4]}</ErrorMessage>}
+        <ErrorMessage>
+          계열이나, 직업을 활용해서 적으시면 좋아요 :)
+        </ErrorMessage>
         <Label>자기소개</Label>
         <BigTextArea
           name="bio"
@@ -391,7 +383,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
 }
 
 const ErrorMessage = styled.p`
-  margin-top: 3px;
+  margin-top: 7px;
   font-size: 8px;
   margin-left: 5px;
   color: ${colors.MidBlue};

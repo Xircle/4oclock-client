@@ -55,7 +55,9 @@ export default function ParticipantProfilePage({ history }: Props) {
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
           <Heading style={{ marginTop: "20px" }}>
-            <IndicatorBox>원하는 친구와 함께하고 싶나요?</IndicatorBox>
+            <IndicatorBox>
+              재밌고 따뜻한 우리의 대학가, 네시모해
+            </IndicatorBox>
             <b>
               {userProfileData?.location
                 ? userProfileData?.location + " 근처 친구"
