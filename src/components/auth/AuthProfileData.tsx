@@ -104,7 +104,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
     "현재는 고려대/연세대/이화여대 학교만 운영되고 있어요",
     "19-40사이의 나이를 입력해주세요. 20초 20중 20후 30초로 보여져요!",
     "성별을 선택해주세요",
-    "계열이나 직업을 활용해서 적으시면 좋아요",
+    "15자 이내로 적어주세요.",
     "1자 이상의 자기소개를 입력해주세요",
   ];
 
@@ -133,7 +133,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
       SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: false });
       SetGenderError(true);
-    } else if (state.title.length === 0 || state.title.length > 8) {
+    } else if (state.title.length === 0 || state.title.length > 15) {
       SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: false });
       SetTitleError(true);

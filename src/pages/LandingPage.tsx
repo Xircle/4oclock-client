@@ -250,7 +250,7 @@ function LandingPage() {
           </a>
           <br />
           <GrayLink href={links.LLocationAgree} target={"_blank"}>
-            이용약괸
+            이용약관
           </GrayLink>
           <br />
           <GrayLink href={links.LPrivacyAgree} target={"_blank"}>
