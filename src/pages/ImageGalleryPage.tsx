@@ -39,7 +39,7 @@ export default function ImageGalleryPage({ match, history, location }: Props) {
           items={images}
           startIndex={+index}
           showIndex={true}
-          showBullets={true}
+          showBullets={profileImageUrls.length === 1 ? false : true}
           infinite={true}
           showThumbnails={false}
           showNav={true}
