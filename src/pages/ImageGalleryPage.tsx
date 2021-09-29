@@ -4,6 +4,7 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import React from "react";
 import { RouteComponentProps } from "react-router-dom";
 import routes from "../routes";
+import { useEffect } from "react";
 
 interface Props
   extends RouteComponentProps<
@@ -15,6 +16,12 @@ interface Props
 export default function ImageGalleryPage({ match, history, location }: Props) {
   const { index = 0 } = match.params;
   const { profileImageUrls } = location.state;
+
+  useEffect(() => {
+    document
+      ?.getElementById("image-gallery")
+      ?.scrollIntoView({ block: "center" });
+  }, []);
 
   if (!profileImageUrls[0]) {
     history.goBack();
@@ -31,6 +38,7 @@ export default function ImageGalleryPage({ match, history, location }: Props) {
   return (
     <Container onClick={() => HistoryPop()}>
       <Wrapper
+        id="image-gallery"
         onClick={(e: React.MouseEvent<HTMLDivElement>) => {
           e.stopPropagation();
         }}
