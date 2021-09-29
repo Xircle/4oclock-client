@@ -203,14 +203,16 @@ export default function PlacePage({ match, location, history }: Props) {
               width="46px"
               rightOffset={"8px"}
               onClick={() =>
-                placeData.isParticipating
+                !placeData.isParticipating
                   ? history.push(
                       `/participants-list/${encodeUrlSlug(placeData.name)}`,
                       {
                         placeId,
                       }
                     )
-                  : alert("전체 프로필 조회는 신청완료를 하시면 가능해요!")
+                  : history.push(`${routes.participantProfile}`, {
+                      id: participant.userId,
+                    })
               }
             />
           ))}
