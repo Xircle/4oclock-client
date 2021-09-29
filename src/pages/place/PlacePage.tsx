@@ -165,7 +165,9 @@ export default function PlacePage({ match, location, history }: Props) {
         </p>
 
         <DetailDescription>
-          <p>맛집 정보 더보기</p>
+          <a href={placeData.placeDetail.detailLink} target="_blank">
+            맛집 정보 더보기
+          </a>
         </DetailDescription>
       </DescriptionContainer>
 
@@ -217,13 +219,15 @@ export default function PlacePage({ match, location, history }: Props) {
               rightOffset={"8px"}
               onClick={() =>
                 placeData.isParticipating
-                  ? history.push(
+                  ? history.push(`${routes.participantProfile}`, {
+                      id: participant.userId,
+                    })
+                  : history.push(
                       `/participants-list/${encodeUrlSlug(placeData.name)}`,
                       {
                         placeId,
                       }
                     )
-                  : alert("전체 프로필 조회는 신청완료를 하시면 가능해요!")
               }
             />
           ))}
@@ -379,8 +383,11 @@ const DetailDescription = styled.div`
   position: absolute;
   bottom: -35px;
   right: 0;
-  color: #a7b0c0;
-  font-weight: bold;
+  a {
+    color: #a7b0c0;
+    font-weight: bold;
+    text-decoration: none;
+  }
 `;
 
 const SHeaderTextHeading = styled.h3`
