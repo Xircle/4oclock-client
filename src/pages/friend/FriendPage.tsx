@@ -24,7 +24,7 @@ import routes from "../../routes";
 import storage from "../../lib/storage";
 import { CURRENT_USER } from "../../components/shared/constants";
 import PageTitle from "../../components/PageTitle";
-import { IndicatorBox } from "./ParticipantProfilePage";
+import { ChattingButton, IndicatorBox } from "./ParticipantProfilePage";
 import { RouteComponentProps } from "react-router-dom";
 
 interface Props extends RouteComponentProps {}
@@ -43,6 +43,7 @@ export default function FriendsPage({ history }: Props) {
   } = useQuery<UserProfile | undefined>(["randomProfile"], seeRandomProfile, {
     retry: 1,
     refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
@@ -93,14 +94,23 @@ export default function FriendsPage({ history }: Props) {
             }}
           />
         </FlexDiv>
+
         <FlexDiv style={{ marginTop: "15px" }}>
           <Name>{randomProfileData?.username || "써클 개발자"}</Name>
         </FlexDiv>
+
         <FlexDiv>
           <TagOnName>
             <p>{randomProfileData?.job || "18학번 헌내기"}</p>
           </TagOnName>
         </FlexDiv>
+
+        <FlexDiv style={{ marginTop: "5px" }}>
+          <ChattingButton onClick={() => alert("개발중")}>
+            <p>채팅하기</p>
+          </ChattingButton>
+        </FlexDiv>
+
         <InnerContainer style={{ marginTop: "45px" }}>
           <InnerSubject>학교</InnerSubject>
           <InnerContent>
@@ -201,7 +211,7 @@ const TagOnName = styled(InterestTag)`
   p {
     font-size: 14px;
     font-weight: normal;
-    color: ${colors.BareGray};
+    color: #8c94a4;
   }
 `;
 

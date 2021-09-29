@@ -207,7 +207,7 @@ const Job = styled.div`
   font-weight: 500;
 `;
 
-const ChattingButton = styled(InterestTag)`
+export const ChattingButton = styled(InterestTag)`
   margin-left: 10px;
   padding: 7px 16px;
   border-radius: 6px;

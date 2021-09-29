@@ -172,7 +172,7 @@ export default function ReservationPage({ match, location, history }: Props) {
               <br />
             </InstructionDetail>
             <InstructionDetail style={{ marginTop: "9px" }}>
-              {"※"}단톡이 만들어지기전에 적어주신 전화번호로 연락을 드릴게요!
+              {"※"}단톡이 만들어지면 적어주신 전화번호로 연락을 드릴게요!
             </InstructionDetail>
           </Instruction>
           <EnabledMainBtnBooking

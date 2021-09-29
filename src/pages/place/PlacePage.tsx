@@ -320,7 +320,7 @@ export default function PlacePage({ match, location, history }: Props) {
             {isClosed
               ? "마감 되었어요"
               : placeData.isParticipating
-              ? "이미 참여신청된 모임이예요"
+              ? "이미 참여 신청된 모임이예요"
               : isFinal
               ? "오늘 마감! 맛집 놀러가기"
               : "맛집 놀러가기"}
@@ -431,14 +431,14 @@ const DescriptionText = styled.p`
   font-weight: normal;
   font-size: 13px;
   line-height: 16px;
-  margin: 15px 0 0;
+  margin-top: 10px;
   b {
     font-weight: bold;
   }
 `;
 
 const PParticipantContainer = styled.div`
-  margin-top: 15px;
+  margin-top: 7px;
 `;
 
 const PParticipant = styled.span<{ MarginLeft?: string }>`
@@ -450,8 +450,9 @@ const PParticipant = styled.span<{ MarginLeft?: string }>`
 `;
 
 const AvartarImgContainerParticipant = styled.div<{ isParticipating: boolean }>`
-  margin-top: 11px;
+  margin-top: 15px;
   filter: ${(props) => !props.isParticipating && "blur(1px)"};
+  transform: translate(-3px, 0);
 `;
 
 const DirText = styled.p`
@@ -460,7 +461,7 @@ const DirText = styled.p`
   margin-left: auto;
   margin-right: auto;
   line-height: 150%;
-  font-size: 11px;
+  font-size: 15px;
 `;
 
 const TempToBeDeleted = styled.div`

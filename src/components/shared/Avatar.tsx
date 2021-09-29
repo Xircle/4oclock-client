@@ -33,5 +33,6 @@ const AvartarImg = styled.img<{
   border-radius: 50%;
   object-fit: cover;
   margin-right: ${(props) => props.rightOffset || "0px"};
+  margin-bottom: 10px;
   cursor: pointer;
 `;
