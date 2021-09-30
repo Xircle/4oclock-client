@@ -344,6 +344,7 @@ export default function PlacePage({ match, location, history }: Props) {
           모임이에요!
         </BottomIndication>
       </BottomFixedIndicationContainer>
+
       <BottomFixedButtonContainer>
         <CTABottomFixedButtoninContainer
           onClick={CTAClickedHandler}
@@ -635,11 +636,12 @@ const PlaceSummaryInformation = styled.div`
 const BottomIndication = styled.div`
   background-color: #dbedff;
   color: #18a0fb;
-  width: 375px;
+  width: 100%;
+  max-width: 375px;
   z-index: 1;
   display: flex;
   justify-content: center;
-  padding: 5px 0;
+  padding: 10px 0;
   font-size: 12px;
   b {
     font-weight: bold;
