@@ -154,7 +154,7 @@ export interface CancelReservationInput {
   detailReason: string;
 }
 
-export interface CancelReservationOutput extends courOutput {}
+export interface CancelReservationOutput extends CoreOutput {}
 
 // Get Reservation Participant number
 export type ReservationInfo = [

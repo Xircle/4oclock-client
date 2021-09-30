@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import ClipLoader from "react-spinners/ClipLoader";
 import PageTitle from "../components/PageTitle";
 import BackButtonLayout from "../components/shared/BackButtonLayout";
 import {
@@ -7,33 +8,39 @@ import {
   SubText,
   MainBtn,
   ContainerwithLeftRightMargin,
-  LinkWithoutUnderLine,
   colors,
   BigTextArea,
 } from "../styles/styles";
 import { useMutation } from "react-query";
 import { cancelReservation } from "../lib/api/cancelReservation";
 import { useState } from "react";
-import { CancelReservationOutput } from "../lib/api/types";
+import { RouteComponentProps } from "react-router-dom";
+import { LoaderBackdrop, LoaderWrapper } from "../components/shared/Loader";
+import { toast } from "react-toastify";
 
-interface Props {
-  placeId: string;
-}
+interface Props extends RouteComponentProps<{}, {}, { placeId: string }> {}
 
-export default function CancelReservationPage({ placeId }: Props) {
+export default function CancelReservationPage({ history, location }: Props) {
+  const { placeId } = location.state;
   const [cancelReason, SetReasonMain] = useState<string>("");
   const [detailReason, SetReasonDetail] = useState<string>("");
-  const {
-    mutateAsync: mutateCancelReservation,
-    isLoading: isPatching,
-  } = useMutation(cancelReservation);
+  const { mutateAsync: mutateCancelReservation, isLoading: isPatching } =
+    useMutation(cancelReservation);
 
-  const onClickHandler = () => {
-    mutateCancelReservation({
+  const onClickHandler = async () => {
+    if (!placeId) return;
+    const { data } = await mutateCancelReservation({
       placeId,
       cancelReason,
       detailReason,
     });
+    if (!data.ok) {
+      throw new Error(data.error);
+    }
+    toast.info("예약이 취소되었습니다", {
+      position: toast.POSITION.TOP_CENTER,
+    });
+    history.push(`/place/${placeId}`);
   };
 
   return (
@@ -86,6 +93,19 @@ export default function CancelReservationPage({ placeId }: Props) {
             신청 취소하기
           </MainBtnCancelReservation>
         </ContainerwithLeftRightMargin>
+        {isPatching && (
+          <>
+            <LoaderBackdrop />
+            <LoaderWrapper>
+              <ClipLoader
+                loading={isPatching}
+                color={colors.MidBlue}
+                css={{ name: "width", styles: "border-width: 4px;" }}
+                size={30}
+              />
+            </LoaderWrapper>
+          </>
+        )}
       </BackButtonLayout>
     </Container>
   );

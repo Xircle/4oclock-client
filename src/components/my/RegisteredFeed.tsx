@@ -29,19 +29,21 @@ export default function RegisteredFeed({
         <FeedImg src={coverImage} />
       </FeedLeftContainer>
       <FeedDescription>
-        <FeedHeading>{name}</FeedHeading>
-        <FeedInfoP>
-          {oneLineIntroText} <br />
-          <b>
-            {startDateFromNow} / {participantsCount}명의
-          </b>{" "}
-          친구들 신청중
-        </FeedInfoP>
+        <div>
+          <FeedHeading>{name}</FeedHeading>
+          <FeedInfoP>
+            {oneLineIntroText} <br />
+            <b>
+              {startDateFromNow} / {participantsCount}명의
+            </b>{" "}
+            친구들 신청중
+          </FeedInfoP>
+        </div>
         <CancelLink
           to={`place/${id}?showCancelBtn=true`}
           onClick={(e: any) => e.stopPropagation()}
         >
-          취소하기
+          <span>신청 취소하기</span>
         </CancelLink>
       </FeedDescription>
     </FeedContainer>
@@ -53,6 +55,15 @@ const CancelLink = styled(Link)`
   text-decoration: none;
   &:hover {
     text-decoration: underline;
+  }
+  span {
+    color: #fff;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 13px;
+    padding: 5px;
+    background-color: #c4cbd8;
+    border-radius: 3px;
   }
 `;
 
@@ -82,9 +93,13 @@ const FeedImg = styled.img`
 `;
 
 const FeedDescription = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 205px;
   padding-left: 16px;
   padding-top: 5px;
+  padding-bottom: 7px;
 `;
 
 const FeedDetailP = styled.p`
