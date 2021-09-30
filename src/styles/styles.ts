@@ -189,6 +189,17 @@ export const BottomNavBarContainer = styled.div`
   filter: drop-shadow(16px 16px 20px rgba(75, 88, 208, 0.15));
 `;
 
+export const BottomFixedIndicationContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  bottom: 75px;
+  z-index: 1;
+`;
+
 export const BottomFixedButtonContainer = styled(BottomNavBarContainer)`
   width: 375px;
   display: flex;
