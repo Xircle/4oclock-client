@@ -197,7 +197,7 @@ export default function ReservationPage({ match, location, history }: Props) {
       )}
       {reservationClicked && (
         <Modal isClose={!reservationClicked} onClose={toggleReservation}>
-          <ModalWrapper>
+          <ReservationModalWrapper>
             <h1>모임 신청 전에 읽어주세요</h1>
             <span>
               1. 모임 전날 적어주신 전화번호로{" "}
@@ -220,7 +220,7 @@ export default function ReservationPage({ match, location, history }: Props) {
             >
               뒤로가기
             </p>
-          </ModalWrapper>
+          </ReservationModalWrapper>
         </Modal>
       )}
       <BottomNavBar selectedItem="places" />
@@ -320,7 +320,7 @@ const CheckIcon = styled.div`
   right: 10%;
 `;
 
-const ModalWrapper = styled.div`
+export const ReservationModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -335,7 +335,7 @@ const ModalWrapper = styled.div`
   }
   span {
     color: #18a0fb;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 18px;
   }
   strong {

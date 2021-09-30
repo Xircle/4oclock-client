@@ -53,13 +53,13 @@ export default function MyPlacePage() {
           return (
             <RegisteredFeed
               key={item.id}
+              id={item.id}
               isClosed={item.isClosed}
               coverImage={item.coverImage}
               name={item.name}
               startDateFromNow={item.startDateFromNow}
               oneLineIntroText={item.oneLineIntroText}
               participantsCount={item.participantsCount}
-              onClick={() => history.push(`/place/${item.id}?myPlace=true`)}
             />
           );
         })}

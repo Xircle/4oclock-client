@@ -1,14 +1,13 @@
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { MyPlaceData } from "../../lib/api/types";
 import { colors } from "../../styles/styles";
 import { PlaceFull, PlaceFullText } from "../placeFeed/PlaceFeedRow";
 
-interface Props extends Omit<MyPlaceData, "id"> {
-  onClick: () => void;
-}
+interface Props extends MyPlaceData {}
 
 export default function RegisteredFeed({
-  onClick,
+  id,
   isClosed,
   coverImage,
   name,
@@ -16,8 +15,10 @@ export default function RegisteredFeed({
   oneLineIntroText,
   participantsCount,
 }: Props) {
+  console.log(id);
+  const history = useHistory();
   return (
-    <FeedContainer onClick={onClick}>
+    <FeedContainer onClick={() => history.push(`/place/${id}?myPlace=true`)}>
       <FeedLeftContainer>
         {isClosed && (
           <>
@@ -36,10 +37,24 @@ export default function RegisteredFeed({
           </b>{" "}
           친구들 신청중
         </FeedInfoP>
+        <CancelLink
+          to={`place/${id}?showCancelBtn=true`}
+          onClick={(e: any) => e.stopPropagation()}
+        >
+          취소하기
+        </CancelLink>
       </FeedDescription>
     </FeedContainer>
   );
 }
+
+const CancelLink = styled(Link)`
+  z-index: 999;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
 
 const FeedContainer = styled.div`
   width: 100%;

@@ -5,6 +5,7 @@ import {
   SpaceForNavBar,
   BottomFixedButtonContainer,
   BottomFixedButtoninContainer,
+  MainBtn,
 } from "../../styles/styles";
 import { RouteComponentProps } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -25,7 +26,7 @@ import queryString from "query-string";
 import routes from "../../routes";
 import Modal from "../../components/UI/Modal";
 import PageTitle from "../../components/PageTitle";
-import useFullscreen from "../../hooks/useFullscreen";
+import { ReservationModalWrapper } from "../reservation/ReservationPage";
 
 const kakao = window.kakao;
 declare global {
@@ -33,7 +34,6 @@ declare global {
     kakao: any;
   }
 }
-
 interface MatchParmas {
   placeId: string;
 }
@@ -45,6 +45,11 @@ export default function PlacePage({ match, location, history }: Props) {
   const UrlSearch = location.search;
   const isFinal = Boolean(queryString.parse(UrlSearch).isFinal === "true");
   const isClosed = Boolean(queryString.parse(UrlSearch).isClosed === "true");
+  const showCancelBtn = Boolean(
+    queryString.parse(UrlSearch).showCancelBtn === "true"
+  );
+  const [isCancleBtnClicked, setIsCancleBtnClicked] = useState(false);
+
   const scrollToProfile = Boolean(
     queryString.parse(UrlSearch).scrollToProfile === "true"
   );
@@ -69,6 +74,21 @@ export default function PlacePage({ match, location, history }: Props) {
       window.scrollTo(0, 0);
     }
   }, []);
+
+  const CTAClickedHandler = () => {
+    if (!placeData) return;
+    if (showCancelBtn) {
+      setIsCancleBtnClicked(true);
+    } else if (placeData.isParticipating) {
+      history.push(`/reservation/${encodeUrlSlug(placeData.name)}`, {
+        placeId,
+        startDateFromNow: placeData.startDateFromNow,
+        detailAddress: placeData.placeDetail.detailAddress,
+        recommendation: placeData.recommendation,
+        participationFee: placeData.placeDetail.participationFee,
+      });
+    }
+  };
 
   useEffect(() => {
     searchAddress(placeData?.placeDetail.detailAddress);
@@ -313,23 +333,17 @@ export default function PlacePage({ match, location, history }: Props) {
       {/* 코드 너무 더룸.. Link 를 따로 컴포넌트로 뺴야할듯 */}
       <BottomFixedButtonContainer>
         <CTABottomFixedButtoninContainer
-          onClick={() =>
-            !placeData.isParticipating &&
-            history.push(`/reservation/${encodeUrlSlug(placeData.name)}`, {
-              placeId,
-              startDateFromNow: placeData.startDateFromNow,
-              detailAddress: placeData.placeDetail.detailAddress,
-              recommendation: placeData.recommendation,
-              participationFee: placeData.placeDetail.participationFee,
-            })
-          }
+          onClick={CTAClickedHandler}
           isParticipating={placeData.isParticipating}
           isFinal={isFinal}
           isClosed={isClosed}
-          disabled={placeData.isParticipating || isClosed}
+          showCancelBtn={showCancelBtn}
+          disabled={(placeData.isParticipating && !showCancelBtn) || isClosed}
         >
           <p>
-            {isClosed
+            {showCancelBtn
+              ? "신청 취소하기"
+              : isClosed
               ? "마감 되었어요"
               : placeData.isParticipating
               ? "이미 참여 신청된 모임이예요"
@@ -341,6 +355,39 @@ export default function PlacePage({ match, location, history }: Props) {
       </BottomFixedButtonContainer>
 
       <SpaceForNavBar />
+
+      {isCancleBtnClicked && (
+        <Modal
+          isClose={!isCancleBtnClicked}
+          onClose={() => setIsCancleBtnClicked((prev) => !prev)}
+        >
+          <ReservationModalWrapper>
+            <h1>모임을 정말 취소하시겠어요?</h1>
+            <span>
+              1. 모임 취소 절차를 거치지 않고 <strong>당일/무단불참</strong>의
+              경우 서비스 이용의 제재를 받게 됩니다.
+              <br />
+              <br />
+              2. 모임 취소는 <strong>12시간 내</strong>로 취소가 되고 취소가
+              어려운 경우 개별적으로 연락을 드리고 있습니다.
+              <br />
+              <br />
+              3. 이번에는 아쉽게도 모임에 참석하지 못하시지만{" "}
+              <strong>다음에 꼭 네시모해에서 맛집 모임</strong>을 즐기셨으면
+              좋겠습니다:)
+            </span>
+            <MainBtn onClick={() => history.push("/")} style={{ width: "90%" }}>
+              취소하기
+            </MainBtn>
+            <p
+              onClick={() => setIsCancleBtnClicked(false)}
+              className="cancleBtn"
+            >
+              뒤로가기
+            </p>
+          </ReservationModalWrapper>
+        </Modal>
+      )}
     </Container>
   );
 }
@@ -349,9 +396,10 @@ const CTABottomFixedButtoninContainer = styled(BottomFixedButtoninContainer)<{
   isParticipating: boolean;
   isFinal: boolean;
   isClosed: boolean;
+  showCancelBtn: boolean;
 }>`
   background-color: ${(props) =>
-    props.isParticipating || props.isClosed
+    props.isParticipating || props.isClosed || props.showCancelBtn
       ? "#A7B0C0"
       : props.isFinal
       ? "#FF2343"
