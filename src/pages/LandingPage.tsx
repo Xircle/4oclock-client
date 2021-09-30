@@ -49,13 +49,12 @@ function LandingPage() {
           onClose={() => setIsSamsungBrowser((prev) => !prev)}
         >
           <ModalWrapper>
-            <h1>✅ 건의사항이 있어요!</h1>
+            <h1>크롬이신가요?</h1>
             <p>
               삼성 브라우저에서 회원가입이 잘되지 않는 이슈를 발견했어요!
               <br />
               <br />
-              원활한 서비스 사용을 위해 크롬이나 사파리로 회원가입을 해주시면
-              감사하겠습니다
+              원활한 접속을 위해 크롬 or 사파리로 접속해주세요
             </p>
             <MainBtn
               onClick={() => setIsSamsungBrowser(false)}
