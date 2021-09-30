@@ -57,6 +57,7 @@ export interface PlaceData {
   oneLineIntroText: string;
   recommendation: string;
   startDateFromNow: string;
+  deadline: string;
   coverImage: string;
   isClosed: boolean;
   isParticipating: boolean;
