@@ -10,6 +10,9 @@ export const cancelReservation = async (
 ): Promise<AxiosResponse<CancelReservationOutput>> => {
   return AxiosClient.patch<CancelReservationOutput>(
     `reservation/${cancelReservationInput.placeId}`,
-    cancelReservationInput
+    {
+      cancelReason: cancelReservationInput.cancelReason,
+      detailReason: cancelReservationInput.detailReason,
+    }
   );
 };
