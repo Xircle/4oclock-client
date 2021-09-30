@@ -67,9 +67,9 @@ export default function MyPage() {
               src={userData?.profileImageUrl || "/avatar/anonymous_user.png"}
             />
             <ProfileTextWrapper>
-              <UserName>{userData?.username || "유저1"}</UserName>
+              <UserName>{userData?.username || ""}</UserName>
               <UserDetail>
-                {userData?.university || "고연대"} / {userData?.age || "새내기"}
+                {userData?.university || ""} / {userData?.age || ""}
               </UserDetail>
             </ProfileTextWrapper>
           </ProfileInfoDiv>
