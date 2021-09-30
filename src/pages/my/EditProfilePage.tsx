@@ -350,7 +350,7 @@ export default function EditProfilePage({ history }: Props) {
             {!localValidation[1] && (
               <ErrorMessage>{errorMessages[1]}</ErrorMessage>
             )}
-            <Label>계열이나 직업을 적어주세요</Label>
+            <Label>개성있는 한줄소개</Label>
             <MidInput
               name="job"
               placeholder="ex. 공대생 / 미개봉 새내기 / 디자이너"

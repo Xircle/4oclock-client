@@ -34,6 +34,10 @@ const ParticipantsListPage = React.lazy(
   () => import("./pages/participantsList/ParticipantsListPage")
 );
 
+const CancelReservationPage = React.lazy(
+  () => import("./pages/CancelReservationPage")
+);
+
 const ImageGalleryPage = React.lazy(() => import("./pages/ImageGalleryPage"));
 
 function App() {
@@ -62,6 +66,10 @@ function App() {
                 path={routes.socialRedirect}
                 component={SocialRedirect}
                 exact
+              />
+              <Route
+                path={routes.cancelReservation}
+                component={CancelReservationPage}
               />
               <Route path={routes.placeFeed} component={PlaceFeedPage} />
               <Route path={routes.place} component={PlacePage} />
