@@ -7,6 +7,7 @@ import {
   MainBtn,
   BottomFixedButtoninContainer,
   FlexDiv,
+  BottomFixedIndicationContainer,
 } from "../../styles/styles";
 import { RouteComponentProps } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -18,6 +19,7 @@ import type { PlaceData } from "../../lib/api/types";
 import {
   AgeNumberToString,
   CalculateCloseDate,
+  ModifyDeadline,
   encodeUrlSlug,
 } from "../../lib/utils";
 import Avatar from "../../components/shared/Avatar";
@@ -164,11 +166,11 @@ export default function PlacePage({ match, location, history }: Props) {
           <SHeaderCategoryIndicator>
             {placeData.participantsCount}명 신청중
           </SHeaderCategoryIndicator>
-          {placeData.startDateFromNow != "NA" && (
+          {/* {placeData.startDateFromNow != "NA" && (
             <SHeaderCategoryIndicator>
               {CalculateCloseDate(placeData.startDateFromNow)}
             </SHeaderCategoryIndicator>
-          )}
+          )} */}
           <SHeaderTextHeading>{placeData.name}</SHeaderTextHeading>
           <FlexSpaceBetween>
             <SHeaderTextDescription>
@@ -335,6 +337,13 @@ export default function PlacePage({ match, location, history }: Props) {
 
       {/* Reservation Button */}
       {/* 코드 너무 더룸.. Link 를 따로 컴포넌트로 뺴야할듯 */}
+      <BottomFixedIndicationContainer>
+        <BottomIndication>
+          <b>{placeData.deadline}</b>{" "}
+          {CalculateCloseDate(placeData.startDateFromNow)}까지 신청을 받는
+          모임이에요!
+        </BottomIndication>
+      </BottomFixedIndicationContainer>
       <BottomFixedButtonContainer>
         <CTABottomFixedButtoninContainer
           onClick={CTAClickedHandler}
@@ -620,6 +629,21 @@ const PlaceSummaryInformation = styled.div`
   span {
     font-weight: 700;
     color: #18a0fb;
+  }
+`;
+
+const BottomIndication = styled.div`
+  background-color: #dbedff;
+  color: #18a0fb;
+  width: 375px;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  padding: 5px 0;
+  font-size: 12px;
+  b {
+    font-weight: bold;
+    margin-right: 5px;
   }
 `;
 
