@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 import {
   ProcedureHeading,
@@ -10,14 +9,23 @@ import {
   LinkWithoutUnderLine,
 } from "../styles/styles";
 import KakaoLogin from "react-kakao-login";
-import { LoginResponse, UserProfile } from "../lib/kakao";
+import { LoginResponse } from "../lib/kakao";
 import { useHistory } from "react-router-dom";
 import * as links from "../components/shared/Links";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
+import { isSamsungBrowser } from "react-device-detect";
+import Modal from "../components/UI/Modal";
 
 function LandingPage() {
   const history = useHistory();
+  const [isSamsungBrowser, setIsSamsungBrowser] = useState(false);
+
+  useEffect(() => {
+    console.log(isSamsungBrowser);
+    if (isSamsungBrowser) setIsSamsungBrowser(true);
+  }, []);
 
   const kakaoSuccessCallback = (response: {
     response: LoginResponse;
@@ -35,6 +43,29 @@ function LandingPage() {
 
   return (
     <Container>
+      {isSamsungBrowser && (
+        <Modal
+          isClose={!isSamsungBrowser}
+          onClose={() => setIsSamsungBrowser((prev) => !prev)}
+        >
+          <ModalWrapper>
+            <h1>✅ 건의사항이 있어요!</h1>
+            <p>
+              삼성 브라우저에서 회원가입이 잘되지 않는 이슈를 발견했어요!
+              <br />
+              <br />
+              원활한 서비스 사용을 위해 크롬이나 사파리로 회원가입을 해주시면
+              감사하겠습니다
+            </p>
+            <MainBtn
+              onClick={() => setIsSamsungBrowser(false)}
+              style={{ width: "90%" }}
+            >
+              알겠습니다
+            </MainBtn>
+          </ModalWrapper>
+        </Modal>
+      )}
       <MainBox>
         <img src="/landingPage/LandingPageMain.jpeg" />
         <Row>
@@ -385,6 +416,27 @@ const InputIdPwd = styled.input`
 
 const GrayLink = styled(LinkWithoutUnderLine)`
   color: #a7b0c0;
+`;
+
+const ModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  padding: 10px 40px;
+  h1 {
+    color: #12121d;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+  }
+  p {
+    color: #18a0fb;
+    font-size: 15px;
+    line-height: 18px;
+    font-weight: 500;
+  }
 `;
 
 export default LandingPage;
