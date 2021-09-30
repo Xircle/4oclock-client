@@ -51,3 +51,11 @@ export const CalculateCloseDate = (startDateFromNow: string): string => {
     return "NA";
   }
 };
+
+export const ModifyDeadline = (deadline: string): string => {
+  if (deadline.includes("D")) {
+    return "신청 ".concat(deadline);
+  } else {
+    return deadline;
+  }
+};

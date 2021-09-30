@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import { colors } from "../../styles/styles";
+import { colors, FlexDiv } from "../../styles/styles";
 import { useState } from "react";
 import type { PlaceFeedData } from "../../lib/api/types";
 import Avatar from "../shared/Avatar";
+import { ModifyDeadline } from "../../lib/utils";
 
 interface Props extends PlaceFeedData {
   onClick: () => void;
@@ -19,6 +20,7 @@ export default function PlaceFeedRow({
   startDateFromNow,
   participants,
   isParticipating,
+  views,
 }: Props) {
   return (
     <Container onClick={onClick}>
@@ -31,14 +33,17 @@ export default function PlaceFeedRow({
         )}
         {deadline && (
           <PlaceDeadline>
-            <p>{deadline}</p>
+            <p>{ModifyDeadline(deadline)}</p>
           </PlaceDeadline>
         )}
         <PlaceCoverImage src={coverImage} />
       </PlaceLeftContainer>
 
       <PlaceRightContainer>
-        <PlaceName>{name}</PlaceName>
+        <FlexSpaceBetween>
+          <PlaceName>{name}</PlaceName>
+          <ViewCount>조회 {views}</ViewCount>
+        </FlexSpaceBetween>
         <PlaceOneLineIntroText>{oneLineIntroText}</PlaceOneLineIntroText>
         <PlaceSummary>
           {startDateFromNow} / {participantsCount}명의
@@ -61,6 +66,15 @@ export default function PlaceFeedRow({
     </Container>
   );
 }
+
+const FlexSpaceBetween = styled(FlexDiv)`
+  justify-content: space-between;
+`;
+
+const ViewCount = styled.span`
+  color: ${colors.MidGray};
+  font-size: 9px;
+`;
 
 const Container = styled.div`
   width: 100%;

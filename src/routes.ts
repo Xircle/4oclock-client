@@ -14,6 +14,7 @@ const routes = {
   editProfilePage: "/edit-profile-page",
   auth: "/auth",
   participantsList: "/participants-list/:name",
+  cancelReservation: "/cancel-reservation/:placeId",
 };
 
 export default routes;
