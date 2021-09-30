@@ -80,7 +80,7 @@ export default function PlacePage({ match, location, history }: Props) {
     if (!placeData) return;
     if (showCancelBtn) {
       setIsCancleBtnClicked(true);
-    } else if (placeData.isParticipating) {
+    } else if (!placeData.isParticipating) {
       history.push(`/reservation/${encodeUrlSlug(placeData.name)}`, {
         placeId,
         startDateFromNow: placeData.startDateFromNow,
@@ -380,7 +380,15 @@ export default function PlacePage({ match, location, history }: Props) {
               <strong>다음에 꼭 네시모해에서 맛집 모임</strong>을 즐기셨으면
               좋겠습니다:)
             </span>
-            <MainBtn onClick={() => history.push("/")} style={{ width: "90%" }}>
+
+            <MainBtn
+              onClick={() =>
+                history.push(routes.cancelReservation, {
+                  placeId,
+                })
+              }
+              style={{ width: "90%" }}
+            >
               취소하기
             </MainBtn>
             <p
