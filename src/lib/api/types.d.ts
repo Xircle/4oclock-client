@@ -148,6 +148,14 @@ export interface MakeReservationInput {
 
 export interface MakeReservationOutput extends CoreOutput {}
 
+export interface CancelReservationInput {
+  placeId: string;
+  cancelReason: string;
+  detailReason: string;
+}
+
+export interface CancelReservationOutput extends courOutput {}
+
 // Get Reservation Participant number
 export type ReservationInfo = [
   {
