@@ -11,6 +11,8 @@ import PlaceFeedRow from "./PlaceFeedRow";
 import ClipLoader from "react-spinners/ClipLoader";
 import styled from "styled-components";
 
+
+
 interface Props {
   placeFeedDataArray?: PlaceFeedData[];
   isLoading: boolean;

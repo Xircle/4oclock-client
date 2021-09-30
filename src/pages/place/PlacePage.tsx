@@ -4,12 +4,13 @@ import {
   Container,
   SpaceForNavBar,
   BottomFixedButtonContainer,
-  BottomFixedButtoninContainer,
   MainBtn,
+  BottomFixedButtoninContainer,
+  FlexDiv,
 } from "../../styles/styles";
 import { RouteComponentProps } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-import { faMapMarkerAlt, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { getPlaceById } from "../../lib/api/getPlaceById";
@@ -169,9 +170,12 @@ export default function PlacePage({ match, location, history }: Props) {
             </SHeaderCategoryIndicator>
           )}
           <SHeaderTextHeading>{placeData.name}</SHeaderTextHeading>
-          <SHeaderTextDescription>
-            {placeData.oneLineIntroText}
-          </SHeaderTextDescription>
+          <FlexSpaceBetween>
+            <SHeaderTextDescription>
+              {placeData.oneLineIntroText}
+            </SHeaderTextDescription>
+            <ViewCount>조회 {placeData.views}</ViewCount>
+          </FlexSpaceBetween>
         </HeaderText>
       </SHeader>
 
@@ -392,6 +396,15 @@ export default function PlacePage({ match, location, history }: Props) {
   );
 }
 
+const FlexSpaceBetween = styled(FlexDiv)`
+  justify-content: space-between;
+`;
+
+const ViewCount = styled.span`
+  color: #fff;
+  font-size: 9px;
+`;
+
 const CTABottomFixedButtoninContainer = styled(BottomFixedButtoninContainer)<{
   isParticipating: boolean;
   isFinal: boolean;
@@ -580,7 +593,7 @@ const HeaderText = styled.div`
   position: absolute;
   bottom: 20px;
   left: 20px;
-  width: 65%;
+  width: 335px;
   h3,
   p {
     color: #fff;

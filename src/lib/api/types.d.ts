@@ -40,6 +40,7 @@ export interface PlaceFeedData {
   participants: Participants[];
   isParticipating: boolean;
   deadline?: string;
+  views: number;
 }
 
 export interface ParticipantsListData extends Participants {}
@@ -61,6 +62,7 @@ export interface PlaceData {
   isParticipating: boolean;
   participants: PlaceDataParticipantsProfile[];
   participantsCount: number;
+  views: number;
   participantsInfo: {
     total_count: number;
     male_count: number;
@@ -145,6 +147,14 @@ export interface MakeReservationInput {
 }
 
 export interface MakeReservationOutput extends CoreOutput {}
+
+export interface CancelReservationInput {
+  placeId: string;
+  cancelReason: string;
+  detailReason: string;
+}
+
+export interface CancelReservationOutput extends courOutput {}
 
 // Get Reservation Participant number
 export type ReservationInfo = [

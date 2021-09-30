@@ -120,6 +120,9 @@ export const MainBtn = styled.button`
   p {
     color: white;
   }
+  &:disabled {
+    background-color: ${colors.LightGray};
+  }
 `;
 
 export const SelectionBox = styled.div`
