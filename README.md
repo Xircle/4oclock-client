@@ -1,13 +1,13 @@
-# 네시 식탁, Xircle
+# 네시모해, Xircle
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/dd939a86-a7bf-4118-825c-fa0eb3bd9435/deploy-status)](https://app.netlify.com/sites/xircle/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e9113e2f-2781-4ef5-bd13-d649c290ce76/deploy-status)](https://app.netlify.com/sites/4oclock/deploys)
 
-This project is source code of xircle v1. After v2 update, this project is now archived. For source code of v2, check out the links below:
+This project is source code of `4o'clock` v1. After v2 update, this project is now archived. For source code of v2, check out the links below:
 
-- https://github.com/Xircle/client
-- https://github.com/Xircle/server
+- https://github.com/Xircle/4oclock-client
+- https://github.com/Xircle/4oclock-server
 
-> Xircle is a meeting reservation platform for university students. It provides you with lots of places where you can make any kinds of networks. Feel free to make a network in Xircle.
+> `4o'clock` is a meeting reservation platform for university students. It provides you with lots of places where you can make any kinds of networks. Feel free to make a network in 4o'clock
 
 ## Project Stack
 
@@ -31,7 +31,18 @@ Following items are core backend technologies used in this project:
 - PostgreSQL
 
 ### Infra
+
 - Netlify for clinet
-- Heroku for server 
+- Heroku for server
 - AWS S3 for static image
-- (Upcoming) AWS Lambda for thumbnail image 
+
+### Trouble shooting
+
+- Cross-browsing problem with old version of `Samsung Internet Browser`
+
+## Upcoming Feature
+
+- [ ] Chatting
+- [ ] Review other participants, After meeting
+- [ ] Push notification
+- [ ] Thumbnail image with Lambda
