@@ -42,7 +42,7 @@ export default function PlaceFeedRow({
       <PlaceRightContainer>
         <FlexSpaceBetween>
           <PlaceName>{name}</PlaceName>
-          <ViewCount>조회 {views}</ViewCount>
+          <ViewCount> 👀 {views}</ViewCount>
         </FlexSpaceBetween>
         <PlaceOneLineIntroText>{oneLineIntroText}</PlaceOneLineIntroText>
         <PlaceSummary>
