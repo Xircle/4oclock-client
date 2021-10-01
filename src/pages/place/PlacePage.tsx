@@ -19,7 +19,6 @@ import type { PlaceData } from "../../lib/api/types";
 import {
   AgeNumberToString,
   CalculateDDay,
-  ModifyDeadline,
   encodeUrlSlug,
   CalculateCloseDay,
 } from "../../lib/utils";
@@ -341,7 +340,7 @@ export default function PlacePage({ match, location, history }: Props) {
 
       {/* Reservation Button */}
       {/* 코드 너무 더룸.. Link 를 따로 컴포넌트로 뺴야할듯 */}
-      {placeData.startDateFromNow != "NA" && (
+      {CalculateDDay(placeData.startDateAt) >= 0 && (
         <BottomFixedIndicationContainer>
           <BottomIndication>
             <b>
