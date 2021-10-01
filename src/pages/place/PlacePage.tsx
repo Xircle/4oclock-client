@@ -337,13 +337,15 @@ export default function PlacePage({ match, location, history }: Props) {
 
       {/* Reservation Button */}
       {/* 코드 너무 더룸.. Link 를 따로 컴포넌트로 뺴야할듯 */}
-      <BottomFixedIndicationContainer>
-        <BottomIndication>
-          <b>{placeData.deadline}</b>{" "}
-          {CalculateCloseDate(placeData.startDateFromNow)}까지 신청을 받는
-          모임이에요!
-        </BottomIndication>
-      </BottomFixedIndicationContainer>
+      {placeData.startDateFromNow != "NA" && (
+        <BottomFixedIndicationContainer>
+          <BottomIndication>
+            <b>{placeData.deadline}</b>{" "}
+            {CalculateCloseDate(placeData.startDateFromNow)}까지 신청을 받는
+            모임이에요!
+          </BottomIndication>
+        </BottomFixedIndicationContainer>
+      )}
 
       <BottomFixedButtonContainer>
         <CTABottomFixedButtoninContainer
