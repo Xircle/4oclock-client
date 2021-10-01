@@ -49,7 +49,7 @@ function LandingPage() {
           onClose={() => setIsSamsungBrowserBool((prev) => !prev)}
         >
           <ModalWrapper>
-            <h1>크롬이신가요?</h1>
+            <h1>크롬 or 사파리로 접속해주세요!</h1>
             <p>
               삼성 브라우저에서 회원가입이 잘되지 않는 이슈를 발견했어요!
               <br />
