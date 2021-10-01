@@ -1,3 +1,18 @@
+import moment from "moment";
+import "moment/locale/ko";
+import { parseIsolatedEntityName } from "typescript";
+
+const DateByMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const StartDays = [
+  "월요일",
+  "화요일",
+  "수요일",
+  "목요일",
+  "금요일",
+  "토요일",
+  "일요일",
+];
+
 export function AgeNumberToString(age: number): string {
   if (age === 0) {
     return "미정";
@@ -42,15 +57,31 @@ export const decodeUrlSlug = (url: string): string => {
   return url.replaceAll("-", " ");
 };
 
+export const CalculateDDay = (startDateAt: string): number => {
+  const nowTimes = moment().format("YYYY-MM-DD").split("-");
+  const startTimes = startDateAt.split("-");
+  const nowMonths = Number(nowTimes[1]);
+  const startMonths = Number(startTimes[1]);
 
-export const CalculateCloseDate = (startDateFromNow: string): string => {
-  if (startDateFromNow.includes("이번주 일요일")) {
-    return "토요일 자정";
-  } else if (startDateFromNow.includes("이번주 토요일")) {
-    return "금요일 자정";
-  } else {
-    return "NA";
+  let diffs: number = (Number(startTimes[0]) - Number(nowTimes[0])) * 365;
+  diffs += Number(startTimes[2]) - Number(nowTimes[2]);
+  for (let i = 0; i < startMonths; i++) {
+    diffs += DateByMonth[i];
   }
+  for (let i = 0; i < nowMonths; i++) {
+    diffs -= DateByMonth[i];
+  }
+
+  return diffs - 1;
+};
+
+export const CalculateCloseDay = (startDateAt: string): string => {
+  const startDay = CalculateDDay(startDateAt);
+  const curDay = moment().format("llll").split(" ")[3];
+  let index = StartDays.indexOf(curDay);
+  index += startDay;
+  index %= 7;
+  return StartDays[index];
 };
 
 export const ModifyDeadline = (deadline: string): string => {

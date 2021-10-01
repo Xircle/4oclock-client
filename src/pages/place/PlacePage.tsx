@@ -11,16 +11,17 @@ import {
 } from "../../styles/styles";
 import { RouteComponentProps } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { faMapMarkerAlt, faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { getPlaceById } from "../../lib/api/getPlaceById";
 import type { PlaceData } from "../../lib/api/types";
 import {
   AgeNumberToString,
-  CalculateCloseDate,
+  CalculateDDay,
   ModifyDeadline,
   encodeUrlSlug,
+  CalculateCloseDay,
 } from "../../lib/utils";
 import Avatar from "../../components/shared/Avatar";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
@@ -176,7 +177,10 @@ export default function PlacePage({ match, location, history }: Props) {
             <SHeaderTextDescription>
               {placeData.oneLineIntroText}
             </SHeaderTextDescription>
-            <ViewCount>조회 {placeData.views}</ViewCount>
+            <ViewCount>
+              <FontAwesomeIcon icon={faEye} style={{ marginRight: "4px" }} />{" "}
+              {placeData.views}
+            </ViewCount>
           </FlexSpaceBetween>
         </HeaderText>
       </SHeader>
@@ -340,8 +344,13 @@ export default function PlacePage({ match, location, history }: Props) {
       {placeData.startDateFromNow != "NA" && (
         <BottomFixedIndicationContainer>
           <BottomIndication>
-            <b>{placeData.deadline}</b>{" "}
-            {CalculateCloseDate(placeData.startDateFromNow)}까지 신청을 받는
+            <b>
+              D-
+              {CalculateDDay(placeData.startDateAt) === 0
+                ? "DAY"
+                : CalculateDDay(placeData.startDateAt)}
+            </b>
+            {CalculateCloseDay(placeData.startDateAt)} 자정까지 신청하는
             모임이에요!
           </BottomIndication>
         </BottomFixedIndicationContainer>
