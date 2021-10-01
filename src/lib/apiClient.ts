@@ -2,9 +2,10 @@ import { CURRENT_USER } from "./../components/shared/constants";
 import axios, { AxiosRequestConfig } from "axios";
 import storage from "./storage";
 
+// http://localhost:3080
 const host =
   process.env.NODE_ENV === "development"
-    ? process.env.REACT_APP_API_SERVER
+    ? "http://localhost:3080"
     : process.env.REACT_APP_API_SERVER || "/";
 
 const apiClient = axios.create({

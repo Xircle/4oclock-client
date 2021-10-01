@@ -42,9 +42,10 @@ export const decodeUrlSlug = (url: string): string => {
   return url.replaceAll("-", " ");
 };
 
-
+// StartDateFromnow example
+// 마감, 오늘, 내일, 모래 이번주 *요일, 다음주 *요일, 10월 31일
 export const CalculateCloseDate = (startDateFromNow: string): string => {
-  if (startDateFromNow.includes("이번주 일요일")) {
+  if (startDateFromNow.includes("오늘")) {
     return "토요일 자정";
   } else if (startDateFromNow.includes("이번주 토요일")) {
     return "금요일 자정";
