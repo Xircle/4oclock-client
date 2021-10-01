@@ -24,7 +24,7 @@ function LandingPage() {
 
   useEffect(() => {
     console.log(isSamsungBrowser);
-    if (isSamsungBrowserBool) setIsSamsungBrowserBool(true);
+    if (isSamsungBrowser) setIsSamsungBrowserBool(true);
   }, []);
 
   const kakaoSuccessCallback = (response: {
