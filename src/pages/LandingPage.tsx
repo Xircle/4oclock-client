@@ -20,11 +20,11 @@ import Modal from "../components/UI/Modal";
 
 function LandingPage() {
   const history = useHistory();
-  const [isSamsungBrowser, setIsSamsungBrowser] = useState(false);
+  const [isSamsungBrowserBool, setIsSamsungBrowser] = useState(false);
 
   useEffect(() => {
     console.log(isSamsungBrowser);
-    if (isSamsungBrowser) setIsSamsungBrowser(true);
+    if (isSamsungBrowserBool) setIsSamsungBrowser(true);
   }, []);
 
   const kakaoSuccessCallback = (response: {
