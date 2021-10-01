@@ -64,6 +64,7 @@ export interface PlaceData {
   participants: PlaceDataParticipantsProfile[];
   participantsCount: number;
   views: number;
+  startDateAt: string;
   participantsInfo: {
     total_count: number;
     male_count: number;
