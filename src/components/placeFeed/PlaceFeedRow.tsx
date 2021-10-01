@@ -1,10 +1,8 @@
 import styled from "styled-components";
 import { colors, FlexDiv } from "../../styles/styles";
-import { useState } from "react";
 import type { PlaceFeedData } from "../../lib/api/types";
 import Avatar from "../shared/Avatar";
 import { ModifyDeadline } from "../../lib/utils";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Props extends PlaceFeedData {
@@ -45,7 +43,8 @@ export default function PlaceFeedRow({
         <FlexSpaceBetween>
           <PlaceName>{name}</PlaceName>
           <ViewCount>
-            <FontAwesomeIcon icon={faEye} /> {views}
+            <img src="/icons/eye.svg" />
+            {views}
           </ViewCount>
         </FlexSpaceBetween>
         <PlaceOneLineIntroText>{oneLineIntroText}</PlaceOneLineIntroText>
@@ -76,8 +75,11 @@ const FlexSpaceBetween = styled(FlexDiv)`
 `;
 
 const ViewCount = styled.span`
-  color: ${colors.MidGray};
+  color: #a7b0c0;
   font-size: 9px;
+  img {
+    margin-right: 5px;
+  }
 `;
 
 const Container = styled.div`
