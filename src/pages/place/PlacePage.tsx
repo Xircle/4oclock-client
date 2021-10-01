@@ -211,17 +211,44 @@ export default function PlacePage({ match, location, history }: Props) {
 
       {/* Album  */}
       <GridContainer>
-        {placeData.placeDetail.photos.map((photo, index) => (
-          <GridPic
-            key={photo}
-            src={photo}
-            onClick={() =>
-              history.push(`/image/${index}`, {
-                profileImageUrls: placeData.placeDetail.photos,
-              })
-            }
-          />
-        ))}
+        {placeData.placeDetail.photos.map((photo, index) => {
+          if (index < 5) {
+            return (
+              <GridPic
+                key={photo}
+                src={photo}
+                onClick={() =>
+                  history.push(`/image/${index}`, {
+                    profileImageUrls: placeData.placeDetail.photos,
+                  })
+                }
+              />
+            );
+          } else if (index == 5) {
+            return (
+              <OverlayContainer
+                key={photo}
+                onClick={() =>
+                  history.push(`/image/${index}`, {
+                    profileImageUrls: placeData.placeDetail.photos,
+                  })
+                }
+              >
+                <GridPic src={photo} />
+                <Overlay />
+                <OverlayText>
+                  {placeData.placeDetail.photos.length - 6 > 0 && (
+                    <>
+                      +{placeData.placeDetail.photos.length - 6}
+                      <br />
+                    </>
+                  )}
+                  더보기
+                </OverlayText>
+              </OverlayContainer>
+            );
+          }
+        })}
       </GridContainer>
 
       {/* Participants */}
@@ -423,6 +450,45 @@ export default function PlacePage({ match, location, history }: Props) {
     </Container>
   );
 }
+
+const OverlayPlusNumber = styled.p`
+  color: white;
+`;
+
+const OverlayContainer = styled.div`
+  width: 112px;
+  height: 112px;
+  padding: 0px;
+  position: relative;
+`;
+
+export const Overlay = styled.div`
+  position: absolute;
+  background-color: ${colors.Black};
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  border-radius: 5px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  bottom: 50%;
+  transform: translateY(50%);
+`;
+
+export const OverlayText = styled.div`
+  color: white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-weight: 800;
+  font-size: 14px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+`;
 
 const FlexSpaceBetween = styled(FlexDiv)`
   justify-content: space-between;

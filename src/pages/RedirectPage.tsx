@@ -44,16 +44,11 @@ export default function SocialRedirect() {
       style={{
         height: "90vh",
         display: "flex",
-        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <MainText>네시모해?</MainText>
-      <SubText>
-        좋은 친구들과 &nbsp; <b>맛있는 음식</b> 먹으러 가자!
-      </SubText>
-      <Emoji>🍚</Emoji>
+      <img src="/fallback_icon.png" />
     </div>
   );
 }
