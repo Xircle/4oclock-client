@@ -20,11 +20,11 @@ import Modal from "../components/UI/Modal";
 
 function LandingPage() {
   const history = useHistory();
-  const [isSamsungBrowserBool, setIsSamsungBrowser] = useState(false);
+  const [isSamsungBrowserBool, setIsSamsungBrowserBool] = useState(false);
 
   useEffect(() => {
     console.log(isSamsungBrowser);
-    if (isSamsungBrowserBool) setIsSamsungBrowser(true);
+    if (isSamsungBrowserBool) setIsSamsungBrowserBool(true);
   }, []);
 
   const kakaoSuccessCallback = (response: {
@@ -43,10 +43,10 @@ function LandingPage() {
 
   return (
     <Container>
-      {isSamsungBrowser && (
+      {isSamsungBrowserBool && (
         <Modal
-          isClose={!isSamsungBrowser}
-          onClose={() => setIsSamsungBrowser((prev) => !prev)}
+          isClose={!isSamsungBrowserBool}
+          onClose={() => setIsSamsungBrowserBool((prev) => !prev)}
         >
           <ModalWrapper>
             <h1>크롬이신가요?</h1>
@@ -57,7 +57,7 @@ function LandingPage() {
               원활한 접속을 위해 크롬 or 사파리로 접속해주세요
             </p>
             <MainBtn
-              onClick={() => setIsSamsungBrowser(false)}
+              onClick={() => setIsSamsungBrowserBool(false)}
               style={{ width: "90%" }}
             >
               알겠습니다
