@@ -4,6 +4,8 @@ import { useState } from "react";
 import type { PlaceFeedData } from "../../lib/api/types";
 import Avatar from "../shared/Avatar";
 import { ModifyDeadline } from "../../lib/utils";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Props extends PlaceFeedData {
   onClick: () => void;
@@ -42,7 +44,9 @@ export default function PlaceFeedRow({
       <PlaceRightContainer>
         <FlexSpaceBetween>
           <PlaceName>{name}</PlaceName>
-          <ViewCount>조회 {views}</ViewCount>
+          <ViewCount>
+            <FontAwesomeIcon icon={faEye} /> {views}
+          </ViewCount>
         </FlexSpaceBetween>
         <PlaceOneLineIntroText>{oneLineIntroText}</PlaceOneLineIntroText>
         <PlaceSummary>
