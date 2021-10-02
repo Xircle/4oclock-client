@@ -42,6 +42,7 @@ export interface ProfileData {
   job?: string;
   location?: string;
   activities?: string;
+  gender?: string;
 }
 
 interface Props extends RouteComponentProps<any> {}
@@ -59,16 +60,15 @@ export default function EditProfilePage({ history }: Props) {
   ]);
   const [detailAddress, setDetailAddress] = useState(localProfileData.location);
 
-  const {
-    data: userData,
-    isLoading,
-    isSuccess,
-  } = useQuery<UserData | undefined>("userProfile", () => getUser(), {
+  const { data: userData, isLoading, isSuccess } = useQuery<
+    UserData | undefined
+  >("userProfile", () => getUser(), {
     retry: 2,
   });
 
-  const { mutateAsync: mutateUserProfile, isLoading: isUpdating } =
-    useMutation(editProfile);
+  const { mutateAsync: mutateUserProfile, isLoading: isUpdating } = useMutation(
+    editProfile
+  );
 
   useEffect(() => {
     if (isSuccess) {
@@ -79,6 +79,7 @@ export default function EditProfilePage({ history }: Props) {
         profileImageUrl: userData?.profileImageUrl,
         location: userData?.location,
         activities: userData?.activities,
+        gender: userData?.gender,
       });
     }
   }, [isSuccess]);
@@ -322,15 +323,32 @@ export default function EditProfilePage({ history }: Props) {
               disabled
             />
             <FlexDiv style={{ justifyContent: "normal", marginTop: "20px" }}>
-              <input type="radio" name="gender" id="male" disabled checked />
+              {localProfileData.gender === "Male" ? (
+                <input type="radio" name="gender" id="male" disabled checked />
+              ) : (
+                <input type="radio" name="gender" id="male" disabled />
+              )}
+
               <GenderText>남성</GenderText>
-              <input
-                type="radio"
-                name="gender"
-                id="female"
-                disabled
-                style={{ marginLeft: "32px" }}
-              />
+              {localProfileData.gender === "Female" ? (
+                <input
+                  type="radio"
+                  name="gender"
+                  id="female"
+                  disabled
+                  checked
+                  style={{ marginLeft: "32px" }}
+                />
+              ) : (
+                <input
+                  type="radio"
+                  name="gender"
+                  id="female"
+                  disabled
+                  style={{ marginLeft: "32px" }}
+                />
+              )}
+
               <GenderText>여성</GenderText>
             </FlexDiv>
 
