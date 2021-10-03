@@ -144,6 +144,7 @@ export default function EditProfilePage({ history }: Props) {
         } else {
           acc[curr] = localProfileData[curr];
         }
+
         return acc;
       },
       {}
@@ -397,7 +398,10 @@ export default function EditProfilePage({ history }: Props) {
 
       <BottomFixedButtonContainer>
         <BottomFixedButtoninContainer
-          disabled={diff(userData, localProfileData) === {}}
+          disabled={
+            diff(userData, localProfileData) === {} ||
+            localValidation.includes(false)
+          }
           onClick={updateProfile}
         >
           수정하기
