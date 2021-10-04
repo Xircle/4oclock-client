@@ -460,6 +460,7 @@ const OverlayContainer = styled.div`
   height: 112px;
   padding: 0px;
   position: relative;
+  cursor: pointer;
 `;
 
 export const Overlay = styled.div`
