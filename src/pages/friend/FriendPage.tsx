@@ -26,6 +26,8 @@ import { CURRENT_USER } from "../../components/shared/constants";
 import PageTitle from "../../components/PageTitle";
 import { ChattingButton, IndicatorBox } from "./ParticipantProfilePage";
 import { RouteComponentProps } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import "./FriendPage.css";
 
 interface Props extends RouteComponentProps {}
@@ -61,10 +63,6 @@ export default function FriendsPage({ history }: Props) {
       window.location.href = routes.root;
     }
   }, []);
-
-  useEffect(() => {
-    console.log(isYkOnly);
-  }, [isYkOnly]);
 
   useEffect(() => {
     if (randomProfileData) {
@@ -112,6 +110,18 @@ export default function FriendsPage({ history }: Props) {
                 onChange={handleYKCheckboxChange}
               />
               <label htmlFor="YGE">연고이팅친구만 보기</label>
+
+              <FontAwesomeIcon
+                icon={faCheck}
+                color={"white"}
+                style={{
+                  position: "absolute",
+                  fontSize: "10px",
+                  left: "6px",
+                  bottom: "4.5px",
+                }}
+                size="xs"
+              />
             </YGEContainer>
           )}
         </Heading>
@@ -227,6 +237,8 @@ const YGECheckBox = styled.input`
 `;
 
 const YGEContainer = styled.div`
+  cursor: pointer;
+  position: relative;
   display: flex;
   align-items: center;
   text-align: center;
