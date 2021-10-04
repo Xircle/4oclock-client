@@ -27,6 +27,7 @@ export interface Participants {
   age: number;
   job: string;
   shortBio: string;
+  isYkClub: boolean;
 }
 export interface PlaceFeedData {
   id: string;
@@ -96,6 +97,7 @@ export interface UserData {
   shortBio: string;
   location: string;
   activities?: string;
+  isYkClub?: boolean;
 }
 
 export interface GetUserOutput extends CoreOutput {
@@ -129,6 +131,7 @@ interface UserProfile {
   age: number;
   shortBio: string;
   activities?: string;
+  isYkClub?: boolean;
 }
 
 export interface SeeRandomProfile extends CoreOutput {

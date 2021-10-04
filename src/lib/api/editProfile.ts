@@ -20,6 +20,12 @@ export const editProfile = async (
   } else {
     formData.append("activities", "");
   }
+  if (
+    editedProfileData.isYkClub === true ||
+    editedProfileData.isYkClub === false
+  ) {
+    formData.append("isYkClub", editedProfileData.isYkClub + "");
+  }
 
   return AxiosClient.put<CreateAccountOutput>("user", formData);
 };

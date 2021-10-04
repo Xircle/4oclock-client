@@ -14,6 +14,7 @@ import {
   GenderText,
   BigTextArea,
   Label,
+  LabelSpan,
   FileLabel,
 } from "../../styles/styles";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
@@ -43,6 +44,7 @@ export interface ProfileData {
   location?: string;
   activities?: string;
   gender?: string;
+  isYkClub?: boolean;
 }
 
 interface Props extends RouteComponentProps<any> {}
@@ -80,6 +82,7 @@ export default function EditProfilePage({ history }: Props) {
         location: userData?.location,
         activities: userData?.activities,
         gender: userData?.gender,
+        isYkClub: userData?.isYkClub,
       });
     }
   }, [isSuccess]);
@@ -193,6 +196,14 @@ export default function EditProfilePage({ history }: Props) {
     setLocalProfileData((prev) => ({
       ...prev,
       job: e.target.value,
+    }));
+  };
+
+  const handleIsYkChnage = () => {
+    const newYk = !localProfileData.isYkClub;
+    setLocalProfileData((prev) => ({
+      ...prev,
+      isYkClub: newYk,
     }));
   };
 
@@ -384,13 +395,18 @@ export default function EditProfilePage({ history }: Props) {
             {!localValidation[2] && (
               <ErrorMessage>{errorMessages[2]}</ErrorMessage>
             )}
-            <Label>활동이력</Label>
-            <MidInput
-              name="activities"
-              placeholder="ex. 식탁팟/인사이더스/멋쟁이사자처럼"
-              value={localProfileData.activities || ""}
-              onChange={handleActivitiesChange}
-            />
+            <YkContainer>
+              <Label>혹시 맛집 동아리 연고이팅 회원이신가요?</Label>
+              <YkInnerContainer onClick={handleIsYkChnage}>
+                {localProfileData?.isYkClub ? (
+                  <YkChecked></YkChecked>
+                ) : (
+                  <Ykunchecked></Ykunchecked>
+                )}
+
+                <LabelSpan>예</LabelSpan>
+              </YkInnerContainer>
+            </YkContainer>
           </form>
           <SpaceForNavBar></SpaceForNavBar>
         </ContainerwithLeftRightMargin>
@@ -424,6 +440,33 @@ export default function EditProfilePage({ history }: Props) {
     </ContainerFlexColumn>
   );
 }
+
+const YkContainer = styled.div``;
+
+const YkInnerContainer = styled.div`
+  margin-top: 15px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+`;
+
+const Ykunchecked = styled.div`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid ${colors.LightGray};
+  margin-right: 5px;
+`;
+
+const YkChecked = styled.div`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: ${colors.MidBlue};
+  color: white;
+  margin-right: 5px;
+  border: 1px solid ${colors.MidBlue};
+`;
 
 const WarningText = styled.p`
   margin: 18px 0 22px;
