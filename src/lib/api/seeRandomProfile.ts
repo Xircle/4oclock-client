@@ -1,11 +1,16 @@
 import { UserProfile, SeeRandomProfile } from "./types.d";
 import AxiosClient from "../apiClient";
 
-export const seeRandomProfile = async (): Promise<UserProfile | undefined> => {
+export const seeRandomProfile = async (
+  isYkClub: boolean
+): Promise<UserProfile | undefined> => {
   try {
-    const { data } = await AxiosClient.get<SeeRandomProfile>("/user/profile/random", {
-      timeout: 6000,
-    });
+    const { data } = await AxiosClient.get<SeeRandomProfile>(
+      `/user/profile/random?ykClubOnly=${isYkClub}`,
+      {
+        timeout: 6000,
+      }
+    );
     if (!data.ok) {
       throw new Error(data.error);
     }

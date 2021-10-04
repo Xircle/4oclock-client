@@ -12,12 +12,11 @@ import {
   SpaceForNavBar,
   BottomNavBarContainer,
 } from "../../styles/styles";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
-import { UserProfile } from "../../lib/api/types";
+import { UserProfile, UserData } from "../../lib/api/types";
 import { seeRandomProfile } from "../../lib/api/seeRandomProfile";
+import { getUser } from "../../lib/api/getUser";
 import { AgeNumberToString } from "../../lib/utils";
 import ClipLoader from "react-spinners/ClipLoader";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
@@ -36,10 +35,21 @@ export default function FriendsPage({ history }: Props) {
     window.scrollTo(0, 0);
   }, []);
   const [age, SetAge] = useState<string>("");
+  const [isYkClub, SetIsYkClub] = useState<boolean>(false);
+  const [isYkOnly, SetIsYkOnly] = useState<boolean>(true);
+
+  const { data: userData } = useQuery<UserData | undefined>(
+    "userProfile",
+    () => getUser(),
+    {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
     UserProfile | undefined
-  >(["randomProfile"], seeRandomProfile, {
+  >(["randomProfile"], () => seeRandomProfile(isYkClub && isYkOnly), {
     retry: 1,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
@@ -53,13 +63,27 @@ export default function FriendsPage({ history }: Props) {
   }, []);
 
   useEffect(() => {
+    console.log(isYkOnly);
+  }, [isYkOnly]);
+
+  useEffect(() => {
     if (randomProfileData) {
       SetAge(AgeNumberToString(randomProfileData.age));
     }
   }, [randomProfileData?.age]);
 
+  useEffect(() => {
+    if (userData) {
+      SetIsYkClub(userData?.isYkClub || false);
+    }
+  }, [userData?.isYkClub]);
+
   const refetchRandomProfileData = () => {
     refetch();
+  };
+
+  const handleYKCheckboxChange = () => {
+    SetIsYkOnly(!isYkOnly);
   };
 
   return (
@@ -67,7 +91,7 @@ export default function FriendsPage({ history }: Props) {
       <PageTitle title="랜덤 프로필" />
       <ContainerwithLeftRightMargin>
         <Heading style={{ marginTop: "40px" }}>
-          <IndicatorBox>
+          <IndicatorBox style={{ backgroundColor: colors.MLBlue }}>
             네시모해를 가입한 친구들과 소통할 수 있는 탭이에요! 채팅기능은 개발
             중입니다 🔥
           </IndicatorBox>
@@ -78,12 +102,18 @@ export default function FriendsPage({ history }: Props) {
               "대한민국 어딘가"
             )}
           </b>
-          <YGEContainer>
-            {/* <FlexDiv style={{ justifyContent: "start" }}> */}
-            <YGECheckBox type="checkbox" id="YGE" name="YGE" />
-            <label htmlFor="YGE">연고이팅친구만 보기</label>
-            {/* </FlexDiv> */}
-          </YGEContainer>
+          {isYkClub && (
+            <YGEContainer>
+              <YGECheckBox
+                type="checkbox"
+                id="YGE"
+                name="YGE"
+                defaultChecked={isYkOnly}
+                onChange={handleYKCheckboxChange}
+              />
+              <label htmlFor="YGE">연고이팅친구만 보기</label>
+            </YGEContainer>
+          )}
         </Heading>
 
         <FlexDiv style={{ position: "relative" }}>
@@ -107,12 +137,6 @@ export default function FriendsPage({ history }: Props) {
             <p>{randomProfileData?.job || "18학번 헌내기"}</p>
           </TagOnName>
         </FlexDiv>
-
-        {/* <FlexDiv style={{ marginTop: "5px" }}>
-          <ChattingButton onClick={() => alert("개발중")}>
-            <p>채팅하기</p>
-          </ChattingButton>
-        </FlexDiv> */}
 
         <InnerContainer style={{ marginTop: "45px" }}>
           <InnerSubject>학교</InnerSubject>
@@ -166,8 +190,9 @@ export default function FriendsPage({ history }: Props) {
           </>
         ))}
       <BottomButtonsContainer>
+        <ChatButton onClick={() => alert("개발중")}>채팅하기</ChatButton>
         <NextButtonFriend onClick={refetchRandomProfileData}>
-          <FontAwesomeIcon icon={faArrowRight} size="lg" />
+          다음 친구 보기
         </NextButtonFriend>
       </BottomButtonsContainer>
       <BottomNavBar selectedItem="friends" />
@@ -176,8 +201,23 @@ export default function FriendsPage({ history }: Props) {
 }
 
 const BottomButtonsContainer = styled(BottomNavBarContainer)`
-  bottom: 75px;
-  
+  bottom: 70px;
+  width: 375px;
+`;
+
+const NextButtonFriend = styled(MainBtn)`
+  width: 176px;
+  height: 50px;
+  background-color: ${colors.LightBlue};
+  color: ${colors.MidBlue};
+  filter: none;
+  box-shadow: none;
+  cursor: pointer;
+`;
+
+const ChatButton = styled(NextButtonFriend)`
+  background-color: ${colors.MidBlue};
+  color: #fff;
 `;
 
 const YGECheckBox = styled.input`
@@ -197,13 +237,6 @@ const YGEContainer = styled.div`
     font-size: 12px;
     color: ${colors.MidGray};
   }
-`;
-
-const NextButtonFriend = styled(MainBtn)`
-  width: 46%;
-  height: 50px;
-  background-color: #f9f9f9;
-  color: #000;
 `;
 
 const Heading = styled(SubText)`
