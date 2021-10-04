@@ -10,6 +10,7 @@ import {
   FlexDiv,
   MainBtn,
   SpaceForNavBar,
+  BottomNavBarContainer,
 } from "../../styles/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -26,6 +27,7 @@ import { CURRENT_USER } from "../../components/shared/constants";
 import PageTitle from "../../components/PageTitle";
 import { ChattingButton, IndicatorBox } from "./ParticipantProfilePage";
 import { RouteComponentProps } from "react-router-dom";
+import "./FriendPage.css";
 
 interface Props extends RouteComponentProps {}
 
@@ -35,12 +37,9 @@ export default function FriendsPage({ history }: Props) {
   }, []);
   const [age, SetAge] = useState<string>("");
 
-  const {
-    data: randomProfileData,
-    refetch,
-    isLoading,
-    isFetching,
-  } = useQuery<UserProfile | undefined>(["randomProfile"], seeRandomProfile, {
+  const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
+    UserProfile | undefined
+  >(["randomProfile"], seeRandomProfile, {
     retry: 1,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
@@ -79,11 +78,15 @@ export default function FriendsPage({ history }: Props) {
               "대한민국 어딘가"
             )}
           </b>
+          <YGEContainer>
+            {/* <FlexDiv style={{ justifyContent: "start" }}> */}
+            <YGECheckBox type="checkbox" id="YGE" name="YGE" />
+            <label htmlFor="YGE">연고이팅친구만 보기</label>
+            {/* </FlexDiv> */}
+          </YGEContainer>
         </Heading>
+
         <FlexDiv style={{ position: "relative" }}>
-          <NextButtonFriend onClick={refetchRandomProfileData}>
-            <FontAwesomeIcon icon={faArrowRight} size="lg" />
-          </NextButtonFriend>
           <AvartarBig
             src={randomProfileData?.profileImageUrl || "/avatar/2donny.png"}
             alt="friend-profile"
@@ -105,11 +108,11 @@ export default function FriendsPage({ history }: Props) {
           </TagOnName>
         </FlexDiv>
 
-        <FlexDiv style={{ marginTop: "5px" }}>
+        {/* <FlexDiv style={{ marginTop: "5px" }}>
           <ChattingButton onClick={() => alert("개발중")}>
             <p>채팅하기</p>
           </ChattingButton>
-        </FlexDiv>
+        </FlexDiv> */}
 
         <InnerContainer style={{ marginTop: "45px" }}>
           <InnerSubject>학교</InnerSubject>
@@ -162,21 +165,43 @@ export default function FriendsPage({ history }: Props) {
             </LoaderWrapper>
           </>
         ))}
-
+      <BottomButtonsContainer>
+        <NextButtonFriend onClick={refetchRandomProfileData}>
+          <FontAwesomeIcon icon={faArrowRight} size="lg" />
+        </NextButtonFriend>
+      </BottomButtonsContainer>
       <BottomNavBar selectedItem="friends" />
     </ContainerFlexColumn>
   );
 }
 
+const BottomButtonsContainer = styled(BottomNavBarContainer)`
+  bottom: 75px;
+  
+`;
+
+const YGECheckBox = styled.input`
+  width: 14px;
+  height: 14px;
+  padding: 0px;
+`;
+
+const YGEContainer = styled.div`
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding-top: 16px;
+  label {
+    padding-bottom: 2px;
+    font-weight: 400;
+    font-size: 12px;
+    color: ${colors.MidGray};
+  }
+`;
+
 const NextButtonFriend = styled(MainBtn)`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translateX(115px);
-  border-radius: 50%;
-  width: 50px;
+  width: 46%;
   height: 50px;
-  box-shadow: -10px -10px 30px #ffffff, 10px 10px 20px rgba(174, 174, 192, 0.3);
   background-color: #f9f9f9;
   color: #000;
 `;
@@ -192,8 +217,8 @@ const Heading = styled(SubText)`
 `;
 const AvartarBig = styled(Avartar)`
   margin-top: 60px;
-  width: 200px;
-  height: 200px;
+  width: 174px;
+  height: 174px;
 `;
 
 const Name = styled.span`

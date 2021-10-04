@@ -1,0 +1,16 @@
+input[id="YGE"] {
+  cursor: pointer;
+}
+
+input[id="YGE"] + label {
+  cursor: pointer;
+}
+
+input[id="YGE"]:checked {
+  background-color: #18a0fb;
+  border-color: #18a0fb;
+}
+
+input[id="YGE"]:checked + label {
+  color: #18a0fb;
+}

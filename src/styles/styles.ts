@@ -69,7 +69,7 @@ export const LinkWithoutUnderLine = styled.a`
 export const colors: Colors = {
   StrongBlue: "#1C43B7",
   MidBlue: "#18A0FB",
-  LightBlue: "#DBEDFF",
+  LightBlue: "#EEF7FF",
   BareBlue: "#F8FAFD",
   Black: "#12121D",
   MidGray: "#6F7789",
