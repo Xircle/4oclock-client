@@ -4,9 +4,6 @@ import "react-dropdown/style.css";
 import "./PlaceFeedPage.css";
 import { Option } from "react-dropdown";
 import { colors, Container, SubText } from "../../styles/styles";
-import Header from "../../components/shared/Header/Header";
-import HeaderTextHeading from "../../components/shared/Header/HeaderTextHeading";
-import HeaderTextDescription from "../../components/shared/Header/HeaderTextDescription";
 import BottomNavBar from "../../components/shared/BottomNavBar";
 import { Link, RouteComponentProps, useHistory } from "react-router-dom";
 import routes from "../../routes";
@@ -19,6 +16,7 @@ import {
 import {
   CURRENT_USER,
   placeLocationoptions,
+  CURRENT_PLACE,
 } from "../../components/shared/constants";
 import { PlaceFeedData } from "../../lib/api/types";
 import PlaceFeedRowsContainer from "../../components/placeFeed/PlaceFeedContainer";
@@ -44,6 +42,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
   const isSignup = Boolean(queryString.parse(UrlSearch).isSignup === "true");
 
   const HandleChangeLocation = (option: Option) => {
+    storage.setItem(CURRENT_PLACE, option.value as PlaceLocation);
     setSelectedPlaceLocation(option.value as PlaceLocation);
   };
 
@@ -76,6 +75,12 @@ export default function PlaceFeedPage({ history, location }: Props) {
         position: toast.POSITION.TOP_CENTER,
       });
       historyH.replace(location.pathname);
+    }
+
+    if (!storage.getItem(CURRENT_PLACE)) {
+      storage.setItem(CURRENT_PLACE, selectedPlaceLocation);
+    } else {
+      setSelectedPlaceLocation(storage.getItem(CURRENT_PLACE));
     }
   }, []);
 

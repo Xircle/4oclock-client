@@ -15,11 +15,8 @@ export const editProfile = async (
   editedProfileData.shortBio &&
     formData.append("shortBio", editedProfileData.shortBio);
   editedProfileData.job && formData.append("job", editedProfileData.job);
-  if (editedProfileData.activities) {
+  editedProfileData.activities &&
     formData.append("activities", editedProfileData.activities);
-  } else {
-    formData.append("activities", "");
-  }
   if (
     editedProfileData.isYkClub === true ||
     editedProfileData.isYkClub === false

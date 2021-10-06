@@ -4,6 +4,7 @@ input[id="YGE"] {
 
 input[id="YGE"] + label {
   cursor: pointer;
+  color: #a7b0c0;
 }
 
 input[id="YGE"]:checked {
