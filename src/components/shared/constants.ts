@@ -1,7 +1,9 @@
 import { Option } from "react-dropdown";
 
 export const CURRENT_USER = "CURRENT_USER";
+export const CURRENT_PLACE = "CURRENT_PLACE";
 export const BACKDROP_Z_INDEX = "100";
+export const IS_YK_ONLY = "IS_YK_ONLY";
 export const placeLocationoptions: Option[] = [
   {
     value: "전체",
