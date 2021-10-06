@@ -11,8 +11,6 @@ import PlaceFeedRow from "./PlaceFeedRow";
 import ClipLoader from "react-spinners/ClipLoader";
 import styled from "styled-components";
 
-
-
 interface Props {
   placeFeedDataArray?: PlaceFeedData[];
   isLoading: boolean;
@@ -48,7 +46,7 @@ export default function PlaceFeedContainer({
 
   return (
     <>
-      {placeFeedDataArray?.map((placeFeedData) => (
+      {placeFeedDataArray?.reverse().map((placeFeedData) => (
         <PlaceFeedRow
           key={placeFeedData.id}
           onClick={() =>
