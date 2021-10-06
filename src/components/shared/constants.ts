@@ -1,6 +1,7 @@
 import { Option } from "react-dropdown";
 
 export const CURRENT_USER = "CURRENT_USER";
+export const CURRENT_PLACE = "CURRENT_PLACE";
 export const BACKDROP_Z_INDEX = "100";
 export const placeLocationoptions: Option[] = [
   {
