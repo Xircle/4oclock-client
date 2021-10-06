@@ -22,7 +22,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
 import routes from "../../routes";
 import storage from "../../lib/storage";
-import { CURRENT_USER } from "../../components/shared/constants";
+import { CURRENT_USER, IS_YK_ONLY } from "../../components/shared/constants";
 import PageTitle from "../../components/PageTitle";
 import { ChattingButton, IndicatorBox } from "./ParticipantProfilePage";
 import { RouteComponentProps } from "react-router-dom";
@@ -35,12 +35,16 @@ interface Props extends RouteComponentProps {}
 export default function FriendsPage({ history }: Props) {
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (localStorage.getItem("isYkOnly") === null) {
-      localStorage.setItem("isYkOnly", isYkOnly + "");
-    } else if (localStorage.getItem("isYkOnly") === "true") {
+    if (storage.getItem(IS_YK_ONLY) === null) {
+      storage.setItem(IS_YK_ONLY, isYkOnly + "");
+    } else if (storage.getItem(IS_YK_ONLY) === "true") {
       SetIsYkOnly(true);
     } else {
       SetIsYkOnly(false);
+    }
+    if (!storage.getItem(CURRENT_USER)) {
+      alert("친구 프로필은 로그인을 하셔야 볼 수 있어요!");
+      window.location.href = routes.root;
     }
   }, []);
   const [age, SetAge] = useState<string>("");
@@ -65,13 +69,6 @@ export default function FriendsPage({ history }: Props) {
   });
 
   useEffect(() => {
-    if (!storage.getItem(CURRENT_USER)) {
-      alert("친구 프로필은 로그인을 하셔야 볼 수 있어요!");
-      window.location.href = routes.root;
-    }
-  }, []);
-
-  useEffect(() => {
     if (randomProfileData) {
       SetAge(AgeNumberToString(randomProfileData.age));
     }
@@ -88,7 +85,7 @@ export default function FriendsPage({ history }: Props) {
   };
 
   const handleYKCheckboxChange = () => {
-    localStorage.setItem("isYkOnly", !isYkOnly + "");
+    storage.setItem(IS_YK_ONLY, !isYkOnly + "");
     SetIsYkOnly(!isYkOnly);
   };
 
