@@ -9,6 +9,7 @@ export default function ParticipantsListRow({
   job,
   shortBio,
   profileImgUrl,
+  isYkClub,
 }: Props) {
   return (
     <Container>
@@ -24,7 +25,15 @@ export default function ParticipantsListRow({
         />
       </ParticipantLeftContainer>
       <ParticipantRightContainer>
-        <JobText>{job}</JobText>
+        <JobText>
+          {job}
+          {isYkClub && (
+            <span style={{ padding: "0px", margin: "0px", color: "#18A0FB" }}>
+              {" "}
+              연고이팅v
+            </span>
+          )}
+        </JobText>
         <ShortBioText>{shortBio}</ShortBioText>
       </ParticipantRightContainer>
     </Container>

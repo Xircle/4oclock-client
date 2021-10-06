@@ -15,8 +15,17 @@ export const editProfile = async (
   editedProfileData.shortBio &&
     formData.append("shortBio", editedProfileData.shortBio);
   editedProfileData.job && formData.append("job", editedProfileData.job);
-  editedProfileData.activities &&
+  if (editedProfileData.activities) {
     formData.append("activities", editedProfileData.activities);
+  } else {
+    formData.append("activities", "");
+  }
+  if (
+    editedProfileData.isYkClub === true ||
+    editedProfileData.isYkClub === false
+  ) {
+    formData.append("isYkClub", editedProfileData.isYkClub + "");
+  }
 
   return AxiosClient.put<CreateAccountOutput>("user", formData);
 };

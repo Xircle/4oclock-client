@@ -10,13 +10,13 @@ import {
   FlexDiv,
   MainBtn,
   SpaceForNavBar,
+  BottomNavBarContainer,
 } from "../../styles/styles";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
-import { UserProfile } from "../../lib/api/types";
+import { UserProfile, UserData } from "../../lib/api/types";
 import { seeRandomProfile } from "../../lib/api/seeRandomProfile";
+import { getUser } from "../../lib/api/getUser";
 import { AgeNumberToString } from "../../lib/utils";
 import ClipLoader from "react-spinners/ClipLoader";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
@@ -26,6 +26,9 @@ import { CURRENT_USER } from "../../components/shared/constants";
 import PageTitle from "../../components/PageTitle";
 import { ChattingButton, IndicatorBox } from "./ParticipantProfilePage";
 import { RouteComponentProps } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import "./FriendPage.css";
 
 interface Props extends RouteComponentProps {}
 
@@ -34,13 +37,21 @@ export default function FriendsPage({ history }: Props) {
     window.scrollTo(0, 0);
   }, []);
   const [age, SetAge] = useState<string>("");
+  const [isYkClub, SetIsYkClub] = useState<boolean>(false);
+  const [isYkOnly, SetIsYkOnly] = useState<boolean>(true);
 
-  const {
-    data: randomProfileData,
-    refetch,
-    isLoading,
-    isFetching,
-  } = useQuery<UserProfile | undefined>(["randomProfile"], seeRandomProfile, {
+  const { data: userData } = useQuery<UserData | undefined>(
+    "userProfile",
+    () => getUser(),
+    {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
+    UserProfile | undefined
+  >(["randomProfile"], () => seeRandomProfile(isYkClub && isYkOnly), {
     retry: 1,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
@@ -59,8 +70,18 @@ export default function FriendsPage({ history }: Props) {
     }
   }, [randomProfileData?.age]);
 
+  useEffect(() => {
+    if (userData) {
+      SetIsYkClub(userData?.isYkClub || false);
+    }
+  }, [userData?.isYkClub]);
+
   const refetchRandomProfileData = () => {
     refetch();
+  };
+
+  const handleYKCheckboxChange = () => {
+    SetIsYkOnly(!isYkOnly);
   };
 
   return (
@@ -68,7 +89,7 @@ export default function FriendsPage({ history }: Props) {
       <PageTitle title="랜덤 프로필" />
       <ContainerwithLeftRightMargin>
         <Heading style={{ marginTop: "40px" }}>
-          <IndicatorBox>
+          <IndicatorBox style={{ backgroundColor: colors.MLBlue }}>
             네시모해를 가입한 친구들과 소통할 수 있는 탭이에요! 채팅기능은 개발
             중입니다 🔥
           </IndicatorBox>
@@ -79,11 +100,33 @@ export default function FriendsPage({ history }: Props) {
               "대한민국 어딘가"
             )}
           </b>
+          {isYkClub && (
+            <YGEContainer>
+              <YGECheckBox
+                type="checkbox"
+                id="YGE"
+                name="YGE"
+                defaultChecked={isYkOnly}
+                onChange={handleYKCheckboxChange}
+              />
+              <label htmlFor="YGE">연고이팅친구만 보기</label>
+
+              <FontAwesomeIcon
+                icon={faCheck}
+                color={"white"}
+                style={{
+                  position: "absolute",
+                  fontSize: "10px",
+                  left: "6px",
+                  bottom: "4.5px",
+                }}
+                size="xs"
+              />
+            </YGEContainer>
+          )}
         </Heading>
+
         <FlexDiv style={{ position: "relative" }}>
-          <NextButtonFriend onClick={refetchRandomProfileData}>
-            <FontAwesomeIcon icon={faArrowRight} size="lg" />
-          </NextButtonFriend>
           <AvartarBig
             src={randomProfileData?.profileImageUrl || "/avatar/2donny.png"}
             alt="friend-profile"
@@ -103,12 +146,6 @@ export default function FriendsPage({ history }: Props) {
           <TagOnName>
             <p>{randomProfileData?.job || "18학번 헌내기"}</p>
           </TagOnName>
-        </FlexDiv>
-
-        <FlexDiv style={{ marginTop: "5px" }}>
-          <ChattingButton onClick={() => alert("개발중")}>
-            <p>채팅하기</p>
-          </ChattingButton>
         </FlexDiv>
 
         <InnerContainer style={{ marginTop: "45px" }}>
@@ -162,23 +199,56 @@ export default function FriendsPage({ history }: Props) {
             </LoaderWrapper>
           </>
         ))}
-
+      <BottomButtonsContainer>
+        <ChatButton onClick={() => alert("개발중")}>채팅하기</ChatButton>
+        <NextButtonFriend onClick={refetchRandomProfileData}>
+          다음 친구 보기
+        </NextButtonFriend>
+      </BottomButtonsContainer>
       <BottomNavBar selectedItem="friends" />
     </ContainerFlexColumn>
   );
 }
 
+const BottomButtonsContainer = styled(BottomNavBarContainer)`
+  bottom: 70px;
+  width: 375px;
+`;
+
 const NextButtonFriend = styled(MainBtn)`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translateX(115px);
-  border-radius: 50%;
-  width: 50px;
+  width: 176px;
   height: 50px;
-  box-shadow: -10px -10px 30px #ffffff, 10px 10px 20px rgba(174, 174, 192, 0.3);
-  background-color: #f9f9f9;
-  color: #000;
+  background-color: ${colors.LightBlue};
+  color: ${colors.MidBlue};
+  filter: none;
+  box-shadow: none;
+  cursor: pointer;
+`;
+
+const ChatButton = styled(NextButtonFriend)`
+  background-color: ${colors.MidBlue};
+  color: #fff;
+`;
+
+const YGECheckBox = styled.input`
+  width: 14px;
+  height: 14px;
+  padding: 0px;
+`;
+
+const YGEContainer = styled.div`
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding-top: 16px;
+  label {
+    padding-bottom: 2px;
+    font-weight: 400;
+    font-size: 12px;
+    color: ${colors.MidGray};
+  }
 `;
 
 const Heading = styled(SubText)`
@@ -192,8 +262,8 @@ const Heading = styled(SubText)`
 `;
 const AvartarBig = styled(Avartar)`
   margin-top: 60px;
-  width: 200px;
-  height: 200px;
+  width: 174px;
+  height: 174px;
 `;
 
 const Name = styled.span`

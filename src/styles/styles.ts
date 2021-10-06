@@ -6,6 +6,7 @@ interface Colors {
   StrongBlue: string;
   MidBlue: string;
   LightBlue: string;
+  MLBlue: string;
   BareBlue: string;
   Black: string;
   MidGray: string;
@@ -69,6 +70,7 @@ export const LinkWithoutUnderLine = styled.a`
 export const colors: Colors = {
   StrongBlue: "#1C43B7",
   MidBlue: "#18A0FB",
+  MLBlue: "#EEF7FF",
   LightBlue: "#DBEDFF",
   BareBlue: "#F8FAFD",
   Black: "#12121D",
@@ -311,6 +313,12 @@ export const Label = styled.p`
   color: ${colors.MidGray};
   margin-top: 24px;
   line-height: 20px;
+`;
+
+export const LabelSpan = styled.span`
+  font-size: 16px;
+  font-weight: normal;
+  color: ${colors.MidGray};
 `;
 
 export const NextButton = styled(MainBtn)`

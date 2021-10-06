@@ -14,6 +14,7 @@ import {
   GenderText,
   BigTextArea,
   Label,
+  LabelSpan,
   FileLabel,
 } from "../../styles/styles";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
@@ -42,6 +43,8 @@ export interface ProfileData {
   job?: string;
   location?: string;
   activities?: string;
+  gender?: string;
+  isYkClub?: boolean;
 }
 
 interface Props extends RouteComponentProps<any> {}
@@ -59,16 +62,15 @@ export default function EditProfilePage({ history }: Props) {
   ]);
   const [detailAddress, setDetailAddress] = useState(localProfileData.location);
 
-  const {
-    data: userData,
-    isLoading,
-    isSuccess,
-  } = useQuery<UserData | undefined>("userProfile", () => getUser(), {
+  const { data: userData, isLoading, isSuccess } = useQuery<
+    UserData | undefined
+  >("userProfile", () => getUser(), {
     retry: 2,
   });
 
-  const { mutateAsync: mutateUserProfile, isLoading: isUpdating } =
-    useMutation(editProfile);
+  const { mutateAsync: mutateUserProfile, isLoading: isUpdating } = useMutation(
+    editProfile
+  );
 
   useEffect(() => {
     if (isSuccess) {
@@ -79,6 +81,8 @@ export default function EditProfilePage({ history }: Props) {
         profileImageUrl: userData?.profileImageUrl,
         location: userData?.location,
         activities: userData?.activities,
+        gender: userData?.gender,
+        isYkClub: userData?.isYkClub,
       });
     }
   }, [isSuccess]);
@@ -143,6 +147,7 @@ export default function EditProfilePage({ history }: Props) {
         } else {
           acc[curr] = localProfileData[curr];
         }
+
         return acc;
       },
       {}
@@ -191,6 +196,14 @@ export default function EditProfilePage({ history }: Props) {
     setLocalProfileData((prev) => ({
       ...prev,
       job: e.target.value,
+    }));
+  };
+
+  const handleIsYkChnage = () => {
+    const newYk = !localProfileData.isYkClub;
+    setLocalProfileData((prev) => ({
+      ...prev,
+      isYkClub: newYk,
     }));
   };
 
@@ -322,15 +335,32 @@ export default function EditProfilePage({ history }: Props) {
               disabled
             />
             <FlexDiv style={{ justifyContent: "normal", marginTop: "20px" }}>
-              <input type="radio" name="gender" id="male" disabled checked />
+              {localProfileData.gender === "Male" ? (
+                <input type="radio" name="gender" id="male" disabled checked />
+              ) : (
+                <input type="radio" name="gender" id="male" disabled />
+              )}
+
               <GenderText>남성</GenderText>
-              <input
-                type="radio"
-                name="gender"
-                id="female"
-                disabled
-                style={{ marginLeft: "32px" }}
-              />
+              {localProfileData.gender === "Female" ? (
+                <input
+                  type="radio"
+                  name="gender"
+                  id="female"
+                  disabled
+                  checked
+                  style={{ marginLeft: "32px" }}
+                />
+              ) : (
+                <input
+                  type="radio"
+                  name="gender"
+                  id="female"
+                  disabled
+                  style={{ marginLeft: "32px" }}
+                />
+              )}
+
               <GenderText>여성</GenderText>
             </FlexDiv>
 
@@ -365,13 +395,18 @@ export default function EditProfilePage({ history }: Props) {
             {!localValidation[2] && (
               <ErrorMessage>{errorMessages[2]}</ErrorMessage>
             )}
-            <Label>활동이력</Label>
-            <MidInput
-              name="activities"
-              placeholder="ex. 식탁팟/인사이더스/멋쟁이사자처럼"
-              value={localProfileData.activities || ""}
-              onChange={handleActivitiesChange}
-            />
+            <YkContainer>
+              <Label>혹시 맛집 동아리 연고이팅 회원이신가요?</Label>
+              <YkInnerContainer onClick={handleIsYkChnage}>
+                {localProfileData?.isYkClub ? (
+                  <YkChecked></YkChecked>
+                ) : (
+                  <Ykunchecked></Ykunchecked>
+                )}
+
+                <LabelSpan>예</LabelSpan>
+              </YkInnerContainer>
+            </YkContainer>
           </form>
           <SpaceForNavBar></SpaceForNavBar>
         </ContainerwithLeftRightMargin>
@@ -379,7 +414,10 @@ export default function EditProfilePage({ history }: Props) {
 
       <BottomFixedButtonContainer>
         <BottomFixedButtoninContainer
-          disabled={diff(userData, localProfileData) === {}}
+          disabled={
+            diff(userData, localProfileData) === {} ||
+            localValidation.includes(false)
+          }
           onClick={updateProfile}
         >
           수정하기
@@ -402,6 +440,33 @@ export default function EditProfilePage({ history }: Props) {
     </ContainerFlexColumn>
   );
 }
+
+const YkContainer = styled.div``;
+
+const YkInnerContainer = styled.div`
+  margin-top: 15px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+`;
+
+const Ykunchecked = styled.div`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid ${colors.LightGray};
+  margin-right: 5px;
+`;
+
+const YkChecked = styled.div`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: ${colors.MidBlue};
+  color: white;
+  margin-right: 5px;
+  border: 1px solid ${colors.MidBlue};
+`;
 
 const WarningText = styled.p`
   margin: 18px 0 22px;

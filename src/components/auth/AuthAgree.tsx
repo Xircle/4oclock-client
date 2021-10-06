@@ -14,8 +14,6 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
-import { Link } from "react-router-dom";
-import routes from "../../routes";
 import { AuthState, AuthAction } from "./types";
 
 interface Props {

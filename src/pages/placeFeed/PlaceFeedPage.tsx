@@ -8,7 +8,7 @@ import Header from "../../components/shared/Header/Header";
 import HeaderTextHeading from "../../components/shared/Header/HeaderTextHeading";
 import HeaderTextDescription from "../../components/shared/Header/HeaderTextDescription";
 import BottomNavBar from "../../components/shared/BottomNavBar";
-import { Link, RouteComponentProps } from "react-router-dom";
+import { Link, RouteComponentProps, useHistory } from "react-router-dom";
 import routes from "../../routes";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
@@ -31,10 +31,13 @@ import InfoBox from "../../components/UI/InfoBox";
 interface Props extends RouteComponentProps {}
 
 export default function PlaceFeedPage({ history, location }: Props) {
+  const historyH = useHistory();
   const UrlSearch = location.search;
   const [page, setPage] = useState(1);
-  const [selectedPlaceLocation, setSelectedPlaceLocation] =
-    useState<PlaceLocation>(placeLocationoptions[0].value as PlaceLocation);
+  const [
+    selectedPlaceLocation,
+    setSelectedPlaceLocation,
+  ] = useState<PlaceLocation>(placeLocationoptions[0].value as PlaceLocation);
   const isLoggedIn = Boolean(
     queryString.parse(UrlSearch).isLoggedIn === "true"
   );
@@ -44,11 +47,9 @@ export default function PlaceFeedPage({ history, location }: Props) {
     setSelectedPlaceLocation(option.value as PlaceLocation);
   };
 
-  const {
-    data: placeFeedDataArray,
-    isLoading,
-    isError,
-  } = useQuery<PlaceFeedData[] | undefined>(
+  const { data: placeFeedDataArray, isLoading, isError } = useQuery<
+    PlaceFeedData[] | undefined
+  >(
     ["place", selectedPlaceLocation, page],
     () => getPlacesByLocation(selectedPlaceLocation, page),
     {
@@ -56,7 +57,6 @@ export default function PlaceFeedPage({ history, location }: Props) {
       refetchOnWindowFocus: false,
     }
   );
-
   useEffect(() => {
     if (!storage.getItem(CURRENT_USER)) {
       toast.info("로그인하신 후에 이용해주세요.", {
@@ -70,10 +70,12 @@ export default function PlaceFeedPage({ history, location }: Props) {
       toast.success("다시 돌아오신 것을 환영합니다!", {
         position: toast.POSITION.TOP_CENTER,
       });
+      historyH.replace(location.pathname);
     } else if (isSignup) {
       toast.success("가입이 완료되었습니다!", {
         position: toast.POSITION.TOP_CENTER,
       });
+      historyH.replace(location.pathname);
     }
   }, []);
 
