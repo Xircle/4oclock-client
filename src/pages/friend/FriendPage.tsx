@@ -35,6 +35,13 @@ interface Props extends RouteComponentProps {}
 export default function FriendsPage({ history }: Props) {
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("isYkOnly") === null) {
+      localStorage.setItem("isYkOnly", isYkOnly + "");
+    } else if (localStorage.getItem("isYkOnly") === "true") {
+      SetIsYkOnly(true);
+    } else {
+      SetIsYkOnly(false);
+    }
   }, []);
   const [age, SetAge] = useState<string>("");
   const [isYkClub, SetIsYkClub] = useState<boolean>(false);
@@ -81,6 +88,7 @@ export default function FriendsPage({ history }: Props) {
   };
 
   const handleYKCheckboxChange = () => {
+    localStorage.setItem("isYkOnly", !isYkOnly + "");
     SetIsYkOnly(!isYkOnly);
   };
 
@@ -88,7 +96,7 @@ export default function FriendsPage({ history }: Props) {
     <ContainerFlexColumn>
       <PageTitle title="랜덤 프로필" />
       <ContainerwithLeftRightMargin>
-        <Heading style={{ marginTop: "40px" }}>
+        <Heading style={{ marginTop: "5px" }}>
           <IndicatorBox style={{ backgroundColor: colors.MLBlue }}>
             네시모해를 가입한 친구들과 소통할 수 있는 탭이에요! 채팅기능은 개발
             중입니다 🔥
@@ -109,19 +117,24 @@ export default function FriendsPage({ history }: Props) {
                 defaultChecked={isYkOnly}
                 onChange={handleYKCheckboxChange}
               />
-              <label htmlFor="YGE">연고이팅친구만 보기</label>
 
-              <FontAwesomeIcon
-                icon={faCheck}
-                color={"white"}
-                style={{
-                  position: "absolute",
-                  fontSize: "10px",
-                  left: "6px",
-                  bottom: "4.5px",
-                }}
-                size="xs"
-              />
+              <label
+                htmlFor="YGE"
+                style={{ fontSize: "14px", marginTop: "3px" }}
+              >
+                <FontAwesomeIcon
+                  icon={faCheck}
+                  color={"white"}
+                  style={{
+                    position: "absolute",
+                    fontSize: "14px",
+                    left: "7px",
+                    bottom: "5px",
+                  }}
+                  size="xs"
+                />
+                연고이팅 친구만 보기
+              </label>
             </YGEContainer>
           )}
         </Heading>
@@ -148,7 +161,7 @@ export default function FriendsPage({ history }: Props) {
           </TagOnName>
         </FlexDiv>
 
-        <InnerContainer style={{ marginTop: "45px" }}>
+        <InnerContainer style={{ marginTop: "10px" }}>
           <InnerSubject>학교</InnerSubject>
           <InnerContent>
             {randomProfileData?.university || "고려대학교"}
@@ -213,11 +226,12 @@ export default function FriendsPage({ history }: Props) {
 const BottomButtonsContainer = styled(BottomNavBarContainer)`
   bottom: 70px;
   width: 375px;
+  height: 50px;
 `;
 
 const NextButtonFriend = styled(MainBtn)`
   width: 176px;
-  height: 50px;
+  height: 35px;
   background-color: ${colors.LightBlue};
   color: ${colors.MidBlue};
   filter: none;
@@ -231,8 +245,8 @@ const ChatButton = styled(NextButtonFriend)`
 `;
 
 const YGECheckBox = styled.input`
-  width: 14px;
-  height: 14px;
+  width: 20px;
+  height: 20px;
   padding: 0px;
 `;
 
@@ -240,15 +254,10 @@ const YGEContainer = styled.div`
   cursor: pointer;
   position: relative;
   display: flex;
-  align-items: center;
+  align-content: center;
   text-align: center;
+  justify-content: start;
   padding-top: 16px;
-  label {
-    padding-bottom: 2px;
-    font-weight: 400;
-    font-size: 12px;
-    color: ${colors.MidGray};
-  }
 `;
 
 const Heading = styled(SubText)`
@@ -261,7 +270,7 @@ const Heading = styled(SubText)`
   }
 `;
 const AvartarBig = styled(Avartar)`
-  margin-top: 60px;
+  margin-top: 10px;
   width: 174px;
   height: 174px;
 `;
