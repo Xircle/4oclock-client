@@ -20,7 +20,5 @@ export const editProfile = async (
   if (typeof editedProfileData.isYkClub === "boolean") {
     formData.append("isYkClub", String(editedProfileData.isYkClub));
   }
-
-  console.log(String(editedProfileData.isYkClub));
   return AxiosClient.put<CreateAccountOutput>("user", formData);
 };
