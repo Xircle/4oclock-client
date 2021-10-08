@@ -48,7 +48,7 @@ export default function CancelReservationPage({ history, location }: Props) {
       <PageTitle title="예약 취소하기" />
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
-          <Heading>네시모해 모임 취소하기</Heading>
+          <Heading>연고이팅 모임 취소하기</Heading>
           <SubTextRequest>
             <b>정말로 취소하실건가요? 모임 취소사유와 상세사유를 적어주세요.</b>
           </SubTextRequest>

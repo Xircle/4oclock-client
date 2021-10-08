@@ -102,7 +102,7 @@ export default function FriendsPage({ history }: Props) {
       <ContainerwithLeftRightMargin>
         <Heading style={{ marginTop: "5px" }}>
           <IndicatorBox style={{ backgroundColor: colors.MLBlue }}>
-            네시모해를 가입한 친구들과 소통할 수 있는 탭이에요! 채팅기능은 개발
+            연고이팅을 가입한 친구들과 소통할 수 있는 탭이에요! 채팅기능은 개발
             중입니다 🔥
           </IndicatorBox>
           <b>
@@ -137,7 +137,7 @@ export default function FriendsPage({ history }: Props) {
                   }}
                   size="xs"
                 />
-                연고이팅 친구만 보기
+                연고이팅 동아리원만 보기
               </label>
             </YGEContainer>
           )}

@@ -111,7 +111,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
       </InfoBox>
       <TopInfoTextContainer>
         <TopInfoText>
-          {"※"} 네시모해의 모임은 오후 4시와 7시에 열려요
+          {"※"} 연고이팅의 모임은 오후 4시와 7시에 열려요
         </TopInfoText>
       </TopInfoTextContainer>
 
@@ -126,7 +126,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
 
       <BottomInfoTextContainer>
         <BottomInfoText>
-          {"'"}네시모해{"'"}는 대학친구들과 따뜻한 밥 한끼, 술 한잔 할 수 있는
+          {"'"}연고이팅{"'"}은 대학친구들과 따뜻한 밥 한끼, 술 한잔 할 수 있는
           문화를 여러분들과 함께 만들어나갔으면 좋겠어요{"😊"}
           <br /> <br />
           아직 베타 서비스 단계로 여러분들의 피드백이 간절해요.

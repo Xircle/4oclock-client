@@ -28,11 +28,11 @@ function Auth() {
   useEffect(() => {
     const uid = location.state?.uid;
     const thumbnail = location.state?.thumbnail;
-    const username = location.state?.username;
+    //const username = location.state?.username;
     const email = location.state?.email;
     const gender = location.state?.gender;
     if (uid) dispatch({ type: "setUid", payload: uid });
-    if (username) dispatch({ type: "setName", payload: username });
+    //if (username) dispatch({ type: "setName", payload: username });
     if (gender) dispatch({ type: "setGender", payload: gender });
     if (thumbnail) dispatch({ type: "setProfileImgUrl", payload: thumbnail });
     if (email) dispatch({ type: "setEmail", payload: email });
