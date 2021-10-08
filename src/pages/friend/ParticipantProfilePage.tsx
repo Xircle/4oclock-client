@@ -68,11 +68,17 @@ export default function ParticipantProfilePage({ history }: Props) {
                 userProfileData?.profileImageUrl || "/avatar/anonymous_user.png"
               }
               alt="friend-profile"
-              onClick={() =>
+              onClick={() => {
+                if (!userProfileData?.profileImageUrl) return;
                 history.push("image/0", {
-                  profileImageUrls: [userProfileData?.profileImageUrl],
-                })
-              }
+                  payload: [
+                    {
+                      id: userProfileData?.profileImageUrl,
+                      imageUrl: userProfileData?.profileImageUrl,
+                    },
+                  ],
+                });
+              }}
             />
           </FlexDiv>
 

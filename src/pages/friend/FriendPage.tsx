@@ -60,13 +60,20 @@ export default function FriendsPage({ history }: Props) {
     }
   );
 
-  const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
-    UserProfile | undefined
-  >(["randomProfile"], () => seeRandomProfile(isYkClub && isYkOnly), {
-    retry: 1,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
+  const {
+    data: randomProfileData,
+    refetch,
+    isLoading,
+    isFetching,
+  } = useQuery<UserProfile | undefined>(
+    ["randomProfile"],
+    () => seeRandomProfile(isYkClub && isYkOnly),
+    {
+      retry: 1,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   useEffect(() => {
     if (randomProfileData) {
@@ -141,8 +148,14 @@ export default function FriendsPage({ history }: Props) {
             src={randomProfileData?.profileImageUrl || "/avatar/2donny.png"}
             alt="friend-profile"
             onClick={() => {
+              if (!randomProfileData?.profileImageUrl) return;
               history.push(`/image/${0}`, {
-                profileImageUrls: [randomProfileData?.profileImageUrl],
+                payload: [
+                  {
+                    id: randomProfileData?.id,
+                    imageUrl: randomProfileData.profileImageUrl,
+                  },
+                ],
               });
             }}
           />

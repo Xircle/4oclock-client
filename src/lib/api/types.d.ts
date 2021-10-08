@@ -53,6 +53,12 @@ export interface GetPlacesByLocationOutput extends CoreOutput {
 // Get Place By Id
 interface PlaceDataParticipantsProfile extends Participants {}
 
+export interface ReviewData {
+  id: string;
+  imageUrl: string;
+  description: string;
+}
+
 export interface PlaceData {
   name: string;
   oneLineIntroText: string;
@@ -66,6 +72,7 @@ export interface PlaceData {
   participantsCount: number;
   views: number;
   startDateAt: string;
+  reviews: ReviewData[];
   participantsInfo: {
     total_count: number;
     male_count: number;
@@ -77,7 +84,6 @@ export interface PlaceData {
     categories: string;
     detailAddress: string;
     detailLink: string;
-    photos: string[];
     participationFee: number;
   };
 }

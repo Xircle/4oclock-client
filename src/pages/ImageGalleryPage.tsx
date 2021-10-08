@@ -4,18 +4,22 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import React from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+export interface ImageGalleryPayload {
+  id: string;
+  imageUrl: string;
+  description?: string;
+}
 interface Props
   extends RouteComponentProps<
     { index: string },
     {},
-    { profileImageUrls: string[] }
+    { payload: ImageGalleryPayload[] }
   > {}
 
 export default function ImageGalleryPage({ match, history, location }: Props) {
   const { index = 0 } = match.params;
-  const { profileImageUrls } = location.state;
+  const { payload } = location.state;
 
   useEffect(() => {
     document
@@ -23,17 +27,20 @@ export default function ImageGalleryPage({ match, history, location }: Props) {
       ?.scrollIntoView({ block: "center" });
   }, []);
 
-  if (!profileImageUrls[0]) {
+  console.log(payload);
+  if (!payload[0]) {
     history.goBack();
   }
-  const images: ReactImageGalleryItem[] = profileImageUrls.map((img) => ({
-    original: img,
-    thumbnail: img,
+  const images: ReactImageGalleryItem[] = payload.map((payload) => ({
+    original: payload.imageUrl,
+    thumbnail: payload.imageUrl,
   }));
 
   const HistoryPop = () => {
     history.goBack();
   };
+
+  console.log(payload);
 
   return (
     <Container onClick={() => HistoryPop()}>
@@ -50,7 +57,7 @@ export default function ImageGalleryPage({ match, history, location }: Props) {
           items={images}
           startIndex={+index}
           showIndex={true}
-          showBullets={profileImageUrls.length === 1 ? false : true}
+          showBullets={payload.length === 1 ? false : true}
           infinite={true}
           showThumbnails={false}
           showNav={true}

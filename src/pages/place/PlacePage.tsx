@@ -148,6 +148,7 @@ export default function PlacePage({ match, location, history }: Props) {
     );
   if (!placeData) return null;
 
+  console.log(placeData);
   return (
     <Container>
       <PageTitle title="맛집 정보" />
@@ -156,7 +157,12 @@ export default function PlacePage({ match, location, history }: Props) {
       <SHeader
         onClick={() => {
           history.push(`/image/${0}`, {
-            profileImageUrls: [placeData.coverImage],
+            payload: [
+              {
+                id: placeData.coverImage,
+                imageUrl: placeData.coverImage,
+              },
+            ],
           });
         }}
       >
@@ -209,17 +215,17 @@ export default function PlacePage({ match, location, history }: Props) {
         </DetailDescription>
       </DescriptionContainer>
 
-      {/* Album  */}
+      {/* Review Album  */}
       <GridContainer>
-        {placeData.placeDetail.photos.map((photo, index) => {
+        {placeData.reviews.map((review, index) => {
           if (index < 5) {
             return (
               <GridPic
-                key={photo}
-                src={photo}
+                key={review.id}
+                src={review.imageUrl}
                 onClick={() =>
                   history.push(`/image/${index}`, {
-                    profileImageUrls: placeData.placeDetail.photos,
+                    payload: placeData.reviews,
                   })
                 }
               />
@@ -227,19 +233,19 @@ export default function PlacePage({ match, location, history }: Props) {
           } else if (index == 5) {
             return (
               <OverlayContainer
-                key={photo}
+                key={review.id}
                 onClick={() =>
                   history.push(`/image/${index}`, {
-                    profileImageUrls: placeData.placeDetail.photos,
+                    payload: placeData.reviews,
                   })
                 }
               >
-                <GridPic src={photo} />
+                <GridPic src={review.imageUrl} />
                 <Overlay />
                 <OverlayText>
-                  {placeData.placeDetail.photos.length - 6 > 0 && (
+                  {placeData.reviews.length - 6 > 0 && (
                     <>
-                      +{placeData.placeDetail.photos.length - 6}
+                      +{placeData.reviews.length - 6}
                       <br />
                     </>
                   )}
