@@ -32,7 +32,7 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
         맛있는 모임이 시작돼요!
       </Heading>
       <SubText style={{ lineHeight: "20px", marginTop: "13px" }}>
-        친구들과 네시모여 모임 시작 전 필수 약관 내용에 먼저 <br />
+        친구들과 연고이팅 모임 시작 전 필수 약관 내용에 먼저 <br />
         동의해주세요
       </SubText>
       <TextSpanDiv
@@ -66,7 +66,7 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
             <FontAwesomeIcon icon={faCircle} color={colors.LightGray} />
           )}
           <BlackTextSpan style={{ marginLeft: "10px" }}>
-            네시모여 이용약관
+            연고이팅 이용약관
           </BlackTextSpan>
           <BlueTextSpan>
             {"("}필수{")"}
@@ -90,7 +90,7 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
             <FontAwesomeIcon icon={faCircle} color={colors.LightGray} />
           )}
           <BlackTextSpan style={{ marginLeft: "10px" }}>
-            네시모해 개인정보 수집 및 이용동의
+            연고이팅 개인정보 수집 및 이용동의
           </BlackTextSpan>
           <BlueTextSpan>
             {"("}필수{")"}
@@ -138,7 +138,7 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
             <FontAwesomeIcon icon={faCircle} color={colors.LightGray} />
           )}
           <BlackTextSpan style={{ marginLeft: "10px" }}>
-            네시모해 마케팅 수신동의
+            연고이팅 마케팅 수신동의
           </BlackTextSpan>
           <GrayTextSpan>
             {"("}선택{")"}

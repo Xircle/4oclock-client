@@ -18,7 +18,7 @@ export default function RequestPage() {
       <PageTitle title="건의" />
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
-          <Heading>네시모해 맛집모임 만들기</Heading>
+          <Heading>연고이팅 맛집모임 만들기</Heading>
           <SubTextRequest>
             <b>
               앗! 가고 싶은 맛집 모임이 없나요? 카카오 채널로 말씀해 주시면

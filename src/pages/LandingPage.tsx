@@ -69,7 +69,7 @@ function LandingPage() {
         <img src="/landingPage/LandingPageMain.jpeg" />
         <Row>
           <Heading>
-            안암{"/"}신촌에서 만나는 <br /> 연고대 친구 <br /> 네시모해 {"👋"}
+            안암{"/"}신촌에서 만나는 <br /> 연고대 친구 <br /> 연고이팅 {"👋"}
           </Heading>
         </Row>
         <Row style={{ paddingTop: "3vh" }}>
@@ -139,7 +139,7 @@ function LandingPage() {
               }}
             />
             <FlexDiv style={{ paddingTop: "30px" }}>
-              네시모해 소개
+              연고이팅 소개
               <FontAwesomeIcon
                 icon={faChevronDown}
                 color={colors.Black}

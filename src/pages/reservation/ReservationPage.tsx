@@ -161,7 +161,7 @@ export default function ReservationPage({ match, location, history }: Props) {
           </Row>
 
           <Instruction>
-            <InstructionHeading>네시모해는 이렇게 진행돼요!</InstructionHeading>
+            <InstructionHeading>연고이팅은 이렇게 진행돼요!</InstructionHeading>
             <InstructionDetail>
               1. 같은 시간을 신청한 친구들과 4인/2인 단톡을 만들어 드려요
               <br />

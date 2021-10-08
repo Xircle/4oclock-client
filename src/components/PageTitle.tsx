@@ -7,7 +7,7 @@ export interface Props {
 export default function PageTitle({ title }: Props) {
   return (
     <Helmet>
-      <title> {title} | 네시모해 </title>
+      <title> {title} | 연고이팅 </title>
     </Helmet>
   );
 }

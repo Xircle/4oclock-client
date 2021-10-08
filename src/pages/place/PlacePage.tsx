@@ -424,7 +424,7 @@ export default function PlacePage({ match, location, history }: Props) {
               <br />
               <br />
               3. 이번에는 아쉽게도 모임에 참석하지 못하시지만{" "}
-              <strong>다음에 꼭 네시모해에서 맛집 모임</strong>을 즐기셨으면
+              <strong>다음에 꼭 연고이팅에서 맛집 모임</strong>을 즐기셨으면
               좋겠습니다:)
             </span>
 
