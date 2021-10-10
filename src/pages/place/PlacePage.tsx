@@ -214,52 +214,53 @@ export default function PlacePage({ match, location, history }: Props) {
         </p>
       </DescriptionContainer>
 
-      {/* Review Album  */}
       <AlbumnSection>
         <strong>{placeData.name} 이팅모임</strong>{" "}
         <span>{placeData.reviews.length}</span>
         <p>사진을 클릭해서 살펴보세요</p>
-        <GridContainer>
-          {placeData.reviews.map((review, index) => {
-            if (index < 5) {
-              return (
-                <GridPic
-                  key={review.id}
-                  src={review.imageUrl}
-                  onClick={() =>
-                    history.push(`/image/${index}`, {
-                      payload: placeData.reviews,
-                    })
-                  }
-                />
-              );
-            } else if (index == 5) {
-              return (
-                <OverlayContainer
-                  key={review.id}
-                  onClick={() =>
-                    history.push(`/image/${index}`, {
-                      payload: placeData.reviews,
-                    })
-                  }
-                >
-                  <GridPic src={review.imageUrl} />
-                  <Overlay />
-                  <OverlayText>
-                    {placeData.reviews.length - 6 > 0 && (
-                      <>
-                        +{placeData.reviews.length - 6}
-                        <br />
-                      </>
-                    )}
-                    더보기
-                  </OverlayText>
-                </OverlayContainer>
-              );
-            }
-          })}
-        </GridContainer>
       </AlbumnSection>
+      
+      {/* Review Album  */}
+      <GridContainer>
+        {placeData.reviews.map((review, index) => {
+          if (index < 5) {
+            return (
+              <GridPic
+                key={review.id}
+                src={review.imageUrl}
+                onClick={() =>
+                  history.push(`/image/${index}`, {
+                    payload: placeData.reviews,
+                  })
+                }
+              />
+            );
+          } else if (index == 5) {
+            return (
+              <OverlayContainer
+                key={review.id}
+                onClick={() =>
+                  history.push(`/image/${index}`, {
+                    payload: placeData.reviews,
+                  })
+                }
+              >
+                <GridPic src={review.imageUrl} />
+                <Overlay />
+                <OverlayText>
+                  {placeData.reviews.length - 6 > 0 && (
+                    <>
+                      +{placeData.reviews.length - 6}
+                      <br />
+                    </>
+                  )}
+                  더보기
+                </OverlayText>
+              </OverlayContainer>
+            );
+          }
+        })}
+      </GridContainer>
 
       {/* Participants */}
       <Section id="participant">
@@ -319,8 +320,8 @@ export default function PlacePage({ match, location, history }: Props) {
         <Row>
           <span className="bold">시간</span>
           <span>
-            {placeData.startDateFromNow} 오후 4시(4인) / 오후 7시(2인) 모임 중
-            택1
+            {placeData.startDateFromNow}{" "}
+            {TimeNumberToString(placeData.startTime, { hasIndicator: true })}
           </span>
         </Row>
         <Row>
@@ -350,7 +351,11 @@ export default function PlacePage({ match, location, history }: Props) {
       {/* Kakao Map */}
       <Section style={{ marginTop: "25px", border: "none" }}>
         <PrimaryText>찾아오는 길</PrimaryText>
-        <DirText>
+        <DirText
+          onClick={() => {
+            window.location.href = placeData.placeDetail.detailLink;
+          }}
+        >
           <FontAwesomeIcon
             icon={faMapMarkerAlt}
             color={colors.LightGray}
@@ -635,6 +640,7 @@ const DirText = styled.p`
   margin-right: auto;
   line-height: 150%;
   font-size: 15px;
+  cursor: pointer;
 `;
 
 const TempToBeDeleted = styled.div`
