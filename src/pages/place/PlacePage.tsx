@@ -31,6 +31,7 @@ import routes from "../../routes";
 import Modal from "../../components/UI/Modal";
 import PageTitle from "../../components/PageTitle";
 import { ReservationModalWrapper } from "../reservation/ReservationPage";
+import { parseHashTags } from "../../lib/helper";
 
 const kakao = window.kakao;
 declare global {
@@ -131,6 +132,8 @@ export default function PlacePage({ match, location, history }: Props) {
     map.setCenter(coords);
   };
 
+  console.log(placeData);
+
   if (isLoading)
     return (
       <>
@@ -150,7 +153,6 @@ export default function PlacePage({ match, location, history }: Props) {
     );
   if (!placeData) return null;
 
-  console.log(placeData);
   return (
     <Container>
       <PageTitle title="맛집 정보" />
@@ -174,15 +176,10 @@ export default function PlacePage({ match, location, history }: Props) {
           <SHeaderCategoryIndicator>
             {placeData.participantsCount}명 신청중
           </SHeaderCategoryIndicator>
-          {/* {placeData.startDateFromNow != "NA" && (
-            <SHeaderCategoryIndicator>
-              {CalculateCloseDate(placeData.startDateFromNow)}
-            </SHeaderCategoryIndicator>
-          )} */}
           <SHeaderTextHeading>{placeData.name}</SHeaderTextHeading>
           <FlexSpaceBetween>
             <SHeaderTextDescription>
-              {placeData.oneLineIntroText}
+              {parseHashTags(placeData.placeDetail.categories)}
             </SHeaderTextDescription>
             <ViewCount>
               <FontAwesomeIcon icon={faEye} style={{ marginRight: "4px" }} />{" "}
@@ -214,12 +211,12 @@ export default function PlacePage({ match, location, history }: Props) {
         </p>
       </DescriptionContainer>
 
-      <AlbumnSection>
+      <AlbumnDescription>
         <strong>{placeData.name} 이팅모임</strong>{" "}
         <span>{placeData.reviews.length}</span>
         <p>사진을 클릭해서 살펴보세요</p>
-      </AlbumnSection>
-      
+      </AlbumnDescription>
+
       {/* Review Album  */}
       <GridContainer>
         {placeData.reviews.map((review, index) => {
@@ -763,7 +760,7 @@ export const Row = styled.div`
   }
 `;
 
-const AlbumnSection = styled.section`
+const AlbumnDescription = styled.section`
   margin: 0 auto;
   width: 345px;
   strong {
