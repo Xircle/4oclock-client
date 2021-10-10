@@ -35,6 +35,7 @@ export interface PlaceFeedData {
   coverImage: string;
   oneLineIntroText: string;
   startDateAt: string;
+  startTime: number;
   isClosed: boolean;
   participantsCount: number;
   startDateFromNow: string;
@@ -53,11 +54,18 @@ export interface GetPlacesByLocationOutput extends CoreOutput {
 // Get Place By Id
 interface PlaceDataParticipantsProfile extends Participants {}
 
+export interface ReviewData {
+  id: string;
+  imageUrl: string;
+  description: string;
+}
+
 export interface PlaceData {
   name: string;
   oneLineIntroText: string;
   recommendation: string;
   startDateFromNow: string;
+  startTime: number;
   deadline: string;
   coverImage: string;
   isClosed: boolean;
@@ -66,6 +74,7 @@ export interface PlaceData {
   participantsCount: number;
   views: number;
   startDateAt: string;
+  reviews: ReviewData[];
   participantsInfo: {
     total_count: number;
     male_count: number;
@@ -77,7 +86,6 @@ export interface PlaceData {
     categories: string;
     detailAddress: string;
     detailLink: string;
-    photos: string[];
     participationFee: number;
   };
 }
@@ -144,10 +152,8 @@ export interface SeeUserByIdOutput extends CoreOutput {
 }
 
 // Make reservation
-export type StartTime = "Four" | "Seven";
 export interface MakeReservationInput {
   placeId: string;
-  startTime: StartTime;
   isVaccinated: boolean;
 }
 
@@ -162,19 +168,8 @@ export interface CancelReservationInput {
 export interface CancelReservationOutput extends CoreOutput {}
 
 // Get Reservation Participant number
-export type ReservationInfo = [
-  {
-    startTime: StartTime;
-    participantNumber: number;
-  },
-  {
-    startTime: StartTime;
-    participantNumber: number;
-  }
-];
-
 export interface GetReservationParticipantNumberOutput extends CoreOutput {
-  info?: ReservationInfo;
+  participantsNumber?: number;
 }
 
 // Get ParticipantList

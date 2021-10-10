@@ -46,7 +46,7 @@ export default function PlaceFeedContainer({
 
   return (
     <>
-      {placeFeedDataArray?.reverse().map((placeFeedData) => (
+      {placeFeedDataArray?.map((placeFeedData) => (
         <PlaceFeedRow
           key={placeFeedData.id}
           onClick={() =>

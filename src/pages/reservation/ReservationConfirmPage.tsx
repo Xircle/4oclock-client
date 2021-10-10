@@ -4,6 +4,7 @@ import styled from "styled-components";
 import PageTitle from "../../components/PageTitle";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
 import BottomNavBar from "../../components/shared/BottomNavBar";
+import { participantsNumberLimit, TimeNumberToString } from "../../lib/utils";
 import routes from "../../routes";
 import {
   Container,
@@ -22,6 +23,7 @@ interface Props
     {
       placeId: string;
       startDateFromNow: string;
+      startTime: number;
       detailAddress: string;
       recommendation: string;
       participationFee: number;
@@ -32,6 +34,7 @@ export default function ReservationConfirmPage({ history, location }: Props) {
   const {
     placeId,
     startDateFromNow,
+    startTime,
     detailAddress,
     recommendation,
     participationFee,
@@ -49,7 +52,7 @@ export default function ReservationConfirmPage({ history, location }: Props) {
           <Heading>맛집 모임 참여 신청 완료</Heading>
 
           <SubTextBookingBookingConfirm>
-            네시 모해 맛집 모임을 신청해주셔서 정말 감사합니다 :)
+            이팅모임을 신청해주셔서 정말 감사합니다 :)
             <br />
             <br />
             <strong>
@@ -67,7 +70,11 @@ export default function ReservationConfirmPage({ history, location }: Props) {
             </Row>
             <Row>
               <span className="bold">시간</span>
-              <span>{startDateFromNow} 오후 4시(4인) / 오후 7시(2인) 모임</span>
+              <span>
+                {startDateFromNow}{" "}
+                {TimeNumberToString(startTime, { hasIndicator: true })} (
+                {participantsNumberLimit(startTime)})
+              </span>
             </Row>
             <Row>
               <span className="bold">장소</span>
@@ -116,7 +123,7 @@ const SubTextBookingBookingConfirm = styled(SubText)`
   color: #8c94a4;
   strong {
     line-height: 20px;
-    font-weight: bold;
+    font-weight: 500;
   }
 `;
 

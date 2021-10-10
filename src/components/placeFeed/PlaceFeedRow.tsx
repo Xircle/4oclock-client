@@ -3,7 +3,7 @@ import { colors, FlexDiv } from "../../styles/styles";
 import type { PlaceFeedData } from "../../lib/api/types";
 import Avatar from "../shared/Avatar";
 import { ModifyDeadline } from "../../lib/utils";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { TimeNumberToString } from "../../lib/utils";
 
 interface Props extends PlaceFeedData {
   onClick: () => void;
@@ -18,6 +18,7 @@ export default function PlaceFeedRow({
   isClosed,
   participantsCount,
   startDateFromNow,
+  startTime,
   participants,
   isParticipating,
   views,
@@ -49,7 +50,8 @@ export default function PlaceFeedRow({
         </FlexSpaceBetween>
         <PlaceOneLineIntroText>{oneLineIntroText}</PlaceOneLineIntroText>
         <PlaceSummary>
-          {startDateFromNow} / {participantsCount}명의
+          {startDateFromNow} {!isClosed && TimeNumberToString(startTime)} /{" "}
+          {participantsCount}명의
           <span className="bold"> 친구들 신청중</span>
         </PlaceSummary>
 

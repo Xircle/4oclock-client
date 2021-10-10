@@ -48,7 +48,7 @@ export default function SocialRedirect() {
         alignItems: "center",
       }}
     >
-      <img src="/fallback_icon.png" />
+      <img src="/fallback_icon.png" width="270px" height="160px" />
     </div>
   );
 }

@@ -21,6 +21,7 @@ import {
   CalculateDDay,
   encodeUrlSlug,
   CalculateCloseDay,
+  TimeNumberToString,
 } from "../../lib/utils";
 import Avatar from "../../components/shared/Avatar";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
@@ -86,6 +87,7 @@ export default function PlacePage({ match, location, history }: Props) {
       history.push(`/reservation/${encodeUrlSlug(placeData.name)}`, {
         placeId,
         startDateFromNow: placeData.startDateFromNow,
+        startTime: placeData.startTime,
         detailAddress: placeData.placeDetail.detailAddress,
         recommendation: placeData.recommendation,
         participationFee: placeData.placeDetail.participationFee,
@@ -148,6 +150,7 @@ export default function PlacePage({ match, location, history }: Props) {
     );
   if (!placeData) return null;
 
+  console.log(placeData);
   return (
     <Container>
       <PageTitle title="맛집 정보" />
@@ -156,7 +159,12 @@ export default function PlacePage({ match, location, history }: Props) {
       <SHeader
         onClick={() => {
           history.push(`/image/${0}`, {
-            profileImageUrls: [placeData.coverImage],
+            payload: [
+              {
+                id: placeData.coverImage,
+                imageUrl: placeData.coverImage,
+              },
+            ],
           });
         }}
       >
@@ -188,8 +196,11 @@ export default function PlacePage({ match, location, history }: Props) {
       <PlaceSummaryInformation>
         <span>{placeData.recommendation}</span> 나이만 참여가능해요.
         <br />
-        <span>{placeData.startDateFromNow} 오후 4시와 7시에</span> 열리는 모임이
-        있어요.
+        <span>
+          {placeData.startDateFromNow} {TimeNumberToString(placeData.startTime)}
+          에
+        </span>{" "}
+        열리는 모임이에요!
       </PlaceSummaryInformation>
 
       {/* Desccription  */}
@@ -201,25 +212,25 @@ export default function PlacePage({ match, location, history }: Props) {
           {" "}
           {placeData.placeDetail.description}
         </p>
-
-        <DetailDescription>
-          <a href={placeData.placeDetail.detailLink} target="_blank">
-            맛집 정보 더보기
-          </a>
-        </DetailDescription>
       </DescriptionContainer>
 
-      {/* Album  */}
+      <AlbumnSection>
+        <strong>{placeData.name} 이팅모임</strong>{" "}
+        <span>{placeData.reviews.length}</span>
+        <p>사진을 클릭해서 살펴보세요</p>
+      </AlbumnSection>
+      
+      {/* Review Album  */}
       <GridContainer>
-        {placeData.placeDetail.photos.map((photo, index) => {
+        {placeData.reviews.map((review, index) => {
           if (index < 5) {
             return (
               <GridPic
-                key={photo}
-                src={photo}
+                key={review.id}
+                src={review.imageUrl}
                 onClick={() =>
                   history.push(`/image/${index}`, {
-                    profileImageUrls: placeData.placeDetail.photos,
+                    payload: placeData.reviews,
                   })
                 }
               />
@@ -227,19 +238,19 @@ export default function PlacePage({ match, location, history }: Props) {
           } else if (index == 5) {
             return (
               <OverlayContainer
-                key={photo}
+                key={review.id}
                 onClick={() =>
                   history.push(`/image/${index}`, {
-                    profileImageUrls: placeData.placeDetail.photos,
+                    payload: placeData.reviews,
                   })
                 }
               >
-                <GridPic src={photo} />
+                <GridPic src={review.imageUrl} />
                 <Overlay />
                 <OverlayText>
-                  {placeData.placeDetail.photos.length - 6 > 0 && (
+                  {placeData.reviews.length - 6 > 0 && (
                     <>
-                      +{placeData.placeDetail.photos.length - 6}
+                      +{placeData.reviews.length - 6}
                       <br />
                     </>
                   )}
@@ -309,8 +320,8 @@ export default function PlacePage({ match, location, history }: Props) {
         <Row>
           <span className="bold">시간</span>
           <span>
-            {placeData.startDateFromNow} 오후 4시(4인) / 오후 7시(2인) 모임 중
-            택1
+            {placeData.startDateFromNow}{" "}
+            {TimeNumberToString(placeData.startTime, { hasIndicator: true })}
           </span>
         </Row>
         <Row>
@@ -330,9 +341,9 @@ export default function PlacePage({ match, location, history }: Props) {
 
         <Row>
           <span className="Info">
-            <strong>(중요)</strong> 같은 시간대를 신청한 친구들과{" "}
-            <strong> 4인/2인 매칭해서 단톡</strong>을 만들어드려요! 단톡링크는
-            모임 전날 적어주신 전화번호로 보내드릴게요 :)
+            <strong>💙중요 💙</strong> 같은 시간대를 신청한 친구들과{" "}
+            <strong>모임 전날 그룹단톡</strong>을 만들어드려요! 단톡링크는 모임
+            전날 적어주신 전화번호로 보내드릴게요 :)
           </span>
         </Row>
       </Section>
@@ -340,7 +351,11 @@ export default function PlacePage({ match, location, history }: Props) {
       {/* Kakao Map */}
       <Section style={{ marginTop: "25px", border: "none" }}>
         <PrimaryText>찾아오는 길</PrimaryText>
-        <DirText>
+        <DirText
+          onClick={() => {
+            window.location.href = placeData.placeDetail.detailLink;
+          }}
+        >
           <FontAwesomeIcon
             icon={faMapMarkerAlt}
             color={colors.LightGray}
@@ -460,6 +475,7 @@ const OverlayContainer = styled.div`
   height: 112px;
   padding: 0px;
   position: relative;
+  cursor: pointer;
 `;
 
 export const Overlay = styled.div`
@@ -547,14 +563,9 @@ const BackButton = styled.div`
 `;
 
 const DetailDescription = styled.div`
-  position: absolute;
-  bottom: -35px;
-  right: 0;
-  a {
-    color: #a7b0c0;
-    font-weight: bold;
-    text-decoration: none;
-  }
+  color: #505050;
+  font-weight: 500;
+  line-height: 18px;
 `;
 
 const SHeaderTextHeading = styled.h3`
@@ -629,6 +640,7 @@ const DirText = styled.p`
   margin-right: auto;
   line-height: 150%;
   font-size: 15px;
+  cursor: pointer;
 `;
 
 const TempToBeDeleted = styled.div`
@@ -729,7 +741,7 @@ export const Row = styled.div`
   display: flex;
   span {
     color: #6f7789;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 19px;
   }
   .bold {
@@ -748,5 +760,26 @@ export const Row = styled.div`
   }
   strong {
     font-weight: 700;
+  }
+`;
+
+const AlbumnSection = styled.section`
+  margin: 0 auto;
+  width: 345px;
+  strong {
+    color: #505050;
+    font-weight: 500;
+    line-height: 18px;
+  }
+  span {
+    margin-left: 5px;
+    color: #18a0fb;
+    font-weight: bold;
+  }
+  p {
+    margin-top: 7px;
+    color: #8c94a4;
+    font-size: 13px;
+    line-height: 16px;
   }
 `;

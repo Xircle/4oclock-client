@@ -104,6 +104,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
         </Top>
       </TopWrapper>
 
+      {/* Header info text  */}
       <InfoBox>
         현재 열린 대학가 근처 맛집 모임들이에요{"!"} <br />
         신청을 하시면 모임 전날에 <b>4인 or 2인 매칭해서 단톡</b>을 만들어드려요{" "}
@@ -124,6 +125,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
         />
       </PlaceFeedRowsWrapper>
 
+      {/* Bottom Info text */}
       <BottomInfoTextContainer>
         <BottomInfoText>
           {"'"}연고이팅{"'"}은 대학친구들과 따뜻한 밥 한끼, 술 한잔 할 수 있는

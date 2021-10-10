@@ -1,6 +1,5 @@
 import moment from "moment";
 import "moment/locale/ko";
-import { parseIsolatedEntityName } from "typescript";
 
 const DateByMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const StartDays = [
@@ -30,6 +29,37 @@ export function AgeNumberToString(age: number): string {
     return "30후반";
   } else {
     return "비밀~^^";
+  }
+}
+
+/**
+ *
+ * @param time
+ * @param options hasIndicator의 디폴트는 false 입니다.
+ * @returns 1, 5, 오후 4시, 오전 9시,
+ */
+
+export function TimeNumberToString(
+  time: number,
+  options?: { hasIndicator: boolean }
+): string {
+  let timeString: string = "";
+  if (time > 12) {
+    timeString = `오후 ${time - 12}시`;
+  } else {
+    timeString = `오전 ${time}시`;
+  }
+  if (!options?.hasIndicator) {
+    return timeString.slice(3);
+  }
+  return timeString;
+}
+
+export function participantsNumberLimit(time: number): string {
+  if (time < 18) {
+    return "4인";
+  } else {
+    return "2인";
   }
 }
 
