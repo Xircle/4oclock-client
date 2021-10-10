@@ -20,8 +20,7 @@ import routes from "../../routes";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
 import { useMutation, useQuery } from "react-query";
 import { makeReservation } from "../../lib/api/makeReservation";
-import { decodeUrlSlug } from "../../lib/utils";
-import { StartTime } from "../../lib/api/types";
+import { decodeUrlSlug, TimeNumberToString } from "../../lib/utils";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
 import ClipLoader from "react-spinners/ClipLoader";
 import { getReservationParticipantNumber } from "../../lib/api/getReservationParticipantNumber";
@@ -35,6 +34,7 @@ interface Props
     {
       placeId: string;
       startDateFromNow: string;
+      startTime: number;
       detailAddress: string;
       recommendation: string;
       participationFee: number;
@@ -49,15 +49,16 @@ export default function ReservationPage({ match, location, history }: Props) {
   const {
     placeId,
     startDateFromNow,
+    startTime,
     detailAddress,
     recommendation,
     participationFee,
   } = location.state;
-  const [selectedTime, setSelectedTime] = useState<StartTime | undefined>();
   const [isVaccinated, setIsVaccinated] = useState(false);
   const [reservationClicked, setReservationClicked] = useState(false);
+  const [selected, setSelected] = useState(false);
 
-  const { data: reservationInfo } = useQuery(
+  const { data: participantsNumber } = useQuery(
     ["getReservationParticipantNumber", placeId],
     () => getReservationParticipantNumber(placeId),
     {
@@ -73,10 +74,9 @@ export default function ReservationPage({ match, location, history }: Props) {
     useMutation(makeReservation);
 
   const makeReservationHandler = async () => {
-    if (!selectedTime || !placeId) return;
+    if (!selected || !placeId) return;
     try {
       const { data } = await mutateReservation({
-        startTime: selectedTime,
         isVaccinated,
         placeId,
       });
@@ -88,6 +88,7 @@ export default function ReservationPage({ match, location, history }: Props) {
       history.push(routes.reservationConfirm, {
         placeId,
         startDateFromNow,
+        startTime,
         detailAddress,
         recommendation,
         participationFee,
@@ -110,37 +111,19 @@ export default function ReservationPage({ match, location, history }: Props) {
             대학친구들과 함께하는 꿀잼 맛집모임!
           </p>
 
-          <SelectionBoxBooking onClick={() => setSelectedTime("Four")}>
+          <SelectionBoxBooking onClick={() => setSelected((prev) => !prev)}>
             <SelectionMainTextBooking>
-              {startDateFromNow} 오후 4시
+              {startDateFromNow}{" "}
+              {TimeNumberToString(startTime, { hasIndicator: true })}
               <TagBooking>
                 <p>4인 모임</p>
               </TagBooking>
             </SelectionMainTextBooking>
             <SelectionSubTextBooking>
-              {reservationInfo?.[0].participantNumber || "0"}명 참가중
+              {participantsNumber || "0"}명의 친구들이 신청했어요
             </SelectionSubTextBooking>
             <CheckIcon>
-              {selectedTime === "Four" ? (
-                <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
-              ) : (
-                <FontAwesomeIcon icon={faCircle} color={colors.LightGray} />
-              )}
-            </CheckIcon>
-          </SelectionBoxBooking>
-
-          <SelectionBoxBooking onClick={() => setSelectedTime("Seven")}>
-            <SelectionMainTextBooking>
-              {startDateFromNow} 오후 7시
-              <TagBooking>
-                <p>2인 모임</p>
-              </TagBooking>
-            </SelectionMainTextBooking>
-            <SelectionSubTextBooking>
-              {reservationInfo?.[1].participantNumber || "0"}명 참가중
-            </SelectionSubTextBooking>
-            <CheckIcon>
-              {selectedTime === "Seven" ? (
+              {selected ? (
                 <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
               ) : (
                 <FontAwesomeIcon icon={faCircle} color={colors.LightGray} />
@@ -161,21 +144,22 @@ export default function ReservationPage({ match, location, history }: Props) {
           </Row>
 
           <Instruction>
-            <InstructionHeading>연고이팅은 이렇게 진행돼요!</InstructionHeading>
+            <InstructionHeading>💖 연고이팅 이용가이드 💖</InstructionHeading>
             <InstructionDetail>
-              1. 같은 시간을 신청한 친구들과 4인/2인 단톡을 만들어 드려요
+              1. 같은 연고이팅 모임을 신청한 친구들과 4인 or 2인 단톡을 <br />
+              &nbsp; &nbsp; &nbsp;모임 전날 만들어드려요!
               <br />
-              2. 모임 전날 단톡을 만들어드려요! 친해지는 시간을 가져보세요
+              2. 단톡에서 친구들을 알아가고 친해지는 시간을 가져보세요!
               <br />
-              3. 지정된 장소와 시간에 만나서 놀아요.
+              3. 지정된 장소와 시간에 만나서 신나게 놀기!
               <br />
             </InstructionDetail>
-            <InstructionDetail style={{ marginTop: "9px" }}>
-              {"※"}단톡링크는 모임 전날 적어주신 전화번호로 보내드릴게요!
+            <InstructionDetail style={{ marginTop: "12px" }}>
+              {"※"} 단톡링크는 모임 전날 적어주신 전화번호로 보내드릴게요!
             </InstructionDetail>
           </Instruction>
           <EnabledMainBtnBooking
-            disabled={!selectedTime}
+            disabled={!selected}
             onClick={toggleReservation}
           >
             놀러가기
@@ -199,9 +183,13 @@ export default function ReservationPage({ match, location, history }: Props) {
         <Modal isClose={!reservationClicked} onClose={toggleReservation}>
           <ReservationModalWrapper>
             <h1>모임 신청 전에 읽어주세요</h1>
+            {/* 1. 모임 전날 적어주신 전화번호로 인원을 체크하여 단톡을 파드릴게요!
+            2. 모임 시작 전 참여가 어려워진 경우, 반드시 문의하기를 통해서 미리
+            알려주세요! 3. 존중하는 문화로 ‘대학친구와 더 가까워지는 따뜻한
+            대학가’ 를 만들 수 있게 도와주세요 */}
             <span>
-              1. 모임 전날 적어주신 전화번호로{" "}
-              <strong>오픈카카오톡 단톡 링크</strong>를 보내드릴게요.
+              1. 모임 전날 적어주신 전화번호로 인원을 체크하여 {" "}
+              <strong>단톡을 파드릴게요!</strong>
               <br />
               <br />
               2. 모임 시작 전 참여가 어려워진 경우, 반드시{" "}
@@ -209,7 +197,7 @@ export default function ReservationPage({ match, location, history }: Props) {
               <br />
               <br />
               3. <strong>존중하는 문화로</strong> ‘대학친구와 더 가까워지는
-              따뜻한 대학가’ 를 만들 수 있게 도와주세요
+              따뜻한 대학가’를 만들수 있게 도와주세요
             </span>
             <MainBtn onClick={makeReservationHandler} style={{ width: "90%" }}>
               OK{"!"} 놀러가기
@@ -280,6 +268,7 @@ const Instruction = styled.div`
   margin-left: auto;
   margin-right: auto;
   margin-top: 30px;
+  padding-bottom: 15px;
   min-height: 150px;
   background-color: #dbedff;
   border-radius: 5px;
@@ -287,6 +276,7 @@ const Instruction = styled.div`
   justify-content: center;
   align-items: center;
   color: ${colors.MidGray};
+  line-height: 18px;
   p {
     color: #18a0fb;
   }
@@ -302,8 +292,8 @@ const InstructionHeading = styled.p`
 
 const InstructionDetail = styled.p`
   margin-top: 10px;
-  font-weight: 400;
-  font-size: 11px;
+  font-weight: 500;
+  font-size: 12px;
   line-height: 18px;
   letter-spacing: -0.005em;
   margin-left: 12px;
