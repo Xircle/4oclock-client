@@ -167,7 +167,7 @@ function LandingPage() {
           <TextSubBox>미팅의 시대는 갔다. 이팅의 시대다.</TextSubBox>
         </FlexDiv>
         <FlexDiv>
-          <img src="/landingPage/SubPic1.png" />
+          <img src="/landingPage/SubPic1.webp" width="359px" height="389px" />
         </FlexDiv>
       </SubBox>
       <SubBox style={{ height: "1000px" }}>
@@ -183,10 +183,10 @@ function LandingPage() {
         </FlexDiv>
         <FullContainerWithLeftAndRightMargin>
           <FlexDiv>
-            <img src="/landingPage/SubPic2.png" />
+            <img src="/landingPage/SubPic2.webp" width="371px" height="178px" />
           </FlexDiv>
           <FlexDiv>
-            <img src="/landingPage/SubPic3.png" />
+            <img src="/landingPage/SubPic3.webp" width="320px" height="475px" />
           </FlexDiv>
         </FullContainerWithLeftAndRightMargin>
       </SubBox>
@@ -204,7 +204,7 @@ function LandingPage() {
           <TextSubBox>남은 2021년 청춘 여기서 불태우자{"!"}</TextSubBox>
         </FlexDiv>
         <FlexDiv>
-          <img src="/landingPage/SubPic4.png" />
+          <img src="/landingPage/SubPic4.webp" width="281px" height="456px" />
         </FlexDiv>
       </SubBox>
       <FlexDiv>
@@ -326,6 +326,7 @@ const Footer = styled.div`
 const FooterInnerContainer = styled.div`
   padding-left: 21px;
   padding-top: 28px;
+  padding-bottom: 50px;
   font-size: 12px;
   line-height: 23px;
   color: #a7b0c0;
