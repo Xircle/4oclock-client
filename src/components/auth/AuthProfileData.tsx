@@ -305,10 +305,10 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
           </span>
         </FlexDiv>
         {genderError && <ErrorMessage>{errorMessages[3]}</ErrorMessage>}
-        <Label>계열이나 직업</Label>
+        <Label>계열 or 직업을 적어주세요</Label>
         <MidInput
           name="title"
-          placeholder="ex. 개발자를 준비하는 미대생 / entp 새내기..."
+          placeholder="ex. 새내기 / 스타트업 마케터 / AI중독 문과생..."
           style={{ fontSize: "12px" }}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             dispatch({ type: "setTitle", payload: e.target.value })
@@ -323,8 +323,8 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
         <BigTextArea
           name="bio"
           value={state.bio}
-          placeholder="ex. 미대에 다니는 다양한 삶을 살고 싶어하는 미개봉화석^^
-           요즘 스타트업에 관심이 생겨서 관련하신 분들과 이야기하면 좋을 것 같아요ㅎㅎ"
+          placeholder="ex. 어떤거에 관심이 있는지 써주시면 좋아요!
+          요즘 요리에 푹 빠져서 요리강의만 보고 집콕하고 있어요... 맛있는거 먹고싶어요 ><"
           style={
             bioError
               ? {

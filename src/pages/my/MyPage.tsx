@@ -119,11 +119,8 @@ export default function MyPage() {
             <LinkWithoutUnderLine href={links.LPrivacyAgree} target={"_blank"}>
               <AgreeText>개인정보처리방침</AgreeText>
             </LinkWithoutUnderLine>
-            <LinkWithoutUnderLine
-              href={links.LMarketingAgree}
-              target={"_blank"}
-            >
-              <AgreeText>마케팅 수신동의 이용약관</AgreeText>
+            <LinkWithoutUnderLine href={links.LServiceAgree} target={"_blank"}>
+              <AgreeText>서비스 이용약관</AgreeText>
             </LinkWithoutUnderLine>
           </Footer>
         </ContainerwithLeftRightMargin>
