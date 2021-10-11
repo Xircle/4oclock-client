@@ -20,7 +20,11 @@ export const initialState = {
   agreeAll: false,
   stage1Valid: false,
   stage2Valid: false,
+  stage3Valid: false,
   isGraduate: false,
+  MBTI: "",
+  personality: "",
+  drinkingStyle: -1,
 };
 
 export function reducer(state: AuthState, action: AuthAction): AuthState {
@@ -157,10 +161,30 @@ export function reducer(state: AuthState, action: AuthAction): AuthState {
         ...state,
         stage2Valid: action.payload,
       };
+    case "setStage3Valid":
+      return {
+        ...state,
+        stage3Valid: action.payload,
+      };
     case "setIsGraduate":
       return {
         ...state,
         isGraduate: action.payload,
+      };
+    case "setMBTI":
+      return {
+        ...state,
+        MBTI: action.payload,
+      };
+    case "setPersonality":
+      return {
+        ...state,
+        personality: action.payload,
+      };
+    case "setDrinkingStyle":
+      return {
+        ...state,
+        drinkingStyle: action.payload,
       };
     default:
       throw new Error();
