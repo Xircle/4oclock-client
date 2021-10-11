@@ -11,7 +11,11 @@ import {
 } from "../../styles/styles";
 import { RouteComponentProps } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-import { faMapMarkerAlt, faEye } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMapMarkerAlt,
+  faEye,
+  faArrowLeft,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { getPlaceById } from "../../lib/api/getPlaceById";
@@ -172,6 +176,9 @@ export default function PlacePage({ match, location, history }: Props) {
       >
         <SHeaderPic src={placeData.coverImage} alt={placeData.name + "사진"} />
         <TempToBeDeleted></TempToBeDeleted>
+        <BackContainer onClick={() => history.goBack()}>
+          <FontAwesomeIcon icon={faArrowLeft} size="1x" color="white" />
+        </BackContainer>
         <HeaderText>
           <SHeaderCategoryIndicator>
             {placeData.participantsCount}명 신청중
@@ -339,8 +346,7 @@ export default function PlacePage({ match, location, history }: Props) {
         <Row>
           <span className="Info">
             <strong>💙중요 💙</strong> 같은 시간대를 신청한 친구들과{" "}
-            <strong>모임 전날 그룹단톡</strong>을 만들어드려요! 단톡링크는 모임
-            전날 적어주신 전화번호로 보내드릴게요 :)
+            <strong>모임 전날 그룹단톡</strong>을 만들어드려요!
           </span>
         </Row>
       </Section>
@@ -462,6 +468,14 @@ export default function PlacePage({ match, location, history }: Props) {
     </Container>
   );
 }
+
+const BackContainer = styled.div`
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 20px;
+`;
 
 const OverlayPlusNumber = styled.p`
   color: white;

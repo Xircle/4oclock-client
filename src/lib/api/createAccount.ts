@@ -21,6 +21,9 @@ export const createAccount = async (
   formData.append("shortBio", state.bio);
   formData.append("location", state.location + "");
   formData.append("isMarketingAgree", state.agree4 + "");
+  formData.append("MBTI", state.MBTI);
+  formData.append("personality", state.personality);
+  formData.append("drinkingStyle", state.drinkingStyle + "");
   const { data } = await AxiosClient.post<CreateAccountOutput>(
     "auth/social/register/kakao",
     formData

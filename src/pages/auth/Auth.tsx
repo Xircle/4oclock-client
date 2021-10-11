@@ -2,7 +2,8 @@ import { useState, Fragment, useReducer, useEffect } from "react";
 import { withRouter, useHistory, useLocation } from "react-router-dom";
 import AuthPhoneNumber from "../../components/auth/AuthPhoneNumber";
 import AuthProfileData from "../../components/auth/AuthProfileData";
-import AuthProfileImage from "../../components/auth//AuthProfileImage";
+import AuthProfileImage from "../../components/auth/AuthProfileImage";
+import AuthProfileDetailData from "../../components/auth/AuthProfileDetailData";
 import AuthAgree from "../../components/auth/AuthAgree";
 import { colors, ContainerFlexColumn } from "../../styles/styles";
 import BackButtonWithNoBackground from "../../components/shared/BackButtonWithNoBackground";
@@ -74,6 +75,11 @@ function Auth() {
   const components = [
     <AuthPhoneNumber onNext={handleNext} state={state} dispatch={dispatch} />,
     <AuthProfileData onNext={handleNext} state={state} dispatch={dispatch} />,
+    <AuthProfileDetailData
+      onNext={handleNext}
+      state={state}
+      dispatch={dispatch}
+    />,
     <AuthProfileImage onNext={handleNext} state={state} dispatch={dispatch} />,
     <AuthAgree onNext={handleNext} state={state} dispatch={dispatch} />,
   ];

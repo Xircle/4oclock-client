@@ -17,12 +17,19 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { isSamsungBrowser } from "react-device-detect";
 import Modal from "../components/UI/Modal";
+import storage from "../lib/storage";
+import { CURRENT_USER } from "../components/shared/constants";
+import routes from "../routes";
 
 function LandingPage() {
   const history = useHistory();
   const [isSamsungBrowserBool, setIsSamsungBrowserBool] = useState(false);
 
   useEffect(() => {
+    if (storage.getItem(CURRENT_USER) && storage.getItem(CURRENT_USER).token) {
+      window.location.href = routes.placeFeed;
+      return;
+    }
     console.log(isSamsungBrowser);
     if (isSamsungBrowser) setIsSamsungBrowserBool(true);
   }, []);
@@ -69,16 +76,15 @@ function LandingPage() {
         <img src="/landingPage/LandingPageMain.jpeg" />
         <Row>
           <Heading>
-            안암{"/"}신촌에서 만나는 <br /> 연고대 친구 <br /> 연고이팅 {"👋"}
+            안암{"/"}신촌에서 만나는 <br /> 연.고.이대 친구 <br /> 연고이팅{" "}
+            {"👋"}
           </Heading>
         </Row>
         <Row style={{ paddingTop: "3vh" }}>
           <MainInfo>
             취향이 비슷한 대학 친구들과
             <br />
-            <b>먹고 마시고, 웃고 떠들며 함께 놀러가는</b>
-            <br />
-            대학생 맛집매칭 서비스입니다{"."}
+            <b>먹고 마시고, 웃고 떠들며 함께 놀러가실 분?!</b>
             <br />
             새내기 {"/"} 졸업생 {"/"} 대학원생 누구나{"!"}
           </MainInfo>
@@ -158,7 +164,7 @@ function LandingPage() {
           </HeadingSubBox>
         </FlexDiv>
         <FlexDiv>
-          <TextSubBox>철수는 여기서 연대생 동네 친구 사귀었대{"!"}</TextSubBox>
+          <TextSubBox>미팅의 시대는 갔다. 이팅의 시대다.</TextSubBox>
         </FlexDiv>
         <FlexDiv>
           <img src="/landingPage/SubPic1.png" />
@@ -173,7 +179,7 @@ function LandingPage() {
           </HeadingSubBox>
         </FlexDiv>
         <FlexDiv>
-          <TextSubBox>모임을 함께 할 친구의 취향을 확인하기 ❤️</TextSubBox>
+          <TextSubBox>이팅모임을 함께 할 친구의 취향을 확인하기</TextSubBox>
         </FlexDiv>
         <FullContainerWithLeftAndRightMargin>
           <FlexDiv>
@@ -249,7 +255,32 @@ function LandingPage() {
       </FlexDiv>
       <Footer>
         <FooterInnerContainer>
-          <b>대학생 고인물(팀)</b>이 운영하는 프로젝트입니다.
+          <b>(팀)연고링</b>
+          <br />
+          대표: 양희원
+          <br />
+          주소: 서울특별시 성북구 안암로 145, 2층 214호 경영대학 본관
+          <br />
+          사업자등록번호 749-16-01653{" "}
+          <a href={""} target={"_blank"}>
+            사업자 정보 확인
+          </a>
+          <br />
+          문의: 연고이팅{" "}
+          <GrayLink href={links.LOpenKakaoChat}>카카오톡 채널</GrayLink> /{" "}
+          <GrayLink href={links.LInstagram}>인스타그램</GrayLink>
+          <br />
+          서비스 소개: <GrayLink href={links.LServiceGuide}>연고이팅</GrayLink>
+          <br />
+          <GrayLink href={links.LLocationAgree} target={"_blank"}>
+            이용약관
+          </GrayLink>
+          <br />
+          <GrayLink href={links.LPrivacyAgree} target={"_blank"}>
+            개인정보처리방침
+          </GrayLink>
+          <br />
+          {"ⓒ "}연고링 all rights reserved
           <br />
           <SNSIconContainer>
             <a href={links.LInstagram} target={"_blank"}>
@@ -270,22 +301,6 @@ function LandingPage() {
               />
             </a>
           </SNSIconContainer>
-          각종 문의{" "}
-          <a href={links.LOpenKakaoChat} target={"_blank"}>
-            네시모임 카카오톡 채널
-          </a>{" "}
-          /{" "}
-          <a href={links.LInstagram} target={"_blank"}>
-            인스타그램
-          </a>
-          <br />
-          <GrayLink href={links.LLocationAgree} target={"_blank"}>
-            이용약관
-          </GrayLink>
-          <br />
-          <GrayLink href={links.LPrivacyAgree} target={"_blank"}>
-            개인정보처리방침
-          </GrayLink>
         </FooterInnerContainer>
       </Footer>
     </Container>
@@ -305,19 +320,22 @@ const SNSIconContainer = styled.div``;
 const Footer = styled.div`
   background-color: #e7ecf3;
   width: 100%;
-  height: 250px;
+  min-height: 250px;
 `;
 
 const FooterInnerContainer = styled.div`
   padding-left: 21px;
   padding-top: 28px;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 23px;
   color: #a7b0c0;
   a {
     font-weight: bold;
     text-decoration: none;
     color: #a7b0c0;
+  }
+  b {
+    font-weight: bold;
   }
 `;
 
