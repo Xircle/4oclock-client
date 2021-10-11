@@ -349,8 +349,7 @@ export default function PlacePage({ match, location, history }: Props) {
         <Row>
           <span className="Info">
             <strong>💙중요 💙</strong> 같은 시간대를 신청한 친구들과{" "}
-            <strong>모임 전날 그룹단톡</strong>을 만들어드려요! 단톡링크는 모임
-            전날 적어주신 전화번호로 보내드릴게요 :)
+            <strong>모임 전날 그룹단톡</strong>을 만들어드려요!
           </span>
         </Row>
       </Section>
