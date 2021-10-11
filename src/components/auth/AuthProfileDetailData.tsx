@@ -176,7 +176,7 @@ export default function AuthProfileDetailData({
                   : { borderColor: "#A7B0C0", color: "#A7B0C0" }
               }
             >
-              술은 내 동반자
+              술은 분위기상
             </ChoiceSpan>
             <br />
             <ChoiceSpan
@@ -191,7 +191,7 @@ export default function AuthProfileDetailData({
                   : { borderColor: "#A7B0C0", color: "#A7B0C0" }
               }
             >
-              피할 수 없을때만
+              메뉴가 좋으면 못 참지!
             </ChoiceSpan>
             <ChoiceSpan
               onClick={() => {
@@ -205,7 +205,7 @@ export default function AuthProfileDetailData({
                   : { borderColor: "#A7B0C0", color: "#A7B0C0" }
               }
             >
-              메뉴가 좋을때만
+              술은 동반자
             </ChoiceSpan>
           </SubSubContainer>
         </SubContainer>
