@@ -73,7 +73,7 @@ function LandingPage() {
         </Modal>
       )}
       <MainBox>
-        <img src="/landingPage/LandingPageMain.jpeg" />
+        <img src="/landingPage/LandingPageMain.webp" />
         <Row>
           <Heading>
             안암{"/"}신촌에서 만나는 <br /> 연.고.이대 친구 <br /> 연고이팅{" "}
