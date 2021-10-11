@@ -305,7 +305,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
           </span>
         </FlexDiv>
         {genderError && <ErrorMessage>{errorMessages[3]}</ErrorMessage>}
-        <Label>개성있는 한줄소개</Label>
+        <Label>계열이나 직업</Label>
         <MidInput
           name="title"
           placeholder="ex. 개발자를 준비하는 미대생 / entp 새내기..."

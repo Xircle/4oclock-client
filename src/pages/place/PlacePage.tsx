@@ -176,7 +176,11 @@ export default function PlacePage({ match, location, history }: Props) {
       >
         <SHeaderPic src={placeData.coverImage} alt={placeData.name + "사진"} />
         <TempToBeDeleted></TempToBeDeleted>
-        <BackContainer onClick={() => history.goBack()}>
+        <BackContainer
+          onClick={() => {
+            window.location.href = routes.placeFeed;
+          }}
+        >
           <FontAwesomeIcon icon={faArrowLeft} size="1x" color="white" />
         </BackContainer>
         <HeaderText>
@@ -319,9 +323,6 @@ export default function PlacePage({ match, location, history }: Props) {
       <Section>
         <PrimaryText>#모임안내</PrimaryText>
         <Row>
-          <span className="Top01">자세한 정보를 알려드릴게요</span>
-        </Row>
-        <Row>
           <span className="bold">시간</span>
           <span>
             {placeData.startDateFromNow}{" "}
@@ -346,7 +347,8 @@ export default function PlacePage({ match, location, history }: Props) {
         <Row>
           <span className="Info">
             <strong>💙중요 💙</strong> 같은 시간대를 신청한 친구들과{" "}
-            <strong>모임 전날 그룹단톡</strong>을 만들어드려요!
+            <strong>모임 전날 그룹단톡</strong>을 만들어드려요! <br />
+            (백신 접종 여부에 따라 인원이 추가될 수 있어요)
           </span>
         </Row>
       </Section>
@@ -417,8 +419,8 @@ export default function PlacePage({ match, location, history }: Props) {
               : placeData.isParticipating
               ? "이미 참여 신청된 모임이예요"
               : isFinal
-              ? "오늘 마감! 맛집 놀러가기"
-              : "맛집 놀러가기"}
+              ? "오늘 마감! 이팅모임 놀러가기"
+              : "이팅모임 놀러가기"}
           </p>
         </CTABottomFixedButtoninContainer>
       </BottomFixedButtonContainer>
@@ -475,6 +477,7 @@ const BackContainer = styled.div`
   top: 20px;
   left: 20px;
   font-size: 20px;
+  z-index: 100;
 `;
 
 const OverlayPlusNumber = styled.p`
