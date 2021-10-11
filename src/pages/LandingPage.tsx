@@ -17,12 +17,19 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { isSamsungBrowser } from "react-device-detect";
 import Modal from "../components/UI/Modal";
+import storage from "../lib/storage";
+import { CURRENT_USER } from "../components/shared/constants";
+import routes from "../routes";
 
 function LandingPage() {
   const history = useHistory();
   const [isSamsungBrowserBool, setIsSamsungBrowserBool] = useState(false);
 
   useEffect(() => {
+    if (storage.getItem(CURRENT_USER) && storage.getItem(CURRENT_USER).token) {
+      window.location.href = routes.placeFeed;
+      return;
+    }
     console.log(isSamsungBrowser);
     if (isSamsungBrowser) setIsSamsungBrowserBool(true);
   }, []);
