@@ -17,7 +17,7 @@ import {
   faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getPlaceById } from "../../lib/api/getPlaceById";
 import type { PlaceData } from "../../lib/api/types";
 import {
@@ -136,8 +136,6 @@ export default function PlacePage({ match, location, history }: Props) {
     map.setCenter(coords);
   };
 
-  console.log(placeData);
-
   if (isLoading)
     return (
       <>
@@ -156,6 +154,15 @@ export default function PlacePage({ match, location, history }: Props) {
       </>
     );
   if (!placeData) return null;
+
+  const BackButtonClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    if (scrollToProfile) {
+      history.push(routes.placeFeed);
+    } else {
+      history.goBack();
+    }
+  };
 
   return (
     <Container>
@@ -176,11 +183,7 @@ export default function PlacePage({ match, location, history }: Props) {
       >
         <SHeaderPic src={placeData.coverImage} alt={placeData.name + "사진"} />
         <TempToBeDeleted></TempToBeDeleted>
-        <BackContainer
-          onClick={() => {
-            window.location.href = routes.placeFeed;
-          }}
-        >
+        <BackContainer onClick={BackButtonClickHandler}>
           <FontAwesomeIcon icon={faArrowLeft} size="1x" color="white" />
         </BackContainer>
         <HeaderText>
