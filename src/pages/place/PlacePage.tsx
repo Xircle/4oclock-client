@@ -174,7 +174,11 @@ export default function PlacePage({ match, location, history }: Props) {
       >
         <SHeaderPic src={placeData.coverImage} alt={placeData.name + "사진"} />
         <TempToBeDeleted></TempToBeDeleted>
-        <BackContainer onClick={() => history.goBack()}>
+        <BackContainer
+          onClick={() => {
+            window.location.href = routes.placeFeed;
+          }}
+        >
           <FontAwesomeIcon icon={faArrowLeft} size="1x" color="white" />
         </BackContainer>
         <HeaderText>
@@ -476,6 +480,7 @@ const BackContainer = styled.div`
   top: 20px;
   left: 20px;
   font-size: 20px;
+  z-index: 100;
 `;
 
 const OverlayPlusNumber = styled.p`
