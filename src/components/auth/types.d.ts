@@ -19,6 +19,10 @@ export interface AuthState {
   agreeAll: boolean;
   stage1Valid: boolean;
   stage2Valid: boolean;
+  stage3Valid: boolean;
+  MBTI: string;
+  personality: string;
+  drinkingStyle: number;
 }
 export type AuthAction =
   | { type: "setUid"; payload: number }
@@ -40,4 +44,8 @@ export type AuthAction =
   | { type: "setAgree4"; payload: boolean }
   | { type: "setAgreeAll"; payload: boolean }
   | { type: "setStage1Valid"; payload: boolean }
-  | { type: "setStage2Valid"; payload: boolean };
+  | { type: "setStage2Valid"; payload: boolean }
+  | { type: "setStage3Valid"; payload: boolean }
+  | { type: "setMBTI"; payload: string }
+  | { type: "setPersonality"; payload: string }
+  | { type: "setDrinkingStyle"; payload: number };
