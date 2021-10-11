@@ -49,7 +49,7 @@ export default function ReservationConfirmPage({ history, location }: Props) {
       <PageTitle title="예약 확인" />
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
-          <Heading>맛집 모임 참여 신청 완료</Heading>
+          <Heading>이팅 모임 참여 신청 완료</Heading>
 
           <SubTextBookingBookingConfirm>
             이팅모임을 신청해주셔서 정말 감사합니다 :)
