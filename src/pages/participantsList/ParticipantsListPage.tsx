@@ -35,6 +35,7 @@ interface Props
     {
       placeId: string;
       startDateFromNow: string;
+      startTime: number;
       detailAddress: string;
       recommendation: string;
       participationFee: number;
@@ -136,6 +137,7 @@ export default function ParticipantsListPage({
               history.push(`/reservation/${encodeUrlSlug(placeData.name)}`, {
                 placeId,
                 startDateFromNow: placeData.startDateFromNow,
+                startTime: placeData.startTime,
                 detailAddress: placeData.placeDetail.detailAddress,
                 recommendation: placeData.recommendation,
                 participationFee: placeData.placeDetail.participationFee,
