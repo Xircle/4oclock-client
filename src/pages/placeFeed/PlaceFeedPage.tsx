@@ -110,11 +110,11 @@ export default function PlaceFeedPage({ history, location }: Props) {
         신청을 하시면 모임 전날에 <b>4인 or 2인 매칭해서 단톡</b>을 만들어드려요{" "}
         {":)"} {"("}혼성, 동성{")"}
       </InfoBox>
-      <TopInfoTextContainer>
+      {/* <TopInfoTextContainer>
         <TopInfoText>
           {"※"} 연고이팅의 모임은 오후 4시와 7시에 열려요
         </TopInfoText>
-      </TopInfoTextContainer>
+      </TopInfoTextContainer> */}
 
       {/* Places Feed Rows container */}
       <PlaceFeedRowsWrapper>
