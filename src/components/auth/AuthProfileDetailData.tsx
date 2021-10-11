@@ -71,52 +71,52 @@ export default function AuthProfileDetailData({
               MBTI
             </option>
             <option value="ISFP" style={{ color: colors.Black }}>
-              ISFP
+              ISFP (호기심 많은 예술가)
             </option>
             <option value="ISFJ" style={{ color: colors.Black }}>
-              ISFJ
+              ISFJ (용감한 수호자)
             </option>
             <option value="ISTP" style={{ color: colors.Black }}>
-              ISTP
+              ISTP (만능재주꾼)
             </option>
             <option value="ISTJ" style={{ color: colors.Black }}>
-              ISTJ
+              ISTJ (청렴결백 논리주의자)
             </option>
             <option value="INFP" style={{ color: colors.Black }}>
-              INFP
+              INFP (열정적인 중재자)
             </option>
             <option value="INFJ" style={{ color: colors.Black }}>
-              INFJ
+              INFJ (선의의 옹호자)
             </option>
             <option value="INTP" style={{ color: colors.Black }}>
-              INTP
+              INTP (논리적 사색가)
             </option>
             <option value="INTJ" style={{ color: colors.Black }}>
-              INTJ
+              INTJ (용의주도한 전략가)
             </option>
             <option value="ESFP" style={{ color: colors.Black }}>
-              ESFP
+              ESFP (자유영혼 연예인)
             </option>
             <option value="ESFJ" style={{ color: colors.Black }}>
-              ESFJ
+              ESFJ (사교적인 외교관)
             </option>
             <option value="ESTP" style={{ color: colors.Black }}>
-              ESTP
+              ESTP (모험을 즐기는 사업가)
             </option>
             <option value="ESTJ" style={{ color: colors.Black }}>
-              ESTJ
+              ESTJ (엄격한 관리자)
             </option>
             <option value="ENFP" style={{ color: colors.Black }}>
-              ENFP
+              ENFP (재기발랄한 활동가)
             </option>
             <option value="ENFJ" style={{ color: colors.Black }}>
-              ENFJ
+              ENFJ (정의로운 사회운동가)
             </option>
             <option value="ENTP" style={{ color: colors.Black }}>
-              ENTP
+              ENTP (논쟁을 즐기는 변론가)
             </option>
             <option value="ENTJ" style={{ color: colors.Black }}>
-              ENTJ
+              ENTJ (대담한 통솔가)
             </option>
             <option value="모름" style={{ color: colors.Black }}>
               모름
