@@ -20,7 +20,7 @@ export default function BottomNavBar({ selectedItem }: Props) {
         <Link to={routes.placeFeed} style={{ textDecoration: "none" }}>
           <BottomNavBarItem selected={selectedItem === "places"}>
             <FontAwesomeIcon icon={faUtensils} />
-            <span className="pageName">맛집</span>
+            <span className="pageName">이팅모임</span>
           </BottomNavBarItem>
         </Link>
 
@@ -39,7 +39,7 @@ export default function BottomNavBar({ selectedItem }: Props) {
         >
           <BottomNavBarItem selected={selectedItem === "mypage"}>
             <FontAwesomeIcon icon={faUser} />
-            <span className="pageName">마이페이지</span>
+            <span className="pageName">MY</span>
           </BottomNavBarItem>
         </Link>
       </BottomNavBarContainer>

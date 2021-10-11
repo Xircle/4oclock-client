@@ -32,8 +32,10 @@ export default function PlaceFeedPage({ history, location }: Props) {
   const historyH = useHistory();
   const UrlSearch = location.search;
   const [page, setPage] = useState(1);
-  const [selectedPlaceLocation, setSelectedPlaceLocation] =
-    useState<PlaceLocation>(placeLocationoptions[0].value as PlaceLocation);
+  const [
+    selectedPlaceLocation,
+    setSelectedPlaceLocation,
+  ] = useState<PlaceLocation>(placeLocationoptions[0].value as PlaceLocation);
   const isLoggedIn = Boolean(
     queryString.parse(UrlSearch).isLoggedIn === "true"
   );
@@ -44,11 +46,9 @@ export default function PlaceFeedPage({ history, location }: Props) {
     setSelectedPlaceLocation(option.value as PlaceLocation);
   };
 
-  const {
-    data: placeFeedDataArray,
-    isLoading,
-    isError,
-  } = useQuery<PlaceFeedData[] | undefined>(
+  const { data: placeFeedDataArray, isLoading, isError } = useQuery<
+    PlaceFeedData[] | undefined
+  >(
     ["place", selectedPlaceLocation, page],
     () => getPlacesByLocation(selectedPlaceLocation, page),
     {
@@ -106,9 +106,8 @@ export default function PlaceFeedPage({ history, location }: Props) {
 
       {/* Header info text  */}
       <InfoBox>
-        현재 열린 대학가 근처 맛집 모임들이에요{"!"} <br />
-        신청을 하시면 모임 전날에 <b>4인 or 2인 매칭해서 단톡</b>을 만들어드려요{" "}
-        {":)"} {"("}혼성, 동성{")"}
+        수시로 번개모임들이 올라와요 {"😄 "}가고 싶은 모임을{" "}
+        <b>확인하고{">"}놀러가기</b>를 누르면 신청 완료!
       </InfoBox>
       {/* <TopInfoTextContainer>
         <TopInfoText>
