@@ -70,8 +70,9 @@ export default function ReservationPage({ match, location, history }: Props) {
     setReservationClicked((prev) => !prev);
   };
 
-  const { mutateAsync: mutateReservation, isLoading } =
-    useMutation(makeReservation);
+  const { mutateAsync: mutateReservation, isLoading } = useMutation(
+    makeReservation
+  );
 
   const makeReservationHandler = async () => {
     if (!selected || !placeId) return;
@@ -116,7 +117,7 @@ export default function ReservationPage({ match, location, history }: Props) {
               {startDateFromNow}{" "}
               {TimeNumberToString(startTime, { hasIndicator: true })}
               <TagBooking>
-                <p>4인 모임</p>
+                <p>{startTime >= 18 ? "2" : "4"}인 모임</p>
               </TagBooking>
             </SelectionMainTextBooking>
             <SelectionSubTextBooking>
@@ -188,7 +189,7 @@ export default function ReservationPage({ match, location, history }: Props) {
             알려주세요! 3. 존중하는 문화로 ‘대학친구와 더 가까워지는 따뜻한
             대학가’ 를 만들 수 있게 도와주세요 */}
             <span>
-              1. 모임 전날 적어주신 전화번호로 인원을 체크하여 {" "}
+              1. 모임 전날 적어주신 전화번호로 인원을 체크하여{" "}
               <strong>단톡을 파드릴게요!</strong>
               <br />
               <br />
