@@ -20,5 +20,10 @@ export const editProfile = async (
   if (typeof editedProfileData.isYkClub === "boolean") {
     formData.append("isYkClub", String(editedProfileData.isYkClub));
   }
+  editedProfileData.MBTI && formData.append("MBTI", editedProfileData.MBTI);
+  editedProfileData.personality &&
+    formData.append("personality", editedProfileData.personality);
+  editedProfileData.drinkingStyle &&
+    formData.append("drinkingStyle", editedProfileData.drinkingStyle + "");
   return AxiosClient.put<CreateAccountOutput>("user", formData);
 };
