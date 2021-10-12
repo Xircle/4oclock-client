@@ -106,6 +106,9 @@ export interface UserData {
   location: string;
   activities?: string;
   isYkClub?: boolean;
+  MBTI?: string;
+  drinkingStyle?: number;
+  personality?: string;
 }
 
 export interface GetUserOutput extends CoreOutput {
@@ -140,6 +143,9 @@ interface UserProfile {
   shortBio: string;
   activities?: string;
   isYkClub?: boolean;
+  MBTI?: string;
+  drinkingStyle?: number;
+  personality?: string;
 }
 
 export interface SeeRandomProfile extends CoreOutput {

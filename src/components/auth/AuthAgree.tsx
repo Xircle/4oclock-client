@@ -152,7 +152,7 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
       </TextSpanDiv>
       <NextButton
         onClick={onNext}
-        disabled={!(state.agree1 && state.agree3 && state.agree3)}
+        disabled={!(state.agree1 && state.agree2 && state.agree3)}
       >
         시작하기
       </NextButton>
