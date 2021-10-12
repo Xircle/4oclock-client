@@ -10,6 +10,7 @@ import {
   FlexDiv,
   MainBtn,
   SpaceForNavBar,
+  BottomNavBarContainer,
 } from "../../styles/styles";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
@@ -56,11 +57,6 @@ export default function ParticipantProfilePage({ history }: Props) {
         <ContainerwithLeftRightMargin>
           <Heading style={{ marginTop: "20px" }}>
             <IndicatorBox>재밌고 따뜻한 우리의 대학가, 연고이팅</IndicatorBox>
-            <b>
-              {userProfileData?.location
-                ? userProfileData?.location + " 근처 친구"
-                : "대한민국 어딘가"}
-            </b>
           </Heading>
           <FlexDiv>
             <AvartarBig
@@ -83,60 +79,55 @@ export default function ParticipantProfilePage({ history }: Props) {
           </FlexDiv>
 
           <FlexDiv style={{ marginTop: "15px" }}>
-            <Name>{userProfileData?.username || "써클개발자"}</Name>
-            <Job>{userProfileData?.job || "18학번 헌내기"}</Job>
+            <Name>{userProfileData?.username || "써클 개발자"}</Name>
           </FlexDiv>
 
-          <FlexDiv style={{ marginTop: "15px" }}>
-            {userProfileData?.id !== storage.getItem(CURRENT_USER)["uid"] && (
-              <ChattingButton onClick={() => alert("개발중")}>
-                <p>채팅하기</p>
-              </ChattingButton>
-            )}
+          <FlexDiv>
+            <TagOnName>
+              <p>{userProfileData?.job || "18학번 헌내기"}</p>
+            </TagOnName>
           </FlexDiv>
 
-          <InnerContainer style={{ marginTop: "45px" }}>
-            <InnerSubject>학교</InnerSubject>
-            <InnerContent>
-              {userProfileData?.university || "고려대학교"}
-            </InnerContent>
-          </InnerContainer>
-
-          <InnerContainer style={{ marginTop: "6px" }}>
-            <InnerSubject>나이</InnerSubject>
-            <InnerContent>
-              {userProfileData
-                ? AgeNumberToString(userProfileData.age)
-                : "23살"}
-            </InnerContent>
-          </InnerContainer>
-
-          <InnerContainer style={{ marginTop: "6px" }}>
-            <InnerSubject>성별</InnerSubject>
-            <InnerContent>
-              {userProfileData
-                ? userProfileData.gender === "Male"
-                  ? "남"
-                  : "여"
-                : "남"}
-            </InnerContent>
-          </InnerContainer>
-          {userProfileData?.activities && (
-            <InnerContainer style={{ marginTop: "6px" }}>
-              <InnerSubject>활동</InnerSubject>
-              <InnerContent>{userProfileData?.activities}</InnerContent>
-            </InnerContainer>
-          )}
           <InnerContainer style={{ marginTop: "25px" }}>
+            <BlackSubText>{userProfileData?.MBTI}</BlackSubText>
+            <BlackSubText style={{ marginLeft: "20px" }}>
+              {userProfileData?.personality}
+            </BlackSubText>
+          </InnerContainer>
+          <InnerContainer style={{ marginTop: "20px" }}>
             <InnerContent
-              style={{ marginLeft: "0px", fontWeight: 400, fontSize: "14px" }}
+              style={{
+                marginLeft: "0px",
+                fontWeight: 300,
+                fontSize: "14px",
+                color: "background: #505050",
+              }}
             >
-              {userProfileData?.shortBio ||
-                `가슴뛰는 청춘 새로운 네트워킹을 써클에서 경험하세요!`}
+              {userProfileData?.shortBio || `안녕하세요!`}
+            </InnerContent>
+          </InnerContainer>
+          <InnerContainer style={{ marginTop: "10px" }}>
+            <InnerContent>
+              {" "}
+              <GraySubText>
+                {userProfileData?.location
+                  ? userProfileData?.location
+                  : "대한민국 어딘가"}{" "}
+                / {userProfileData?.university || "딱대학교"} /{" "}
+                {userProfileData?.age + "세" || "역마살"} /{" "}
+                {userProfileData
+                  ? userProfileData.gender === "Male"
+                    ? "남"
+                    : "여"
+                  : "모름"}
+              </GraySubText>
             </InnerContent>
           </InnerContainer>
         </ContainerwithLeftRightMargin>
         <SpaceForNavBar></SpaceForNavBar>
+        <BottomButtonsContainer>
+          <ChatButton onClick={() => alert("개발중")}>채팅하기</ChatButton>
+        </BottomButtonsContainer>
       </BackButtonLayout>
 
       {isLoading && (
@@ -157,6 +148,35 @@ export default function ParticipantProfilePage({ history }: Props) {
     </ContainerFlexColumn>
   );
 }
+
+const BottomButtonsContainer = styled(BottomNavBarContainer)`
+  bottom: 70px;
+  width: 375px;
+  height: 65px;
+`;
+
+const ChatButton = styled(MainBtn)`
+  width: 352px;
+  height: 45px;
+  filter: none;
+  box-shadow: none;
+  cursor: pointer;
+  background-color: ${colors.MidBlue};
+  color: #fff;
+`;
+
+const GraySubText = styled(SubText)`
+  font-size: 14px;
+`;
+
+const BlackSubText = styled.span`
+  margin-top: 8px;
+  color: #a7b0c0;
+  font-weight: 400;
+  font-size: 15px;
+  color: ${colors.Black};
+  font-size: 14px;
+`;
 
 const Heading = styled(SubText)`
   margin-top: 60px;
@@ -219,4 +239,17 @@ export const ChattingButton = styled(InterestTag)`
     font-weight: bold;
   }
   cursor: pointer;
+`;
+
+const TagOnName = styled(InterestTag)`
+  /* margin-left: 10px; */
+  padding: 7px 16px;
+  /* border-radius: 6px; */
+  background-color: transparent;
+
+  p {
+    font-size: 14px;
+    font-weight: normal;
+    color: #8c94a4;
+  }
 `;
