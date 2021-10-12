@@ -60,20 +60,13 @@ export default function FriendsPage({ history }: Props) {
     }
   );
 
-  const {
-    data: randomProfileData,
-    refetch,
-    isLoading,
-    isFetching,
-  } = useQuery<UserProfile | undefined>(
-    ["randomProfile"],
-    () => seeRandomProfile(isYkClub && isYkOnly),
-    {
-      retry: 1,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
+  const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
+    UserProfile | undefined
+  >(["randomProfile"], () => seeRandomProfile(isYkClub && isYkOnly), {
+    retry: 1,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
 
   useEffect(() => {
     if (randomProfileData) {
@@ -105,13 +98,6 @@ export default function FriendsPage({ history }: Props) {
             연고이팅을 가입한 친구들과 소통할 수 있는 탭이에요! 채팅기능은 개발
             중입니다 🔥
           </IndicatorBox>
-          <b>
-            {randomProfileData?.location ? (
-              <>{randomProfileData?.location} 근처 친구</>
-            ) : (
-              "대한민국 어딘가"
-            )}
-          </b>
           {isYkClub && (
             <YGEContainer>
               <YGECheckBox
@@ -171,38 +157,39 @@ export default function FriendsPage({ history }: Props) {
           </TagOnName>
         </FlexDiv>
 
-        <InnerContainer style={{ marginTop: "10px" }}>
-          <InnerSubject>학교</InnerSubject>
-          <InnerContent>
-            {randomProfileData?.university || "고려대학교"}
-          </InnerContent>
-        </InnerContainer>
-        <InnerContainer style={{ marginTop: "6px" }}>
-          <InnerSubject>나이</InnerSubject>
-          <InnerContent>{age || "23살"}</InnerContent>
-        </InnerContainer>
-        <InnerContainer style={{ marginTop: "6px" }}>
-          <InnerSubject>성별</InnerSubject>
-          <InnerContent>
-            {randomProfileData
-              ? randomProfileData.gender === "Male"
-                ? "남"
-                : "여"
-              : "남"}
-          </InnerContent>
-        </InnerContainer>
-        {randomProfileData?.activities && (
-          <InnerContainer style={{ marginTop: "6px" }}>
-            <InnerSubject>활동</InnerSubject>
-            <InnerContent>{randomProfileData?.activities}</InnerContent>
-          </InnerContainer>
-        )}
-
         <InnerContainer style={{ marginTop: "25px" }}>
+          <BlackSubText>{randomProfileData?.MBTI}</BlackSubText>
+          <BlackSubText style={{ marginLeft: "20px" }}>
+            {randomProfileData?.personality}
+          </BlackSubText>
+        </InnerContainer>
+        <InnerContainer style={{ marginTop: "20px" }}>
           <InnerContent
-            style={{ marginLeft: "0px", fontWeight: 400, fontSize: "14px" }}
+            style={{
+              marginLeft: "0px",
+              fontWeight: 300,
+              fontSize: "14px",
+              color: "background: #505050",
+            }}
           >
             {randomProfileData?.shortBio || `안녕하세요!`}
+          </InnerContent>
+        </InnerContainer>
+        <InnerContainer style={{ marginTop: "10px" }}>
+          <InnerContent>
+            {" "}
+            <GraySubText>
+              {randomProfileData?.location
+                ? randomProfileData?.location
+                : "대한민국 어딘가"}{" "}
+              / {randomProfileData?.university || "딱대학교"} /{" "}
+              {age || "역마살"} /{" "}
+              {randomProfileData
+                ? randomProfileData.gender === "Male"
+                  ? "남"
+                  : "여"
+                : "모름"}
+            </GraySubText>
           </InnerContent>
         </InnerContainer>
       </ContainerwithLeftRightMargin>
@@ -233,15 +220,28 @@ export default function FriendsPage({ history }: Props) {
   );
 }
 
+const GraySubText = styled(SubText)`
+  font-size: 14px;
+`;
+
+const BlackSubText = styled.span`
+  margin-top: 8px;
+  color: #a7b0c0;
+  font-weight: 400;
+  font-size: 15px;
+  color: ${colors.Black};
+  font-size: 14px;
+`;
+
 const BottomButtonsContainer = styled(BottomNavBarContainer)`
   bottom: 70px;
   width: 375px;
-  height: 50px;
+  height: 65px;
 `;
 
 const NextButtonFriend = styled(MainBtn)`
   width: 176px;
-  height: 35px;
+  height: 45px;
   background-color: ${colors.LightBlue};
   color: ${colors.MidBlue};
   filter: none;

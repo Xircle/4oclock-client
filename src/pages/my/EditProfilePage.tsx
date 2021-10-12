@@ -631,7 +631,7 @@ const ErrorMessage = styled.p`
 `;
 
 const SBigTextArea = styled(BigTextArea)`
-  font-size: 12px;
+  font-size: 14px;
   line-height: 18px;
   height: 80px;
 `;
