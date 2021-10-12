@@ -304,18 +304,20 @@ export default function PlacePage({ match, location, history }: Props) {
               profileImgUrl={participant.profileImgUrl}
               width="46px"
               rightOffset={"8px"}
-              onClick={() =>
-                placeData.isParticipating
-                  ? history.push(`${routes.participantProfile}`, {
-                      id: participant.userId,
-                    })
-                  : history.push(
-                      `/participants-list/${encodeUrlSlug(placeData.name)}`,
-                      {
-                        placeId,
-                      }
-                    )
-              }
+              onClick={() => {
+                if (placeData.isParticipating) {
+                  history.push(`${routes.participantProfile}`, {
+                    id: participant.userId,
+                  });
+                } else if (!isClosed) {
+                  history.push(
+                    `/participants-list/${encodeUrlSlug(placeData.name)}`,
+                    {
+                      placeId,
+                    }
+                  );
+                }
+              }}
             />
           ))}
         </AvartarImgContainerParticipant>

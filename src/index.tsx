@@ -12,6 +12,7 @@ const queryClient = new QueryClient({
     onError: (err: any) => {
       switch (err?.response?.data?.statusCode) {
         case 401:
+          localStorage.clear();
           alert("로그인 후 이용해주세요");
           window.location.href = routes.root;
           break;
