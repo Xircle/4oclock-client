@@ -15,6 +15,7 @@ const routes = {
   auth: "/auth",
   participantsList: "/participants-list/:name",
   cancelReservation: "/cancel-reservation",
+  chat: "/chat",
 };
 
 export default routes;

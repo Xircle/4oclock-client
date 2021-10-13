@@ -63,6 +63,7 @@ export default function ReservationPage({ match, location, history }: Props) {
     () => getReservationParticipantNumber(placeId),
     {
       retry: 1,
+      refetchOnWindowFocus: false,
     }
   );
 
@@ -70,9 +71,8 @@ export default function ReservationPage({ match, location, history }: Props) {
     setReservationClicked((prev) => !prev);
   };
 
-  const { mutateAsync: mutateReservation, isLoading } = useMutation(
-    makeReservation
-  );
+  const { mutateAsync: mutateReservation, isLoading } =
+    useMutation(makeReservation);
 
   const makeReservationHandler = async () => {
     if (!selected || !placeId) return;

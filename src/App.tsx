@@ -5,6 +5,7 @@ import { GlobalStyles, AppContainer } from "./styles/styles";
 import routes from "./routes";
 import { PortalProvider } from "./providers/PortalProvider";
 import { HelmetProvider } from "react-helmet-async";
+import ChatPage from "./pages/chat/ChatPage";
 config();
 
 const LandingPage = React.lazy(() => import("./pages/LandingPage"));
@@ -92,6 +93,7 @@ function App() {
                 component={EditProfilePage}
               />
               <Route path={routes.auth} component={AuthPage} />
+              <Route path={routes.chat} component={ChatPage} />
               <Route
                 path={routes.participantsList}
                 component={ParticipantsListPage}

@@ -41,6 +41,7 @@
     "react-select": "^4.3.1",
     "react-spinners": "^0.11.0",
     "react-toastify": "^8.0.2",
+    "socket.io-client": "^4.2.0",
     "spoqa-han-sans": "^3.3.0",
     "styled-components": "^5.3.1",
     "styled-reset": "^4.3.4",
