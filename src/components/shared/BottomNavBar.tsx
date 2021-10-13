@@ -6,7 +6,12 @@ import {
 } from "../../styles/styles";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUtensils, faStar, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUtensils,
+  faStar,
+  faUser,
+  faComments,
+} from "@fortawesome/free-solid-svg-icons";
 import routes from "../../routes";
 
 interface Props {
@@ -33,6 +38,12 @@ export default function BottomNavBar({ selectedItem }: Props) {
             <span className="pageName">친구들</span>
           </BottomNavBarItem>
         </Link>
+        <Link to={routes.chat} style={{ textDecoration: "none" }}>
+          <BottomNavBarItem selected={selectedItem === "chat"}>
+            <FontAwesomeIcon icon={faComments} />
+            <span className="pageName">채팅</span>
+          </BottomNavBarItem>
+        </Link>
         <Link
           to={routes.myPage}
           style={{ textDecoration: "none", color: colors.Black }}
@@ -49,7 +60,7 @@ export default function BottomNavBar({ selectedItem }: Props) {
 }
 
 const BottomNavBarItem = styled.div<{ selected: boolean }>`
-  width: 125px;
+  width: 93.75px;
   display: flex;
   flex-direction: column;
   justify-content: center;

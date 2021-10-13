@@ -85,7 +85,11 @@ export default function PlaceFeedPage({ history, location }: Props) {
   }, []);
 
   return (
-    <Container>
+    <Container
+      // onTouchStart={(e: React.TouchEvent<HTMLDivElement>) => {
+      //   console.log(10);
+      // }}
+    >
       <PageTitle title="맛집 피드" />
       {/* Drop down */}
       <TopWrapper>

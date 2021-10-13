@@ -1,8 +1,18 @@
 import styled from "styled-components";
-import { useEffect } from "react";
-import { useState } from "react";
 import useSocket from "../../hooks/useSocket";
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import PageTitle from "../../components/PageTitle";
+import ChatList from "../../components/chat/ChatList";
+import BottomNavBar from "../../components/shared/BottomNavBar";
+import {
+  Container,
+  ProcedureHeading,
+  SubText,
+  ContainerwithLeftRightMargin,
+  colors,
+} from "../../styles/styles";
+import { chatListDummies } from "../../components/chat/dummies/ChatDummies";
 
 interface Props {}
 
@@ -13,6 +23,7 @@ export default function ChatPage(props: Props) {
   const [msg, setMsg] = useState("");
   const [socket, disconnect] = useSocket(roomId);
   const [isEntering, setIsEntering] = useState(false);
+  const [chatCount, SetChatCount] = useState(chatListDummies.length);
 
   useEffect(() => {
     socket.emit("join_room", { roomId });
@@ -23,7 +34,7 @@ export default function ChatPage(props: Props) {
     setIsEntering(flag);
   };
 
-  const onChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const onChatInputChange = (e: React.FormEvent<HTMLInputElement>) => {
     setMsg(e.currentTarget.value);
     socket.emit("is_entering", {
       roomId,
@@ -31,7 +42,7 @@ export default function ChatPage(props: Props) {
     });
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onChatSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(msg);
     socket.emit("send_message", {
@@ -40,29 +51,58 @@ export default function ChatPage(props: Props) {
     });
   };
 
-  const onDisconnect = () => {
-    disconnect();
-    console.log(socket);
-  };
   return (
-    <div>
-      <button onClick={onDisconnect}>채팅방 나가기</button>
-      <div style={{ height: "50vh" }}></div>
-
-      {isEntering && (
-        <div
-          style={{
-            width: "100px",
-            height: "100px",
-            backgroundColor: "skyblue",
-          }}
-        >
-          입력중...
-        </div>
-      )}
-      <form onSubmit={onSubmit}>
-        <input onChange={onChange} />
-      </form>
-    </div>
+    <Container>
+      <PageTitle title="채팅" />
+      <SContainerwithLeftRightMargin>
+        <Heading>이팅 채팅</Heading>
+        <SubTextChat>
+          <b>
+            채팅으로 소통하는 공간이에요! 친구와 함께 맛집을 가보는건 어때요?
+          </b>
+        </SubTextChat>
+        {chatCount === 0 ? (
+          <ChatEmptyContainer>
+            <p>
+              앗! 채팅이 없어요ㅠㅠ <br />
+              친구들에게 채팅을 걸어보세요!
+            </p>
+          </ChatEmptyContainer>
+        ) : (
+          <ChatList chatRooms={chatListDummies}></ChatList>
+        )}
+      </SContainerwithLeftRightMargin>
+      <BottomNavBar selectedItem="chat" />
+    </Container>
   );
 }
+
+const Heading = styled(ProcedureHeading)`
+  padding-top: 100px;
+`;
+
+const SubTextChat = styled(SubText)`
+  margin-top: 25px;
+  font-size: 14px;
+  width: 315px;
+  line-height: 20px;
+  color: #8c94a4;
+`;
+
+const ChatEmptyContainer = styled.div`
+  width: 100%;
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p {
+    color: ${colors.MidGray};
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: bold;
+  }
+`;
+
+const SContainerwithLeftRightMargin = styled(ContainerwithLeftRightMargin)`
+  height: 100vh;
+`;
