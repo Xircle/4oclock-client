@@ -7,19 +7,266 @@ import {
   colors,
   Avartar,
 } from "../../styles/styles";
-import { chatMessageDummies } from "../../components/chat/dummies/ChatDummies";
+import {
+  chatMessageDummies,
+  Message,
+} from "../../components/chat/dummies/ChatDummies";
 import { useHistory } from "react-router-dom";
-import { faArrowLeft, faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faArrowUp,
+  faEllipsisV,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChatMessage from "../../components/chat/ChatMessage";
-import { Fragment, useEffect, useRef } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
+import { Collapse, Card, CardBody, Button } from "reactstrap";
 
 interface Props {}
 
 export default function ChatRoomPage(props: Props) {
+  const [messages, SetMessages] = useState<Message[]>([
+    {
+      userId: 0,
+      username: "유저1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: "초면에 실례가 심하시네요. 그럼 님 티어는요?",
+    },
+    {
+      userId: 1,
+      username: "유저2",
+      avatar: "/avatar/Avartar002.jpeg",
+      message: "그래서 님 티어가..?",
+    },
+    {
+      userId: 1,
+      username: "유저2",
+      avatar: "/avatar/Avartar002.jpeg",
+      message: "반가워요",
+    },
+    {
+      userId: 0,
+      username: "유저1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: "안녕하세요",
+    },
+    {
+      userId: 0,
+      username: "유저1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: "초면에 실례가 심하시네요. 그럼 님 티어는요?",
+    },
+    {
+      userId: 1,
+      username: "유저2",
+      avatar: "/avatar/Avartar002.jpeg",
+      message: "그래서 님 티어가..?",
+    },
+    {
+      userId: 1,
+      username: "유저2",
+      avatar: "/avatar/Avartar002.jpeg",
+      message: "반가워요",
+    },
+    {
+      userId: 0,
+      username: "유저1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: "안녕하세요",
+    },
+    {
+      userId: 0,
+      username: "유저1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: "초면에 실례가 심하시네요. 그럼 님 티어는요?",
+    },
+    {
+      userId: 1,
+      username: "유저2",
+      avatar: "/avatar/Avartar002.jpeg",
+      message: "그래서 님 티어가..?",
+    },
+    {
+      userId: 1,
+      username: "유저2",
+      avatar: "/avatar/Avartar002.jpeg",
+      message: "반가워요",
+    },
+    {
+      userId: 0,
+      username: "유저1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: "안녕하세요",
+    },
+    {
+      userId: 0,
+      username: "유저1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: "초면에 실례가 심하시네요. 그럼 님 티어는요?",
+    },
+    {
+      userId: 1,
+      username: "유저2",
+      avatar: "/avatar/Avartar002.jpeg",
+      message: "그래서 님 티어가..?",
+    },
+    {
+      userId: 1,
+      username: "유저2",
+      avatar: "/avatar/Avartar002.jpeg",
+      message: "반가워요",
+    },
+    {
+      userId: 0,
+      username: "유저1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: "안녕하세요",
+    },
+    {
+      userId: 0,
+      username: "유저1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: "초면에 실례가 심하시네요. 그럼 님 티어는요?",
+    },
+    {
+      userId: 1,
+      username: "유저2",
+      avatar: "/avatar/Avartar002.jpeg",
+      message: "그래서 님 티어가..?",
+    },
+    {
+      userId: 1,
+      username: "유저2",
+      avatar: "/avatar/Avartar002.jpeg",
+      message: "반가워요",
+    },
+    {
+      userId: 0,
+      username: "유저1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: "안녕하세요",
+    },
+    {
+      userId: 0,
+      username: "유저1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: "초면에 실례가 심하시네요. 그럼 님 티어는요?",
+    },
+    {
+      userId: 1,
+      username: "유저2",
+      avatar: "/avatar/Avartar002.jpeg",
+      message: "그래서 님 티어가..?",
+    },
+    {
+      userId: 1,
+      username: "유저2",
+      avatar: "/avatar/Avartar002.jpeg",
+      message: "반가워요",
+    },
+    {
+      userId: 0,
+      username: "유저1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: "안녕하세요",
+    },
+    {
+      userId: 0,
+      username: "유저1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: "초면에 실례가 심하시네요. 그럼 님 티어는요?",
+    },
+    {
+      userId: 1,
+      username: "유저2",
+      avatar: "/avatar/Avartar002.jpeg",
+      message: "그래서 님 티어가..?",
+    },
+    {
+      userId: 1,
+      username: "유저2",
+      avatar: "/avatar/Avartar002.jpeg",
+      message: "반가워요",
+    },
+    {
+      userId: 0,
+      username: "유저1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: "안녕하세요",
+    },
+    {
+      userId: 0,
+      username: "유저1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: "초면에 실례가 심하시네요. 그럼 님 티어는요?",
+    },
+    {
+      userId: 1,
+      username: "유저2",
+      avatar: "/avatar/Avartar002.jpeg",
+      message: "그래서 님 티어가..?",
+    },
+    {
+      userId: 1,
+      username: "유저2",
+      avatar: "/avatar/Avartar002.jpeg",
+      message: "반가워요",
+    },
+    {
+      userId: 0,
+      username: "유저1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: "안녕하세요",
+    },
+    {
+      userId: 0,
+      username: "유저1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: "초면에 실례가 심하시네요. 그럼 님 티어는요?",
+    },
+    {
+      userId: 1,
+      username: "유저2",
+      avatar: "/avatar/Avartar002.jpeg",
+      message: "그래서 님 티어가..?",
+    },
+    {
+      userId: 1,
+      username: "유저2",
+      avatar: "/avatar/Avartar002.jpeg",
+      message: "반가워요",
+    },
+    {
+      userId: 0,
+      username: "유저1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: "안녕하세요",
+    },
+  ]);
+  const [messageInput, SetMessageInput] = useState("");
+  const [isCollapse, SetIsCollapse] = useState(false);
+  const [isFirstRefresh, SetIsFirstRefresh] = useState(true);
   const preventDefaultAction = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+  };
+
+  const handleMessageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    SetMessageInput(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    SetMessageInput("");
+    messages.unshift({
+      userId: 0,
+      username: "유저 1",
+      avatar: "/avatar/Avartar001.jpeg",
+      message: messageInput,
+    });
+    // const temp = messages
+    //   .slice(0, messages.length - 1)
+    //   .concat(messages.slice(messages.length - 1, messages.length));
+    SetMessages(messages);
   };
 
   const history = useHistory();
@@ -38,16 +285,39 @@ export default function ChatRoomPage(props: Props) {
           <SAvartar src="/avatar/Avartar001.jpeg" />
           <CounterPartName>{chatMessageDummies[0].username}</CounterPartName>
         </LeftHeaderContainer>
-        <RightHeaderContainer></RightHeaderContainer>
+        <RightHeaderContainer>
+          <FontAwesomeIcon
+            style={{ cursor: "pointer", marginRight: "20px" }}
+            icon={faEllipsisV}
+            color={colors.Black}
+            size="lg"
+            onClick={() => SetIsCollapse(!isCollapse)}
+          />
+        </RightHeaderContainer>
+        <div
+          style={{ position: "absolute", top: "100%", right: 10, zIndex: 100 }}
+        >
+          <Collapse isOpen={isCollapse}>
+            <CollapseButtonContainer>
+              <CollapseButton>채팅방 나가기</CollapseButton>
+              <CollapseButton>차단하기</CollapseButton>
+              <CollapseButton>신고하기</CollapseButton>
+            </CollapseButtonContainer>
+          </Collapse>
+        </div>
       </Header>
+
       <SScrollbars
         autoHide={true}
         ref={(scrollbar) => {
-          scrollbar?.scrollTop(5000000000);
+          if (isFirstRefresh) {
+            scrollbar?.scrollTop(5000000000);
+            SetIsFirstRefresh(false);
+          }
         }}
       >
         <MessageContainer>
-          {chatMessageDummies?.map((message, index) => (
+          {messages?.map((message, index) => (
             <Fragment key={index}>
               <ChatMessage {...message}></ChatMessage>
             </Fragment>
@@ -56,8 +326,13 @@ export default function ChatRoomPage(props: Props) {
       </SScrollbars>
       <InputContainer>
         <form onSubmit={preventDefaultAction}>
-          <SInput placeholder="메세지를 입력해주세요" name="MessageInput" />
-          <SendButton>
+          <SInput
+            placeholder="메세지를 입력해주세요"
+            value={messageInput}
+            name="MessageInput"
+            onChange={handleMessageInputChange}
+          />
+          <SendButton onClick={handleSubmit}>
             <FontAwesomeIcon
               style={{ cursor: "pointer" }}
               icon={faArrowUp}
@@ -78,7 +353,7 @@ const SendButton = styled.button`
   position: absolute;
   bottom: 50%;
   transform: translateY(50%);
-  right: 20px;
+  right: 25px;
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -87,6 +362,7 @@ const SendButton = styled.button`
 
 const SInput = styled.input`
   padding: 0 10px;
+  padding-right: 80px;
   width: 340px;
   height: 60px;
   box-shadow: 0px 2px 28px rgba(75, 88, 208, 0.1);
@@ -110,6 +386,7 @@ const SContainer = styled(Container)`
   justify-content: flex-start;
   flex-direction: column;
   height: 100vh;
+  position: relative;
 `;
 
 const SScrollbars = styled(Scrollbars)`
@@ -134,6 +411,7 @@ const Header = styled.div`
   box-shadow: rgba(0, 0, 0, 0.1) 0px 15px 10px -10px;
   font-size: 14px;
   align-items: center;
+  position: relative;
 `;
 
 const LeftHeaderContainer = styled.div`
@@ -154,4 +432,25 @@ const SAvartar = styled(Avartar)`
 
 const CounterPartName = styled.span`
   margin-left: 10px;
+`;
+
+const CollapseButtonContainer = styled.div`
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+`;
+
+const CollapseButton = styled.div`
+  width: 100px;
+  background-color: white;
+  border: 1px solid white;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${colors.Black};
+  font-size: 13px;
+  cursor: pointer;
+  :hover {
+    background-color: #f0f0f0;
+    border: 1px solid #f0f0f0;
+  }
 `;
