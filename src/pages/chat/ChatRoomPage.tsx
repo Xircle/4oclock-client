@@ -6,6 +6,7 @@ import {
   ContainerwithLeftRightMargin,
   colors,
   Avartar,
+  MainBtn,
 } from "../../styles/styles";
 import {
   chatMessageDummies,
@@ -23,6 +24,8 @@ import ChatMessage from "../../components/chat/ChatMessage";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { Collapse, Card, CardBody, Button } from "reactstrap";
+import Modal from "../../components/UI/Modal";
+import { ReservationModalWrapper } from "../reservation/ReservationPage";
 
 interface Props {}
 
@@ -249,6 +252,9 @@ export default function ChatRoomPage(props: Props) {
   const [isCollapse, SetIsCollapse] = useState(false);
   const [isCollapseScrollButton, SetIsCollapseScrollButton] = useState(false);
   const [isFirstRefresh, SetIsFirstRefresh] = useState(true);
+  const [isLeaveRoomClicked, SetIsLeaveRoomClicked] = useState(false);
+  const [isBlockUserClicked, SetIsBlockUserClicked] = useState(false);
+  const [isReportUserClicked, SetIsReportUserClicked] = useState(false);
   const scrollbarRef = useRef<Scrollbars>(null);
 
   useEffect(() => {
@@ -301,17 +307,34 @@ export default function ChatRoomPage(props: Props) {
             onClick={() => SetIsCollapse(!isCollapse)}
           />
         </RightHeaderContainer>
-        <div
-          style={{ position: "absolute", top: "100%", right: 10, zIndex: 100 }}
-        >
-          <Collapse isOpen={isCollapse}>
-            <CollapseButtonContainer>
-              <CollapseButton>채팅방 나가기</CollapseButton>
-              <CollapseButton>차단하기</CollapseButton>
-              <CollapseButton>신고하기</CollapseButton>
+        <DropdownContainer>
+          <Collapse isOpen={isCollapseScrollButton}>
+            <CollapseButtonContainer style={{ boxShadow: "none" }}>
+              <NewMessageAlertContainer
+                onClick={() => {
+                  scrollbarRef.current?.scrollToBottom();
+                }}
+              >
+                새로운 메세지가 도착했습니다
+              </NewMessageAlertContainer>
             </CollapseButtonContainer>
           </Collapse>
-        </div>
+        </DropdownContainer>
+        <DropdownContainer>
+          <Collapse isOpen={isCollapse}>
+            <CollapseButtonContainer>
+              <CollapseButton onClick={() => SetIsLeaveRoomClicked(true)}>
+                채팅방 나가기
+              </CollapseButton>
+              <CollapseButton onClick={() => SetIsBlockUserClicked(true)}>
+                차단하기
+              </CollapseButton>
+              <CollapseButton onClick={() => SetIsReportUserClicked(true)}>
+                신고하기
+              </CollapseButton>
+            </CollapseButtonContainer>
+          </Collapse>
+        </DropdownContainer>
       </Header>
 
       <SScrollbars
@@ -373,9 +396,110 @@ export default function ChatRoomPage(props: Props) {
           </SendButton>
         </form>
       </InputContainer>
+      {(isLeaveRoomClicked || isBlockUserClicked || isReportUserClicked) && (
+        <Modal
+          isClose={
+            !isLeaveRoomClicked && !isBlockUserClicked && !isReportUserClicked
+          }
+          onClose={() => {
+            SetIsLeaveRoomClicked((prev) => !prev);
+            SetIsBlockUserClicked((prev) => !prev);
+            SetIsReportUserClicked((prev) => !prev);
+          }}
+        >
+          <ReservationModalWrapper>
+            {isLeaveRoomClicked && (
+              <>
+                <h1>채팅방에서 나가시겠어요?</h1>
+                <span
+                  style={{
+                    color: "#8C94A4",
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    padding: "0 10px",
+                  }}
+                >
+                  나가시기를 하시면 나의 채팅방에서 상대방과 주고 받았던 대화가
+                  모두 삭제됩니다. 상대방 채팅방에는 기록이남아있습니다.
+                </span>
+              </>
+            )}
+            {isBlockUserClicked && (
+              <>
+                <h1>{messages[0].username}을 차단하시겠어요?</h1>
+                <span
+                  style={{
+                    color: "#8C94A4",
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    padding: "0 10px",
+                  }}
+                >
+                  차단된 상대방은 연고이팅에서 연고이팅에서 회원님의
+                  프로필검색과 채팅 전송이 불가해지며 주고받은 채팅이
+                  삭제됩니다.
+                </span>
+              </>
+            )}
+            {isReportUserClicked && (
+              <>
+                <h1>{messages[0].username}을 신고하시겠어요?</h1>
+                <span
+                  style={{
+                    color: "#8C94A4",
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    padding: "0 10px",
+                  }}
+                >
+                  호로로로로로로로로로로
+                </span>
+              </>
+            )}
+
+            <MainBtn style={{ width: "90%" }}>취소하기</MainBtn>
+            <CloseModalButton
+              onClick={() => {
+                SetIsLeaveRoomClicked(false);
+                SetIsBlockUserClicked(false);
+                SetIsReportUserClicked(false);
+              }}
+              className="userOptionBtn"
+            >
+              뒤로가기
+            </CloseModalButton>
+          </ReservationModalWrapper>
+        </Modal>
+      )}
     </SContainer>
   );
 }
+
+const CloseModalButton = styled.p`
+  cursor: pointer;
+  color: #8c94a4;
+`;
+
+const NewMessageAlertContainer = styled.div`
+  width: 355px;
+  height: 50px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  opacity: 0.8;
+  border-radius: 0 0 10px 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+`;
+
+//position: "absolute", top: "100%", right: 10, zIndex: 100
+const DropdownContainer = styled.div`
+  position: absolute;
+  top: 100%;
+  right: 10px;
+  z-index: 100;
+`;
 
 const ScrollToBottomContainer = styled.div`
   bottom: 100px;
@@ -446,7 +570,9 @@ const SScrollbars = styled(Scrollbars)`
 `;
 
 const MessageContainer = styled.div`
-  width: 100%;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
   flex-grow: 1;
   display: flex;
   justify-content: flex-start;
@@ -485,6 +611,7 @@ const CounterPartName = styled.span`
 
 const CollapseButtonContainer = styled.div`
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  z-index: 500;
 `;
 
 const CollapseButton = styled.div`
