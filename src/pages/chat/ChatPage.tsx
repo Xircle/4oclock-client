@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import useSocket from "../../hooks/useSocket";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PageTitle from "../../components/PageTitle";
 import ChatList from "../../components/chat/ChatList";
 import BottomNavBar from "../../components/shared/BottomNavBar";
@@ -12,7 +12,6 @@ import {
   ContainerwithLeftRightMargin,
   colors,
 } from "../../styles/styles";
-import { chatListDummies } from "../../components/chat/dummies/ChatDummies";
 import { useQuery } from "react-query";
 import { getMyRooms } from "../../lib/api/getMyRooms";
 import { IRoom } from "../../lib/api/types";
@@ -27,7 +26,7 @@ export default function ChatPage(props: Props) {
   const [msg, setMsg] = useState("");
   const [socket, disconnect] = useSocket(roomId);
   const [isEntering, setIsEntering] = useState(false);
-  const [chatCount, SetChatCount] = useState(chatListDummies.length);
+  const [chatCount, SetChatCount] = useState(0);
 
   const { data: myRooms, isLoading } = useQuery<IRoom[] | undefined>(
     ["room"],
@@ -37,32 +36,18 @@ export default function ChatPage(props: Props) {
       refetchOnWindowFocus: false,
     }
   );
+  useEffect(() => {
+    if (!myRooms) return;
+    SetChatCount(myRooms?.length);
+  }, [myRooms]);
 
-  // useEffect(() => {
-  //   socket.emit("join_room", { roomId });
-  //   socket.on("is_entering", isEnteringCallBack);
-  // }, []);
-
-  // const isEnteringCallBack = ({ flag }) => {
-  //   setIsEntering(flag);
-  // };
-
-  // const onChatInputChange = (e: React.FormEvent<HTMLInputElement>) => {
-  //   setMsg(e.currentTarget.value);
-  //   socket.emit("is_entering", {
-  //     roomId,
-  //     flag: e.currentTarget.value.trim().length > 0 ? true : false,
-  //   });
-  // };
-
-  // const onChatSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   console.log(msg);
-  //   socket.emit("send_message", {
-  //     roomId,
-  //     content: msg,
-  //   });
-  // };
+  const onChatSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    socket.emit("send_message", {
+      roomId,
+      content: msg,
+    });
+  };
 
   if (isLoading) {
     <>
