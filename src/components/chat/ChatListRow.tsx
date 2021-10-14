@@ -2,14 +2,25 @@ import styled from "styled-components";
 import { Avartar, colors } from "../../styles/styles";
 import { ConvertSentTime } from "../../lib/utils";
 import { IRoom } from "../../lib/api/types";
+import { useHistory } from "react-router-dom";
 
 interface Props {
   room: IRoom;
 }
 
 export default function ChatListRow({ room }: Props) {
+  const history = useHistory();
+
   return (
-    <SContainer>
+    <SContainer
+      onClick={() =>
+        history.push(`/chatRoom/${room.id}`, {
+          id: room.receiver.id,
+          profileImageUrl: room.receiver.profileImageUrl,
+          username: room.receiver.username,
+        })
+      }
+    >
       <LeftContainer>
         <SAvatar src={room.receiver.profileImageUrl} />
         <LeftTextContainer>
@@ -42,6 +53,10 @@ const SContainer = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 10px 0px;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.7;
+  }
 `;
 
 const LeftContainer = styled.div`
