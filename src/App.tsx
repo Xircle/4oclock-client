@@ -5,19 +5,18 @@ import { GlobalStyles, AppContainer } from "./styles/styles";
 import routes from "./routes";
 import { PortalProvider } from "./providers/PortalProvider";
 import { HelmetProvider } from "react-helmet-async";
+import ImageGalleryPage from "./pages/ImageGalleryPage";
+import SocialRedirect from "./pages/RedirectPage";
+import PlaceFeedPage from "./pages/placeFeed/PlaceFeedPage";
+import FriendsPage from "./pages/friend/FriendPage";
+import MyPage from "./pages/my/MyPage";
 config();
 
 const LandingPage = React.lazy(() => import("./pages/LandingPage"));
-const SocialRedirect = React.lazy(() => import("./pages/RedirectPage"));
-const PlaceFeedPage = React.lazy(
-  () => import("./pages/placeFeed/PlaceFeedPage")
-);
 const PlacePage = React.lazy(() => import("./pages/place/PlacePage"));
-const FriendsPage = React.lazy(() => import("./pages/friend/FriendPage"));
 const ParticipantProfilePage = React.lazy(
   () => import("./pages/friend/ParticipantProfilePage")
 );
-const MyPage = React.lazy(() => import("./pages/my/MyPage"));
 const ReservationConfirmPage = React.lazy(
   () => import("./pages/reservation/ReservationConfirmPage")
 );
@@ -29,16 +28,12 @@ const MyPlacePage = React.lazy(() => import("./pages/my/MyPlacePage"));
 const EditProfilePage = React.lazy(() => import("./pages/my/EditProfilePage"));
 const AuthPage = React.lazy(() => import("./pages/auth/Auth"));
 const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage"));
-
 const ParticipantsListPage = React.lazy(
   () => import("./pages/participantsList/ParticipantsListPage")
 );
-
 const CancelReservationPage = React.lazy(
   () => import("./pages/CancelReservationPage")
 );
-
-const ImageGalleryPage = React.lazy(() => import("./pages/ImageGalleryPage"));
 const ChatPage = React.lazy(() => import("./pages/chat/ChatPage"));
 const ChatRoomPage = React.lazy(() => import("./pages/chat/ChatRoomPage"));
 
