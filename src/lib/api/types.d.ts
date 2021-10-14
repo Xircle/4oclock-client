@@ -191,3 +191,23 @@ export interface PlaceParticipantListData {
 export interface GetPlaceParticipantListOutput extends CoreOutput {
   participants?: PlaceParticipantListData;
 }
+
+// My Room
+export interface IRoom {
+  id: string;
+  receiver: {
+    id: string;
+    profileImageUrl: string;
+    username: string;
+  };
+  lastMessage: {
+    isMe: boolean;
+    isRead: boolean;
+    content: string;
+  };
+  latestMessageAt: Date;
+}
+
+export interface GetMyRooms extends CoreOutput {
+  myRooms: IRoom[];
+}
