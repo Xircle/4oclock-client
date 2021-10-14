@@ -1,12 +1,8 @@
 import styled from "styled-components";
 import PageTitle from "../../components/PageTitle";
 import { Container, colors, Avartar, MainBtn } from "../../styles/styles";
-import {
-  chatMessageDummies,
-  Message,
-} from "../../components/chat/dummies/ChatDummies";
-
-import { useHistory } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
+import { RouteComponentProps } from "react-router-dom";
 import {
   faArrowLeft,
   faArrowUp,
@@ -17,231 +13,57 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChatMessage from "../../components/chat/ChatMessage";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
-import { Collapse, Card, CardBody, Button } from "reactstrap";
+import { Collapse } from "reactstrap";
 import Modal from "../../components/UI/Modal";
 import { ReservationModalWrapper } from "../reservation/ReservationPage";
+import useSocket from "../../hooks/useSocket";
+import { IMessage } from "../../lib/api/types";
+import { useMutation, useQuery } from "react-query";
+import { getRoomMessages } from "../../lib/api/getRoomMessages";
+import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
+import storage from "../../lib/storage";
+import { CURRENT_USER } from "../../components/shared/constants";
+import { useCallback } from "react";
+import { sendMessage } from "../../lib/api/sendMessage";
+import { toast } from "react-toastify";
 
-interface Props {}
+interface Props
+  extends RouteComponentProps<
+    { roomId: string },
+    {},
+    {
+      id: string;
+      profileImageUrl: string;
+      username: string;
+    }
+  > {}
 
-export default function ChatRoomPage(props: Props) {
-  const [messages, SetMessages] = useState<Message[]>([
-    {
-      userId: 0,
-      username: "유저1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: "초면에 실례가 심하시네요. 그럼 님 티어는요?",
-    },
-    {
-      userId: 1,
-      username: "유저2",
-      avatar: "/avatar/Avartar002.jpeg",
-      message: "그래서 님 티어가..?",
-    },
-    {
-      userId: 1,
-      username: "유저2",
-      avatar: "/avatar/Avartar002.jpeg",
-      message: "반가워요",
-    },
-    {
-      userId: 0,
-      username: "유저1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: "안녕하세요",
-    },
-    {
-      userId: 0,
-      username: "유저1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: "초면에 실례가 심하시네요. 그럼 님 티어는요?",
-    },
-    {
-      userId: 1,
-      username: "유저2",
-      avatar: "/avatar/Avartar002.jpeg",
-      message: "그래서 님 티어가..?",
-    },
-    {
-      userId: 1,
-      username: "유저2",
-      avatar: "/avatar/Avartar002.jpeg",
-      message: "반가워요",
-    },
-    {
-      userId: 0,
-      username: "유저1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: "안녕하세요",
-    },
-    {
-      userId: 0,
-      username: "유저1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: "초면에 실례가 심하시네요. 그럼 님 티어는요?",
-    },
-    {
-      userId: 1,
-      username: "유저2",
-      avatar: "/avatar/Avartar002.jpeg",
-      message: "그래서 님 티어가..?",
-    },
-    {
-      userId: 1,
-      username: "유저2",
-      avatar: "/avatar/Avartar002.jpeg",
-      message: "반가워요",
-    },
-    {
-      userId: 0,
-      username: "유저1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: "안녕하세요",
-    },
-    {
-      userId: 0,
-      username: "유저1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: "초면에 실례가 심하시네요. 그럼 님 티어는요?",
-    },
-    {
-      userId: 1,
-      username: "유저2",
-      avatar: "/avatar/Avartar002.jpeg",
-      message: "그래서 님 티어가..?",
-    },
-    {
-      userId: 1,
-      username: "유저2",
-      avatar: "/avatar/Avartar002.jpeg",
-      message: "반가워요",
-    },
-    {
-      userId: 0,
-      username: "유저1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: "안녕하세요",
-    },
-    {
-      userId: 0,
-      username: "유저1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: "초면에 실례가 심하시네요. 그럼 님 티어는요?",
-    },
-    {
-      userId: 1,
-      username: "유저2",
-      avatar: "/avatar/Avartar002.jpeg",
-      message: "그래서 님 티어가..?",
-    },
-    {
-      userId: 1,
-      username: "유저2",
-      avatar: "/avatar/Avartar002.jpeg",
-      message: "반가워요",
-    },
-    {
-      userId: 0,
-      username: "유저1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: "안녕하세요",
-    },
-    {
-      userId: 0,
-      username: "유저1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: "초면에 실례가 심하시네요. 그럼 님 티어는요?",
-    },
-    {
-      userId: 1,
-      username: "유저2",
-      avatar: "/avatar/Avartar002.jpeg",
-      message: "그래서 님 티어가..?",
-    },
-    {
-      userId: 1,
-      username: "유저2",
-      avatar: "/avatar/Avartar002.jpeg",
-      message: "반가워요",
-    },
-    {
-      userId: 0,
-      username: "유저1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: "안녕하세요",
-    },
-    {
-      userId: 0,
-      username: "유저1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: "초면에 실례가 심하시네요. 그럼 님 티어는요?",
-    },
-    {
-      userId: 1,
-      username: "유저2",
-      avatar: "/avatar/Avartar002.jpeg",
-      message: "그래서 님 티어가..?",
-    },
-    {
-      userId: 1,
-      username: "유저2",
-      avatar: "/avatar/Avartar002.jpeg",
-      message: "반가워요",
-    },
-    {
-      userId: 0,
-      username: "유저1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: "안녕하세요",
-    },
-    {
-      userId: 0,
-      username: "유저1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: "초면에 실례가 심하시네요. 그럼 님 티어는요?",
-    },
-    {
-      userId: 1,
-      username: "유저2",
-      avatar: "/avatar/Avartar002.jpeg",
-      message: "그래서 님 티어가..?",
-    },
-    {
-      userId: 1,
-      username: "유저2",
-      avatar: "/avatar/Avartar002.jpeg",
-      message: "반가워요",
-    },
-    {
-      userId: 0,
-      username: "유저1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: "안녕하세요",
-    },
-    {
-      userId: 0,
-      username: "유저1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: "초면에 실례가 심하시네요. 그럼 님 티어는요?",
-    },
-    {
-      userId: 1,
-      username: "유저2",
-      avatar: "/avatar/Avartar002.jpeg",
-      message: "그래서 님 티어가..?",
-    },
-    {
-      userId: 1,
-      username: "유저2",
-      avatar: "/avatar/Avartar002.jpeg",
-      message: "반가워요",
-    },
-    {
-      userId: 0,
-      username: "유저1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: "안녕하세요",
-    },
-  ]);
+export default function ChatRoomPage({ match, history, location }: Props) {
+  const scrollbarRef = useRef<Scrollbars>(null);
+  useEffect(() => {
+    scrollbarRef.current?.scrollTop(5000000000);
+  }, [scrollbarRef]);
+
+  const { roomId } = match.params;
+  const [socket, disconnect] = useSocket(roomId);
+  const isEnteringCallBack = ({ flag }) => {
+    setIsEntering(flag);
+  };
+  useEffect(() => {
+    const anonymouseId = storage.getItem(CURRENT_USER)?.uid;
+    if (!roomId || !anonymouseId) return;
+    socket.emit("join_room", { roomId, anonymouseId });
+    socket.on("is_entering", isEnteringCallBack);
+    socket.on("receive_message", receivedMsgFromSocket);
+  }, [roomId]);
+
+  const {
+    id: receiverId,
+    profileImageUrl: receiverProfileImageUrl,
+    username: receiverUsername,
+  } = location.state;
+
+  const [messages, SetMessages] = useState<IMessage[]>([]);
   const [messageInput, SetMessageInput] = useState("");
   const [isCollapse, SetIsCollapse] = useState(false);
   const [isCollapseScrollButton, SetIsCollapseScrollButton] = useState(false);
@@ -249,34 +71,113 @@ export default function ChatRoomPage(props: Props) {
   const [isLeaveRoomClicked, SetIsLeaveRoomClicked] = useState(false);
   const [isBlockUserClicked, SetIsBlockUserClicked] = useState(false);
   const [isReportUserClicked, SetIsReportUserClicked] = useState(false);
-  const scrollbarRef = useRef<Scrollbars>(null);
+  const [isEntering, setIsEntering] = useState(false);
+
+  const { data: fetchedMessages, isLoading } = useQuery<IMessage[] | undefined>(
+    ["room-chat", roomId],
+    () => getRoomMessages(roomId, receiverId),
+    {
+      onError: (err: any) => {
+        alert(err);
+        return;
+      },
+      retry: 1,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  const { mutateAsync: mutateMessage } = useMutation(sendMessage);
 
   useEffect(() => {
-    scrollbarRef.current?.scrollTop(5000000000);
-  }, [scrollbarRef]);
+    if (!fetchedMessages) return;
+    SetMessages(fetchedMessages);
+  }, [fetchedMessages]);
 
-  const preventDefaultAction = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
+  // 소켓으로부터 받은 메세지 콜백
+  const receivedMsgFromSocket = useCallback(
+    ({ content, sentAt }) => {
+      SetMessages((prev) => {
+        const messages = [
+          { content, isMe: false, sentAt, isRead: true },
+          ...prev,
+        ];
+        console.log(messages);
+        return messages;
+      });
+    },
+    [messages]
+  );
 
   const handleMessageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     SetMessageInput(e.target.value);
+    socket.emit("is_entering", {
+      roomId,
+      anonymouseId: storage.getItem(CURRENT_USER)?.uid,
+      flag: e.currentTarget.value.trim().length > 0 ? true : false,
+    });
   };
 
-  const handleSubmit = () => {
-    if (messageInput) {
-      messages.unshift({
-        userId: 0,
-        username: "유저 1",
-        avatar: "/avatar/Avartar001.jpeg",
-        message: messageInput,
-      });
-      SetMessages(messages);
-      SetMessageInput("");
-    }
+  const onSubmitHandler = (
+    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
+    // 로컬 message state 에 동기화
+    SetMessages((prev) => {
+      const messages = [
+        {
+          content: messageInput,
+          isMe: true,
+          sentAt: new Date(),
+          isRead: false,
+        },
+        ...prev,
+      ];
+      return messages;
+    });
+    // POST 비동기로 요청
+    mutateMessage({
+      content: messageInput,
+      receiverId: receiverId,
+      roomId,
+    }).then((res) => {
+      if (!res.data.ok) {
+        console.log(res);
+        toast.error("전송에 실패했습니다. 잠시 후 다시 시도해주세요");
+        // 전송에 실패했으므로, 로컬의 message의 말풍선에 X 추가한다.
+      }
+    });
+    // socket emit
+    socket.emit("send_message", {
+      roomId,
+      anonymouseId: storage.getItem(CURRENT_USER)?.uid,
+      content: messageInput,
+    });
+    socket.emit("is_entering", {
+      roomId,
+      anonymouseId: storage.getItem(CURRENT_USER)?.uid,
+      flag: false,
+    });
+    SetMessageInput("");
   };
 
-  const history = useHistory();
+  if (isLoading)
+    return (
+      <>
+        <LoaderBackdrop />
+        <LoaderWrapper>
+          <ClipLoader
+            loading={isLoading}
+            color={colors.MidBlue}
+            css={{
+              name: "width",
+              styles: "border-width: 4px; z-index: 999;",
+            }}
+            size={30}
+          />
+        </LoaderWrapper>
+      </>
+    );
+
   return (
     <SContainer>
       <PageTitle title="채팅" />
@@ -289,8 +190,8 @@ export default function ChatRoomPage(props: Props) {
             size="lg"
             onClick={() => history.goBack()}
           />
-          <SAvartar src="/avatar/Avartar001.jpeg" />
-          <CounterPartName>{chatMessageDummies[0].username}</CounterPartName>
+          <SAvartar src={receiverProfileImageUrl} />
+          <CounterPartName>{receiverUsername}</CounterPartName>
         </LeftHeaderContainer>
         <RightHeaderContainer>
           <FontAwesomeIcon
@@ -349,9 +250,12 @@ export default function ChatRoomPage(props: Props) {
         }}
       >
         <MessageContainer>
+          {isEntering && (
+            <ChatMessage content="....." isMe={false}></ChatMessage>
+          )}
           {messages?.map((message, index) => (
             <Fragment key={index}>
-              <ChatMessage {...message}></ChatMessage>
+              <ChatMessage {...message} />
             </Fragment>
           ))}
         </MessageContainer>
@@ -373,14 +277,14 @@ export default function ChatRoomPage(props: Props) {
         </Collapse>
       </ScrollToBottomContainer>
       <InputContainer>
-        <form onSubmit={preventDefaultAction}>
+        <form onSubmit={onSubmitHandler}>
           <SInput
             placeholder="메세지를 입력해주세요"
             value={messageInput}
             name="MessageInput"
             onChange={handleMessageInputChange}
           />
-          <SendButton onClick={handleSubmit}>
+          <SendButton type="submit" onClick={onSubmitHandler}>
             <FontAwesomeIcon
               style={{ cursor: "pointer" }}
               icon={faArrowUp}
@@ -420,7 +324,7 @@ export default function ChatRoomPage(props: Props) {
             )}
             {isBlockUserClicked && (
               <>
-                <h1>{messages[0].username}을 차단하시겠어요?</h1>
+                <h1>{receiverUsername}을 차단하시겠어요?</h1>
                 <span
                   style={{
                     color: "#8C94A4",
@@ -437,7 +341,7 @@ export default function ChatRoomPage(props: Props) {
             )}
             {isReportUserClicked && (
               <>
-                <h1>{messages[0].username}을 신고하시겠어요?</h1>
+                <h1>{receiverUsername}을 신고하시겠어요?</h1>
                 <span
                   style={{
                     color: "#8C94A4",

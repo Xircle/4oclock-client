@@ -211,3 +211,22 @@ export interface IRoom {
 export interface GetMyRooms extends CoreOutput {
   myRooms: IRoom[];
 }
+
+// My Room Messages
+export interface IMessage {
+  content: string;
+  isMe: boolean;
+  sentAt?: Date;
+  isRead?: boolean;
+}
+
+export interface GetRoomMessages extends CoreOutput {
+  messages: IMessage[];
+}
+
+// Send Message
+export interface SendMessageInput {
+  roomId: string;
+  receiverId: string;
+  content: string;
+}
