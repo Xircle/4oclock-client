@@ -295,32 +295,34 @@ export default function PlacePage({ match, location, history }: Props) {
             {AgeNumberToString(placeData.participantsInfo.average_age)}
           </PParticipant>
         </PParticipantContainer>
-        <AvartarImgContainerParticipant
-          isParticipating={placeData.isParticipating}
-        >
-          {placeData.participants.map((participant) => (
-            <Avatar
-              key={participant.userId}
-              profileImgUrl={participant.profileImgUrl}
-              width="46px"
-              rightOffset={"8px"}
-              onClick={() => {
-                if (placeData.isParticipating) {
-                  history.push(`${routes.participantProfile}`, {
-                    id: participant.userId,
-                  });
-                } else if (!isClosed) {
-                  history.push(
-                    `/participants-list/${encodeUrlSlug(placeData.name)}`,
-                    {
-                      placeId,
-                    }
-                  );
-                }
-              }}
-            />
-          ))}
-        </AvartarImgContainerParticipant>
+        {!isClosed && (
+          <AvartarImgContainerParticipant
+            isParticipating={placeData.isParticipating}
+          >
+            {placeData.participants.map((participant) => (
+              <Avatar
+                key={participant.userId}
+                profileImgUrl={participant.profileImgUrl}
+                width="46px"
+                rightOffset={"8px"}
+                onClick={() => {
+                  if (placeData.isParticipating) {
+                    history.push(`${routes.participantProfile}`, {
+                      id: participant.userId,
+                    });
+                  } else if (!isClosed) {
+                    history.push(
+                      `/participants-list/${encodeUrlSlug(placeData.name)}`,
+                      {
+                        placeId,
+                      }
+                    );
+                  }
+                }}
+              />
+            ))}
+          </AvartarImgContainerParticipant>
+        )}
       </Section>
 
       {/* 모임 안내 */}
