@@ -24,7 +24,7 @@ import routes from "../../routes";
 import storage from "../../lib/storage";
 import { CURRENT_USER, IS_YK_ONLY } from "../../components/shared/constants";
 import PageTitle from "../../components/PageTitle";
-import { ChattingButton, IndicatorBox } from "./ParticipantProfilePage";
+import { IndicatorBox } from "./ParticipantProfilePage";
 import { RouteComponentProps } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
@@ -60,13 +60,20 @@ export default function FriendsPage({ history }: Props) {
     }
   );
 
-  const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
-    UserProfile | undefined
-  >(["randomProfile"], () => seeRandomProfile(isYkClub && isYkOnly), {
-    retry: 1,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
+  const {
+    data: randomProfileData,
+    refetch,
+    isLoading,
+    isFetching,
+  } = useQuery<UserProfile | undefined>(
+    ["randomProfile"],
+    () => seeRandomProfile(isYkClub && isYkOnly),
+    {
+      retry: 1,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   useEffect(() => {
     if (randomProfileData) {
@@ -131,7 +138,9 @@ export default function FriendsPage({ history }: Props) {
 
         <FlexDiv style={{ position: "relative" }}>
           <AvartarBig
-            src={randomProfileData?.profileImageUrl || "/avatar/2donny.png"}
+            src={
+              randomProfileData?.profileImageUrl || "/avatar/anonymous_user.png"
+            }
             alt="friend-profile"
             onClick={() => {
               if (!randomProfileData?.profileImageUrl) return;
@@ -148,19 +157,19 @@ export default function FriendsPage({ history }: Props) {
         </FlexDiv>
 
         <FlexDiv style={{ marginTop: "15px" }}>
-          <Name>{randomProfileData?.username || "써클 개발자"}</Name>
+          <Name>{randomProfileData?.username || ""}</Name>
         </FlexDiv>
 
         <FlexDiv>
           <TagOnName>
-            <p>{randomProfileData?.job || "18학번 헌내기"}</p>
+            <p>{randomProfileData?.job || ""}</p>
           </TagOnName>
         </FlexDiv>
 
         <InnerContainer style={{ marginTop: "25px" }}>
-          <BlackSubText>{randomProfileData?.MBTI}</BlackSubText>
+          <BlackSubText>{randomProfileData?.MBTI || ""}</BlackSubText>
           <BlackSubText style={{ marginLeft: "20px" }}>
-            {randomProfileData?.personality}
+            {randomProfileData?.personality || ""}
           </BlackSubText>
         </InnerContainer>
         <InnerContainer style={{ marginTop: "20px" }}>
@@ -172,7 +181,7 @@ export default function FriendsPage({ history }: Props) {
               color: "background: #505050",
             }}
           >
-            {randomProfileData?.shortBio || `안녕하세요!`}
+            {randomProfileData?.shortBio || ``}
           </InnerContent>
         </InnerContainer>
         <InnerContainer style={{ marginTop: "10px" }}>
@@ -182,13 +191,13 @@ export default function FriendsPage({ history }: Props) {
               {randomProfileData?.location
                 ? randomProfileData?.location
                 : "대한민국 어딘가"}{" "}
-              / {randomProfileData?.university || "딱대학교"} /{" "}
-              {age || "역마살"} /{" "}
+              / {randomProfileData?.university || "고연이대"} /{" "}
+              {age || "나잇살"} /{" "}
               {randomProfileData
                 ? randomProfileData.gender === "Male"
                   ? "남"
                   : "여"
-                : "모름"}
+                : "남성역"}
             </GraySubText>
           </InnerContent>
         </InnerContainer>
