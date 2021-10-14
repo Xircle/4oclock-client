@@ -28,11 +28,8 @@ export const GlobalStyles = createGlobalStyle`
      border: 1px solid #C4CBD8;
      border-radius: 8px;
      font-size: 14px;
-     padding-top: 8px;
-     padding-bottom: 8px;
+     padding: 8px;
      width: 301px;
-     padding-left: 8px;
-     padding-right: 8px;
    }
    input::placeholder, textarea::placeholder, input:disabled, select, option {
       color: #C4CBD8;
@@ -93,6 +90,9 @@ export const AppContainer = styled.div`
 
 export const Container = styled.div`
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
 `;
 
 export const ProcedureHeading = styled.div`

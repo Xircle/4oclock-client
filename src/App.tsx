@@ -39,6 +39,8 @@ const CancelReservationPage = React.lazy(
 );
 
 const ImageGalleryPage = React.lazy(() => import("./pages/ImageGalleryPage"));
+const ChatPage = React.lazy(() => import("./pages/chat/ChatPage"));
+const ChatRoomPage = React.lazy(() => import("./pages/chat/ChatRoomPage"));
 
 function App() {
   return (
@@ -96,6 +98,9 @@ function App() {
                 path={routes.participantsList}
                 component={ParticipantsListPage}
               />
+              {/* REMINDER Delete*/}
+              <Route path={routes.chat} component={ChatPage} />
+              <Route path={routes.chatRoom} component={ChatRoomPage} />
               <Route component={NotFoundPage} />
             </Switch>
           </Suspense>

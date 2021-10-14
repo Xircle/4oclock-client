@@ -15,6 +15,9 @@ const routes = {
   auth: "/auth",
   participantsList: "/participants-list/:name",
   cancelReservation: "/cancel-reservation",
+  // REMINDER: deleteBelow
+  chat: "/chat",
+  chatRoom: "/chatRoom",
 };
 
 export default routes;
