@@ -169,18 +169,7 @@ export default function PlacePage({ match, location, history }: Props) {
       <PageTitle title="맛집 정보" />
 
       {/* Cover Image */}
-      <SHeader
-        onClick={() => {
-          history.push(`/image/${0}`, {
-            payload: [
-              {
-                id: placeData.coverImage,
-                imageUrl: placeData.coverImage,
-              },
-            ],
-          });
-        }}
-      >
+      <SHeader>
         <SHeaderPic src={placeData.coverImage} alt={placeData.name + "사진"} />
         <TempToBeDeleted></TempToBeDeleted>
         <BackContainer onClick={BackButtonClickHandler}>
