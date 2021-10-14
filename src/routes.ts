@@ -17,7 +17,7 @@ const routes = {
   cancelReservation: "/cancel-reservation",
   // REMINDER: deleteBelow
   chat: "/chat",
-  chatRoom: "/chatRoom",
+  chatRoom: "/chatRoom/:roomId",
 };
 
 export default routes;

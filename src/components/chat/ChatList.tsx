@@ -18,7 +18,6 @@ export default function ChatList({ chatRooms }: Props) {
     </SContainer>
   );
 }
-
 const SContainer = styled.div`
   width: 90%;
   margin-top: 20px;
