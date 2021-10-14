@@ -6,6 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { BrowserRouter as Router } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import routes from "./routes";
+import 'bootstrap/dist/css/bootstrap.css';
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({

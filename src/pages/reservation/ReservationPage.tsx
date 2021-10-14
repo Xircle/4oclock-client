@@ -143,7 +143,9 @@ export default function ReservationPage({ match, location, history }: Props) {
               을 받았습니다.
             </span>
           </Row>
-
+          <VaccineInfoText>
+            접종 후 14일이 지난 분만 선택해주세요
+          </VaccineInfoText>
           <Instruction>
             <InstructionHeading>💖 연고이팅 이용가이드 💖</InstructionHeading>
             <InstructionDetail>
@@ -216,6 +218,14 @@ export default function ReservationPage({ match, location, history }: Props) {
     </Container>
   );
 }
+
+const VaccineInfoText = styled.div`
+  color: ${colors.MidBlue};
+  font-size: 10px;
+  padding-left: 45px;
+  margin-top: -20px;
+  padding-bottom: 20px;
+`;
 
 const Row = styled.div`
   display: flex;
