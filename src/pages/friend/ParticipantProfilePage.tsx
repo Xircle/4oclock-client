@@ -125,9 +125,11 @@ export default function ParticipantProfilePage({ history }: Props) {
           </InnerContainer>
         </ContainerwithLeftRightMargin>
         <SpaceForNavBar></SpaceForNavBar>
-        <BottomButtonsContainer>
-          <ChatButton onClick={() => alert("개발중")}>채팅하기</ChatButton>
-        </BottomButtonsContainer>
+        {storage.getItem(CURRENT_USER).uid !== userProfileData?.id && (
+          <BottomButtonsContainer>
+            <ChatButton onClick={() => alert("개발중")}>채팅하기</ChatButton>
+          </BottomButtonsContainer>
+        )}
       </BackButtonLayout>
 
       {isLoading && (
