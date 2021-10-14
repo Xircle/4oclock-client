@@ -17,7 +17,8 @@ export default function ChatMessage(props: Props) {
 const MessageContainer = styled.div<{ me?: boolean }>`
   max-width: 60%;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: ${(props) =>
+    props.me ? "25px 0 25px 25px" : "25px 25px 25px 0"};
   background-color: ${(props) => (props.me ? "#1FA1FF" : "#F8FAFD")};
   color: ${(props) => (props.me ? "white" : "black")};
   font-size: 14px;
