@@ -16,6 +16,7 @@ import {
   faArrowLeft,
   faArrowUp,
   faEllipsisV,
+  faArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChatMessage from "../../components/chat/ChatMessage";
@@ -246,7 +247,14 @@ export default function ChatRoomPage(props: Props) {
   ]);
   const [messageInput, SetMessageInput] = useState("");
   const [isCollapse, SetIsCollapse] = useState(false);
+  const [isCollapseScrollButton, SetIsCollapseScrollButton] = useState(false);
   const [isFirstRefresh, SetIsFirstRefresh] = useState(true);
+  const scrollbarRef = useRef<Scrollbars>(null);
+
+  useEffect(() => {
+    scrollbarRef.current?.scrollTop(5000000000);
+  }, [scrollbarRef]);
+
   const preventDefaultAction = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
@@ -256,17 +264,16 @@ export default function ChatRoomPage(props: Props) {
   };
 
   const handleSubmit = () => {
-    SetMessageInput("");
-    messages.unshift({
-      userId: 0,
-      username: "유저 1",
-      avatar: "/avatar/Avartar001.jpeg",
-      message: messageInput,
-    });
-    // const temp = messages
-    //   .slice(0, messages.length - 1)
-    //   .concat(messages.slice(messages.length - 1, messages.length));
-    SetMessages(messages);
+    if (messageInput) {
+      messages.unshift({
+        userId: 0,
+        username: "유저 1",
+        avatar: "/avatar/Avartar001.jpeg",
+        message: messageInput,
+      });
+      SetMessages(messages);
+      SetMessageInput("");
+    }
   };
 
   const history = useHistory();
@@ -308,11 +315,19 @@ export default function ChatRoomPage(props: Props) {
       </Header>
 
       <SScrollbars
+        ref={scrollbarRef}
         autoHide={true}
-        ref={(scrollbar) => {
-          if (isFirstRefresh) {
-            scrollbar?.scrollTop(5000000000);
-            SetIsFirstRefresh(false);
+        // ref={(scrollbar) => {
+        //   if (isFirstRefresh) {
+        //     scrollbar?.scrollTop(5000000000);
+        //     SetIsFirstRefresh(false);
+        //   }
+        // }}
+        onScrollFrame={(values) => {
+          if (values.top < 0.9) {
+            SetIsCollapseScrollButton(true);
+          } else {
+            SetIsCollapseScrollButton(false);
           }
         }}
       >
@@ -324,6 +339,22 @@ export default function ChatRoomPage(props: Props) {
           ))}
         </MessageContainer>
       </SScrollbars>
+      <ScrollToBottomContainer>
+        <Collapse isOpen={isCollapseScrollButton}>
+          <ScrollToBottomButton
+            onClick={() => {
+              scrollbarRef.current?.scrollToBottom();
+            }}
+          >
+            <FontAwesomeIcon
+              style={{ cursor: "pointer" }}
+              icon={faArrowDown}
+              color="black"
+              size="lg"
+            />
+          </ScrollToBottomButton>
+        </Collapse>
+      </ScrollToBottomContainer>
       <InputContainer>
         <form onSubmit={preventDefaultAction}>
           <SInput
@@ -345,6 +376,23 @@ export default function ChatRoomPage(props: Props) {
     </SContainer>
   );
 }
+
+const ScrollToBottomContainer = styled.div`
+  bottom: 100px;
+  right: 15px;
+  position: absolute;
+`;
+
+const ScrollToBottomButton = styled.div`
+  width: 44px;
+  height: 44px;
+  background-color: ${colors.BareGray};
+  border: 1px solid ${colors.BareGray};
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const SendButton = styled.button`
   border: none;
@@ -394,6 +442,7 @@ const SScrollbars = styled(Scrollbars)`
   flex-grow: 1;
   display: flex;
   justify-content: flex-end;
+  position: relative;
 `;
 
 const MessageContainer = styled.div`
