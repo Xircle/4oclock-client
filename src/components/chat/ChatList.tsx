@@ -1,17 +1,17 @@
 import styled from "styled-components";
-import { Room } from "./dummies/ChatDummies";
 import ChatListRow from "./ChatListRow";
 import { Fragment } from "react";
+import { IRoom } from "../../lib/api/types";
 
 interface Props {
-  chatRooms?: Room[];
+  chatRooms?: IRoom[];
 }
 
 export default function ChatList({ chatRooms }: Props) {
   return (
     <SContainer>
-      {chatRooms?.map((chatRoom, index) => (
-        <Fragment key={index}>
+      {chatRooms?.map((chatRoom) => (
+        <Fragment key={chatRoom.receiver.id}>
           <ChatListRow room={chatRoom}></ChatListRow>
         </Fragment>
       ))}

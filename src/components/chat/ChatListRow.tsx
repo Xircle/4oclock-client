@@ -1,32 +1,29 @@
 import styled from "styled-components";
-import { Room } from "./dummies/ChatDummies";
-import { Fragment } from "react";
 import { Avartar, colors } from "../../styles/styles";
 import { ConvertSentTime } from "../../lib/utils";
+import { IRoom } from "../../lib/api/types";
 
 interface Props {
-  room: Room;
+  room: IRoom;
 }
 
 export default function ChatListRow({ room }: Props) {
   return (
-    <>
-      <SContainer>
-        <LeftContainer>
-          <SAvatar src={room.avatar} />
-          <LeftTextContainer>
-            <UsernameText>
-              {room.username}
-              {room.unread && <UnreadIndicator></UnreadIndicator>}
-            </UsernameText>
-            <MessageText>{room.message}</MessageText>
-          </LeftTextContainer>
-        </LeftContainer>
-        <RightContainer>
-          {room.sentTime && ConvertSentTime(room.sentTime)}
-        </RightContainer>
-      </SContainer>
-    </>
+    <SContainer>
+      <LeftContainer>
+        <SAvatar src={room.receiver.profileImageUrl} />
+        <LeftTextContainer>
+          <UsernameText>
+            {room.receiver.username}
+            {!room.lastMessage.isRead && <UnreadIndicator></UnreadIndicator>}
+          </UsernameText>
+          <MessageText>{room.lastMessage.content}</MessageText>
+        </LeftTextContainer>
+      </LeftContainer>
+      <RightContainer>
+        {room.latestMessageAt && ConvertSentTime(room.latestMessageAt)}
+      </RightContainer>
+    </SContainer>
   );
 }
 

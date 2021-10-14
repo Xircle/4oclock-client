@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import useSocket from "../../hooks/useSocket";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PageTitle from "../../components/PageTitle";
 import ChatList from "../../components/chat/ChatList";
 import BottomNavBar from "../../components/shared/BottomNavBar";
@@ -13,10 +13,14 @@ import {
   colors,
 } from "../../styles/styles";
 import { chatListDummies } from "../../components/chat/dummies/ChatDummies";
+import { useQuery } from "react-query";
+import { getMyRooms } from "../../lib/api/getMyRooms";
+import { IRoom } from "../../lib/api/types";
+import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
+import ClipLoader from "react-spinners/ClipLoader";
 
 interface Props {}
 
-// 디테일 채팅방 입니다.
 export default function ChatPage(props: Props) {
   const { roomId = "fc88ebc3-1b06-418c-9dde-c81ffd4e36a3" } =
     useParams<{ roomId: string }>();
@@ -25,31 +29,54 @@ export default function ChatPage(props: Props) {
   const [isEntering, setIsEntering] = useState(false);
   const [chatCount, SetChatCount] = useState(chatListDummies.length);
 
-  useEffect(() => {
-    socket.emit("join_room", { roomId });
-    socket.on("is_entering", isEnteringCallBack);
-  }, []);
+  const { data: myRooms, isLoading } = useQuery<IRoom[] | undefined>(
+    ["room"],
+    () => getMyRooms(),
+    {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    }
+  );
 
-  const isEnteringCallBack = ({ flag }) => {
-    setIsEntering(flag);
-  };
+  // useEffect(() => {
+  //   socket.emit("join_room", { roomId });
+  //   socket.on("is_entering", isEnteringCallBack);
+  // }, []);
 
-  const onChatInputChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setMsg(e.currentTarget.value);
-    socket.emit("is_entering", {
-      roomId,
-      flag: e.currentTarget.value.trim().length > 0 ? true : false,
-    });
-  };
+  // const isEnteringCallBack = ({ flag }) => {
+  //   setIsEntering(flag);
+  // };
 
-  const onChatSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(msg);
-    socket.emit("send_message", {
-      roomId,
-      content: msg,
-    });
-  };
+  // const onChatInputChange = (e: React.FormEvent<HTMLInputElement>) => {
+  //   setMsg(e.currentTarget.value);
+  //   socket.emit("is_entering", {
+  //     roomId,
+  //     flag: e.currentTarget.value.trim().length > 0 ? true : false,
+  //   });
+  // };
+
+  // const onChatSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   console.log(msg);
+  //   socket.emit("send_message", {
+  //     roomId,
+  //     content: msg,
+  //   });
+  // };
+
+  if (isLoading) {
+    <>
+      <LoaderBackdrop />
+      <LoaderWrapper>
+        <ClipLoader
+          loading={isLoading}
+          color={colors.MidBlue}
+          css={{ name: "width", styles: "border-width: 4px;" }}
+          size={30}
+        />
+      </LoaderWrapper>
+    </>;
+  }
 
   return (
     <Container>
@@ -69,7 +96,7 @@ export default function ChatPage(props: Props) {
             </p>
           </ChatEmptyContainer>
         ) : (
-          <ChatList chatRooms={chatListDummies}></ChatList>
+          <ChatList chatRooms={myRooms}></ChatList>
         )}
       </SContainerwithLeftRightMargin>
       <BottomNavBar selectedItem="chat" />

@@ -107,9 +107,6 @@ export const ModifyDeadline = (deadline: string): string => {
   }
 };
 
-export const ConvertSentTime = (sentTime: string): string => {
-  const temp = [sentTime.split("-")[1], sentTime.split("-")[2].split(" ")[0]];
-  const result = temp[0] + "월" + temp[1] + "일";
-
-  return result;
+export const ConvertSentTime = (sentTime: Date): string => {
+  return "";
 };
