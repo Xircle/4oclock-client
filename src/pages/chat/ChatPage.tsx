@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import useSocket from "../../hooks/useSocket";
-import { useParams } from "react-router-dom";
+import { UseSocketOutput } from "../../hooks/useSocket";
 import { useEffect, useState } from "react";
 import PageTitle from "../../components/PageTitle";
 import ChatList from "../../components/chat/ChatList";
@@ -17,37 +16,36 @@ import { getMyRooms } from "../../lib/api/getMyRooms";
 import { IRoom } from "../../lib/api/types";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
 import ClipLoader from "react-spinners/ClipLoader";
+import storage from "../../lib/storage";
+import { CURRENT_USER } from "../../components/shared/constants";
+import routes from "../../routes";
 
-interface Props {}
-
-export default function ChatPage(props: Props) {
-  const { roomId = "fc88ebc3-1b06-418c-9dde-c81ffd4e36a3" } =
-    useParams<{ roomId: string }>();
-  const [msg, setMsg] = useState("");
-  const [socket, disconnect] = useSocket(roomId);
-  const [isEntering, setIsEntering] = useState(false);
-  const [chatCount, SetChatCount] = useState(0);
-
+export default function ChatPage() {
+  const [chatCount, setChatCount] = useState(0);
   const { data: myRooms, isLoading } = useQuery<IRoom[] | undefined>(
     ["room"],
     () => getMyRooms(),
     {
       retry: 1,
-      refetchOnWindowFocus: false,
+      refetchOnWindowFocus: true,
+      refetchOnMount: true,
+      refetchOnReconnect: true,
     }
   );
   useEffect(() => {
-    if (!myRooms) return;
-    SetChatCount(myRooms?.length);
-  }, [myRooms]);
+    if (!storage.getItem(CURRENT_USER)) {
+      alert("로그인이 필요한 페이지입니다!");
+      window.location.href = routes.root;
+    }
+    return () => {
+      console.info("disconnect sockets");
+    };
+  }, []);
 
-  const onChatSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    socket.emit("send_message", {
-      roomId,
-      content: msg,
-    });
-  };
+  useEffect(() => {
+    if (!myRooms) return;
+    setChatCount(myRooms?.length);
+  }, [myRooms]);
 
   if (isLoading) {
     <>
