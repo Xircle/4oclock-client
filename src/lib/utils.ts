@@ -107,6 +107,51 @@ export const ModifyDeadline = (deadline: string): string => {
   }
 };
 
+// in ChatRoom
+// ex param: new Date("2021-10-10T16:00:00"); ex result 오후 4:00
+// ex param: new Date("2021-10-10T05:20:03"); ex result 오전 5:20
 export const ConvertSentTime = (sentTime: Date): string => {
-  return "";
+  return moment(sentTime).format("LT");
+};
+
+/**
+ *
+ * @param sentTime
+ */
+// in ChatList
+// XX월 XX일
+// (어제/오늘) (오전/오후) X:XX
+export const ConvertSentTimeForList = (sentTime: Date): string => {
+  //return moment(sentTime).format("MMM Do");
+  console.log(moment(sentTime).from("2021-10-15T05:20:03"));
+  if (moment(sentTime).format("MMM Do YY") === moment().format("MMM Do YY")) {
+    return "오늘 " + ConvertSentTime(sentTime);
+  } else if (
+    moment(sentTime).add(1, "days").format("MMM Do YY") ===
+    moment().format("MMM Do YY")
+  ) {
+    return "어제 " + ConvertSentTime(sentTime);
+  } else {
+    return moment(sentTime).format("MMM Do");
+  }
+};
+
+/**
+ *
+ * @param prevM index - 1
+ * @param curM  index
+ */
+export const IsMessageDividor = (prevM: Date, curM: Date): boolean => {
+  return (
+    moment(prevM).add(1, "days").format("MMM Do YY") ===
+    moment(curM).format("MMM Do YY")
+  );
+};
+
+/**
+ *
+ * @param prevM index -1
+ */
+export const SetMessageDividorText = (prevM: Date): string => {
+  return moment(prevM).format("MMM Do YY");
 };

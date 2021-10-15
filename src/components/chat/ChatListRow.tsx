@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Avartar, colors } from "../../styles/styles";
-import { ConvertSentTime } from "../../lib/utils";
+import { ConvertSentTimeForList } from "../../lib/utils";
 import { IRoom } from "../../lib/api/types";
 import { useHistory } from "react-router-dom";
 
@@ -32,7 +32,7 @@ export default function ChatListRow({ room }: Props) {
         </LeftTextContainer>
       </LeftContainer>
       <RightContainer>
-        {room.latestMessageAt && ConvertSentTime(room.latestMessageAt)}
+        {room.latestMessageAt && ConvertSentTimeForList(room.latestMessageAt)}
       </RightContainer>
     </SContainer>
   );
