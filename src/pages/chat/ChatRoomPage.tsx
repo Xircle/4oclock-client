@@ -12,11 +12,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChatMessage from "../../components/chat/ChatMessage";
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import { Scrollbars } from "react-custom-scrollbars-2";
+import { positionValues, Scrollbars } from "react-custom-scrollbars-2";
 import { Collapse } from "reactstrap";
 import Modal from "../../components/UI/Modal";
 import { ReservationModalWrapper } from "../reservation/ReservationPage";
-import useSocket from "../../hooks/useSocket";
+import { useSocket } from "../../hooks/useSocket";
 import { IMessage } from "../../lib/api/types";
 import { useMutation, useQuery } from "react-query";
 import { getRoomMessages } from "../../lib/api/getRoomMessages";
@@ -41,20 +41,27 @@ interface Props
 export default function ChatRoomPage({ match, history, location }: Props) {
   const scrollbarRef = useRef<Scrollbars>(null);
   useEffect(() => {
-    scrollbarRef.current?.scrollTop(5000000000);
-  }, [scrollbarRef]);
-
+    scrollbarRef.current?.scrollToBottom();
+  }, [scrollbarRef.current]);
   const { roomId } = match.params;
   const [socket, disconnect] = useSocket(roomId);
   const isEnteringCallBack = ({ flag }) => {
     setIsEntering(flag);
   };
+
+  useEffect(() => {
+    return () => disconnect();
+  }, []);
   useEffect(() => {
     const anonymouseId = storage.getItem(CURRENT_USER)?.uid;
     if (!roomId || !anonymouseId) return;
     socket.emit("join_room", { roomId, anonymouseId });
     socket.on("is_entering", isEnteringCallBack);
     socket.on("receive_message", receivedMsgFromSocket);
+    return () => {
+      socket.off("is_entering", isEnteringCallBack);
+      socket.off("receive_message", receivedMsgFromSocket);
+    };
   }, [roomId]);
 
   const {
@@ -63,14 +70,17 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     username: receiverUsername,
   } = location.state;
 
-  const [messages, SetMessages] = useState<IMessage[]>([]);
+  const [messages, setMessages] = useState<IMessage[]>([]);
   const [messageInput, SetMessageInput] = useState("");
   const [isCollapse, SetIsCollapse] = useState(false);
-  const [isCollapseScrollButton, SetIsCollapseScrollButton] = useState(false);
-  const [isFirstRefresh, SetIsFirstRefresh] = useState(true);
+  const [showCollapseScrollButton, SetShowCollapseScrollButton] =
+    useState(false);
+  const [showNewMessageAlert, setShowNewMessageAlert] = useState(false);
+
   const [isLeaveRoomClicked, SetIsLeaveRoomClicked] = useState(false);
   const [isBlockUserClicked, SetIsBlockUserClicked] = useState(false);
   const [isReportUserClicked, SetIsReportUserClicked] = useState(false);
+
   const [isEntering, setIsEntering] = useState(false);
 
   const { data: fetchedMessages, isLoading } = useQuery<IMessage[] | undefined>(
@@ -90,75 +100,101 @@ export default function ChatRoomPage({ match, history, location }: Props) {
 
   useEffect(() => {
     if (!fetchedMessages) return;
-    SetMessages(fetchedMessages);
+    setMessages(fetchedMessages);
   }, [fetchedMessages]);
+
+  const showNewMessageAlertHandler = (top: number) => {
+    const threshold = 0.7;
+    if (top < threshold) {
+      console.log("show!!!!");
+      setShowNewMessageAlert(true);
+    }
+  };
+
+  const onScrollFram = (values: positionValues) => {
+    if (values.top <= 0.4) {
+      console.log("axios 요청!");
+    } else if (values.top < 0.7) {
+      SetShowCollapseScrollButton(true);
+    } else {
+      SetShowCollapseScrollButton(false);
+    }
+  };
 
   // 소켓으로부터 받은 메세지 콜백
   const receivedMsgFromSocket = useCallback(
     ({ content, sentAt }) => {
-      SetMessages((prev) => {
-        const messages = [
-          { content, isMe: false, sentAt, isRead: true },
-          ...prev,
-        ];
-        console.log(messages);
-        return messages;
+      if (!scrollbarRef?.current) return;
+      showNewMessageAlertHandler(scrollbarRef.current.getValues().top);
+      setMessages((prev) => {
+        return [{ content, isMe: false, sentAt, isRead: true }, ...prev];
       });
     },
-    [messages]
+    [messages, showCollapseScrollButton]
   );
 
-  const handleMessageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    SetMessageInput(e.target.value);
-    socket.emit("is_entering", {
-      roomId,
-      anonymouseId: storage.getItem(CURRENT_USER)?.uid,
-      flag: e.currentTarget.value.trim().length > 0 ? true : false,
-    });
-  };
+  const handleMessageInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      SetMessageInput(e.target.value);
+      socket.emit("is_entering", {
+        roomId,
+        anonymouseId: storage.getItem(CURRENT_USER)?.uid,
+        flag: e.currentTarget.value.trim().length > 0 ? true : false,
+      });
+    },
+    [socket, roomId]
+  );
 
-  const onSubmitHandler = (
-    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
-  ) => {
-    e.preventDefault();
-    // 로컬 message state 에 동기화
-    SetMessages((prev) => {
-      const messages = [
-        {
-          content: messageInput,
-          isMe: true,
-          sentAt: new Date(),
-          isRead: false,
-        },
-        ...prev,
-      ];
-      return messages;
-    });
-    // POST 비동기로 요청
-    mutateMessage({
-      content: messageInput,
-      receiverId: receiverId,
-      roomId,
-    }).then((res) => {
-      if (!res.data.ok) {
-        console.log(res);
-        toast.error("전송에 실패했습니다. 잠시 후 다시 시도해주세요");
-        // 전송에 실패했으므로, 로컬의 message의 말풍선에 X 추가한다.
-      }
-    });
-    // socket emit
-    socket.emit("send_message", {
-      roomId,
-      anonymouseId: storage.getItem(CURRENT_USER)?.uid,
-      content: messageInput,
-    });
-    socket.emit("is_entering", {
-      roomId,
-      anonymouseId: storage.getItem(CURRENT_USER)?.uid,
-      flag: false,
-    });
-    SetMessageInput("");
-  };
+  const onSubmitHandler = useCallback(
+    (
+      e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
+    ) => {
+      e.preventDefault();
+      // 로컬 message state 에 동기화
+      setMessages((prev) => {
+        const messages = [
+          {
+            content: messageInput,
+            isMe: true,
+            sentAt: new Date(),
+            isRead: false,
+          },
+          ...prev,
+        ];
+        return messages;
+      });
+      // POST 비동기로 요청
+      mutateMessage({
+        content: messageInput,
+        receiverId: receiverId,
+        roomId,
+      }).then((res) => {
+        if (!res.data.ok) {
+          console.log(res);
+          toast.error("전송에 실패했습니다. 잠시 후 다시 시도해주세요");
+          // 전송에 실패했으므로, 로컬의 message의 말풍선에 X 추가한다.
+        }
+      });
+      // socket emit
+      socket.emit("send_message", {
+        roomId,
+        anonymouseId: storage.getItem(CURRENT_USER)?.uid,
+        content: messageInput,
+      });
+      socket.emit("is_entering", {
+        roomId,
+        anonymouseId: storage.getItem(CURRENT_USER)?.uid,
+        flag: false,
+      });
+      SetMessageInput("");
+    },
+    [messageInput, receiverId, roomId, socket, mutateMessage]
+  );
+
+  const exitRoomHandler = useCallback(() => {
+    socket.emit("leave_room", { roomId });
+    history.goBack();
+  }, [socket, roomId]);
 
   if (isLoading)
     return (
@@ -181,6 +217,8 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   return (
     <SContainer>
       <PageTitle title="채팅" />
+
+      {/* Header */}
       <Header>
         <LeftHeaderContainer>
           <FontAwesomeIcon
@@ -188,7 +226,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
             icon={faArrowLeft}
             color={colors.Black}
             size="lg"
-            onClick={() => history.goBack()}
+            onClick={exitRoomHandler}
           />
           <SAvartar src={receiverProfileImageUrl} />
           <CounterPartName>{receiverUsername}</CounterPartName>
@@ -203,10 +241,11 @@ export default function ChatRoomPage({ match, history, location }: Props) {
           />
         </RightHeaderContainer>
         <DropdownContainer>
-          <Collapse isOpen={isCollapseScrollButton}>
+          <Collapse isOpen={showNewMessageAlert}>
             <CollapseButtonContainer style={{ boxShadow: "none" }}>
               <NewMessageAlertContainer
                 onClick={() => {
+                  setShowNewMessageAlert(false);
                   scrollbarRef.current?.scrollToBottom();
                 }}
               >
@@ -235,19 +274,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
       <SScrollbars
         ref={scrollbarRef}
         autoHide={true}
-        // ref={(scrollbar) => {
-        //   if (isFirstRefresh) {
-        //     scrollbar?.scrollTop(5000000000);
-        //     SetIsFirstRefresh(false);
-        //   }
-        // }}
-        onScrollFrame={(values) => {
-          if (values.top < 0.9) {
-            SetIsCollapseScrollButton(true);
-          } else {
-            SetIsCollapseScrollButton(false);
-          }
-        }}
+        onScrollFrame={onScrollFram}
       >
         <MessageContainer>
           {isEntering && (
@@ -260,8 +287,10 @@ export default function ChatRoomPage({ match, history, location }: Props) {
           ))}
         </MessageContainer>
       </SScrollbars>
+
+      {/* 밑으로 가기 버튼 */}
       <ScrollToBottomContainer>
-        <Collapse isOpen={isCollapseScrollButton}>
+        <Collapse isOpen={showCollapseScrollButton}>
           <ScrollToBottomButton
             onClick={() => {
               scrollbarRef.current?.scrollToBottom();
@@ -276,6 +305,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
           </ScrollToBottomButton>
         </Collapse>
       </ScrollToBottomContainer>
+
       <InputContainer>
         <form onSubmit={onSubmitHandler}>
           <SInput
@@ -389,6 +419,7 @@ const NewMessageAlertContainer = styled.div`
   opacity: 0.8;
   border-radius: 0 0 10px 10px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: pointer;
 `;
 
 //position: "absolute", top: "100%", right: 10, zIndex: 100
