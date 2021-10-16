@@ -2,9 +2,11 @@ import { CURRENT_USER } from "./../components/shared/constants";
 import { useCallback } from "react";
 import { io, Socket } from "socket.io-client";
 import storage from "../lib/storage";
+
+// http://localhost:3080
 const socketServerUrl =
   process.env.NODE_ENV === "production"
-    ? process.env.REACT_APP_API_SERVER
+    ? process.env.REACT_APP_PRODUCTION_API_SERVER
     : "http://localhost:8080";
 
 const existingSockets: { [key: string]: Socket } = {};
