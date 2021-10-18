@@ -11,14 +11,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChatMessage from "../../components/chat/ChatMessage";
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { positionValues, Scrollbars } from "react-custom-scrollbars-2";
 import { Collapse } from "reactstrap";
 import Modal from "../../components/UI/Modal";
 import { ReservationModalWrapper } from "../reservation/ReservationPage";
 import { useSocket } from "../../hooks/useSocket";
-import { IMessage } from "../../lib/api/types";
-import { useInfiniteQuery, useMutation, useQuery } from "react-query";
+import { GetRoomMessagesOutput, IMessage } from "../../lib/api/types";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getRoomMessages } from "../../lib/api/getRoomMessages";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
 import storage from "../../lib/storage";
@@ -43,7 +43,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   useEffect(() => {
     scrollbarRef.current?.scrollToBottom(); // 맨 밑으로 스크롤
   }, [scrollbarRef.current]);
-
+  const queryClient = useQueryClient();
   const { roomId } = match.params;
   const {
     id: receiverId,
@@ -82,7 +82,6 @@ export default function ChatRoomPage({ match, history, location }: Props) {
 
   useEffect(() => {
     if (roomId === "0" && !storage.getItem(`chat-${receiverId}`)) return;
-
     const anonymouseId = storage.getItem(CURRENT_USER)?.uid;
     socket.emit("join_room", { roomId, anonymouseId });
     socket.on("is_entering", isEnteringCallBack);
@@ -106,30 +105,13 @@ export default function ChatRoomPage({ match, history, location }: Props) {
 
   const [isEntering, setIsEntering] = useState(false);
 
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-  } = useInfiniteQuery(
+  const { data: fetchedMessagesData, isFetching } = useQuery<
+    GetRoomMessagesOutput | undefined
+  >(
     ["room-chat", roomId, page],
-    () => getRoomMessages(page, roomId, receiverId),
-    {
-      getNextPageParam: (lastPage, pages) => {},
-    }
-  );
-
-  const {
-    data: fetchedMessages,
-    isLoading,
-    isPreviousData,
-  } = useQuery<IMessage[] | undefined>(
-    ["room-chat", roomId, page],
-    () => getRoomMessages(page, roomId, receiverId),
+    () => getRoomMessages(roomId, receiverId, page, 40),
     {
       onError: (err: any) => {
         alert(err);
@@ -144,9 +126,19 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   const { mutateAsync: mutateMessage } = useMutation(sendMessage);
 
   useEffect(() => {
-    if (!fetchedMessages) return;
-    setMessages(fetchedMessages);
-  }, [fetchedMessages]);
+    if (!fetchedMessagesData?.messages) return;
+    setMessages((prev) => [...prev, ...fetchedMessagesData?.messages]);
+  }, [fetchedMessagesData]);
+
+  useEffect(() => {
+    // 만약 hasMore이면 미리 캐싱해놓는다.
+    if (fetchedMessagesData?.meta?.hasMore) {
+      console.log("prefetch!!");
+      queryClient.prefetchQuery(["room-chat", roomId, page + 1], () =>
+        getRoomMessages(roomId, receiverId, page + 1, 40)
+      );
+    }
+  }, [fetchedMessagesData, queryClient, roomId, receiverId, page]);
 
   const showNewMessageAlertHandler = (top: number) => {
     const threshold = 0.7;
@@ -158,15 +150,16 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   const onScrollFram = (values: positionValues) => {
     if (values.top <= 0.4) {
       // page = 0 -> CHAT_PER_PAGE 40
-      if (messages.length >= CHAT_NUMBER_PER_PAGE * (page + 1)) {
-        setPage((old) => old + 1);
+      if (messages.length >= CHAT_NUMBER_PER_PAGE * page) {
         console.log("axios 요청!");
+        setPage((old) => old + 1);
       }
-    } else if (values.top < 0.7) {
-      SetShowCollapseScrollButton(true);
-    } else {
-      SetShowCollapseScrollButton(false);
     }
+    // else if (values.top < 0.7) {
+    //   SetShowCollapseScrollButton(true);
+    // } else {
+    //   SetShowCollapseScrollButton(false);
+    // }
   };
 
   // 소켓으로부터 받은 메세지 콜백
@@ -220,14 +213,13 @@ export default function ChatRoomPage({ match, history, location }: Props) {
         roomId: storage.getItem(`chat-${receiverId}`) || roomId,
       }).then((res) => {
         if (!res.data.ok) {
-          console.log(res);
           toast.error("전송에 실패했습니다. 잠시 후 다시 시도해주세요");
           // 전송에 실패했으므로, 로컬의 message의 말풍선에 X 추가한다.
           return;
         }
-        console.log("created room Id", res.data.createdRoomId);
         if (roomId === "0" && res.data.createdRoomId) {
           // 만약 unmount되었을 때 이 promise는 실행이 될까?
+          console.log("created room Id", res.data.createdRoomId);
           storage.setItem(`chat-${receiverId}`, res.data.createdRoomId);
         }
       });
@@ -252,13 +244,13 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     history.goBack();
   }, [socket, roomId]);
 
-  if (isLoading && page === 0)
+  if (isFetching && page === 1)
     return (
       <>
         <LoaderBackdrop />
         <LoaderWrapper>
           <ClipLoader
-            loading={isLoading}
+            loading={true}
             color={colors.MidBlue}
             css={{
               name: "width",
@@ -339,16 +331,18 @@ export default function ChatRoomPage({ match, history, location }: Props) {
           {messages?.map((message, index) => (
             <ChatMessage key={index} {...message} />
           ))}
-          {isLoading && page !== 0 && (
-            <ClipLoader
-              loading={isLoading}
-              color={colors.MidBlue}
-              css={{
-                name: "width",
-                styles: "border-width: 4px; z-index: 999;",
-              }}
-              size={30}
-            />
+          {isFetching && page !== 1 && (
+            <LoaderWrapper>
+              <ClipLoader
+                loading={true}
+                color={colors.MidBlue}
+                css={{
+                  name: "width",
+                  styles: "border-width: 4px; z-index: 999;",
+                }}
+                size={30}
+              />
+            </LoaderWrapper>
           )}
         </MessageContainer>
       </SScrollbars>
@@ -565,8 +559,7 @@ const SScrollbars = styled(Scrollbars)`
 
 const MessageContainer = styled.div`
   width: 95%;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 10px auto 0px;
   flex-grow: 1;
   display: flex;
   justify-content: flex-start;
