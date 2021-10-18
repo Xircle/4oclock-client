@@ -18,19 +18,15 @@ import Modal from "../../components/UI/Modal";
 import { ReservationModalWrapper } from "../reservation/ReservationPage";
 import { useSocket } from "../../hooks/useSocket";
 import { IMessage } from "../../lib/api/types";
-import { useMutation, useQuery } from "react-query";
+import { useInfiniteQuery, useMutation, useQuery } from "react-query";
 import { getRoomMessages } from "../../lib/api/getRoomMessages";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
 import storage from "../../lib/storage";
-import {
-  CURRENT_USER,
-  USERID_TO_ROOMID,
-} from "../../components/shared/constants";
+import { CURRENT_USER } from "../../components/shared/constants";
 import { useCallback } from "react";
 import { sendMessage } from "../../lib/api/sendMessage";
 import { toast } from "react-toastify";
 import routes from "../../routes";
-
 interface Props
   extends RouteComponentProps<
     { roomId: string },
@@ -41,8 +37,13 @@ interface Props
       username: string;
     }
   > {}
-
+export const CHAT_NUMBER_PER_PAGE = 40;
 export default function ChatRoomPage({ match, history, location }: Props) {
+  const scrollbarRef = useRef<Scrollbars>(null);
+  useEffect(() => {
+    scrollbarRef.current?.scrollToBottom(); // 맨 밑으로 스크롤
+  }, [scrollbarRef.current]);
+
   const { roomId } = match.params;
   const {
     id: receiverId,
@@ -50,16 +51,8 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     username: receiverUsername,
   } = location.state;
 
-  const scrollbarRef = useRef<Scrollbars>(null);
   useEffect(() => {
-    scrollbarRef.current?.scrollToBottom();
-  }, [scrollbarRef.current]);
-
-  const [socket, disconnect] = useSocket(roomId);
-  const isEnteringCallBack = ({ flag }) => {
-    setIsEntering(flag);
-  };
-  useEffect(() => {
+    // 토큰 검사
     if (!roomId || !storage.getItem(CURRENT_USER)?.uid) {
       // 토큰이 없으면
       alert("로그인 후 이용해주세요!");
@@ -69,8 +62,27 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   }, []);
 
   useEffect(() => {
+    // 로컬스토리지 체크
+    const existingRoomId = storage.getItem(`chat-${receiverId}`);
+    if (roomId === "0" && existingRoomId) {
+      history.replace(`/chatRoom/${existingRoomId}`, {
+        id: receiverId,
+        profileImageUrl: receiverProfileImageUrl,
+        username: receiverUsername,
+      });
+    }
+  }, []);
+
+  const [socket, disconnect] = useSocket(
+    storage.getItem(`chat-${receiverId}`) || ""
+  );
+  const isEnteringCallBack = ({ flag }) => {
+    setIsEntering(flag);
+  };
+
+  useEffect(() => {
     if (roomId === "0" && !storage.getItem(`chat-${receiverId}`)) return;
-    
+
     const anonymouseId = storage.getItem(CURRENT_USER)?.uid;
     socket.emit("join_room", { roomId, anonymouseId });
     socket.on("is_entering", isEnteringCallBack);
@@ -94,9 +106,30 @@ export default function ChatRoomPage({ match, history, location }: Props) {
 
   const [isEntering, setIsEntering] = useState(false);
 
-  const { data: fetchedMessages, isLoading } = useQuery<IMessage[] | undefined>(
-    ["room-chat", roomId],
-    () => getRoomMessages(roomId, receiverId),
+  const [page, setPage] = useState(0);
+
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+  } = useInfiniteQuery(
+    ["room-chat", roomId, page],
+    () => getRoomMessages(page, roomId, receiverId),
+    {
+      getNextPageParam: (lastPage, pages) => {},
+    }
+  );
+
+  const {
+    data: fetchedMessages,
+    isLoading,
+    isPreviousData,
+  } = useQuery<IMessage[] | undefined>(
+    ["room-chat", roomId, page],
+    () => getRoomMessages(page, roomId, receiverId),
     {
       onError: (err: any) => {
         alert(err);
@@ -104,6 +137,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
       },
       retry: 1,
       refetchOnWindowFocus: false,
+      keepPreviousData: true,
     }
   );
 
@@ -117,14 +151,17 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   const showNewMessageAlertHandler = (top: number) => {
     const threshold = 0.7;
     if (top < threshold) {
-      console.log("show!!!!");
       setShowNewMessageAlert(true);
     }
   };
 
   const onScrollFram = (values: positionValues) => {
     if (values.top <= 0.4) {
-      console.log("axios 요청!");
+      // page = 0 -> CHAT_PER_PAGE 40
+      if (messages.length >= CHAT_NUMBER_PER_PAGE * (page + 1)) {
+        setPage((old) => old + 1);
+        console.log("axios 요청!");
+      }
     } else if (values.top < 0.7) {
       SetShowCollapseScrollButton(true);
     } else {
@@ -161,10 +198,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
       e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
     ) => {
       e.preventDefault();
-      // 로컬 스토리지에서 채팅한 기록이 있는지 확인 -> 최초에 들어와서 메세지를 보낼 때 저장하기위해
-      if (!storage.getItem(`chat-${receiverId}`)) {
-        storage.setItem(`chat-${receiverId}`, new Date().getTime().toString());
-      }
+      if (messageInput.trim().length === 0) return;
 
       // 로컬 message state 에 동기화
       setMessages((prev) => {
@@ -183,7 +217,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
       mutateMessage({
         content: messageInput,
         receiverId: receiverId,
-        roomId,
+        roomId: storage.getItem(`chat-${receiverId}`) || roomId,
       }).then((res) => {
         if (!res.data.ok) {
           console.log(res);
@@ -191,7 +225,9 @@ export default function ChatRoomPage({ match, history, location }: Props) {
           // 전송에 실패했으므로, 로컬의 message의 말풍선에 X 추가한다.
           return;
         }
+        console.log("created room Id", res.data.createdRoomId);
         if (roomId === "0" && res.data.createdRoomId) {
+          // 만약 unmount되었을 때 이 promise는 실행이 될까?
           storage.setItem(`chat-${receiverId}`, res.data.createdRoomId);
         }
       });
@@ -216,7 +252,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     history.goBack();
   }, [socket, roomId]);
 
-  if (isLoading)
+  if (isLoading && page === 0)
     return (
       <>
         <LoaderBackdrop />
@@ -301,10 +337,19 @@ export default function ChatRoomPage({ match, history, location }: Props) {
             <ChatMessage content="....." isMe={false}></ChatMessage>
           )}
           {messages?.map((message, index) => (
-            <Fragment key={index}>
-              <ChatMessage {...message} />
-            </Fragment>
+            <ChatMessage key={index} {...message} />
           ))}
+          {isLoading && page !== 0 && (
+            <ClipLoader
+              loading={isLoading}
+              color={colors.MidBlue}
+              css={{
+                name: "width",
+                styles: "border-width: 4px; z-index: 999;",
+              }}
+              size={30}
+            />
+          )}
         </MessageContainer>
       </SScrollbars>
 
