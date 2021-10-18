@@ -221,6 +221,7 @@ export default function FriendsPage({ history }: Props) {
       <BottomButtonsContainer>
         <ChatButton
           onClick={() => {
+            if (!randomProfileData) return;
             history.push(`/chatRoom/0`, {
               id: randomProfileData?.id,
               profileImageUrl: randomProfileData?.profileImageUrl,

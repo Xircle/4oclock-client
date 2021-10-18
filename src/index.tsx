@@ -11,8 +11,8 @@ import "bootstrap/dist/css/bootstrap.css";
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (err: any) => {
-      console.log(err.response.status);
-      const errCode = err?.response.status || err?.response?.data?.statusCode;
+      console.log(err?.response?.status);
+      const errCode = err?.response?.status || err?.response?.data?.statusCode;
       switch (errCode) {
         case 401:
           localStorage.clear();

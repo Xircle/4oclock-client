@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { UseSocketOutput } from "../../hooks/useSocket";
 import { useEffect, useState } from "react";
 import PageTitle from "../../components/PageTitle";
 import ChatList from "../../components/chat/ChatList";
