@@ -3,9 +3,13 @@ import { AxiosResponse } from "axios";
 import AxiosClient from "../apiClient";
 import { SendMessageInput } from "./types";
 
+interface SendMessageOutput extends CoreOutput {
+  createdRoomId?: string;
+}
+
 export const sendMessage = async (
   sendMessageInput: SendMessageInput
-): Promise<AxiosResponse<CoreOutput>> => {
+): Promise<AxiosResponse<SendMessageOutput>> => {
   const { roomId, content, receiverId } = sendMessageInput;
   return AxiosClient.post(`/room/${roomId}/messages`, {
     content,

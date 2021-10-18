@@ -26,3 +26,4 @@ class LocalStorage {
 const storage = new LocalStorage();
 
 export default storage;
+
