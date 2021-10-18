@@ -4,7 +4,8 @@ import AxiosClient from "../apiClient";
 export const getRoomMessages = async (
   roomId: string,
   receiverId: string
-): Promise<IMessage[]> => {
+): Promise<IMessage[] | undefined> => {
+  if (roomId === "0") return;
   const { data } = await AxiosClient.get<GetRoomMessages>(
     `/room/${roomId}/messages/${receiverId}`
   );

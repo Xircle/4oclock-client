@@ -22,10 +22,14 @@ import { useMutation, useQuery } from "react-query";
 import { getRoomMessages } from "../../lib/api/getRoomMessages";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
 import storage from "../../lib/storage";
-import { CURRENT_USER } from "../../components/shared/constants";
+import {
+  CURRENT_USER,
+  USERID_TO_ROOMID,
+} from "../../components/shared/constants";
 import { useCallback } from "react";
 import { sendMessage } from "../../lib/api/sendMessage";
 import { toast } from "react-toastify";
+import routes from "../../routes";
 
 interface Props
   extends RouteComponentProps<
@@ -39,22 +43,35 @@ interface Props
   > {}
 
 export default function ChatRoomPage({ match, history, location }: Props) {
+  const { roomId } = match.params;
+  const {
+    id: receiverId,
+    profileImageUrl: receiverProfileImageUrl,
+    username: receiverUsername,
+  } = location.state;
+
   const scrollbarRef = useRef<Scrollbars>(null);
   useEffect(() => {
     scrollbarRef.current?.scrollToBottom();
   }, [scrollbarRef.current]);
-  const { roomId } = match.params;
+
   const [socket, disconnect] = useSocket(roomId);
   const isEnteringCallBack = ({ flag }) => {
     setIsEntering(flag);
   };
-
   useEffect(() => {
+    if (!roomId || !storage.getItem(CURRENT_USER)?.uid) {
+      // 토큰이 없으면
+      alert("로그인 후 이용해주세요!");
+      window.location.href = routes.root;
+    }
     return () => disconnect();
   }, []);
+
   useEffect(() => {
+    if (roomId === "0" && !storage.getItem(`chat-${receiverId}`)) return;
+    
     const anonymouseId = storage.getItem(CURRENT_USER)?.uid;
-    if (!roomId || !anonymouseId) return;
     socket.emit("join_room", { roomId, anonymouseId });
     socket.on("is_entering", isEnteringCallBack);
     socket.on("receive_message", receivedMsgFromSocket);
@@ -63,12 +80,6 @@ export default function ChatRoomPage({ match, history, location }: Props) {
       socket.off("receive_message", receivedMsgFromSocket);
     };
   }, [roomId]);
-
-  const {
-    id: receiverId,
-    profileImageUrl: receiverProfileImageUrl,
-    username: receiverUsername,
-  } = location.state;
 
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [messageInput, SetMessageInput] = useState("");
@@ -150,6 +161,11 @@ export default function ChatRoomPage({ match, history, location }: Props) {
       e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
     ) => {
       e.preventDefault();
+      // 로컬 스토리지에서 채팅한 기록이 있는지 확인 -> 최초에 들어와서 메세지를 보낼 때 저장하기위해
+      if (!storage.getItem(`chat-${receiverId}`)) {
+        storage.setItem(`chat-${receiverId}`, new Date().getTime().toString());
+      }
+
       // 로컬 message state 에 동기화
       setMessages((prev) => {
         const messages = [
@@ -173,6 +189,10 @@ export default function ChatRoomPage({ match, history, location }: Props) {
           console.log(res);
           toast.error("전송에 실패했습니다. 잠시 후 다시 시도해주세요");
           // 전송에 실패했으므로, 로컬의 message의 말풍선에 X 추가한다.
+          return;
+        }
+        if (roomId === "0" && res.data.createdRoomId) {
+          storage.setItem(`chat-${receiverId}`, res.data.createdRoomId);
         }
       });
       // socket emit

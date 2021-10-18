@@ -219,7 +219,17 @@ export default function FriendsPage({ history }: Props) {
           </>
         ))}
       <BottomButtonsContainer>
-        <ChatButton onClick={() => alert("개발중")}>채팅하기</ChatButton>
+        <ChatButton
+          onClick={() => {
+            history.push(`/chatRoom/0`, {
+              id: randomProfileData?.id,
+              profileImageUrl: randomProfileData?.profileImageUrl,
+              username: randomProfileData?.username,
+            });
+          }}
+        >
+          채팅하기
+        </ChatButton>
         <NextButtonFriend onClick={refetchRandomProfileData}>
           다음 친구 보기
         </NextButtonFriend>
