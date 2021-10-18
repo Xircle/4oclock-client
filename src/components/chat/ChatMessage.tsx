@@ -5,12 +5,11 @@ import moment from "moment";
 
 interface Props extends IMessage {}
 
-export default function ChatMessage({ isMe, isRead, content }: Props) {
-  const tempDate = new Date("2021-10-14T03:24:00");
+export default function ChatMessage({ isMe, isRead, content, sentAt }: Props) {
   return (
     <Container isMe={isMe}>
       <MessageContainer isMe={isMe}>{content}</MessageContainer>
-      <TimeText>{ConvertSentTime(tempDate)}</TimeText>
+      {sentAt && <TimeText>{ConvertSentTime(sentAt)}</TimeText>}
     </Container>
   );
 }

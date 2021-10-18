@@ -18,6 +18,9 @@ const routes = {
   // REMINDER: deleteBelow
   chat: "/chat",
   chatRoom: "/chatRoom/:roomId",
+  admin: "/admin",
+  createPlace: "/createPlace",
+  editPlace: "/editPlace",
 };
 
 export default routes;

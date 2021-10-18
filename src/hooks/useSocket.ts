@@ -3,10 +3,12 @@ import { useCallback } from "react";
 import { io, Socket } from "socket.io-client";
 import storage from "../lib/storage";
 
+const socketServerUrl = "https://xircle-test-server.herokuapp.com";
+
 const serverUrl =
   process.env.NODE_ENV === "production"
     ? process.env.REACT_APP_API_SERVER
-    : "http://localhost:80";
+    : process.env.REACT_APP_API_SERVER;
 
 const existingSockets: { [key: string]: Socket } = {};
 const useSocket = (room: string): [Socket, () => void] => {
@@ -18,7 +20,7 @@ const useSocket = (room: string): [Socket, () => void] => {
   }, [room]);
 
   if (!existingSockets[room]) {
-    existingSockets[room] = io(`${serverUrl}/chat`, {
+    existingSockets[room] = io(`${socketServerUrl}/chat`, {
       transports: ["websocket"],
       withCredentials: true,
       auth: {

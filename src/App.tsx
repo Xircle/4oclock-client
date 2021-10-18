@@ -37,6 +37,12 @@ const CancelReservationPage = React.lazy(
 const ChatPage = React.lazy(() => import("./pages/chat/ChatPage"));
 const ChatRoomPage = React.lazy(() => import("./pages/chat/ChatRoomPage"));
 
+const AdminPage = React.lazy(() => import("./pages/Admin/AdminPage"));
+const CreatePlacePage = React.lazy(
+  () => import("./pages/Admin/CreatePlacePage")
+);
+const EditPlacePage = React.lazy(() => import("./pages/Admin/EditPlacePage"));
+
 function App() {
   return (
     <PortalProvider>
@@ -97,6 +103,9 @@ function App() {
               {/* REMINDER Delete*/}
               <Route path={routes.chat} component={ChatPage} />
               <Route path={routes.chatRoom} component={ChatRoomPage} />
+              <Route path={routes.admin} component={AdminPage} />
+              <Route path={routes.createPlace} component={CreatePlacePage} />
+              <Route path={routes.editPlace} component={EditPlacePage} />
               <Route component={NotFoundPage} />
             </Switch>
           </Suspense>
