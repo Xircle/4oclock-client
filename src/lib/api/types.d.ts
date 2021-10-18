@@ -1,5 +1,5 @@
 import { AuthState } from "./../../pages/auth/types.d";
-import { CoreOutput } from "./../../components/shared/types.d";
+import { CoreOutput, MetaTag } from "./../../components/shared/types.d";
 
 export interface CreateAccountOutput extends CoreOutput {
   data?: {
@@ -220,8 +220,9 @@ export interface IMessage {
   isRead?: boolean;
 }
 
-export interface GetRoomMessages extends CoreOutput {
+export interface GetRoomMessagesOutput extends CoreOutput {
   messages: IMessage[];
+  meta?: MetaTag;
 }
 
 // Send Message
