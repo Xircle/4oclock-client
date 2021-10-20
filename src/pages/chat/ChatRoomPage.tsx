@@ -26,6 +26,7 @@ import { CURRENT_USER } from "../../components/shared/constants";
 import { useCallback } from "react";
 import { sendMessage } from "../../lib/api/sendMessage";
 import { toast } from "react-toastify";
+import { IsMessageDividor, SetMessageDividorText } from "../../lib/utils";
 
 interface Props
   extends RouteComponentProps<
@@ -72,6 +73,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   const [isBlockUserClicked, SetIsBlockUserClicked] = useState(false);
   const [isReportUserClicked, SetIsReportUserClicked] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
+  const [loadOldMessages, SetLoadOldMessages] = useState(false);
 
   const { data: fetchedMessages, isLoading } = useQuery<IMessage[] | undefined>(
     ["room-chat", roomId],
@@ -247,6 +249,9 @@ export default function ChatRoomPage({ match, history, location }: Props) {
           } else {
             SetIsCollapseScrollButton(false);
           }
+          if (values.top < 0.3) {
+            SetLoadOldMessages(true);
+          }
         }}
       >
         <MessageContainer>
@@ -255,6 +260,14 @@ export default function ChatRoomPage({ match, history, location }: Props) {
           )}
           {messages?.map((message, index) => (
             <Fragment key={index}>
+              {IsMessageDividor(
+                new Date("1995-12-17T03:24:00"),
+                new Date("1996-05-17T03:24:00")
+              ) && (
+                <MessageDividor>
+                  {SetMessageDividorText(new Date("1995-12-17T03:24:00"))}
+                </MessageDividor>
+              )}
               <ChatMessage {...message} />
             </Fragment>
           ))}
@@ -372,6 +385,14 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     </SContainer>
   );
 }
+
+const MessageDividor = styled.div`
+  text-align: center;
+  width: 100%;
+  color: #a7b0c0;
+  font-size: 13px;
+  margin: 5px 0;
+`;
 
 const CloseModalButton = styled.p`
   cursor: pointer;
