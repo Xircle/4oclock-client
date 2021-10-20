@@ -168,11 +168,6 @@ export default function CreatePlacePage(props: Props) {
           <MidInput name="name" placeholder="ex. 고대 근본 막걸리집" />
         </SubContainer>
         <SubContainer>
-          모임 이름
-          <br />
-          <MidInput name="name" placeholder="ex. 한잔의 추억" />
-        </SubContainer>
-        <SubContainer>
           설명
           <br />
           <BigTextArea
@@ -181,7 +176,7 @@ export default function CreatePlacePage(props: Props) {
           />
         </SubContainer>
         <SubContainer>
-          카테고리(,로 나누어주세요)
+          카테고리(현재 사용되지 않으니까 대충넣어줘)
           <br />
           <MidInput
             name="categories"

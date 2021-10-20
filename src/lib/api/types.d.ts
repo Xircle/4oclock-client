@@ -113,7 +113,7 @@ export interface CreatePlaceData {
 }
 
 // need to change CreatePlaceOutput
-export interface CreatePlaceInput extends CreatePlaceData {}
+export interface CreatePlaceOutput extends CreatePlaceData {}
 
 export interface GetPlaceByIdOutput extends CoreOutput {
   placeData: PlaceData;
