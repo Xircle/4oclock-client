@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import styled from "styled-components";
 import {
   Container,
@@ -10,10 +10,12 @@ import {
   BigTextArea,
 } from "../../styles/styles";
 import DatePicker from "react-date-picker";
+import { createPlaceInitialState, reducer } from "./AdminReducer";
 
 interface Props {}
 
 export default function CreatePlacePage(props: Props) {
+  const [state, dispatch] = useReducer(reducer, createPlaceInitialState);
   const [startDate, setStartDate] = useState(new Date());
   const [mainFile, setMainFile] = useState<File>();
   const [subFiles, setSubFiles] = useState<File[]>([]);
@@ -21,14 +23,23 @@ export default function CreatePlacePage(props: Props) {
   const [subFilesUrl, setSubFilesUrl] = useState<string[]>([]);
 
   useEffect(() => {
-    console.log(startDate);
+    dispatch({
+      type: "setStartDateAt",
+      payload: startDate,
+    });
   }, [startDate]);
-  // useEffect(() => {
-  //   console.log(subFilesUrl);
-  // }, [subFilesUrl]);
-  // useEffect(() => {
-  //   console.log(subFiles);
-  // }, [subFiles]);
+  useEffect(() => {
+    dispatch({
+      type: "setReviewImagesUrl",
+      payload: subFilesUrl,
+    });
+  }, [subFilesUrl]);
+  useEffect(() => {
+    dispatch({
+      type: "setReviewImagesFile",
+      payload: subFiles,
+    });
+  }, [subFiles]);
 
   const handleFileOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return null;
@@ -47,9 +58,15 @@ export default function CreatePlacePage(props: Props) {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(__file);
     fileReader.onload = (e) => {
-      setMainFileUrl(e.target!.result as string);
+      dispatch({
+        type: "setCoverImageUrl",
+        payload: e.target!.result as string,
+      });
     };
-    setMainFile(__file);
+    dispatch({
+      type: "setCoverImageFile",
+      payload: __file,
+    });
   };
   const handleFilesOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return null;
@@ -101,6 +118,12 @@ export default function CreatePlacePage(props: Props) {
             id=""
             name="location"
             style={{ marginTop: "12px", color: colors.Black }}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              dispatch({
+                type: "setLocation",
+                payload: e.target.value,
+              });
+            }}
           >
             <option value="전체" style={{ color: colors.Black }}>
               전체

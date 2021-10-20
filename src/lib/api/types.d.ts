@@ -106,9 +106,9 @@ export interface CreatePlaceData {
   detailAddress: string;
   detailLink: string;
   reviewDescriptions: string[];
-  coverImageURL?: string;
+  coverImageUrl?: string;
   coverImageFile?: File;
-  reviewImagesURL?: string[];
+  reviewImagesUrl?: string[];
   reviewImagesFile?: File[];
 }
 

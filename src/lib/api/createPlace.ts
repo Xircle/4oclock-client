@@ -9,18 +9,18 @@ export const createPlace = async (
   const formData = new FormData();
   placeData.coverImageFile
     ? formData.append("coverImageFile", placeData.coverImageFile!)
-    : formData.append("coverImageUrl", placeData.coverImageURL!);
+    : formData.append("coverImageUrl", placeData.coverImageUrl!);
   if (
     placeData.reviewImagesFile &&
-    placeData.reviewImagesFile?.length === placeData.reviewImagesURL?.length
+    placeData.reviewImagesFile?.length === placeData.reviewImagesUrl?.length
   ) {
     for (let i = 0; i < placeData.reviewImagesFile.length; i++) {
       formData.append("reviewImagesFile", placeData.reviewImagesFile[i]!);
       formData.append("reviewDescriptions", placeData.reviewDescriptions[i]);
     }
-  } else if (placeData.reviewImagesURL) {
-    for (let i = 0; i < placeData.reviewImagesURL.length; i++) {
-      formData.append("reviewImagesFile", placeData.reviewImagesURL[i]!);
+  } else if (placeData.reviewImagesUrl) {
+    for (let i = 0; i < placeData.reviewImagesUrl.length; i++) {
+      formData.append("reviewImagesFile", placeData.reviewImagesUrl[i]!);
       formData.append("reviewDescriptions", placeData.reviewDescriptions[i]);
     }
   }
@@ -39,8 +39,8 @@ export const createPlace = async (
   formData.append("startTime", placeData.startTime);
   formData.append("startDateAt", placeData.startDateAt + "");
   formData.append("recommendation", placeData.recommendation);
-  formData.append("participationFee", placeData.participationFee + "");
-  formData.append("oneLineIntroText", placeData.oneLineIntroText + "");
+  formData.append("participationFee", placeData.participationFee);
+  formData.append("oneLineIntroText", placeData.oneLineIntroText);
   const { data } = await AxiosClient.post<CreatePlaceOutput>("place", formData);
   return data;
 };
