@@ -12,13 +12,13 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChatMessage from "../../components/chat/ChatMessage";
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import { Scrollbars } from "react-custom-scrollbars-2";
+import { positionValues, Scrollbars } from "react-custom-scrollbars-2";
 import { Collapse } from "reactstrap";
 import Modal from "../../components/UI/Modal";
 import { ReservationModalWrapper } from "../reservation/ReservationPage";
-import useSocket from "../../hooks/useSocket";
+import { useSocket } from "../../hooks/useSocket";
 import { IMessage } from "../../lib/api/types";
-import { useMutation, useQuery } from "react-query";
+import { useInfiniteQuery, useMutation, useQuery } from "react-query";
 import { getRoomMessages } from "../../lib/api/getRoomMessages";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
 import storage from "../../lib/storage";
@@ -26,7 +26,7 @@ import { CURRENT_USER } from "../../components/shared/constants";
 import { useCallback } from "react";
 import { sendMessage } from "../../lib/api/sendMessage";
 import { toast } from "react-toastify";
-import { IsMessageDividor, SetMessageDividorText } from "../../lib/utils";
+import routes from "../../routes";
 
 interface Props
   extends RouteComponentProps<
@@ -38,46 +38,100 @@ interface Props
       username: string;
     }
   > {}
-
+export const CHAT_NUMBER_PER_PAGE = 40;
 export default function ChatRoomPage({ match, history, location }: Props) {
   const scrollbarRef = useRef<Scrollbars>(null);
   useEffect(() => {
-    scrollbarRef.current?.scrollTop(5000000000);
-  }, [scrollbarRef]);
+    scrollbarRef.current?.scrollToBottom(); // 맨 밑으로 스크롤
+  }, [scrollbarRef.current]);
 
   const { roomId } = match.params;
-  const [socket, disconnect] = useSocket(roomId);
-  const isEnteringCallBack = ({ flag }) => {
-    setIsEntering(flag);
-  };
-  useEffect(() => {
-    const anonymouseId = storage.getItem(CURRENT_USER)?.uid;
-    if (!roomId || !anonymouseId) return;
-    socket.emit("join_room", { roomId, anonymouseId });
-    socket.on("is_entering", isEnteringCallBack);
-    socket.on("receive_message", receivedMsgFromSocket);
-  }, [roomId]);
-
   const {
     id: receiverId,
     profileImageUrl: receiverProfileImageUrl,
     username: receiverUsername,
   } = location.state;
 
-  const [messages, SetMessages] = useState<IMessage[]>([]);
+  useEffect(() => {
+    // 토큰 검사
+    if (!roomId || !storage.getItem(CURRENT_USER)?.uid) {
+      // 토큰이 없으면
+      alert("로그인 후 이용해주세요!");
+      window.location.href = routes.root;
+    }
+    return () => disconnect();
+  }, []);
+
+  useEffect(() => {
+    // 로컬스토리지 체크
+    const existingRoomId = storage.getItem(`chat-${receiverId}`);
+    if (roomId === "0" && existingRoomId) {
+      history.replace(`/chatRoom/${existingRoomId}`, {
+        id: receiverId,
+        profileImageUrl: receiverProfileImageUrl,
+        username: receiverUsername,
+      });
+    }
+  }, []);
+
+  const [socket, disconnect] = useSocket(
+    storage.getItem(`chat-${receiverId}`) || ""
+  );
+  const isEnteringCallBack = ({ flag }) => {
+    setIsEntering(flag);
+  };
+
+  useEffect(() => {
+    if (roomId === "0" && !storage.getItem(`chat-${receiverId}`)) return;
+
+    const anonymouseId = storage.getItem(CURRENT_USER)?.uid;
+    socket.emit("join_room", { roomId, anonymouseId });
+    socket.on("is_entering", isEnteringCallBack);
+    socket.on("receive_message", receivedMsgFromSocket);
+    return () => {
+      socket.off("is_entering", isEnteringCallBack);
+      socket.off("receive_message", receivedMsgFromSocket);
+    };
+  }, [roomId]);
+
+  const [messages, setMessages] = useState<IMessage[]>([]);
   const [messageInput, SetMessageInput] = useState("");
   const [isCollapse, SetIsCollapse] = useState(false);
-  const [isCollapseScrollButton, SetIsCollapseScrollButton] = useState(false);
-  const [isFirstRefresh, SetIsFirstRefresh] = useState(true);
+  const [showCollapseScrollButton, SetShowCollapseScrollButton] =
+    useState(false);
+  const [showNewMessageAlert, setShowNewMessageAlert] = useState(false);
+
   const [isLeaveRoomClicked, SetIsLeaveRoomClicked] = useState(false);
   const [isBlockUserClicked, SetIsBlockUserClicked] = useState(false);
   const [isReportUserClicked, SetIsReportUserClicked] = useState(false);
+
   const [isEntering, setIsEntering] = useState(false);
   const [loadOldMessages, SetLoadOldMessages] = useState(false);
 
-  const { data: fetchedMessages, isLoading } = useQuery<IMessage[] | undefined>(
-    ["room-chat", roomId],
-    () => getRoomMessages(roomId, receiverId),
+  const [page, setPage] = useState(0);
+
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+  } = useInfiniteQuery(
+    ["room-chat", roomId, page],
+    () => getRoomMessages(page, roomId, receiverId),
+    {
+      getNextPageParam: (lastPage, pages) => {},
+    }
+  );
+
+  const {
+    data: fetchedMessages,
+    isLoading,
+    isPreviousData,
+  } = useQuery<IMessage[] | undefined>(
+    ["room-chat", roomId, page],
+    () => getRoomMessages(page, roomId, receiverId),
     {
       onError: (err: any) => {
         alert(err);
@@ -85,6 +139,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
       },
       retry: 1,
       refetchOnWindowFocus: false,
+      keepPreviousData: true,
     }
   );
 
@@ -92,77 +147,114 @@ export default function ChatRoomPage({ match, history, location }: Props) {
 
   useEffect(() => {
     if (!fetchedMessages) return;
-    SetMessages(fetchedMessages);
+    setMessages(fetchedMessages);
   }, [fetchedMessages]);
+
+  const showNewMessageAlertHandler = (top: number) => {
+    const threshold = 0.7;
+    if (top < threshold) {
+      setShowNewMessageAlert(true);
+    }
+  };
+
+  const onScrollFram = (values: positionValues) => {
+    if (values.top <= 0.4) {
+      // page = 0 -> CHAT_PER_PAGE 40
+      if (messages.length >= CHAT_NUMBER_PER_PAGE * (page + 1)) {
+        setPage((old) => old + 1);
+        console.log("axios 요청!");
+      }
+    } else if (values.top < 0.7) {
+      SetShowCollapseScrollButton(true);
+    } else {
+      SetShowCollapseScrollButton(false);
+    }
+  };
 
   // 소켓으로부터 받은 메세지 콜백
   const receivedMsgFromSocket = useCallback(
     ({ content, sentAt }) => {
-      SetMessages((prev) => {
-        const messages = [
-          { content, isMe: false, sentAt, isRead: true },
-          ...prev,
-        ];
-        console.log(messages);
-        return messages;
+      if (!scrollbarRef?.current) return;
+      showNewMessageAlertHandler(scrollbarRef.current.getValues().top);
+      setMessages((prev) => {
+        return [{ content, isMe: false, sentAt, isRead: true }, ...prev];
       });
     },
-    [messages]
+    [messages, showCollapseScrollButton]
   );
 
-  const handleMessageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    SetMessageInput(e.target.value);
-    socket.emit("is_entering", {
-      roomId,
-      anonymouseId: storage.getItem(CURRENT_USER)?.uid,
-      flag: e.currentTarget.value.trim().length > 0 ? true : false,
-    });
-  };
+  const handleMessageInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      SetMessageInput(e.target.value);
+      socket.emit("is_entering", {
+        roomId,
+        anonymouseId: storage.getItem(CURRENT_USER)?.uid,
+        flag: e.currentTarget.value.trim().length > 0 ? true : false,
+      });
+    },
+    [socket, roomId]
+  );
 
-  const onSubmitHandler = (
-    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
-  ) => {
-    e.preventDefault();
-    // 로컬 message state 에 동기화
-    SetMessages((prev) => {
-      const messages = [
-        {
-          content: messageInput,
-          isMe: true,
-          sentAt: new Date(),
-          isRead: false,
-        },
-        ...prev,
-      ];
-      return messages;
-    });
-    // POST 비동기로 요청
-    mutateMessage({
-      content: messageInput,
-      receiverId: receiverId,
-      roomId,
-    }).then((res) => {
-      if (!res.data.ok) {
-        console.log(res);
-        toast.error("전송에 실패했습니다. 잠시 후 다시 시도해주세요");
-        // 전송에 실패했으므로, 로컬의 message의 말풍선에 X 추가한다.
-      }
-    });
-    // socket emit
-    socket.emit("send_message", {
-      roomId,
-      anonymouseId: storage.getItem(CURRENT_USER)?.uid,
-      content: messageInput,
-    });
-    socket.emit("is_entering", {
-      roomId,
-      anonymouseId: storage.getItem(CURRENT_USER)?.uid,
-      flag: false,
-    });
-    SetMessageInput("");
-  };
+  const onSubmitHandler = useCallback(
+    (
+      e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
+    ) => {
+      e.preventDefault();
+      if (messageInput.trim().length === 0) return;
 
-  if (isLoading)
+      // 로컬 message state 에 동기화
+      setMessages((prev) => {
+        const messages = [
+          {
+            content: messageInput,
+            isMe: true,
+            sentAt: new Date(),
+            isRead: false,
+          },
+          ...prev,
+        ];
+        return messages;
+      });
+      // POST 비동기로 요청
+      mutateMessage({
+        content: messageInput,
+        receiverId: receiverId,
+        roomId: storage.getItem(`chat-${receiverId}`) || roomId,
+      }).then((res) => {
+        if (!res.data.ok) {
+          console.log(res);
+          toast.error("전송에 실패했습니다. 잠시 후 다시 시도해주세요");
+          // 전송에 실패했으므로, 로컬의 message의 말풍선에 X 추가한다.
+          return;
+        }
+        console.log("created room Id", res.data.createdRoomId);
+        if (roomId === "0" && res.data.createdRoomId) {
+          // 만약 unmount되었을 때 이 promise는 실행이 될까?
+          storage.setItem(`chat-${receiverId}`, res.data.createdRoomId);
+        }
+      });
+      // socket emit
+      socket.emit("send_message", {
+        roomId,
+        anonymouseId: storage.getItem(CURRENT_USER)?.uid,
+        content: messageInput,
+      });
+      socket.emit("is_entering", {
+        roomId,
+        anonymouseId: storage.getItem(CURRENT_USER)?.uid,
+        flag: false,
+      });
+      SetMessageInput("");
+    },
+    [messageInput, receiverId, roomId, socket, mutateMessage]
+  );
+
+  const exitRoomHandler = useCallback(() => {
+    socket.emit("leave_room", { roomId });
+    history.goBack();
+  }, [socket, roomId]);
+
+  if (isLoading && page === 0)
     return (
       <>
         <LoaderBackdrop />
@@ -183,6 +275,8 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   return (
     <SContainer>
       <PageTitle title="채팅" />
+
+      {/* Header */}
       <Header>
         <LeftHeaderContainer>
           <FontAwesomeIcon
@@ -190,7 +284,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
             icon={faArrowLeft}
             color={colors.Black}
             size="lg"
-            onClick={() => history.goBack()}
+            onClick={exitRoomHandler}
           />
           <SAvartar src={receiverProfileImageUrl} />
           <CounterPartName>{receiverUsername}</CounterPartName>
@@ -205,10 +299,11 @@ export default function ChatRoomPage({ match, history, location }: Props) {
           />
         </RightHeaderContainer>
         <DropdownContainer>
-          <Collapse isOpen={isCollapseScrollButton}>
+          <Collapse isOpen={showNewMessageAlert}>
             <CollapseButtonContainer style={{ boxShadow: "none" }}>
               <NewMessageAlertContainer
                 onClick={() => {
+                  setShowNewMessageAlert(false);
                   scrollbarRef.current?.scrollToBottom();
                 }}
               >
@@ -237,44 +332,33 @@ export default function ChatRoomPage({ match, history, location }: Props) {
       <SScrollbars
         ref={scrollbarRef}
         autoHide={true}
-        // ref={(scrollbar) => {
-        //   if (isFirstRefresh) {
-        //     scrollbar?.scrollTop(5000000000);
-        //     SetIsFirstRefresh(false);
-        //   }
-        // }}
-        onScrollFrame={(values) => {
-          if (values.top < 0.9) {
-            SetIsCollapseScrollButton(true);
-          } else {
-            SetIsCollapseScrollButton(false);
-          }
-          if (values.top < 0.3) {
-            SetLoadOldMessages(true);
-          }
-        }}
+        onScrollFrame={onScrollFram}
       >
         <MessageContainer>
           {isEntering && (
             <ChatMessage content="....." isMe={false}></ChatMessage>
           )}
           {messages?.map((message, index) => (
-            <Fragment key={index}>
-              {IsMessageDividor(
-                new Date("1995-12-17T03:24:00"),
-                new Date("1996-05-17T03:24:00")
-              ) && (
-                <MessageDividor>
-                  {SetMessageDividorText(new Date("1995-12-17T03:24:00"))}
-                </MessageDividor>
-              )}
-              <ChatMessage {...message} />
-            </Fragment>
+
+            <ChatMessage key={index} {...message} />
           ))}
+          {isLoading && page !== 0 && (
+            <ClipLoader
+              loading={isLoading}
+              color={colors.MidBlue}
+              css={{
+                name: "width",
+                styles: "border-width: 4px; z-index: 999;",
+              }}
+              size={30}
+            />
+          )}
         </MessageContainer>
       </SScrollbars>
+
+      {/* 밑으로 가기 버튼 */}
       <ScrollToBottomContainer>
-        <Collapse isOpen={isCollapseScrollButton}>
+        <Collapse isOpen={showCollapseScrollButton}>
           <ScrollToBottomButton
             onClick={() => {
               scrollbarRef.current?.scrollToBottom();
@@ -289,6 +373,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
           </ScrollToBottomButton>
         </Collapse>
       </ScrollToBottomContainer>
+
       <InputContainer>
         <form onSubmit={onSubmitHandler}>
           <SInput
@@ -410,6 +495,7 @@ const NewMessageAlertContainer = styled.div`
   opacity: 0.8;
   border-radius: 0 0 10px 10px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: pointer;
 `;
 
 //position: "absolute", top: "100%", right: 10, zIndex: 100

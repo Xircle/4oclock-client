@@ -115,24 +115,21 @@ export const ConvertSentTime = (sentTime: Date): string => {
 };
 
 /**
- *
  * @param sentTime
  */
 // in ChatList
 // XX월 XX일
 // (어제/오늘) (오전/오후) X:XX
-export const ConvertSentTimeForList = (sentTime: Date): string => {
-  //return moment(sentTime).format("MMM Do");
-  console.log(moment(sentTime).from("2021-10-15T05:20:03"));
-  if (moment(sentTime).format("MMM Do YY") === moment().format("MMM Do YY")) {
-    return "오늘 " + ConvertSentTime(sentTime);
+export const ConvertSentTimeForList = (sentAt: Date): string => {
+  if (moment(sentAt).format("MMM Do YY") === moment().format("MMM Do YY")) {
+    return "오늘 " + ConvertSentTime(sentAt);
   } else if (
-    moment(sentTime).add(1, "days").format("MMM Do YY") ===
+    moment(sentAt).add(1, "days").format("MMM Do YY") ===
     moment().format("MMM Do YY")
   ) {
-    return "어제 " + ConvertSentTime(sentTime);
+    return "어제 " + ConvertSentTime(sentAt);
   } else {
-    return moment(sentTime).format("MMM Do");
+    return moment(sentAt).format("MMM Do");
   }
 };
 

@@ -3,34 +3,39 @@ import { useCallback } from "react";
 import { io, Socket } from "socket.io-client";
 import storage from "../lib/storage";
 
-const socketServerUrl = "https://xircle-test-server.herokuapp.com";
 
-const serverUrl =
+// http://localhost:3080
+// process.env.REACT_APP_TEST_API_SERVER
+const socketServerUrl =
   process.env.NODE_ENV === "production"
-    ? process.env.REACT_APP_API_SERVER
-    : process.env.REACT_APP_API_SERVER;
+    ? process.env.REACT_APP_PRODUCTION_API_SERVER
+    : "http://localhost:3080";
+
 
 const existingSockets: { [key: string]: Socket } = {};
-const useSocket = (room: string): [Socket, () => void] => {
-  const disconnect = useCallback(() => {
-    if (room && existingSockets[room]) {
-      existingSockets[room].disconnect();
-      delete existingSockets[room];
-    }
-  }, [room]);
 
-  if (!existingSockets[room]) {
-    existingSockets[room] = io(`${socketServerUrl}/chat`, {
+export type UseSocketOutput = [Socket, () => void];
+
+export const useSocket = (roomId: string): UseSocketOutput => {
+  const disconnect = useCallback(() => {
+    if (existingSockets[roomId]) {
+      existingSockets[roomId].disconnect();
+      delete existingSockets[roomId];
+    }
+  }, [roomId]);
+
+
+  if (!existingSockets[roomId]) {
+    existingSockets[roomId] = io(`${socketServerUrl}/chat`, {
+
       transports: ["websocket"],
       withCredentials: true,
       auth: {
         authorization: `Bearer ${storage.getItem(CURRENT_USER)?.token || ""}`,
       },
     });
-    console.info("create socket", room, existingSockets[room]);
+    console.info("create socket", roomId, existingSockets[roomId]);
   }
 
-  return [existingSockets[room], disconnect];
+  return [existingSockets[roomId], disconnect];
 };
-
-export default useSocket;

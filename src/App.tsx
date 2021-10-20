@@ -10,13 +10,16 @@ import SocialRedirect from "./pages/RedirectPage";
 import PlaceFeedPage from "./pages/placeFeed/PlaceFeedPage";
 import FriendsPage from "./pages/friend/FriendPage";
 import MyPage from "./pages/my/MyPage";
+import ChatPage from "./pages/chat/ChatPage";
+import ChatRoomPage from "./pages/chat/ChatRoomPage";
+import EditProfilePage from "./pages/my/EditProfilePage";
+import PlacePage from "./pages/place/PlacePage";
+import LandingPage from "./pages/LandingPage";
+import ParticipantProfilePage from "./pages/friend/ParticipantProfilePage";
+import MyPlacePage from "./pages/my/MyPlacePage";
+import ParticipantsListPage from "./pages/participantsList/ParticipantsListPage";
 config();
 
-const LandingPage = React.lazy(() => import("./pages/LandingPage"));
-const PlacePage = React.lazy(() => import("./pages/place/PlacePage"));
-const ParticipantProfilePage = React.lazy(
-  () => import("./pages/friend/ParticipantProfilePage")
-);
 const ReservationConfirmPage = React.lazy(
   () => import("./pages/reservation/ReservationConfirmPage")
 );
@@ -24,18 +27,11 @@ const ReservationPage = React.lazy(
   () => import("./pages/reservation/ReservationPage")
 );
 const RequestPage = React.lazy(() => import("./pages/RequestPage"));
-const MyPlacePage = React.lazy(() => import("./pages/my/MyPlacePage"));
-const EditProfilePage = React.lazy(() => import("./pages/my/EditProfilePage"));
 const AuthPage = React.lazy(() => import("./pages/auth/Auth"));
 const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage"));
-const ParticipantsListPage = React.lazy(
-  () => import("./pages/participantsList/ParticipantsListPage")
-);
 const CancelReservationPage = React.lazy(
   () => import("./pages/CancelReservationPage")
 );
-const ChatPage = React.lazy(() => import("./pages/chat/ChatPage"));
-const ChatRoomPage = React.lazy(() => import("./pages/chat/ChatRoomPage"));
 
 const AdminPage = React.lazy(() => import("./pages/Admin/AdminPage"));
 const CreatePlacePage = React.lazy(
