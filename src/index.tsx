@@ -11,7 +11,12 @@ import "bootstrap/dist/css/bootstrap.css";
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (err: any) => {
-      console.log(err?.response?.status);
+      if (err.message) {
+        toast.error(err.message, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        return;
+      }
       const errCode = err?.response?.status || err?.response?.data?.statusCode;
       switch (errCode) {
         case 401:
