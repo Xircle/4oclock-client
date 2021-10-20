@@ -23,6 +23,9 @@ export default function CreatePlacePage(props: Props) {
   useEffect(() => {
     console.log(startDate);
   }, [startDate]);
+  useEffect(() => {
+    console.log(subFilesUrl);
+  }, [subFilesUrl]);
 
   const handleFileOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return null;
@@ -49,8 +52,6 @@ export default function CreatePlacePage(props: Props) {
     if (!e.target.files) return null;
 
     const files = e.target.files;
-    const __file = files[0];
-    const __size = files[0]?.size;
 
     console.log(files.length);
     for (let i = 0; i < files.length; i++) {
@@ -60,12 +61,11 @@ export default function CreatePlacePage(props: Props) {
         );
       }
     }
-    const fileReader = new FileReader();
-
     Array.from(files).forEach((file) => {
+      const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.onload = (e) => {
-        setSubFilesUrl([...subFilesUrl, e.target!.result as string]);
+        setSubFilesUrl((prev) => [...prev, e.target!.result as string]);
       };
       setSubFiles([...subFiles, file]);
     });
@@ -124,6 +124,11 @@ export default function CreatePlacePage(props: Props) {
               style={{ display: "none" }}
             />
           </FileLabel>
+          <div>
+            {mainFileUrl && (
+              <Photo src={mainFileUrl || "/avatar/anonymous_user.png"}></Photo>
+            )}
+          </div>
         </SubContainer>
         <SubContainer>
           <FileLabel htmlFor="sub-files">
@@ -136,6 +141,14 @@ export default function CreatePlacePage(props: Props) {
               multiple
             />
           </FileLabel>
+          <div>
+            {subFilesUrl.map((fileUrl, idx) => (
+              <Photo
+                key={idx}
+                src={fileUrl || "/avatar/anonymous_user.png"}
+              ></Photo>
+            ))}
+          </div>
         </SubContainer>
       </form>
     </Container>
@@ -146,8 +159,10 @@ const SubContainer = styled(Container)`
   margin: 50px 0;
 `;
 
-const AvartarProfile = styled(Avartar)`
+const Photo = styled.img`
   width: 125px;
   height: 125px;
   margin-top: 45px;
+  border-radius: none;
+  object-fit: cover;
 `;
