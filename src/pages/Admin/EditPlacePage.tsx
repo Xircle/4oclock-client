@@ -1,6 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Container, Heading } from "../../styles/styles";
+import {
+  Container,
+  Heading,
+  MidInput,
+  colors,
+  FileLabel,
+  FlexDiv,
+  Avartar,
+  BigTextArea,
+} from "../../styles/styles";
 import DatePicker from "react-date-picker";
 
 interface Props {}

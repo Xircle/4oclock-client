@@ -89,6 +89,32 @@ export interface PlaceData {
     participationFee: number;
   };
 }
+
+export interface CreatePlaceData {
+  name: string;
+  isLightning: boolean;
+  maxParticipantsNumber?: string;
+  location: string;
+  oneLineIntroText: string;
+  participationFee: string;
+  recommendation: string;
+  startDateAt: Date;
+  startTime: string;
+  title: string;
+  description: string;
+  categories: string[];
+  detailAddress: string;
+  detailLink: string;
+  reviewDescriptions: string[];
+  coverImageURL?: string;
+  coverImageFile?: File;
+  reviewImagesURL?: string[];
+  reviewImagesFile?: File[];
+}
+
+// need to change CreatePlaceOutput
+export interface CreatePlaceInput extends CreatePlaceData {}
+
 export interface GetPlaceByIdOutput extends CoreOutput {
   placeData: PlaceData;
 }
