@@ -107,9 +107,11 @@ export default function ChatRoomPage({ match, history, location }: Props) {
 
   const [page, setPage] = useState(1);
 
-  const { data: fetchedMessagesData, isFetching } = useQuery<
-    GetRoomMessagesOutput | undefined
-  >(
+  const {
+    data: fetchedMessagesData,
+    isFetching,
+    isFetchedAfterMount,
+  } = useQuery<GetRoomMessagesOutput | undefined>(
     ["room-chat", roomId, page],
     () => getRoomMessages(roomId, receiverId, page, 40),
     {
@@ -127,8 +129,9 @@ export default function ChatRoomPage({ match, history, location }: Props) {
 
   useEffect(() => {
     if (!fetchedMessagesData?.messages) return;
+    if (isFetching && !isFetchedAfterMount) return;
     setMessages((prev) => [...prev, ...fetchedMessagesData?.messages]);
-  }, [fetchedMessagesData]);
+  }, [fetchedMessagesData, isFetching]);
 
   useEffect(() => {
     // 만약 hasMore이면 미리 캐싱해놓는다.
@@ -247,7 +250,6 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   if (isFetching && page === 1)
     return (
       <>
-        <LoaderBackdrop />
         <LoaderWrapper>
           <ClipLoader
             loading={true}
@@ -332,7 +334,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
             <ChatMessage key={index} {...message} />
           ))}
           {isFetching && page !== 1 && (
-            <LoaderWrapper>
+            <ChatLoadingWrapper>
               <ClipLoader
                 loading={true}
                 color={colors.MidBlue}
@@ -342,7 +344,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
                 }}
                 size={30}
               />
-            </LoaderWrapper>
+            </ChatLoadingWrapper>
           )}
         </MessageContainer>
       </SScrollbars>
@@ -616,4 +618,8 @@ const CollapseButton = styled.div`
     background-color: #f0f0f0;
     border: 1px solid #f0f0f0;
   }
+`;
+
+const ChatLoadingWrapper = styled(LoaderWrapper)`
+  top: 20px;
 `;
