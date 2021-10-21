@@ -88,7 +88,7 @@ export default function MyPage() {
               />
             </MainSubContainer>
           </Link>
-          {true && (
+          {false && (
             <Link to={routes.admin} style={{ textDecoration: "none" }}>
               <SubContainer style={{ color: "red" }}>
                 어드민 페이지
