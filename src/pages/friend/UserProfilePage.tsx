@@ -11,6 +11,7 @@ import {
   MainBtn,
   SpaceForNavBar,
   BottomNavBarContainer,
+  Container,
 } from "../../styles/styles";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
@@ -58,7 +59,7 @@ export default function ParticipantProfilePage({ history }: Props) {
   }, []);
 
   return (
-    <ContainerFlexColumn>
+    <SContainer>
       <PageTitle title="참여자 프로필" />
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
@@ -172,11 +173,17 @@ export default function ParticipantProfilePage({ history }: Props) {
           </LoaderWrapper>
         </>
       )}
-
-      <BottomNavBar selectedItem="friends" />
-    </ContainerFlexColumn>
+    </SContainer>
   );
 }
+
+const SContainer = styled(Container)`
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+`;
 
 const BottomButtonsContainer = styled(BottomNavBarContainer)`
   bottom: 70px;
