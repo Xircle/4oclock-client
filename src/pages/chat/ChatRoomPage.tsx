@@ -20,7 +20,7 @@ import { useSocket } from "../../hooks/useSocket";
 import { GetRoomMessagesOutput, IMessage } from "../../lib/api/types";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getRoomMessages } from "../../lib/api/getRoomMessages";
-import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
+import { LoaderWrapper } from "../../components/shared/Loader";
 import storage from "../../lib/storage";
 import { CURRENT_USER } from "../../components/shared/constants";
 import { useCallback } from "react";
@@ -39,6 +39,7 @@ interface Props
     }
   > {}
 export const CHAT_NUMBER_PER_PAGE = 40;
+const ANNONYMOUSE_USERID = storage.getItem(CURRENT_USER)?.uid;
 export default function ChatRoomPage({ match, history, location }: Props) {
   const scrollbarRef = useRef<Scrollbars>(null);
   useEffect(() => {
@@ -59,7 +60,10 @@ export default function ChatRoomPage({ match, history, location }: Props) {
       alert("로그인 후 이용해주세요!");
       window.location.href = routes.root;
     }
-    return () => disconnect();
+    return () => {
+      socket.emit("leave_room", { roomId });
+      disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -74,41 +78,21 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     }
   }, []);
 
-  const [socket, disconnect] = useSocket(
-    storage.getItem(`chat-${receiverId}`) || ""
-  );
-  const isEnteringCallBack = ({ flag }) => {
-    setIsEntering(flag);
-  };
-
-  useEffect(() => {
-    if (roomId === "0" && !storage.getItem(`chat-${receiverId}`)) return;
-    const anonymouseId = storage.getItem(CURRENT_USER)?.uid;
-    socket.emit("join_room", { roomId, anonymouseId });
-    socket.on("is_entering", isEnteringCallBack);
-    socket.on("receive_message", receivedMsgFromSocket);
-    return () => {
-      socket.off("is_entering", isEnteringCallBack);
-      socket.off("receive_message", receivedMsgFromSocket);
-    };
-  }, [roomId]);
-
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [messageInput, SetMessageInput] = useState("");
   const [isCollapse, SetIsCollapse] = useState(false);
   const [showCollapseScrollButton, SetShowCollapseScrollButton] =
     useState(false);
   const [showNewMessageAlert, setShowNewMessageAlert] = useState(false);
-
   const [isLeaveRoomClicked, SetIsLeaveRoomClicked] = useState(false);
   const [isBlockUserClicked, SetIsBlockUserClicked] = useState(false);
   const [isReportUserClicked, SetIsReportUserClicked] = useState(false);
-
   const [isEntering, setIsEntering] = useState(false);
-  const [loadOldMessages, SetLoadOldMessages] = useState(false);
-
   const [page, setPage] = useState(1);
-
+  const [isReceiverJoining, setIsReceiverJoining] = useState(false);
+  const [socket, disconnect] = useSocket(
+    storage.getItem(`chat-${receiverId}`) || ""
+  );
   const {
     data: fetchedMessagesData,
     isFetching,
@@ -127,9 +111,42 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     }
   );
 
+  useEffect(() => {
+    // 마운트 후, 모든 소켓 연결
+    if (roomId === "0" && !storage.getItem(`chat-${receiverId}`)) return;
+
+    socket.emit("join_room", { roomId, anonymouseId: ANNONYMOUSE_USERID });
+    // socket.on("join_room", receiverJoinRoomHandler);
+    socket.on("leave_room", () => setIsReceiverJoining(false));
+    socket.on("is_entering", isEnteringCallBack);
+    socket.on("receive_message", receivedMsgFromSocket);
+    return () => {
+      socket.off("is_entering", isEnteringCallBack);
+      socket.off("receive_message", receivedMsgFromSocket);
+      // socket.off("join_room", receiverJoinRoomHandler);
+      socket.off("leave_room", () => setIsReceiverJoining(false));
+    };
+  }, [roomId, receiverId]);
+
+  // 상대방이 방에 참여했을 때
+  // const receiverJoinRoomHandler = useCallback(
+  //   (data: { joinedUserId: string }) => {
+  //     setIsReceiverJoining(true);
+  //     setMessages((oldMessages) => {
+  //       return oldMessages.map((msg) => ({
+  //         ...msg,
+  //         isRead: true,
+  //       }));
+  //     });
+  //   },
+  //   []
+  // );
+
+  console.log("상대방이 참여중 : ", isReceiverJoining);
   const { mutateAsync: mutateMessage } = useMutation(sendMessage);
 
   useEffect(() => {
+    // 캐시된 데이터가 아닌, 최신 메세지만 로컬 message와 동기화
     if (!fetchedMessagesData?.messages) return;
     if (isFetching && !isFetchedAfterMount) return;
     setMessages((prev) => [...prev, ...fetchedMessagesData?.messages]);
@@ -144,6 +161,10 @@ export default function ChatRoomPage({ match, history, location }: Props) {
       );
     }
   }, [fetchedMessagesData, queryClient, roomId, receiverId, page]);
+
+  const isEnteringCallBack = ({ flag }) => {
+    setIsEntering(flag);
+  };
 
   const showNewMessageAlertHandler = (top: number) => {
     const threshold = 0.7;
@@ -160,11 +181,6 @@ export default function ChatRoomPage({ match, history, location }: Props) {
         setPage((old) => old + 1);
       }
     }
-    // else if (values.top < 0.7) {
-    //   SetShowCollapseScrollButton(true);
-    // } else {
-    //   SetShowCollapseScrollButton(false);
-    // }
   };
 
   // 소켓으로부터 받은 메세지 콜백
@@ -173,7 +189,8 @@ export default function ChatRoomPage({ match, history, location }: Props) {
       if (!scrollbarRef?.current) return;
       showNewMessageAlertHandler(scrollbarRef.current.getValues().top);
       setMessages((prev) => {
-        return [{ content, isMe: false, sentAt, isRead: true }, ...prev];
+        // isRead: true
+        return [{ content, isMe: false, sentAt }, ...prev];
       });
     },
     [messages, showCollapseScrollButton]
@@ -205,7 +222,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
             content: messageInput,
             isMe: true,
             sentAt: new Date(),
-            isRead: false,
+            // isRead: isReceiverJoining ? true : false,
           },
           ...prev,
         ];
@@ -216,6 +233,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
         content: messageInput,
         receiverId: receiverId,
         roomId: storage.getItem(`chat-${receiverId}`) || roomId,
+        // isRead: isReceiverJoining,
       }).then((res) => {
         if (!res.data.ok) {
           toast.error("전송에 실패했습니다. 잠시 후 다시 시도해주세요");
@@ -330,7 +348,11 @@ export default function ChatRoomPage({ match, history, location }: Props) {
       >
         <MessageContainer>
           {isEntering && (
-            <ChatMessage content="....." isMe={false}></ChatMessage>
+            <ChatMessage
+              isEntering={isEntering}
+              content="....."
+              isMe={false}
+            ></ChatMessage>
           )}
           {messages?.map((message, index) => (
 
@@ -374,11 +396,16 @@ export default function ChatRoomPage({ match, history, location }: Props) {
         <form onSubmit={onSubmitHandler}>
           <SInput
             placeholder="메세지를 입력해주세요"
+            onBlur={() => console.log("onblur fired")}
             value={messageInput}
             name="MessageInput"
             onChange={handleMessageInputChange}
           />
-          <SendButton type="submit" onClick={onSubmitHandler}>
+          <SendButton
+            type="submit"
+            disabled={messageInput.trim().length === 0}
+            onClick={onSubmitHandler}
+          >
             <FontAwesomeIcon
               style={{ cursor: "pointer" }}
               icon={faArrowUp}
@@ -531,11 +558,15 @@ const SendButton = styled.button`
   height: 44px;
   border-radius: 50%;
   background-color: ${colors.MidBlue};
+  &:disabled {
+    background-color: ${colors.LightGray};
+  }
 `;
 
 const SInput = styled.input`
   padding: 0 10px;
   padding-right: 80px;
+  font-size: 17px;
   width: 340px;
   height: 60px;
   box-shadow: 0px 2px 28px rgba(75, 88, 208, 0.1);
@@ -550,6 +581,7 @@ const InputContainer = styled.div`
   position: relative;
   width: 100%;
   height: 80px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: center;
   align-items: center;

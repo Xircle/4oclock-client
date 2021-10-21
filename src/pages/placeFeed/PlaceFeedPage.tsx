@@ -26,6 +26,7 @@ import PageTitle from "../../components/PageTitle";
 import queryString from "query-string";
 import InfoBox from "../../components/UI/InfoBox";
 import { getMyRooms } from "../../lib/api/getMyRooms";
+import { SetLocalStorageItemWithMyRoom } from "../../lib/helper";
 
 interface Props extends RouteComponentProps {}
 
@@ -33,8 +34,10 @@ export default function PlaceFeedPage({ history, location }: Props) {
   const historyH = useHistory();
   const UrlSearch = location.search;
   const [page, setPage] = useState(1);
-  const [selectedPlaceLocation, setSelectedPlaceLocation] =
-    useState<PlaceLocation>(placeLocationoptions[0].value as PlaceLocation);
+  const [
+    selectedPlaceLocation,
+    setSelectedPlaceLocation,
+  ] = useState<PlaceLocation>(placeLocationoptions[0].value as PlaceLocation);
   const isLoggedIn = Boolean(
     queryString.parse(UrlSearch).isLoggedIn === "true"
   );
@@ -45,11 +48,9 @@ export default function PlaceFeedPage({ history, location }: Props) {
     setSelectedPlaceLocation(option.value as PlaceLocation);
   };
 
-  const {
-    data: placeFeedDataArray,
-    isLoading,
-    isError,
-  } = useQuery<PlaceFeedData[] | undefined>(
+  const { data: placeFeedDataArray, isLoading, isError } = useQuery<
+    PlaceFeedData[] | undefined
+  >(
     ["place", selectedPlaceLocation, page],
     () => getPlacesByLocation(selectedPlaceLocation, page),
     {
@@ -57,6 +58,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
       refetchOnWindowFocus: false,
     }
   );
+
   const { data: myRooms } = useQuery<IRoom[] | undefined>(
     ["room"],
     () => getMyRooms(),
@@ -66,13 +68,8 @@ export default function PlaceFeedPage({ history, location }: Props) {
   );
 
   useEffect(() => {
-    // 채팅 기록들 로컬스토리지에 저장하기 -> 바로 친구페이지에서 채팅하는 경우를 위해서 해줘야함.
     if (!myRooms || myRooms.length === 0) return;
-    for (let myRoom of myRooms) {
-      if (!storage.getItem(`chat-${myRoom.receiver.id}`)) {
-        storage.setItem(`chat-${myRoom.receiver.id}`, myRoom.id);
-      }
-    }
+    SetLocalStorageItemWithMyRoom(myRooms);
   }, [myRooms]);
 
   useEffect(() => {
@@ -105,7 +102,6 @@ export default function PlaceFeedPage({ history, location }: Props) {
 
   return (
     <Container>
-
       <PageTitle title="맛집 피드" />
       {/* Drop down */}
       <TopWrapper>
