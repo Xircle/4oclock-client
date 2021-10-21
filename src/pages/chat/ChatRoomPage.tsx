@@ -26,6 +26,8 @@ import { useCallback } from "react";
 import { sendMessage } from "../../lib/api/sendMessage";
 import { toast } from "react-toastify";
 import routes from "../../routes";
+import { use100vh } from "react-div-100vh";
+
 interface Props
   extends RouteComponentProps<
     { roomId: string },
@@ -39,6 +41,8 @@ interface Props
 export const CHAT_NUMBER_PER_PAGE = 40;
 const ANNONYMOUSE_USERID = storage.getItem(CURRENT_USER)?.uid;
 export default function ChatRoomPage({ match, history, location }: Props) {
+  const isUse100Vh = use100vh();
+  const containerHeight = isUse100Vh ? isUse100Vh : "100vh";
   const scrollbarRef = useRef<Scrollbars>(null);
   useEffect(() => {
     scrollbarRef.current?.scrollToBottom(); // 맨 밑으로 스크롤
@@ -80,7 +84,6 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [messageInput, SetMessageInput] = useState("");
   const [isCollapse, SetIsCollapse] = useState(false);
-
   const [showNewMessageAlert, setShowNewMessageAlert] = useState(false);
   const [isLeaveRoomClicked, SetIsLeaveRoomClicked] = useState(false);
   const [isBlockUserClicked, SetIsBlockUserClicked] = useState(false);
@@ -282,7 +285,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     );
 
   return (
-    <SContainer>
+    <SContainer style={{ height: containerHeight }}>
       <PageTitle title="채팅" />
 
       {/* Header */}
@@ -472,6 +475,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   );
 }
 
+
 const CloseModalButton = styled.p`
   cursor: pointer;
   color: #8c94a4;
@@ -560,7 +564,6 @@ const SContainer = styled(Container)`
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  height: 100vh;
   position: relative;
 `;
 

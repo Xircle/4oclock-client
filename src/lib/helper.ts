@@ -6,6 +6,7 @@ export function parseHashTags(string): string {
   return "#" + parsedString.join(" #");
 }
 
+
 export const SetLocalStorageItemWithMyRoom = (myRooms: IRoom[]) => {
   for (let myRoom of myRooms) {
     if (!storage.getItem(`chat-${myRoom.receiver.id}`)) {
