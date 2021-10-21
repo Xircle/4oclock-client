@@ -75,6 +75,7 @@ export interface PlaceData {
   views: number;
   startDateAt: string;
   reviews: ReviewData[];
+  isLightning?: boolean;
   participantsInfo: {
     total_count: number;
     male_count: number;
@@ -87,10 +88,11 @@ export interface PlaceData {
     detailAddress: string;
     detailLink: string;
     participationFee: number;
+    maxParticipantsNumber?: number;
   };
 }
 
-export interface CreatePlaceData {
+export interface AdminPlaceData {
   name: string;
   isLightning: boolean;
   maxParticipantsNumber?: string;
@@ -113,7 +115,7 @@ export interface CreatePlaceData {
 }
 
 // need to change CreatePlaceOutput
-export interface CreatePlaceOutput extends CreatePlaceData {}
+export interface AdminPlaceOutput extends AdminPlaceData {}
 
 export interface GetPlaceByIdOutput extends CoreOutput {
   placeData: PlaceData;
@@ -198,6 +200,14 @@ export interface CancelReservationInput {
 }
 
 export interface CancelReservationOutput extends CoreOutput {}
+
+export interface EditPlaceInput {
+  placeId: string;
+  editedPlace: string;
+  editedPlaceDetail: string;
+}
+
+export interface EditPlaceOutput extends CoreOutput {}
 
 // Get Reservation Participant number
 export interface GetReservationParticipantNumberOutput extends CoreOutput {

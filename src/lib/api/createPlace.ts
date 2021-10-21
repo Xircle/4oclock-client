@@ -1,29 +1,24 @@
-import { CreatePlaceOutput, CreatePlaceData } from "./types.d";
+import { AdminPlaceOutput, AdminPlaceData } from "./types.d";
 import AxiosClient from "../apiClient";
 import moment from "moment";
 import "moment/locale/ko";
 
 export const createPlace = async (
-  placeData: CreatePlaceData
-): Promise<CreatePlaceOutput> => {
+  placeData: AdminPlaceData
+): Promise<AdminPlaceOutput> => {
   const formData = new FormData();
-  placeData.coverImageFile
-    ? formData.append("coverImageFile", placeData.coverImageFile!)
-    : formData.append("coverImageUrl", placeData.coverImageUrl!);
-  if (
-    placeData.reviewImagesFile &&
-    placeData.reviewImagesFile?.length === placeData.reviewImagesUrl?.length
-  ) {
+
+  formData.append("coverImage", placeData.coverImageFile!);
+
+  if (placeData.reviewImagesFile) {
     for (let i = 0; i < placeData.reviewImagesFile.length; i++) {
-      formData.append("reviewImagesFile", placeData.reviewImagesFile[i]!);
-      formData.append("reviewDescriptions", placeData.reviewDescriptions[i]);
-    }
-  } else if (placeData.reviewImagesUrl) {
-    for (let i = 0; i < placeData.reviewImagesUrl.length; i++) {
-      formData.append("reviewImagesFile", placeData.reviewImagesUrl[i]!);
-      formData.append("reviewDescriptions", placeData.reviewDescriptions[i]);
+      formData.append("reviewImages", placeData.reviewImagesFile[i]!);
     }
   }
+  formData.append(
+    "reviewDescriptions",
+    JSON.stringify(placeData.reviewDescriptions)
+  );
   formData.append("name", placeData.name);
   formData.append("isLightning", placeData.isLightning + "");
   if (placeData.maxParticipantsNumber)
@@ -31,9 +26,8 @@ export const createPlace = async (
   formData.append("location", placeData.location);
   formData.append("detailLink", placeData.detailLink);
   formData.append("detailAddress", placeData.detailAddress);
-  placeData.categories.map((category) =>
-    formData.append("categories", category)
-  );
+
+  formData.append("categories", JSON.stringify(placeData.categories));
   formData.append("description", placeData.description);
   formData.append("title", placeData.title);
   formData.append("startTime", placeData.startTime);
@@ -41,6 +35,6 @@ export const createPlace = async (
   formData.append("recommendation", placeData.recommendation);
   formData.append("participationFee", placeData.participationFee);
   formData.append("oneLineIntroText", placeData.oneLineIntroText);
-  const { data } = await AxiosClient.post<CreatePlaceOutput>("place", formData);
+  const { data } = await AxiosClient.post<AdminPlaceOutput>("place", formData);
   return data;
 };

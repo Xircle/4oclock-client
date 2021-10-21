@@ -1,7 +1,7 @@
-import { CreatePlaceOutput } from "../../lib/api/types.d";
+import { AdminPlaceOutput } from "../../lib/api/types.d";
 import moment from "moment";
 
-export type CreatePlaceAction =
+export type AdminPlaceAction =
   | { type: "setName"; payload: string }
   | { type: "setIsLightning"; payload: boolean }
   | { type: "setLocation"; payload: string }
@@ -22,13 +22,13 @@ export type CreatePlaceAction =
   | { type: "setReviewImagesUrl"; payload: string[] }
   | { type: "setReviewImagesFile"; payload: File[] };
 
-export const createPlaceInitialState: CreatePlaceOutput = {
+export const placeInitialState: AdminPlaceOutput = {
   name: "미정",
   isLightning: false,
   maxParticipantsNumber: "4",
   location: "전체",
   oneLineIntroText: "미정",
-  participationFee: "미정",
+  participationFee: "1",
   recommendation: "미정",
   startDateAt: new Date(),
   startTime: "4",
@@ -45,9 +45,9 @@ export const createPlaceInitialState: CreatePlaceOutput = {
 };
 
 export function reducer(
-  state: CreatePlaceOutput,
-  action: CreatePlaceAction
-): CreatePlaceOutput {
+  state: AdminPlaceOutput,
+  action: AdminPlaceAction
+): AdminPlaceOutput {
   switch (action.type) {
     case "setName":
       return {

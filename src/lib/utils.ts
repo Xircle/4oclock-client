@@ -152,3 +152,11 @@ export const IsMessageDividor = (prevM: Date, curM: Date): boolean => {
 export const SetMessageDividorText = (prevM: Date): string => {
   return moment(prevM).format("MMM Do YY");
 };
+
+export const ModifyStringToStringArray = (
+  text: string,
+  divider: string
+): string[] => {
+  const words = text.split("%");
+  return words;
+};

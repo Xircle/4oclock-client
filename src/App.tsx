@@ -37,6 +37,7 @@ const AdminPage = React.lazy(() => import("./pages/Admin/AdminPage"));
 const CreatePlacePage = React.lazy(
   () => import("./pages/Admin/CreatePlacePage")
 );
+const EditPlacesPage = React.lazy(() => import("./pages/Admin/EditPlacesPage"));
 const EditPlacePage = React.lazy(() => import("./pages/Admin/EditPlacePage"));
 
 function App() {
@@ -101,7 +102,9 @@ function App() {
               <Route path={routes.chatRoom} component={ChatRoomPage} />
               <Route path={routes.admin} component={AdminPage} />
               <Route path={routes.createPlace} component={CreatePlacePage} />
+              <Route path={routes.editPlaces} component={EditPlacesPage} />
               <Route path={routes.editPlace} component={EditPlacePage} />
+              {/* insert editPlace in the future*/}
               <Route component={NotFoundPage} />
             </Switch>
           </Suspense>

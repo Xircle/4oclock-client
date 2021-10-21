@@ -11,7 +11,7 @@ export default function AdminPage(props: Props) {
       <Link to={routes.createPlace} style={{ textDecoration: "none" }}>
         <SubContainer>모임 생성</SubContainer>
       </Link>
-      <Link to={routes.editPlace} style={{ textDecoration: "none" }}>
+      <Link to={routes.editPlaces} style={{ textDecoration: "none" }}>
         <SubContainer>모임 변경</SubContainer>
       </Link>
       <Link to={routes.admin} style={{ textDecoration: "none" }}>

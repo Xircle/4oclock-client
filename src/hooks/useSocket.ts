@@ -3,14 +3,12 @@ import { useCallback } from "react";
 import { io, Socket } from "socket.io-client";
 import storage from "../lib/storage";
 
-
 // http://localhost:3080
 // process.env.REACT_APP_TEST_API_SERVER
 const socketServerUrl =
   process.env.NODE_ENV === "production"
-    ? process.env.REACT_APP_TEST_API_SERVER
-    : process.env.REACT_APP_TEST_API_SERVER;
-
+    ? process.env.REACT_APP_API_SERVER
+    : process.env.REACT_APP_API_SERVER;
 
 const existingSockets: { [key: string]: Socket } = {};
 
@@ -24,10 +22,8 @@ export const useSocket = (roomId: string): UseSocketOutput => {
     }
   }, [roomId]);
 
-
   if (!existingSockets[roomId]) {
     existingSockets[roomId] = io(`${socketServerUrl}/chat`, {
-
       transports: ["websocket"],
       withCredentials: true,
       auth: {

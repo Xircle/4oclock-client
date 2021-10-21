@@ -20,7 +20,8 @@ const routes = {
   chatRoom: "/chatRoom/:roomId",
   admin: "/admin",
   createPlace: "/createPlace",
-  editPlace: "/editPlace",
+  editPlaces: "/editPlaces",
+  editPlace: "/editPlace/:placeId",
 };
 
 export default routes;
