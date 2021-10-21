@@ -1,4 +1,5 @@
 import { config } from "dotenv";
+import { use100vh } from "react-div-100vh";
 import React, { Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import { GlobalStyles, AppContainer } from "./styles/styles";
@@ -41,11 +42,14 @@ const EditPlacesPage = React.lazy(() => import("./pages/Admin/EditPlacesPage"));
 const EditPlacePage = React.lazy(() => import("./pages/Admin/EditPlacePage"));
 
 function App() {
+  const isUse100Vh = use100vh();
+  const containerHeight = isUse100Vh ? isUse100Vh : "100vh";
+
   return (
     <PortalProvider>
       <HelmetProvider>
         <GlobalStyles />
-        <AppContainer>
+        <AppContainer style={{ minHeight: containerHeight }}>
           <Suspense
             fallback={
               <div
