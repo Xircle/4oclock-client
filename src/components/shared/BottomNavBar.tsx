@@ -24,7 +24,6 @@ export default function BottomNavBar({ selectedItem }: Props) {
       <BottomNavBarContainer>
         <Link to={routes.placeFeed} style={{ textDecoration: "none" }}>
           <BottomNavBarItem selected={selectedItem === "places"}>
-            <FontAwesomeIcon icon={faUtensils} />
             <span className="pageName">이팅모임</span>
           </BottomNavBarItem>
         </Link>
@@ -34,13 +33,11 @@ export default function BottomNavBar({ selectedItem }: Props) {
           style={{ textDecoration: "none", color: colors.Black }}
         >
           <BottomNavBarItem selected={selectedItem === "friends"}>
-            <FontAwesomeIcon icon={faStar} />
             <span className="pageName">친구들</span>
           </BottomNavBarItem>
         </Link>
         <Link to={routes.chatList} style={{ textDecoration: "none" }}>
           <BottomNavBarItem selected={selectedItem === "chat"}>
-            <FontAwesomeIcon icon={faComments} />
             <span className="pageName">채팅</span>
           </BottomNavBarItem>
         </Link>
@@ -49,7 +46,6 @@ export default function BottomNavBar({ selectedItem }: Props) {
           style={{ textDecoration: "none", color: colors.Black }}
         >
           <BottomNavBarItem selected={selectedItem === "mypage"}>
-            <FontAwesomeIcon icon={faUser} />
             <span className="pageName">MY</span>
           </BottomNavBarItem>
         </Link>
@@ -67,9 +63,8 @@ const BottomNavBarItem = styled.div<{ selected: boolean }>`
   align-items: center;
   color: ${(props) => (props.selected ? colors.MidBlue : "gray")};
   .pageName {
-    font-size: 12px;
+    font-size: 15px;
     color: ${(props) => (props.selected ? colors.MidBlue : "gray")};
-    opacity: ${(props) => (props.selected ? 1 : 0)};
   }
   svg {
     margin-bottom: 5px;
