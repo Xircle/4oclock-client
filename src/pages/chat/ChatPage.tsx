@@ -87,7 +87,7 @@ export default function ChatPage() {
 }
 
 const Heading = styled(ProcedureHeading)`
-  padding-top: 100px;
+  padding-top: 80px;
 `;
 
 const SubTextChat = styled(SubText)`
