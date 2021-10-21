@@ -88,13 +88,13 @@ export default function MyPage() {
               />
             </MainSubContainer>
           </Link>
-          {false && (
+          {/* {false && (
             <Link to={routes.admin} style={{ textDecoration: "none" }}>
               <SubContainer style={{ color: "red" }}>
                 어드민 페이지
               </SubContainer>
             </Link>
-          )}
+          )} */}
 
           <LinkWithoutUnderLine href={links.LOpenKakaoChat} target={"_blank"}>
             <SubContainer>맛집 건의하기</SubContainer>
