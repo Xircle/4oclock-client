@@ -1,5 +1,4 @@
 import { config } from "dotenv";
-import { use100vh } from "react-div-100vh";
 import React, { Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import { GlobalStyles, AppContainer } from "./styles/styles";
@@ -34,22 +33,12 @@ const CancelReservationPage = React.lazy(
   () => import("./pages/CancelReservationPage")
 );
 
-const AdminPage = React.lazy(() => import("./pages/Admin/AdminPage"));
-const CreatePlacePage = React.lazy(
-  () => import("./pages/Admin/CreatePlacePage")
-);
-const EditPlacesPage = React.lazy(() => import("./pages/Admin/EditPlacesPage"));
-const EditPlacePage = React.lazy(() => import("./pages/Admin/EditPlacePage"));
-
 function App() {
-  const isUse100Vh = use100vh();
-  const containerHeight = isUse100Vh ? isUse100Vh : "100vh";
-
   return (
     <PortalProvider>
       <HelmetProvider>
         <GlobalStyles />
-        <AppContainer style={{ minHeight: containerHeight }}>
+        <AppContainer>
           <Suspense
             fallback={
               <div
@@ -104,11 +93,6 @@ function App() {
               {/* REMINDER Delete*/}
               <Route path={routes.chatList} component={ChatPage} />
               <Route path={routes.chatRoom} component={ChatRoomPage} />
-              <Route path={routes.admin} component={AdminPage} />
-              <Route path={routes.createPlace} component={CreatePlacePage} />
-              <Route path={routes.editPlaces} component={EditPlacesPage} />
-              <Route path={routes.editPlace} component={EditPlacePage} />
-              {/* insert editPlace in the future*/}
               <Route component={NotFoundPage} />
             </Switch>
           </Suspense>

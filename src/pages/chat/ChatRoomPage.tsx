@@ -7,6 +7,7 @@ import {
   faArrowLeft,
   faArrowUp,
   faEllipsisV,
+  faArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChatMessage from "../../components/chat/ChatMessage";
@@ -26,8 +27,6 @@ import { useCallback } from "react";
 import { sendMessage } from "../../lib/api/sendMessage";
 import { toast } from "react-toastify";
 import routes from "../../routes";
-import { use100vh } from "react-div-100vh";
-
 interface Props
   extends RouteComponentProps<
     { roomId: string },
@@ -41,13 +40,10 @@ interface Props
 export const CHAT_NUMBER_PER_PAGE = 40;
 const ANNONYMOUSE_USERID = storage.getItem(CURRENT_USER)?.uid;
 export default function ChatRoomPage({ match, history, location }: Props) {
-  const isUse100Vh = use100vh();
-  const containerHeight = isUse100Vh ? isUse100Vh : "100vh";
   const scrollbarRef = useRef<Scrollbars>(null);
   useEffect(() => {
     scrollbarRef.current?.scrollToBottom(); // 맨 밑으로 스크롤
   }, [scrollbarRef.current]);
-  const MessageInputRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
   const { roomId } = match.params;
   const {
@@ -84,6 +80,8 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [messageInput, SetMessageInput] = useState("");
   const [isCollapse, SetIsCollapse] = useState(false);
+  const [showCollapseScrollButton, SetShowCollapseScrollButton] =
+    useState(false);
   const [showNewMessageAlert, setShowNewMessageAlert] = useState(false);
   const [isLeaveRoomClicked, SetIsLeaveRoomClicked] = useState(false);
   const [isBlockUserClicked, SetIsBlockUserClicked] = useState(false);
@@ -143,6 +141,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   //   []
   // );
 
+  console.log("상대방이 참여중 : ", isReceiverJoining);
   const { mutateAsync: mutateMessage } = useMutation(sendMessage);
 
   useEffect(() => {
@@ -175,6 +174,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
 
   const onScrollFram = (values: positionValues) => {
     if (values.top <= 0.4) {
+      // page = 0 -> CHAT_PER_PAGE 40
       if (messages.length >= CHAT_NUMBER_PER_PAGE * page) {
         console.log("axios 요청!");
         setPage((old) => old + 1);
@@ -192,7 +192,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
         return [{ content, isMe: false, sentAt }, ...prev];
       });
     },
-    [messages]
+    [messages, showCollapseScrollButton]
   );
 
   const handleMessageInputChange = useCallback(
@@ -213,8 +213,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     ) => {
       e.preventDefault();
       if (messageInput.trim().length === 0) return;
-      MessageInputRef.current?.focus();
-      scrollbarRef.current?.scrollToBottom();
+
       // 로컬 message state 에 동기화
       setMessages((prev) => {
         const messages = [
@@ -259,7 +258,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
       });
       SetMessageInput("");
     },
-    [MessageInputRef, messageInput, receiverId, roomId, socket, mutateMessage]
+    [messageInput, receiverId, roomId, socket, mutateMessage]
   );
 
   const exitRoomHandler = useCallback(() => {
@@ -285,7 +284,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     );
 
   return (
-    <SContainer style={{ height: containerHeight }}>
+    <SContainer>
       <PageTitle title="채팅" />
 
       {/* Header */}
@@ -373,11 +372,29 @@ export default function ChatRoomPage({ match, history, location }: Props) {
         </MessageContainer>
       </SScrollbars>
 
+      {/* 밑으로 가기 버튼 */}
+      <ScrollToBottomContainer>
+        <Collapse isOpen={showCollapseScrollButton}>
+          <ScrollToBottomButton
+            onClick={() => {
+              scrollbarRef.current?.scrollToBottom();
+            }}
+          >
+            <FontAwesomeIcon
+              style={{ cursor: "pointer" }}
+              icon={faArrowDown}
+              color="black"
+              size="lg"
+            />
+          </ScrollToBottomButton>
+        </Collapse>
+      </ScrollToBottomContainer>
+
       <InputContainer>
         <form onSubmit={onSubmitHandler}>
           <SInput
             placeholder="메세지를 입력해주세요"
-            ref={MessageInputRef}
+            onBlur={() => console.log("onblur fired")}
             value={messageInput}
             name="MessageInput"
             onChange={handleMessageInputChange}
@@ -475,7 +492,6 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   );
 }
 
-
 const CloseModalButton = styled.p`
   cursor: pointer;
   color: #8c94a4;
@@ -564,6 +580,7 @@ const SContainer = styled(Container)`
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
+  height: 100vh;
   position: relative;
 `;
 
