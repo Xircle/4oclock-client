@@ -14,7 +14,7 @@ import {
 } from "../../styles/styles";
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
-import { UserProfile, UserData } from "../../lib/api/types";
+import { UserProfile, UserData, IRoom } from "../../lib/api/types";
 import { seeRandomProfile } from "../../lib/api/seeRandomProfile";
 import { getUser } from "../../lib/api/getUser";
 import { AgeNumberToString } from "../../lib/utils";
@@ -29,14 +29,16 @@ import { RouteComponentProps } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import "./FriendPage.css";
+import { getMyRooms } from "../../lib/api/getMyRooms";
+import { SetLocalStorageItemWithMyRoom } from "../../lib/helper";
 
 interface Props extends RouteComponentProps {}
 
 export default function FriendsPage({ history }: Props) {
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (storage.getItem(IS_YK_ONLY) === null) {
-      storage.setItem(IS_YK_ONLY, isYkOnly + "");
+    if (!storage.getItem(IS_YK_ONLY)) {
+      storage.setItem(IS_YK_ONLY, isYkOnly);
     } else if (storage.getItem(IS_YK_ONLY) === "true") {
       SetIsYkOnly(true);
     } else {
@@ -75,6 +77,19 @@ export default function FriendsPage({ history }: Props) {
     }
   );
 
+  const { data: myRooms } = useQuery<IRoom[] | undefined>(
+    ["room"],
+    () => getMyRooms(),
+    {
+      retry: 1,
+    }
+  );
+
+  useEffect(() => {
+    if (!myRooms || myRooms.length === 0) return;
+    SetLocalStorageItemWithMyRoom(myRooms);
+  }, [myRooms]);
+
   useEffect(() => {
     if (randomProfileData) {
       SetAge(AgeNumberToString(randomProfileData.age));
@@ -92,7 +107,7 @@ export default function FriendsPage({ history }: Props) {
   };
 
   const handleYKCheckboxChange = () => {
-    storage.setItem(IS_YK_ONLY, !isYkOnly + "");
+    storage.setItem(IS_YK_ONLY, !isYkOnly);
     SetIsYkOnly(!isYkOnly);
   };
 
