@@ -41,6 +41,7 @@ interface Props
 export const CHAT_NUMBER_PER_PAGE = 40;
 const ANNONYMOUSE_USERID = storage.getItem(CURRENT_USER)?.uid;
 export default function ChatRoomPage({ match, history, location }: Props) {
+  const iOS = require("is-ios");
   const isUse100Vh = use100vh();
   const containerHeight = isUse100Vh ? isUse100Vh : "100vh";
   const scrollbarRef = useRef<Scrollbars>(null);
@@ -170,6 +171,9 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     const threshold = 0.7;
     if (top < threshold) {
       setShowNewMessageAlert(true);
+    }
+    if (iOS) {
+      scrollbarRef.current?.scrollToBottom();
     }
   };
 
@@ -355,6 +359,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
         onScrollFrame={onScrollFram}
       >
         <MessageContainer>
+          {iOS && <div style={{ height: "100px" }}></div>}
           {isEntering && (
             <ChatMessage
               isEntering={isEntering}
@@ -482,7 +487,6 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     </SContainer>
   );
 }
-
 
 const CloseModalButton = styled.p`
   cursor: pointer;
