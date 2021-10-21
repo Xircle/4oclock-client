@@ -330,7 +330,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
           </Collapse>
         </DropdownContainer>
         <DropdownContainer>
-          <Collapse isOpen={isCollapse}>
+          {/* <Collapse isOpen={isCollapse}>
             <CollapseButtonContainer>
               <CollapseButton onClick={() => SetIsLeaveRoomClicked(true)}>
                 채팅방 나가기
@@ -342,7 +342,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
                 신고하기
               </CollapseButton>
             </CollapseButtonContainer>
-          </Collapse>
+          </Collapse> */}
         </DropdownContainer>
       </Header>
 
