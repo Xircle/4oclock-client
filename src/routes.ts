@@ -16,7 +16,7 @@ const routes = {
   participantsList: "/participants-list/:name",
   cancelReservation: "/cancel-reservation",
   // REMINDER: deleteBelow
-  chat: "/chat",
+  chatList: "/chatList",
   chatRoom: "/chatRoom/:roomId",
 };
 

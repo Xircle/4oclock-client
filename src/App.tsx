@@ -85,13 +85,13 @@ function App() {
                 component={EditProfilePage}
               />
               <Route path={routes.auth} component={AuthPage} />
-              <Route path={routes.chat} component={ChatPage} />
+              <Route path={routes.chatList} component={ChatPage} />
               <Route
                 path={routes.participantsList}
                 component={ParticipantsListPage}
               />
               {/* REMINDER Delete*/}
-              <Route path={routes.chat} component={ChatPage} />
+              <Route path={routes.chatList} component={ChatPage} />
               <Route path={routes.chatRoom} component={ChatRoomPage} />
               <Route component={NotFoundPage} />
             </Switch>
