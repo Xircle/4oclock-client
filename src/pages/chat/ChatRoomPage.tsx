@@ -41,6 +41,7 @@ interface Props
 export const CHAT_NUMBER_PER_PAGE = 40;
 const ANNONYMOUSE_USERID = storage.getItem(CURRENT_USER)?.uid;
 export default function ChatRoomPage({ match, history, location }: Props) {
+  const [isLastMe, SetIsLastMe] = useState(false);
   const iOS = require("is-ios");
   const isUse100Vh = use100vh();
   const containerHeight = isUse100Vh ? isUse100Vh : "100vh";
@@ -174,6 +175,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     }
     if (iOS) {
       scrollbarRef.current?.scrollToBottom();
+      SetIsLastMe(false);
     }
   };
 
@@ -217,6 +219,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     ) => {
       e.preventDefault();
       if (messageInput.trim().length === 0) return;
+      SetIsLastMe(true);
       MessageInputRef.current?.focus();
       scrollbarRef.current?.scrollToBottom();
       // 로컬 message state 에 동기화
@@ -351,7 +354,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
         onScrollFrame={onScrollFram}
       >
         <MessageContainer>
-          {iOS && <div style={{ height: "100px" }}></div>}
+          {iOS && isLastMe && <div style={{ height: "100px" }}></div>}
           {isEntering && (
             <ChatMessage
               isEntering={isEntering}
