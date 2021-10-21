@@ -7,7 +7,7 @@ import storage from "../lib/storage";
 // process.env.REACT_APP_TEST_API_SERVER
 const socketServerUrl =
   process.env.NODE_ENV === "production"
-    ? process.env.REACT_APP_TEST_API_SERVER
+    ? process.env.REACT_APP_PRODUCTION_API_SERVER
     : process.env.REACT_APP_TEST_API_SERVER;
 
 const existingSockets: { [key: string]: Socket } = {};
