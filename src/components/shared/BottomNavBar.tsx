@@ -5,13 +5,6 @@ import {
   SpaceForNavBar,
 } from "../../styles/styles";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUtensils,
-  faStar,
-  faUser,
-  faComments,
-} from "@fortawesome/free-solid-svg-icons";
 import routes from "../../routes";
 
 interface Props {

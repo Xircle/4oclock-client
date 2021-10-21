@@ -102,7 +102,7 @@ export default function ReservationPage({ match, location, history }: Props) {
   };
 
   return (
-    <Container>
+    <SContainer>
       <PageTitle title="써클 예약" />
       <BackButtonLayout>
         <ContainerwithLeftRightMargin>
@@ -139,7 +139,9 @@ export default function ReservationPage({ match, location, history }: Props) {
               <FontAwesomeIcon icon={faCircle} color={colors.LightGray} />
             )}
             <span>
-              <span className="info">[백신 접종] 2차 백신 접종 후 14일이 지났습니다</span>
+              <span className="info">
+                [백신 접종] 2차 백신 접종 후 14일이 지났습니다
+              </span>
             </span>
           </Row>
           <Instruction>
@@ -211,17 +213,13 @@ export default function ReservationPage({ match, location, history }: Props) {
         </Modal>
       )}
       <BottomNavBar selectedItem="places" />
-    </Container>
+    </SContainer>
   );
 }
 
-const VaccineInfoText = styled.div`
-  color: ${colors.MidBlue};
-  font-size: 10px;
-  padding-left: 45px;
-  margin-top: -20px;
-  padding-bottom: 20px;
-`;
+const SContainer = styled(Container)`
+  min-height: 100vh;
+`
 
 const Row = styled.div`
   display: flex;

@@ -68,6 +68,7 @@ const RightContainer = styled.div`
   padding-top: 5px;
   color: #a7b0c0;
   font-size: 13px;
+  text-align: center;
 `;
 
 const LeftTextContainer = styled.div`

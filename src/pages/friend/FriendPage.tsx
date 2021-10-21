@@ -132,7 +132,11 @@ export default function FriendsPage({ history }: Props) {
 
               <label
                 htmlFor="YGE"
-                style={{ fontSize: "14px", marginTop: "3px" }}
+                style={{
+                  fontSize: "14px",
+                  marginLeft: "5px",
+                  marginTop: "3px",
+                }}
               >
                 <FontAwesomeIcon
                   icon={faCheck}
@@ -140,8 +144,8 @@ export default function FriendsPage({ history }: Props) {
                   style={{
                     position: "absolute",
                     fontSize: "14px",
-                    left: "7px",
-                    bottom: "5px",
+                    left: "3px",
+                    bottom: "3px",
                   }}
                   size="xs"
                 />
@@ -328,7 +332,7 @@ const Name = styled.span`
 
 const TagOnName = styled(InterestTag)`
   /* margin-left: 10px; */
-  padding: 7px 16px;
+  padding: 17px 16px;
   /* border-radius: 6px; */
   background-color: transparent;
 

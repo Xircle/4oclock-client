@@ -66,20 +66,17 @@ export default function MyPlacePage() {
         <BottomNavBar selectedItem="mypage"></BottomNavBar>
       </BackButtonLayout>
       {isLoading && (
-        <>
-          <LoaderBackdrop />
-          <LoaderWrapper>
-            <ClipLoader
-              loading={isLoading}
-              color={colors.MidBlue}
-              css={{
-                name: "width",
-                styles: "border-width: 4px; z-index: 999;",
-              }}
-              size={30}
-            />
-          </LoaderWrapper>
-        </>
+        <LoaderWrapper top="100%">
+          <ClipLoader
+            loading={isLoading}
+            color={colors.MidBlue}
+            css={{
+              name: "width",
+              styles: "border-width: 4px; z-index: 999;",
+            }}
+            size={30}
+          />
+        </LoaderWrapper>
       )}
     </ContainerFlexColumn>
   );
