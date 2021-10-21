@@ -144,6 +144,9 @@ export default function ReservationPage({ match, location, history }: Props) {
               </span>
             </span>
           </Row>
+          <VaccineInfoText>
+            접종 후 14일이 지난 분만 선택해주세요
+          </VaccineInfoText>
           <Instruction>
             <InstructionHeading>💖 연고이팅 이용가이드 💖</InstructionHeading>
             <InstructionDetail>
