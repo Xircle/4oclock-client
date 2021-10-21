@@ -5,7 +5,7 @@ const routes = {
   place: "/place/:placeId",
   imageGallery: "/image/:index",
   friend: "/friend",
-  participantProfile: "/participant-profile",
+  userProfile: "/user-profile",
   myPage: "/my-page",
   reservation: "/reservation/:name",
   reservationConfirm: "/reservation/confirm",

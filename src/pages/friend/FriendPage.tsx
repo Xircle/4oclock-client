@@ -24,7 +24,7 @@ import routes from "../../routes";
 import storage from "../../lib/storage";
 import { CURRENT_USER, IS_YK_ONLY } from "../../components/shared/constants";
 import PageTitle from "../../components/PageTitle";
-import { IndicatorBox } from "./ParticipantProfilePage";
+import { IndicatorBox } from "./UserProfilePage";
 import { RouteComponentProps } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";

@@ -15,7 +15,7 @@ import ChatRoomPage from "./pages/chat/ChatRoomPage";
 import EditProfilePage from "./pages/my/EditProfilePage";
 import PlacePage from "./pages/place/PlacePage";
 import LandingPage from "./pages/LandingPage";
-import ParticipantProfilePage from "./pages/friend/ParticipantProfilePage";
+import UserProfilePage from "./pages/friend/UserProfilePage";
 import MyPlacePage from "./pages/my/MyPlacePage";
 import ParticipantsListPage from "./pages/participantsList/ParticipantsListPage";
 config();
@@ -68,10 +68,7 @@ function App() {
               <Route path={routes.place} component={PlacePage} />
               <Route path={routes.imageGallery} component={ImageGalleryPage} />
               <Route path={routes.friend} component={FriendsPage} />
-              <Route
-                path={routes.participantProfile}
-                component={ParticipantProfilePage}
-              />
+              <Route path={routes.userProfile} component={UserProfilePage} />
               <Route path={routes.myPage} component={MyPage}></Route>
               <Route
                 path={routes.reservationConfirm}

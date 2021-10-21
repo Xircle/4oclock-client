@@ -15,7 +15,6 @@ import {
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { UserProfile } from "../../lib/api/types";
-import { AgeNumberToString } from "../../lib/utils";
 import ClipLoader from "react-spinners/ClipLoader";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
 import routes from "../../routes";
@@ -25,17 +24,25 @@ import { seeUserById } from "../../lib/api/seeUserById";
 import { RouteComponentProps, useLocation } from "react-router-dom";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
 import PageTitle from "../../components/PageTitle";
+import queryString from "query-string";
 
 interface LocationState {
   id: string;
+  profileImageUrl?: string;
+  username?: string;
 }
 
 interface Props extends RouteComponentProps {}
+
 export default function ParticipantProfilePage({ history }: Props) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const location = useLocation<LocationState>();
+  const UrlSearch = location.search;
+  const cameFromChat = Boolean(
+    queryString.parse(UrlSearch).cameFromChat === "true"
+  );
 
   const { data: userProfileData, isLoading } = useQuery<
     UserProfile | undefined
@@ -61,7 +68,9 @@ export default function ParticipantProfilePage({ history }: Props) {
           <FlexDiv>
             <AvartarBig
               src={
-                userProfileData?.profileImageUrl || "/avatar/anonymous_user.png"
+                location.state?.profileImageUrl ||
+                userProfileData?.profileImageUrl ||
+                "/avatar/anonymous_user.png"
               }
               alt="friend-profile"
               onClick={() => {
@@ -79,7 +88,11 @@ export default function ParticipantProfilePage({ history }: Props) {
           </FlexDiv>
 
           <FlexDiv style={{ marginTop: "15px" }}>
-            <Name>{userProfileData?.username || "써클 개발자"}</Name>
+            <Name>
+              {location.state?.username ||
+                userProfileData?.username ||
+                "써클 개발자"}
+            </Name>
           </FlexDiv>
 
           <FlexDiv>
@@ -125,11 +138,25 @@ export default function ParticipantProfilePage({ history }: Props) {
           </InnerContainer>
         </ContainerwithLeftRightMargin>
         <SpaceForNavBar></SpaceForNavBar>
-        {storage.getItem(CURRENT_USER).uid !== userProfileData?.id && (
-          <BottomButtonsContainer>
-            <ChatButton onClick={() => alert("개발중")}>채팅하기</ChatButton>
-          </BottomButtonsContainer>
-        )}
+        {storage.getItem(CURRENT_USER).uid !== userProfileData?.id &&
+          !cameFromChat && (
+            <BottomButtonsContainer>
+              <ChatButton
+                onClick={() => {
+                  history.push(`/chatRoom/0`, {
+                    id: location.state?.id || userProfileData?.id,
+                    profileImageUrl:
+                      location.state?.profileImageUrl ||
+                      userProfileData?.profileImageUrl,
+                    username:
+                      location.state?.username || userProfileData?.username,
+                  });
+                }}
+              >
+                채팅하기
+              </ChatButton>
+            </BottomButtonsContainer>
+          )}
       </BackButtonLayout>
 
       {isLoading && (

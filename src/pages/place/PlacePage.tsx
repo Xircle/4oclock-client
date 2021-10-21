@@ -296,7 +296,7 @@ export default function PlacePage({ match, location, history }: Props) {
                 rightOffset={"8px"}
                 onClick={() => {
                   if (placeData.isParticipating) {
-                    history.push(`${routes.participantProfile}`, {
+                    history.push(`${routes.userProfile}`, {
                       id: participant.userId,
                     });
                   } else if (!isClosed) {

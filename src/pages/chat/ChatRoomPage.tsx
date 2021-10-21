@@ -287,7 +287,15 @@ export default function ChatRoomPage({ match, history, location }: Props) {
 
       {/* Header */}
       <Header>
-        <LeftHeaderContainer>
+        <LeftHeaderContainer
+          onClick={() =>
+            history.push(routes.userProfile + "?cameFromChat=true", {
+              id: receiverId,
+              profileImageUrl: receiverProfileImageUrl,
+              username: receiverUsername,
+            })
+          }
+        >
           <FontAwesomeIcon
             style={{ cursor: "pointer", marginRight: "20px" }}
             icon={faArrowLeft}
