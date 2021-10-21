@@ -228,7 +228,7 @@ export interface GetRoomMessagesOutput extends CoreOutput {
 // Send Message
 export interface SendMessageInput {
   roomId: string;
-  isRead: boolean;
+  isRead?: boolean;
   receiverId: string;
   content: string;
 }

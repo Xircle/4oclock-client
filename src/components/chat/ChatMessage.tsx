@@ -18,7 +18,7 @@ export default function ChatMessage({
       <MessageContainer isMe={isMe}>{content}</MessageContainer>
       {!isEntering && (
         <IndicatorContainer isMe={isMe}>
-          <ReadIndicator isRead={isRead!}>1</ReadIndicator>
+          <ReadIndicator isRead={true}>1</ReadIndicator>
           {sentAt && (
             <TimeText>
               <span>{ConvertSentTime(sentAt)}</span>

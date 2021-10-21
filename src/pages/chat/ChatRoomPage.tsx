@@ -115,27 +115,33 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     if (roomId === "0" && !storage.getItem(`chat-${receiverId}`)) return;
 
     socket.emit("join_room", { roomId, anonymouseId: ANNONYMOUSE_USERID });
-    socket.on("join_room", receiverJoinRoomHandler);
+    // socket.on("join_room", receiverJoinRoomHandler);
     socket.on("leave_room", () => setIsReceiverJoining(false));
     socket.on("is_entering", isEnteringCallBack);
     socket.on("receive_message", receivedMsgFromSocket);
     return () => {
       socket.off("is_entering", isEnteringCallBack);
       socket.off("receive_message", receivedMsgFromSocket);
+      // socket.off("join_room", receiverJoinRoomHandler);
+      socket.off("leave_room", () => setIsReceiverJoining(false));
     };
   }, [roomId, receiverId]);
 
   // 상대방이 방에 참여했을 때
-  const receiverJoinRoomHandler = useCallback(() => {
-    setIsReceiverJoining(true);
-    setMessages((oldMessages) => {
-      return oldMessages.map((msg) => ({
-        ...msg,
-        isRead: true,
-      }));
-    });
-  }, []);
+  // const receiverJoinRoomHandler = useCallback(
+  //   (data: { joinedUserId: string }) => {
+  //     setIsReceiverJoining(true);
+  //     setMessages((oldMessages) => {
+  //       return oldMessages.map((msg) => ({
+  //         ...msg,
+  //         isRead: true,
+  //       }));
+  //     });
+  //   },
+  //   []
+  // );
 
+  console.log("상대방이 참여중 : ", isReceiverJoining);
   const { mutateAsync: mutateMessage } = useMutation(sendMessage);
 
   useEffect(() => {
@@ -173,10 +179,6 @@ export default function ChatRoomPage({ match, history, location }: Props) {
         console.log("axios 요청!");
         setPage((old) => old + 1);
       }
-    } else if (values.top < 0.7) {
-      SetShowCollapseScrollButton(true);
-    } else {
-      SetShowCollapseScrollButton(false);
     }
   };
 
@@ -186,7 +188,8 @@ export default function ChatRoomPage({ match, history, location }: Props) {
       if (!scrollbarRef?.current) return;
       showNewMessageAlertHandler(scrollbarRef.current.getValues().top);
       setMessages((prev) => {
-        return [{ content, isMe: false, sentAt, isRead: true }, ...prev];
+        // isRead: true
+        return [{ content, isMe: false, sentAt }, ...prev];
       });
     },
     [messages, showCollapseScrollButton]
@@ -218,7 +221,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
             content: messageInput,
             isMe: true,
             sentAt: new Date(),
-            isRead: isReceiverJoining ? true : false,
+            // isRead: isReceiverJoining ? true : false,
           },
           ...prev,
         ];
@@ -229,7 +232,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
         content: messageInput,
         receiverId: receiverId,
         roomId: storage.getItem(`chat-${receiverId}`) || roomId,
-        isRead: isReceiverJoining,
+        // isRead: isReceiverJoining,
       }).then((res) => {
         if (!res.data.ok) {
           toast.error("전송에 실패했습니다. 잠시 후 다시 시도해주세요");
@@ -259,6 +262,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   );
 
   const exitRoomHandler = useCallback(() => {
+    socket.emit("leave_room", { roomId });
     history.goBack();
   }, [socket, roomId]);
 
@@ -390,6 +394,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
         <form onSubmit={onSubmitHandler}>
           <SInput
             placeholder="메세지를 입력해주세요"
+            onBlur={() => console.log("onblur fired")}
             value={messageInput}
             name="MessageInput"
             onChange={handleMessageInputChange}
@@ -551,6 +556,7 @@ const SendButton = styled.button`
 const SInput = styled.input`
   padding: 0 10px;
   padding-right: 80px;
+  font-size: 17px;
   width: 340px;
   height: 60px;
   box-shadow: 0px 2px 28px rgba(75, 88, 208, 0.1);
@@ -565,6 +571,7 @@ const InputContainer = styled.div`
   position: relative;
   width: 100%;
   height: 80px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
