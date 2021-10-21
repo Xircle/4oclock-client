@@ -10,10 +10,11 @@ interface SendMessageOutput extends CoreOutput {
 export const sendMessage = async (
   sendMessageInput: SendMessageInput
 ): Promise<AxiosResponse<SendMessageOutput>> => {
-  const { roomId, content, receiverId } = sendMessageInput;
+  const { roomId, isRead, content, receiverId } = sendMessageInput;
   return AxiosClient.post(`/room/${roomId}/messages`, {
     content,
     receiverId,
+    isRead,
     sentAt: new Date(),
   });
 };

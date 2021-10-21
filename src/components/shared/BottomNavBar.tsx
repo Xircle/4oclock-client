@@ -38,7 +38,7 @@ export default function BottomNavBar({ selectedItem }: Props) {
             <span className="pageName">친구들</span>
           </BottomNavBarItem>
         </Link>
-        <Link to={routes.chat} style={{ textDecoration: "none" }}>
+        <Link to={routes.chatList} style={{ textDecoration: "none" }}>
           <BottomNavBarItem selected={selectedItem === "chat"}>
             <FontAwesomeIcon icon={faComments} />
             <span className="pageName">채팅</span>

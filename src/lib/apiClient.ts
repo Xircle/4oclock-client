@@ -6,7 +6,7 @@ import storage from "./storage";
 const host =
   process.env.NODE_ENV === "production"
     ? process.env.REACT_APP_TEST_API_SERVER
-    : process.env.REACT_APP_TEST_API_SERVER;
+    : "http://localhost:3080";
 
 const apiClient = axios.create({
   baseURL: host,

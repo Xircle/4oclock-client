@@ -1,22 +1,47 @@
 import styled from "styled-components";
 import { IMessage } from "../../lib/api/types";
 import { ConvertSentTime } from "../../lib/utils";
-import moment from "moment";
 
-interface Props extends IMessage {}
+interface Props extends IMessage {
+  isEntering?: boolean;
+}
 
-export default function ChatMessage({ isMe, sentAt, isRead, content }: Props) {
+export default function ChatMessage({
+  isEntering,
+  isMe,
+  sentAt,
+  isRead,
+  content,
+}: Props) {
   return (
     <Container isMe={isMe}>
       <MessageContainer isMe={isMe}>{content}</MessageContainer>
-      {sentAt && (
-        <TimeText>
-          <span>{ConvertSentTime(sentAt)}</span>
-        </TimeText>
+      {!isEntering && (
+        <IndicatorContainer isMe={isMe}>
+          <ReadIndicator isRead={true}>1</ReadIndicator>
+          {sentAt && (
+            <TimeText>
+              <span>{ConvertSentTime(sentAt)}</span>
+            </TimeText>
+          )}
+        </IndicatorContainer>
       )}
     </Container>
   );
 }
+
+const IndicatorContainer = styled.div<{ isMe: boolean }>`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: ${(props) => (props.isMe ? "flex-end" : "flex-start")};
+`;
+const ReadIndicator = styled.span<{ isRead: boolean }>`
+  color: #1fa1ff;
+  font-size: 12px;
+  margin: 0 5px;
+  opacity: ${(props) => (props.isRead ? 0 : 1)};
+`;
 
 const TimeText = styled.div`
   display: flex;
