@@ -24,11 +24,13 @@ export default function ChatListRow({ room }: Props) {
       <LeftContainer>
         <SAvatar src={room.receiver.profileImageUrl} />
         <LeftTextContainer>
-          <UsernameText>
+          <UsernameText isRead={room.lastMessage.isRead}>
             {room.receiver.username}
-            {!room.lastMessage.isRead && <UnreadIndicator></UnreadIndicator>}
+            {!room.lastMessage.isRead && <UnreadIndicator />}
           </UsernameText>
-          <MessageText>{room.lastMessage.content}</MessageText>
+          <MessageText isRead={room.lastMessage.isRead}>
+            {room.lastMessage.content}
+          </MessageText>
         </LeftTextContainer>
       </LeftContainer>
       <RightContainer>
@@ -43,7 +45,7 @@ const UnreadIndicator = styled.div`
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  margin-left: 5px;
+  margin-left: 7px;
   margin-top: 1px;
 `;
 
@@ -73,7 +75,7 @@ const RightContainer = styled.div`
 
 const LeftTextContainer = styled.div`
   padding-top: 5px;
-  padding-left: 10px;
+  padding-left: 15px;
   width: 150px;
 `;
 
@@ -83,15 +85,16 @@ const SAvatar = styled(Avartar)`
   margin: 0px;
 `;
 
-const UsernameText = styled.div`
+const UsernameText = styled.div<{ isRead: boolean }>`
   font-size: 13px;
+  font-weight: ${(props) => !props.isRead && "bold"};
   color: ${colors.Black};
   display: flex;
   justify-content: flex-start;
 `;
-const MessageText = styled.p`
+const MessageText = styled.p<{ isRead: boolean }>`
   padding-top: 5px;
-  color: #a7b0c0;
+  color: ${(props) => (props.isRead ? "#a7b0c0" : colors.MidBlue)};
   font-size: 12px;
   text-overflow: ellipsis;
   -webkit-line-clamp: 2;
