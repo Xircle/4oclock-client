@@ -10,7 +10,7 @@ import SocialRedirect from "./pages/RedirectPage";
 import PlaceFeedPage from "./pages/placeFeed/PlaceFeedPage";
 import FriendsPage from "./pages/friend/FriendPage";
 import MyPage from "./pages/my/MyPage";
-import ChatPage from "./pages/chat/ChatPage";
+import ChatListPage from "./pages/chat/ChatListPage";
 import ChatRoomPage from "./pages/chat/ChatRoomPage";
 import EditProfilePage from "./pages/my/EditProfilePage";
 import PlacePage from "./pages/place/PlacePage";
@@ -82,13 +82,12 @@ function App() {
                 component={EditProfilePage}
               />
               <Route path={routes.auth} component={AuthPage} />
-              <Route path={routes.chatList} component={ChatPage} />
               <Route
                 path={routes.participantsList}
                 component={ParticipantsListPage}
               />
               {/* REMINDER Delete*/}
-              <Route path={routes.chatList} component={ChatPage} />
+              <Route path={routes.chatList} component={ChatListPage} />
               <Route path={routes.chatRoom} component={ChatRoomPage} />
               {/* <Route path={routes.admin} component={AdminPage} />
               <Route path={routes.createPlace} component={CreatePlacePage} />
