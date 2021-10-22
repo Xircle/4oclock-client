@@ -19,6 +19,6 @@ export default function ChatList({ chatRooms }: Props) {
   );
 }
 const SContainer = styled.div`
-  width: 90%;
+  width: 100%;
   margin-top: 20px;
 `;

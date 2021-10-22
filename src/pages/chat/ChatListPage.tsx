@@ -78,7 +78,7 @@ export default function ChatListPage() {
             </p>
           </ChatEmptyContainer>
         ) : (
-          <ChatList chatRooms={myRooms}></ChatList>
+          <ChatList chatRooms={myRooms} />
         )}
       </SContainerwithLeftRightMargin>
       <BottomNavBar selectedItem="chat" />
