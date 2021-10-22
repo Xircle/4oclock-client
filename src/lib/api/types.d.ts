@@ -137,6 +137,7 @@ export interface UserData {
   MBTI?: string;
   drinkingStyle?: number;
   personality?: string;
+  accountType?: string;
 }
 
 export interface GetUserOutput extends CoreOutput {
