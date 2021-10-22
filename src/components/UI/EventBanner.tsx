@@ -7,7 +7,7 @@ interface Props {
 export default function EventBanner({ bannerImageUrl }: Props) {
   return (
     <Container>
-      <BannerImage src={bannerImageUrl || "/banner/halloween/halloween1.png"} />
+      <BannerImage src={bannerImageUrl || "/banner/default.png"} />
     </Container>
   );
 }
