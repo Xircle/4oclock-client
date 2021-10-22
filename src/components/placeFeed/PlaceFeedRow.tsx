@@ -106,7 +106,7 @@ const PlaceCoverImage = styled.img<{ isLightning: boolean }>`
   height: 100%;
   background: ${(props) =>
     props.isLightning &&
-    "linear-gradient(to bottom, #e11382, #ffdc24) border-box"};
+    "linear-gradient(to top, #E67255, #D3499C) border-box"};
   border: ${(props) => props.isLightning && "3px solid transparent"};
   border-radius: 5px;
   display: inline-block;
@@ -124,14 +124,14 @@ const PlaceDeadline = styled.div<{ isLightning: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 3px;
+  border-radius: 3px 0px 3px 0;
   width: 52px;
-  height: 21px;
-  top: -10px;
-  left: 5px;
+  height: 23px;
+  top: ${(props) => (props.isLightning ? "3px" : "0px")};
+  left: ${(props) => (props.isLightning ? "3px" : "0px")};
   p {
     color: white;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 11px;
   }
 `;
