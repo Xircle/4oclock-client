@@ -160,3 +160,9 @@ export const ModifyStringToStringArray = (
   const words = text.split("%");
   return words;
 };
+
+// export const IsSentDatesDifferent = (prevM: Date, curM: Date): boolean => {
+//   const curMessageMoment = moment(curM);
+//   const prevMessageMoment = moment(prevM);
+
+// }
