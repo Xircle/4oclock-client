@@ -297,15 +297,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
 
       {/* Header */}
       <Header>
-        <LeftHeaderContainer
-          onClick={() =>
-            history.push(routes.userProfile + "?cameFromChat=true", {
-              id: receiverId,
-              profileImageUrl: receiverProfileImageUrl,
-              username: receiverUsername,
-            })
-          }
-        >
+        <LeftHeaderContainer>
           <FontAwesomeIcon
             style={{ cursor: "pointer", marginRight: "20px" }}
             icon={faArrowLeft}
@@ -313,7 +305,16 @@ export default function ChatRoomPage({ match, history, location }: Props) {
             size="lg"
             onClick={exitRoomHandler}
           />
-          <SAvartar src={receiverProfileImageUrl} />
+          <SAvartar
+            src={receiverProfileImageUrl}
+            onClick={() =>
+              history.push(routes.userProfile + "?cameFromChat=true", {
+                id: receiverId,
+                profileImageUrl: receiverProfileImageUrl,
+                username: receiverUsername,
+              })
+            }
+          />
           <CounterPartName>{receiverUsername}</CounterPartName>
         </LeftHeaderContainer>
         <RightHeaderContainer>

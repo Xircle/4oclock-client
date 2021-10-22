@@ -125,11 +125,6 @@ export default function PlaceFeedPage({ history, location }: Props) {
         수시로 번개모임들이 올라와요 {"😄 "}가고 싶은 모임을{" "}
         <b>확인하고{">"}놀러가기</b>를 누르면 신청 완료!
       </InfoBox>
-      {/* <TopInfoTextContainer>
-        <TopInfoText>
-          {"※"} 연고이팅의 모임은 오후 4시와 7시에 열려요
-        </TopInfoText>
-      </TopInfoTextContainer> */}
 
       {/* Places Feed Rows container */}
       <PlaceFeedRowsWrapper>

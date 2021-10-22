@@ -12,18 +12,20 @@ import ClipLoader from "react-spinners/ClipLoader";
 import styled from "styled-components";
 
 interface Props {
+  isAdminEditPlace?: boolean;
   placeFeedDataArray?: PlaceFeedData[];
   isLoading: boolean;
   hasError: boolean;
 }
 
 export default function PlaceFeedContainer({
+  isAdminEditPlace,
   isLoading,
   hasError,
   placeFeedDataArray,
 }: Props) {
   const history = useHistory();
-  if (hasError) return <Heading>에러가 발생했습니다.</Heading>;
+  if (hasError) return <SHeading>에러가 발생했습니다.</SHeading>;
   if (isLoading)
     return (
       <>
@@ -49,13 +51,17 @@ export default function PlaceFeedContainer({
       {placeFeedDataArray?.map((placeFeedData) => (
         <PlaceFeedRow
           key={placeFeedData.id}
-          onClick={() =>
-            history.push(
-              `/place/${placeFeedData.id}?isFinal=${
-                placeFeedData.deadline === "오늘 마감"
-              }&isClosed=${placeFeedData.isClosed}`
-            )
-          }
+          onClick={() => {
+            if (!isAdminEditPlace) {
+              history.push(
+                `/place/${placeFeedData.id}?isFinal=${
+                  placeFeedData.deadline === "오늘 마감"
+                }&isClosed=${placeFeedData.isClosed}`
+              );
+            } else {
+              history.push(`/editPlace/${placeFeedData.id}`);
+            }
+          }}
           {...placeFeedData}
         />
       ))}
@@ -63,6 +69,9 @@ export default function PlaceFeedContainer({
   );
 }
 
+const SHeading = styled(Heading)`
+  text-align: center;
+`;
 const NothingHeading = styled(Heading)`
   height: 100%;
   text-align: center;

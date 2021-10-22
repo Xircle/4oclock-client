@@ -19,7 +19,7 @@ import storage from "../../lib/storage";
 import { CURRENT_USER } from "../../components/shared/constants";
 import routes from "../../routes";
 
-export default function ChatPage() {
+export default function ChatListPage() {
   const [chatCount, setChatCount] = useState(0);
   const { data: myRooms, isLoading } = useQuery<IRoom[] | undefined>(
     ["room"],
