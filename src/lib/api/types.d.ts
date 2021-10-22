@@ -250,6 +250,7 @@ export interface IRoom {
 
 export interface GetMyRooms extends CoreOutput {
   myRooms: IRoom[];
+  hasUnreadMessage: boolean;
 }
 
 // My Room Messages

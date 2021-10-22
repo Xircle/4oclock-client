@@ -14,7 +14,7 @@ import {
 } from "../../styles/styles";
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
-import { UserProfile, UserData, IRoom } from "../../lib/api/types";
+import { UserProfile, UserData, IRoom, GetMyRooms } from "../../lib/api/types";
 import { seeRandomProfile } from "../../lib/api/seeRandomProfile";
 import { getUser } from "../../lib/api/getUser";
 import { AgeNumberToString } from "../../lib/utils";
@@ -62,15 +62,22 @@ export default function FriendsPage({ history }: Props) {
     }
   );
 
-  const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
-    UserProfile | undefined
-  >(["randomProfile"], () => seeRandomProfile(isYkClub && isYkOnly), {
-    retry: 1,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
+  const {
+    data: randomProfileData,
+    refetch,
+    isLoading,
+    isFetching,
+  } = useQuery<UserProfile | undefined>(
+    ["randomProfile"],
+    () => seeRandomProfile(isYkClub && isYkOnly),
+    {
+      retry: 1,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
 
-  const { data: myRooms } = useQuery<IRoom[] | undefined>(
+  const { data } = useQuery<GetMyRooms | undefined>(
     ["room"],
     () => getMyRooms(),
     {
@@ -79,9 +86,9 @@ export default function FriendsPage({ history }: Props) {
   );
 
   useEffect(() => {
-    if (!myRooms || myRooms.length === 0) return;
-    SetLocalStorageItemWithMyRoom(myRooms);
-  }, [myRooms]);
+    if (!data?.myRooms || data?.myRooms.length === 0) return;
+    SetLocalStorageItemWithMyRoom(data.myRooms);
+  }, [data]);
 
   useEffect(() => {
     if (randomProfileData) {

@@ -18,7 +18,11 @@ import {
   placeLocationoptions,
   CURRENT_PLACE,
 } from "../../components/shared/constants";
-import { GetPlacesByLocationOutput, IRoom } from "../../lib/api/types";
+import {
+  GetMyRooms,
+  GetPlacesByLocationOutput,
+  IRoom,
+} from "../../lib/api/types";
 import PlaceFeedRowsContainer from "../../components/placeFeed/PlaceFeedContainer";
 import storage from "../../lib/storage";
 import { toast } from "react-toastify";
@@ -57,7 +61,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
     }
   );
 
-  const { data: myRooms } = useQuery<IRoom[] | undefined>(
+  const { data: myRoomsData } = useQuery<GetMyRooms | undefined>(
     ["room"],
     () => getMyRooms(),
     {
@@ -67,9 +71,9 @@ export default function PlaceFeedPage({ history, location }: Props) {
   );
 
   useEffect(() => {
-    if (!myRooms || myRooms.length === 0) return;
-    SetLocalStorageItemWithMyRoom(myRooms);
-  }, [myRooms]);
+    if (!myRoomsData?.myRooms || myRoomsData.myRooms.length === 0) return;
+    SetLocalStorageItemWithMyRoom(myRoomsData.myRooms);
+  }, [myRoomsData]);
 
   useEffect(() => {
     if (!storage.getItem(CURRENT_USER)) {
