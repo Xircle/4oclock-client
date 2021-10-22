@@ -19,12 +19,11 @@ export default function InfoBox({
 }
 
 const Container = styled.div<{ backgroundColor?: string; fontColor?: string }>`
-  width: 308px;
+  width: 90%;
   border-radius: 4px;
   background: ${(props) =>
     props.backgroundColor ? props.backgroundColor : "#dbedff"};
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0px auto 10px;
   color: ${(props) => (props.fontColor ? props.fontColor : "#18a0fb")};
   font-size: 13px;
   line-height: 18px;

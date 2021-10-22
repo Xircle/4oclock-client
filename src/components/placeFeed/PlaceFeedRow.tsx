@@ -92,7 +92,7 @@ const ViewCount = styled.span`
 const Container = styled.div`
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   padding: 18px 0;
   cursor: pointer;
   &:hover {
@@ -114,7 +114,7 @@ const PlaceCoverImage = styled.img`
 
 const PlaceRightContainer = styled.div`
   width: 205px;
-  padding-left: 16px;
+  padding-left: 10px;
   padding-top: 5px;
 `;
 

@@ -23,7 +23,7 @@ export default function PlaceFeedContainer({
   placeFeedDataArray,
 }: Props) {
   const history = useHistory();
-  if (hasError) return <Heading>에러가 발생했습니다.</Heading>;
+  if (hasError) return <SHeading>에러가 발생했습니다.</SHeading>;
   if (isLoading)
     return (
       <>
@@ -63,6 +63,9 @@ export default function PlaceFeedContainer({
   );
 }
 
+const SHeading = styled(Heading)`
+  text-align: center;
+`;
 const NothingHeading = styled(Heading)`
   height: 100%;
   text-align: center;

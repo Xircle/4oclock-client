@@ -222,7 +222,7 @@ export default function ReservationPage({ match, location, history }: Props) {
 const VaccineInfoText = styled.div`
   color: ${colors.MidBlue};
   font-size: 10px;
-  padding-left: 45px;
+  padding-left: 50px;
   margin-top: -20px;
   padding-bottom: 20px;
 `;

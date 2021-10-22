@@ -1,11 +1,9 @@
 import styled from "styled-components";
-import BottomNavBar from "../../components/shared/BottomNavBar";
 import {
   Avartar,
   SubText,
   colors,
   InterestTag,
-  ContainerFlexColumn,
   ContainerwithLeftRightMargin,
   FlexDiv,
   MainBtn,
@@ -185,10 +183,12 @@ const SContainer = styled(Container)`
   position: relative;
 `;
 
-const BottomButtonsContainer = styled(BottomNavBarContainer)`
-  bottom: 70px;
+const BottomButtonsContainer = styled.div`
+  height: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 375px;
-  height: 65px;
 `;
 
 const ChatButton = styled(MainBtn)`
