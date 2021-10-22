@@ -15,40 +15,60 @@ export default function BottomNavBar({ selectedItem }: Props) {
   return (
     <>
       <BottomNavBarContainer>
-        <Link to={routes.placeFeed} style={{ textDecoration: "none" }}>
-          <BottomNavBarItem selected={selectedItem === "places"}>
-            <span className="pageName">이팅모임</span>
-          </BottomNavBarItem>
-        </Link>
+        <SUl>
+          <SList selected={selectedItem === "places"}>
+            <SLink to={routes.placeFeed} style={{}}>
+              <span className="pageName">이팅모임</span>
+            </SLink>
+          </SList>
 
-        <Link
-          to={routes.friend}
-          style={{ textDecoration: "none", color: colors.Black }}
-        >
-          <BottomNavBarItem selected={selectedItem === "friends"}>
-            <span className="pageName">친구들</span>
-          </BottomNavBarItem>
-        </Link>
-        <Link to={routes.chatList} style={{ textDecoration: "none" }}>
-          <BottomNavBarItem selected={selectedItem === "chat"}>
-            <span className="pageName">채팅</span>
-          </BottomNavBarItem>
-        </Link>
-        <Link
-          to={routes.myPage}
-          style={{ textDecoration: "none", color: colors.Black }}
-        >
-          <BottomNavBarItem selected={selectedItem === "mypage"}>
-            <span className="pageName">MY</span>
-          </BottomNavBarItem>
-        </Link>
+          <SList selected={selectedItem === "friends"}>
+            <SLink
+              to={routes.friend}
+              style={{ textDecoration: "none", color: colors.Black }}
+            >
+              <span className="pageName">친구들</span>
+            </SLink>
+          </SList>
+
+          <SList selected={selectedItem === "chat"}>
+            <SLink to={routes.chatList} style={{ textDecoration: "none" }}>
+              <span className="pageName">채팅</span>
+            </SLink>
+          </SList>
+
+          <SList selected={selectedItem === "mypage"}>
+            <SLink
+              to={routes.myPage}
+              style={{ textDecoration: "none", color: colors.Black }}
+            >
+              <span className="pageName">MY</span>
+            </SLink>
+          </SList>
+        </SUl>
       </BottomNavBarContainer>
       <SpaceForNavBar />
     </>
   );
 }
 
-const BottomNavBarItem = styled.div<{ selected: boolean }>`
+const SLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+`;
+
+const SUl = styled.ul`
+  width: 100%;
+  height: 100%;
+  display: flex;
+`;
+
+const SList = styled.li<{ selected: boolean }>`
+  display: block;
   width: 93.75px;
   display: flex;
   flex-direction: column;
@@ -67,4 +87,6 @@ const BottomNavBarItem = styled.div<{ selected: boolean }>`
     opacity: 0.5;
     cursor: pointer;
   }
+  list-style: none;
+  word-break: keep-all;
 `;
