@@ -92,7 +92,12 @@ const UsernameText = styled.div`
 const MessageText = styled.p`
   padding-top: 5px;
   color: #a7b0c0;
-  font-size: 13px;
+  font-size: 12px;
   text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.2em;
+  height: calc(2.4em + 5px);
+  word-wrap: break-word;
   overflow: hidden;
 `;
