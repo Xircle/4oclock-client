@@ -110,7 +110,9 @@ const PlaceCoverImage = styled.img<{ isLightning: boolean }>`
   object-fit: cover;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, #e11382, #ffdc24) border-box;
+  background: ${(props) =>
+    props.isLightning &&
+    "linear-gradient(to bottom, #e11382, #ffdc24) border-box"};
   border: ${(props) => props.isLightning && "3px solid transparent"};
   border-radius: 5px;
   display: inline-block;
