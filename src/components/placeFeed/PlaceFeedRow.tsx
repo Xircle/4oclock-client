@@ -55,24 +55,18 @@ export default function PlaceFeedRow({
           {participantsCount}명의
           <span className="bold"> 친구들 신청중</span>
         </PlaceSummary>
-        {!isClosed && (
-          <ParticipantsContainer>
-            <ParticipantsWrapper isParticipating={isParticipating}>
-              {participants.map((parti, idx) => {
-                if (idx < 4) {
-                  return (
-                    <Avatar
-                      key={parti.userId}
-                      rightOffset={"-10px"}
-                      {...parti}
-                    />
-                  );
-                }
-              })}
-            </ParticipantsWrapper>
-            {participantsCount > 4 ? <p>+{participantsCount - 4}</p> : null}
-          </ParticipantsContainer>
-        )}
+        <ParticipantsContainer>
+          <ParticipantsWrapper isParticipating={isParticipating}>
+            {participants.map((parti, idx) => {
+              if (idx < 4) {
+                return (
+                  <Avatar key={parti.userId} rightOffset={"-10px"} {...parti} />
+                );
+              }
+            })}
+          </ParticipantsWrapper>
+          {participantsCount > 4 ? <p>+{participantsCount - 4}</p> : null}
+        </ParticipantsContainer>
       </PlaceRightContainer>
     </Container>
   );
