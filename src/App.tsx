@@ -43,13 +43,12 @@ const EditPlacePage = React.lazy(() => import("./pages/Admin/EditPlacePage"));
 
 function App() {
   const isUse100Vh = use100vh();
-  const containerHeight = isUse100Vh ? isUse100Vh : "100vh";
 
   return (
     <PortalProvider>
       <HelmetProvider>
         <GlobalStyles />
-        <AppContainer style={{ minHeight: containerHeight }}>
+        <AppContainer style={{ minHeight: isUse100Vh ? isUse100Vh : "100vh" }}>
           <Suspense
             fallback={
               <div

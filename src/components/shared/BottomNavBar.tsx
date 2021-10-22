@@ -6,12 +6,23 @@ import {
 } from "../../styles/styles";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
+import { useQuery } from "react-query";
+import { GetMyRooms } from "../../lib/api/types";
+import { getMyRooms } from "../../lib/api/getMyRooms";
 
 interface Props {
   selectedItem: string;
 }
 
 export default function BottomNavBar({ selectedItem }: Props) {
+  const { data } = useQuery<GetMyRooms | undefined>(
+    ["room"],
+    () => getMyRooms(),
+    {
+      retry: 1,
+    }
+  );
+
   return (
     <>
       <BottomNavBarContainer>
@@ -35,6 +46,7 @@ export default function BottomNavBar({ selectedItem }: Props) {
             <SLink to={routes.chatList} style={{ textDecoration: "none" }}>
               <span className="pageName">채팅</span>
             </SLink>
+            <UnreadMessageIndicator hasUnreadMessage={data?.hasUnreadMessage} />
           </SList>
 
           <SList selected={selectedItem === "mypage"}>
@@ -52,6 +64,18 @@ export default function BottomNavBar({ selectedItem }: Props) {
   );
 }
 
+const UnreadMessageIndicator = styled.div<{ hasUnreadMessage?: boolean }>`
+  display: ${(props) => !props.hasUnreadMessage && "none"};
+  position: absolute;
+  top: 35%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: ${colors.MidBlue};
+`;
+
 const SLink = styled(Link)`
   display: flex;
   justify-content: center;
@@ -68,6 +92,7 @@ const SUl = styled.ul`
 `;
 
 const SList = styled.li<{ selected: boolean }>`
+  position: relative;
   display: block;
   width: 93.75px;
   display: flex;
