@@ -50,6 +50,7 @@ export interface ParticipantsListData extends Participants {}
 
 export interface GetPlacesByLocationOutput extends CoreOutput {
   places: PlaceFeedData[];
+  eventBannerImageUrl: string;
 }
 
 // Get Place By Id

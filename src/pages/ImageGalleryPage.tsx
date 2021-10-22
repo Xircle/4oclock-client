@@ -27,7 +27,6 @@ export default function ImageGalleryPage({ match, history, location }: Props) {
       ?.scrollIntoView({ block: "center" });
   }, []);
 
-  console.log(payload);
   if (!payload[0]) {
     history.goBack();
   }
@@ -39,8 +38,6 @@ export default function ImageGalleryPage({ match, history, location }: Props) {
   const HistoryPop = () => {
     history.goBack();
   };
-
-  console.log(payload);
 
   return (
     <Container onClick={() => HistoryPop()}>

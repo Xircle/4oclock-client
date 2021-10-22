@@ -7,14 +7,14 @@ import {
 } from "../../lib/api/getPlacesByLocation";
 import { useQuery } from "react-query";
 import PlaceFeedRowsContainer from "../../components/placeFeed/PlaceFeedContainer";
-import { PlaceFeedData } from "../../lib/api/types";
+import { GetPlacesByLocationOutput, PlaceFeedData } from "../../lib/api/types";
 
 interface Props {}
 
 export default function EditPlacesPage(props: Props) {
   const [page, setPage] = useState(1);
-  const { data: placeFeedDataArray, isLoading, isError } = useQuery<
-    PlaceFeedData[] | undefined
+  const { data, isLoading, isError } = useQuery<
+    GetPlacesByLocationOutput | undefined
   >(["place", page], () => getPlacesByLocation("전체", page), {
     retry: 1,
     refetchOnWindowFocus: false,
@@ -29,7 +29,7 @@ export default function EditPlacesPage(props: Props) {
           <PlaceFeedRowsContainer
             hasError={isError}
             isLoading={isLoading}
-            placeFeedDataArray={placeFeedDataArray}
+            placeFeedDataArray={data?.places}
             isAdminEditPlace={true}
           />
         </PlaceFeedRowsWrapper>
