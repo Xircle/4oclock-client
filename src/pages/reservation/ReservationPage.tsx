@@ -140,7 +140,7 @@ export default function ReservationPage({ match, location, history }: Props) {
             )}
             <span>
               <span className="info">
-                [백신 접종] 2차 백신 접종 후 14일이 지났습니다
+                [백신 접종] 2차 백신 접종 후 2주가 지났습니다
               </span>
             </span>
           </Row>

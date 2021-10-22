@@ -16,6 +16,7 @@ export default function PlaceFeedRow({
   deadline,
   oneLineIntroText,
   isClosed,
+  isLightning,
   participantsCount,
   startDateFromNow,
   startTime,
@@ -33,11 +34,11 @@ export default function PlaceFeedRow({
           </>
         )}
         {deadline && (
-          <PlaceDeadline>
+          <PlaceDeadline isLightning={isLightning}>
             <p>{ModifyDeadline(deadline)}</p>
           </PlaceDeadline>
         )}
-        <PlaceCoverImage src={coverImage} />
+        <PlaceCoverImage src={coverImage} isLightning={isLightning} />
       </PlaceLeftContainer>
 
       <PlaceRightContainer>
@@ -105,11 +106,14 @@ const PlaceLeftContainer = styled.div`
   padding: 0px;
   position: relative;
 `;
-const PlaceCoverImage = styled.img`
+const PlaceCoverImage = styled.img<{ isLightning: boolean }>`
+  object-fit: cover;
   width: 100%;
   height: 100%;
+  background: linear-gradient(to bottom, #e11382, #ffdc24) border-box;
+  border: ${(props) => props.isLightning && "3px solid transparent"};
   border-radius: 5px;
-  object-fit: cover;
+  display: inline-block;
 `;
 
 const PlaceRightContainer = styled.div`
@@ -118,15 +122,9 @@ const PlaceRightContainer = styled.div`
   padding-top: 5px;
 `;
 
-const PlaceRightWrapper = styled.div`
-  display: flex;
-  align-content: center;
-  justify-content: start;
-`;
-
-const PlaceDeadline = styled.div`
+const PlaceDeadline = styled.div<{ isLightning: boolean }>`
   position: absolute;
-  background-color: ${colors.MidBlue};
+  background-color: ${(props) => (props.isLightning ? "#000" : colors.MidBlue)};
   display: flex;
   justify-content: center;
   align-items: center;

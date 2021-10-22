@@ -37,11 +37,12 @@ export interface PlaceFeedData {
   startDateAt: string;
   startTime: number;
   isClosed: boolean;
+  isLightning: boolean;
   participantsCount: number;
   startDateFromNow: string;
   participants: Participants[];
   isParticipating: boolean;
-  deadline?: string;
+  deadline: string;
   views: number;
 }
 
@@ -69,6 +70,7 @@ export interface PlaceData {
   deadline: string;
   coverImage: string;
   isClosed: boolean;
+  isLightning: boolean;
   isParticipating: boolean;
   participants: PlaceDataParticipantsProfile[];
   participantsCount: number;
