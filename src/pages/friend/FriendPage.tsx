@@ -37,7 +37,7 @@ interface Props extends RouteComponentProps {}
 export default function FriendsPage({ history }: Props) {
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (!storage.getItem(IS_YK_ONLY)) {
+    if (storage.getItem(IS_YK_ONLY) === null) {
       storage.setItem(IS_YK_ONLY, isYkOnly);
     } else if (storage.getItem(IS_YK_ONLY) === "true") {
       SetIsYkOnly(true);
@@ -62,20 +62,13 @@ export default function FriendsPage({ history }: Props) {
     }
   );
 
-  const {
-    data: randomProfileData,
-    refetch,
-    isLoading,
-    isFetching,
-  } = useQuery<UserProfile | undefined>(
-    ["randomProfile"],
-    () => seeRandomProfile(isYkClub && isYkOnly),
-    {
-      retry: 1,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
+  const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
+    UserProfile | undefined
+  >(["randomProfile"], () => seeRandomProfile(isYkClub && isYkOnly), {
+    retry: 1,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
 
   const { data: myRooms } = useQuery<IRoom[] | undefined>(
     ["room"],

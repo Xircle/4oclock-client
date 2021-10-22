@@ -703,7 +703,6 @@ const SHeaderTextDescription = styled.p`
 const SHeader = styled.div`
   height: 217px;
   position: relative;
-  cursor: pointer;
 `;
 
 const SHeaderPic = styled.img`

@@ -12,12 +12,14 @@ import ClipLoader from "react-spinners/ClipLoader";
 import styled from "styled-components";
 
 interface Props {
+  isAdminEditPlace?: boolean;
   placeFeedDataArray?: PlaceFeedData[];
   isLoading: boolean;
   hasError: boolean;
 }
 
 export default function PlaceFeedContainer({
+  isAdminEditPlace,
   isLoading,
   hasError,
   placeFeedDataArray,
@@ -49,13 +51,17 @@ export default function PlaceFeedContainer({
       {placeFeedDataArray?.map((placeFeedData) => (
         <PlaceFeedRow
           key={placeFeedData.id}
-          onClick={() =>
-            history.push(
-              `/place/${placeFeedData.id}?isFinal=${
-                placeFeedData.deadline === "오늘 마감"
-              }&isClosed=${placeFeedData.isClosed}`
-            )
-          }
+          onClick={() => {
+            if (!isAdminEditPlace) {
+              history.push(
+                `/place/${placeFeedData.id}?isFinal=${
+                  placeFeedData.deadline === "오늘 마감"
+                }&isClosed=${placeFeedData.isClosed}`
+              );
+            } else {
+              history.push(`/editPlace/${placeFeedData.id}`);
+            }
+          }}
           {...placeFeedData}
         />
       ))}

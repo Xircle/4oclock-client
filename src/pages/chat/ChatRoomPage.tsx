@@ -372,7 +372,10 @@ export default function ChatRoomPage({ match, history, location }: Props) {
             ></ChatMessage>
           )}
           {messages?.map((message, index) => (
-            <ChatMessage key={index} {...message} />
+            <>
+              {/* {index > 0 && } */}
+              <ChatMessage key={index} {...message} />
+            </>
           ))}
           {isFetching && page !== 1 && (
             <ChatLoadingWrapper>
