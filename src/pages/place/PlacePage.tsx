@@ -77,7 +77,7 @@ export default function PlacePage({ match, location }: Props) {
     isParticipating,
     participants,
     startDateAt,
-  } = location.state;
+  } = location?.state || {};
   const isFinal = Boolean(queryString.parse(UrlSearch).isFinal === "true");
   const isClosed = Boolean(queryString.parse(UrlSearch).isClosed === "true");
   const showCancelBtn = Boolean(
@@ -192,7 +192,7 @@ export default function PlacePage({ match, location }: Props) {
       <SHeader>
         <SHeaderPic
           src={placeData?.coverImage || coverImage}
-          alt={placeData?.name + "사진" || name}
+          alt={placeData && placeData?.name + "사진"}
         />
         <TempToBeDeleted></TempToBeDeleted>
         <BackContainer onClick={BackButtonClickHandler}>
@@ -313,7 +313,7 @@ export default function PlacePage({ match, location }: Props) {
         <AvartarImgContainerParticipant
           isParticipating={placeData?.isParticipating || isParticipating}
         >
-          {(placeData?.participants || participants).map((participant) => (
+          {(placeData?.participants || participants)?.map((participant) => (
             <Avatar
               key={participant.userId}
               profileImgUrl={participant.profileImgUrl}
@@ -407,7 +407,7 @@ export default function PlacePage({ match, location }: Props) {
       </Section>
       {/* Reservation Button */}
       {/* 코드 너무 더룸.. Link 를 따로 컴포넌트로 뺴야할듯 */}
-      {CalculateDDay(placeData?.startDateAt || startDateAt) >= 0 && (
+      {placeData && CalculateDDay(placeData.startDateAt) >= 0 && (
         <BottomFixedIndicationContainer>
           <BottomIndication>
             <b>
