@@ -282,13 +282,12 @@ export default function ChatRoomPage({ match, history, location }: Props) {
 
       {isFetching && page === 1 && (
         <LoaderWrapper>
-          <LoaderBackdrop />
           <ClipLoader
             loading={true}
             color={colors.MidBlue}
             css={{
               name: "width",
-              styles: "border-width: 4px; z-index: 999;",
+              styles: "border-width: 4px; opacity: 0.4; z-index: 999;",
             }}
             size={30}
           />

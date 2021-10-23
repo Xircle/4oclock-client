@@ -8,7 +8,6 @@ import {
   FlexDiv,
   MainBtn,
   SpaceForNavBar,
-  BottomNavBarContainer,
   Container,
 } from "../../styles/styles";
 import { useEffect } from "react";

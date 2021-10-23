@@ -176,7 +176,7 @@ export const SubTextSpan = styled.span`
 
 export const SpaceForNavBar = styled.div`
   width: 100%;
-  height: 100px;
+  height: 50px;
 `;
 
 export const BottomNavBarContainer = styled.nav`
