@@ -9,6 +9,7 @@ import routes from "../../routes";
 import { useQuery } from "react-query";
 import { GetMyRooms } from "../../lib/api/types";
 import { getMyRooms } from "../../lib/api/getMyRooms";
+import { scrollToTop } from "../../lib/helper";
 
 interface Props {
   selectedItem: string;
@@ -28,12 +29,12 @@ export default function BottomNavBar({ selectedItem }: Props) {
       <BottomNavBarContainer>
         <SUl>
           <SList selected={selectedItem === "places"}>
-            <SLink to={routes.placeFeed} style={{}}>
+            <SLink onClick={scrollToTop} to={routes.placeFeed} style={{}}>
               <span className="pageName">이팅모임</span>
             </SLink>
           </SList>
 
-          <SList selected={selectedItem === "friends"}>
+          <SList onClick={scrollToTop} selected={selectedItem === "friends"}>
             <SLink
               to={routes.friend}
               style={{ textDecoration: "none", color: colors.Black }}
@@ -42,14 +43,14 @@ export default function BottomNavBar({ selectedItem }: Props) {
             </SLink>
           </SList>
 
-          <SList selected={selectedItem === "chat"}>
+          <SList onClick={scrollToTop} selected={selectedItem === "chat"}>
             <SLink to={routes.chatList} style={{ textDecoration: "none" }}>
               <span className="pageName">채팅</span>
             </SLink>
             <UnreadMessageIndicator hasUnreadMessage={data?.hasUnreadMessage} />
           </SList>
 
-          <SList selected={selectedItem === "mypage"}>
+          <SList onClick={scrollToTop} selected={selectedItem === "mypage"}>
             <SLink
               to={routes.myPage}
               style={{ textDecoration: "none", color: colors.Black }}

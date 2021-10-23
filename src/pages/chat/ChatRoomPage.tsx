@@ -84,9 +84,9 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   const [messageInput, SetMessageInput] = useState("");
   const [isCollapse, SetIsCollapse] = useState(false);
   const [showNewMessageAlert, setShowNewMessageAlert] = useState(false);
-  const [isLeaveRoomClicked, SetIsLeaveRoomClicked] = useState(false);
-  const [isBlockUserClicked, SetIsBlockUserClicked] = useState(false);
-  const [isReportUserClicked, SetIsReportUserClicked] = useState(false);
+  // const [isLeaveRoomClicked, SetIsLeaveRoomClicked] = useState(false);
+  // const [isBlockUserClicked, SetIsBlockUserClicked] = useState(false);
+  // const [isReportUserClicked, SetIsReportUserClicked] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
   const [page, setPage] = useState(1);
   const [isReceiverJoining, setIsReceiverJoining] = useState(false);
