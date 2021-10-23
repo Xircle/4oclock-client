@@ -1,12 +1,7 @@
 import { useHistory } from "react-router-dom";
 import type { PlaceFeedData } from "../../lib/api/types";
-import {
-  colors,
-  ContainerFlexColumn,
-  Heading,
-  SLink,
-} from "../../styles/styles";
-import { LoaderBackdrop, LoaderWrapper } from "../shared/Loader";
+import { colors, Heading } from "../../styles/styles";
+import { LoaderWrapper } from "../shared/Loader";
 import PlaceFeedRow from "./PlaceFeedRow";
 import ClipLoader from "react-spinners/ClipLoader";
 import styled from "styled-components";
@@ -19,7 +14,7 @@ interface Props {
 }
 
 export default function PlaceFeedContainer({
-  isAdminEditPlace,
+  isAdminEditPlace = false,
   isLoading,
   hasError,
   placeFeedDataArray,
@@ -52,11 +47,35 @@ export default function PlaceFeedContainer({
         <PlaceFeedRow
           key={placeFeedData.id}
           onClick={() => {
+            const {
+              coverImage,
+              name,
+              participantsCount,
+              isLightning,
+              views,
+              startDateFromNow,
+              startTime,
+              isParticipating,
+              participants,
+              startDateAt,
+            } = placeFeedData;
             if (!isAdminEditPlace) {
               history.push(
                 `/place/${placeFeedData.id}?isFinal=${
                   placeFeedData.deadline === "오늘 마감"
-                }&isClosed=${placeFeedData.isClosed}`
+                }&isClosed=${placeFeedData.isClosed}`,
+                {
+                  coverImage,
+                  name,
+                  participantsCount,
+                  isLightning,
+                  views,
+                  startDateFromNow,
+                  startTime,
+                  isParticipating,
+                  participants,
+                  startDateAt,
+                }
               );
             } else {
               history.push(`/editPlace/${placeFeedData.id}`);

@@ -9,7 +9,7 @@ import {
   FlexDiv,
   BottomFixedIndicationContainer,
 } from "../../styles/styles";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, useHistory } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import {
   faMapMarkerAlt,
@@ -19,7 +19,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { getPlaceById } from "../../lib/api/getPlaceById";
-import type { PlaceData } from "../../lib/api/types";
+import type { Participants, PlaceData } from "../../lib/api/types";
 import {
   AgeNumberToString,
   CalculateDDay,
@@ -46,12 +46,38 @@ declare global {
 interface MatchParmas {
   placeId: string;
 }
+interface LocationState {
+  placeId: string;
+  coverImage: string;
+  name: string;
+  participantsCount: number;
+  isLightning: boolean;
+  views: number;
+  startDateFromNow: string;
+  startTime: number;
+  isParticipating: boolean;
+  isClosed: boolean;
+  participants: Participants[];
+  startDateAt: string;
+}
+interface Props extends RouteComponentProps<MatchParmas, {}, LocationState> {}
 
-interface Props extends RouteComponentProps<MatchParmas> {}
-
-export default function PlacePage({ match, location, history }: Props) {
+export default function PlacePage({ match, location }: Props) {
+  const history = useHistory();
   const { placeId } = match.params;
   const UrlSearch = location.search;
+  const {
+    coverImage,
+    name,
+    participantsCount,
+    isLightning,
+    views,
+    startDateFromNow,
+    startTime,
+    isParticipating,
+    participants,
+    startDateAt,
+  } = location.state;
   const isFinal = Boolean(queryString.parse(UrlSearch).isFinal === "true");
   const isClosed = Boolean(queryString.parse(UrlSearch).isClosed === "true");
   const showCancelBtn = Boolean(
@@ -101,8 +127,9 @@ export default function PlacePage({ match, location, history }: Props) {
   };
 
   useEffect(() => {
-    searchAddress(placeData?.placeDetail.detailAddress);
-  }, [placeData?.placeDetail.detailAddress]);
+    if (!placeData) return;
+    searchAddress(placeData.placeDetail.detailAddress);
+  }, [placeData]);
 
   const searchAddress = (address: string | undefined) => {
     if (!address) return;
@@ -136,25 +163,6 @@ export default function PlacePage({ match, location, history }: Props) {
     map.setCenter(coords);
   };
 
-  if (isLoading)
-    return (
-      <>
-        <LoaderBackdrop />
-        <LoaderWrapper>
-          <ClipLoader
-            loading={isLoading}
-            color={colors.MidBlue}
-            css={{
-              name: "width",
-              styles: "border-width: 4px; z-index: 999;",
-            }}
-            size={30}
-          />
-        </LoaderWrapper>
-      </>
-    );
-  if (!placeData) return null;
-
   const BackButtonClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     if (scrollToProfile) {
@@ -167,64 +175,78 @@ export default function PlacePage({ match, location, history }: Props) {
   return (
     <Container>
       <PageTitle title="맛집 정보" />
-
+      {isLoading && (
+        <LoaderWrapper>
+          <ClipLoader
+            loading={isLoading}
+            color={colors.MidBlue}
+            css={{
+              name: "width",
+              styles: "border-width: 4px; z-index: 999;",
+            }}
+            size={30}
+          />
+        </LoaderWrapper>
+      )}
       {/* Cover Image */}
       <SHeader>
-        <SHeaderPic src={placeData.coverImage} alt={placeData.name + "사진"} />
+        <SHeaderPic
+          src={placeData?.coverImage || coverImage}
+          alt={placeData?.name + "사진" || name}
+        />
         <TempToBeDeleted></TempToBeDeleted>
         <BackContainer onClick={BackButtonClickHandler}>
-          <FontAwesomeIcon icon={faArrowLeft} size="1x" color="white" />
+          <BackButton>
+            <FontAwesomeIcon icon={faArrowLeft} size="1x" color="white" />
+          </BackButton>
         </BackContainer>
         <HeaderText>
           <SHeaderCategoryIndicator>
-            {placeData.participantsCount}명 신청중
+            {placeData?.participantsCount || "N"}명 신청중
           </SHeaderCategoryIndicator>
           <SHeaderTextHeading>
-            {placeData.name} {placeData.isLightning && "⚡️"}
+            {placeData?.name || name}{" "}
+            {(placeData?.isLightning || isLightning) && "⚡️"}
           </SHeaderTextHeading>
           <FlexSpaceBetween>
             <SHeaderTextDescription>
-              {parseHashTags(placeData.placeDetail.categories)}
+              {placeData && parseHashTags(placeData.placeDetail.categories)}
             </SHeaderTextDescription>
             <ViewCount>
               <FontAwesomeIcon icon={faEye} style={{ marginRight: "4px" }} />{" "}
-              {placeData.views}
+              {placeData?.views || views}
             </ViewCount>
           </FlexSpaceBetween>
         </HeaderText>
       </SHeader>
-
       {/* Recommendation */}
       <PlaceSummaryInformation>
-        <span>{placeData.recommendation}</span> 나이만 참여가능해요.
+        <span>{placeData?.recommendation || "모든"}</span> 나이만 참여가능해요.
         <br />
         <span>
-          {placeData.startDateFromNow} {TimeNumberToString(placeData.startTime)}
-          에
+          {placeData?.startDateFromNow || startDateFromNow}{" "}
+          {TimeNumberToString(placeData?.startTime || startTime)}에
         </span>{" "}
         열리는 모임이에요!
       </PlaceSummaryInformation>
-
       {/* Desccription  */}
       <DescriptionContainer>
         <h3 style={{ fontSize: "13px", margin: "3px 0", lineHeight: "18px" }}>
-          {placeData.placeDetail.title}
+          {placeData?.placeDetail.title}
         </h3>
         <p style={{ fontSize: "13px", lineHeight: "18px" }}>
           {" "}
-          {placeData.placeDetail.description}
+          {placeData?.placeDetail.description}
         </p>
       </DescriptionContainer>
-
       <AlbumnDescription>
-        <strong>{placeData.name} 이팅모임</strong>{" "}
-        <span>{placeData.reviews.length}</span>
+        <strong>{placeData?.name || name} 이팅모임</strong>{" "}
+        <span>{placeData?.reviews.length || "N"}</span>
         <p>사진을 클릭해서 살펴보세요</p>
       </AlbumnDescription>
-
       {/* Review Album  */}
       <GridContainer>
-        {placeData.reviews.map((review, index) => {
+        {placeData?.reviews.map((review, index) => {
           if (index < 5) {
             return (
               <GridPic
@@ -232,7 +254,7 @@ export default function PlacePage({ match, location, history }: Props) {
                 src={review.imageUrl}
                 onClick={() =>
                   history.push(`/image/${index}`, {
-                    payload: placeData.reviews,
+                    payload: placeData?.reviews,
                   })
                 }
               />
@@ -243,16 +265,16 @@ export default function PlacePage({ match, location, history }: Props) {
                 key={review.id}
                 onClick={() =>
                   history.push(`/image/${index}`, {
-                    payload: placeData.reviews,
+                    payload: placeData?.reviews,
                   })
                 }
               >
                 <GridPic src={review.imageUrl} />
                 <Overlay />
                 <OverlayText>
-                  {placeData.reviews.length - 6 > 0 && (
+                  {placeData?.reviews.length - 6 > 0 && (
                     <>
-                      +{placeData.reviews.length - 6}
+                      +{placeData?.reviews.length - 6}
                       <br />
                     </>
                   )}
@@ -263,46 +285,50 @@ export default function PlacePage({ match, location, history }: Props) {
           }
         })}
       </GridContainer>
-
       {/* Participants */}
       <Section id="participant">
         <PrimaryText>
-          현재 {placeData.participantsCount}명의 친구들이 신청했어요!
+          현재 {placeData?.participantsCount || participantsCount}명의 친구들이
+          신청했어요!
         </PrimaryText>
         <DescriptionText>
           <b>프로필을 클릭</b>해서 신청한 친구들의 정보를 구경해보세요!
         </DescriptionText>
         <PParticipantContainer>
           <PParticipant>
-            남 {placeData.participantsInfo.male_count}{" "}
+            남 {placeData?.participantsInfo.male_count}{" "}
           </PParticipant>
           <PParticipant MarginLeft={"10px"}>
             여{" "}
-            {placeData.participantsInfo.total_count -
-              placeData.participantsInfo.male_count}
+            {placeData &&
+              placeData.participantsInfo.total_count -
+                placeData.participantsInfo.male_count}
           </PParticipant>
           <PParticipant MarginLeft={"10px"}>
             평균 나이{" "}
-            {AgeNumberToString(placeData.participantsInfo.average_age)}
+            {placeData &&
+              AgeNumberToString(placeData.participantsInfo.average_age)}
           </PParticipant>
         </PParticipantContainer>
         <AvartarImgContainerParticipant
-          isParticipating={placeData.isParticipating}
+          isParticipating={placeData?.isParticipating || isParticipating}
         >
-          {placeData.participants.map((participant) => (
+          {(placeData?.participants || participants).map((participant) => (
             <Avatar
               key={participant.userId}
               profileImgUrl={participant.profileImgUrl}
               width="46px"
               rightOffset={"8px"}
               onClick={() => {
-                if (placeData.isParticipating) {
+                if (placeData?.isParticipating || isParticipating) {
                   history.push(`${routes.userProfile}`, {
                     id: participant.userId,
                   });
                 } else if (!isClosed) {
                   history.push(
-                    `/participants-list/${encodeUrlSlug(placeData.name)}`,
+                    `/participants-list/${encodeUrlSlug(
+                      placeData?.name || name
+                    )}`,
                     {
                       placeId,
                     }
@@ -313,26 +339,25 @@ export default function PlacePage({ match, location, history }: Props) {
           ))}
         </AvartarImgContainerParticipant>
       </Section>
-
       {/* 모임 안내 */}
-
       <Section>
         <PrimaryText>#모임안내</PrimaryText>
         <Row>
           <span className="bold">시간</span>
           <span>
-            {placeData.startDateFromNow}{" "}
-            {TimeNumberToString(placeData.startTime, { hasIndicator: true })}
+            {placeData?.startDateFromNow || startDateFromNow}{" "}
+            {placeData &&
+              TimeNumberToString(placeData.startTime, { hasIndicator: true })}
           </span>
         </Row>
         <Row>
           <span className="bold">장소</span>
-          <span>{placeData.placeDetail.detailAddress}</span>
+          <span>{placeData?.placeDetail.detailAddress}</span>
         </Row>
 
         <Row>
           <span className="bold">나이</span>
-          <span>{placeData.recommendation}</span>
+          <span>{placeData?.recommendation}</span>
         </Row>
 
         <Row>
@@ -348,12 +373,12 @@ export default function PlacePage({ match, location, history }: Props) {
           </span>
         </Row>
       </Section>
-
       {/* Kakao Map */}
       <Section style={{ marginTop: "25px", border: "none" }}>
         <PrimaryText>찾아오는 길</PrimaryText>
         <DirText
           onClick={() => {
+            if (!placeData) return;
             window.location.href = placeData.placeDetail.detailLink;
           }}
         >
@@ -363,7 +388,7 @@ export default function PlacePage({ match, location, history }: Props) {
             size="lg"
             style={{ marginRight: "4px" }}
           />
-          {placeData.placeDetail.detailAddress}
+          {placeData?.placeDetail.detailAddress}
         </DirText>
         <div
           id="map"
@@ -380,42 +405,44 @@ export default function PlacePage({ match, location, history }: Props) {
           }}
         />
       </Section>
-
       {/* Reservation Button */}
       {/* 코드 너무 더룸.. Link 를 따로 컴포넌트로 뺴야할듯 */}
-      {CalculateDDay(placeData.startDateAt) >= 0 && (
+      {CalculateDDay(placeData?.startDateAt || startDateAt) >= 0 && (
         <BottomFixedIndicationContainer>
           <BottomIndication>
             <b>
               D-
-              {CalculateDDay(placeData.startDateAt) === 0
+              {CalculateDDay(placeData?.startDateAt || startDateAt) === 0
                 ? "DAY"
-                : CalculateDDay(placeData.startDateAt)}
+                : CalculateDDay(placeData?.startDateAt || startDateAt)}
             </b>
-            {CalculateCloseDay(placeData.startDateAt)} 자정까지 신청하는
-            모임이에요!
+            {CalculateCloseDay(placeData?.startDateAt || startDateAt)} 자정까지
+            신청하는 모임이에요!
           </BottomIndication>
         </BottomFixedIndicationContainer>
       )}
-
       <BottomFixedButtonContainer>
         <CTABottomFixedButtoninContainer
           onClick={CTAClickedHandler}
-          isParticipating={placeData.isParticipating}
+          isParticipating={placeData?.isParticipating || isParticipating}
           isFinal={isFinal}
           isClosed={isClosed}
-          isLightning={placeData.isLightning}
+          isLightning={placeData?.isLightning || isLightning}
           showCancelBtn={showCancelBtn}
-          disabled={(placeData.isParticipating && !showCancelBtn) || isClosed}
+          disabled={
+            ((placeData?.isParticipating || isParticipating) &&
+              !showCancelBtn) ||
+            isClosed
+          }
         >
           <p>
             {showCancelBtn
               ? "신청 취소하기"
               : isClosed
               ? "마감 되었어요"
-              : placeData.isParticipating
+              : placeData?.isParticipating || isParticipating
               ? "이미 참여 신청된 모임이예요"
-              : placeData.isLightning
+              : placeData?.isLightning || isLightning
               ? " 이팅번개 놀러가기 ⚡️"
               : isFinal
               ? "오늘 마감! 이팅모임 놀러가기"
@@ -423,9 +450,7 @@ export default function PlacePage({ match, location, history }: Props) {
           </p>
         </CTABottomFixedButtoninContainer>
       </BottomFixedButtonContainer>
-
       <SpaceForNavBar />
-
       {isCancleBtnClicked && (
         <Modal
           isClose={!isCancleBtnClicked}
@@ -477,10 +502,6 @@ const BackContainer = styled.div`
   left: 20px;
   font-size: 20px;
   z-index: 100;
-`;
-
-const OverlayPlusNumber = styled.p`
-  color: white;
 `;
 
 const OverlayContainer = styled.div`
@@ -574,14 +595,8 @@ const BackButton = styled.div`
   margin-bottom: 5px;
   background: rgba(25, 27, 26, 0.08);
   backdrop-filter: blur(24px);
-  border-radius: 14px;
+  border-radius: 50%;
   cursor: pointer;
-`;
-
-const DetailDescription = styled.div`
-  color: #505050;
-  font-weight: 500;
-  line-height: 18px;
 `;
 
 const SHeaderTextHeading = styled.h3`
@@ -643,7 +658,9 @@ const PParticipant = styled.span<{ MarginLeft?: string }>`
   font-weight: 500;
 `;
 
-const AvartarImgContainerParticipant = styled.div<{ isParticipating: boolean }>`
+const AvartarImgContainerParticipant = styled.div<{
+  isParticipating?: boolean;
+}>`
   margin-top: 15px;
   filter: ${(props) => !props.isParticipating && "blur(1px)"};
   transform: translate(-3px, 0);
