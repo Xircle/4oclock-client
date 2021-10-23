@@ -8,7 +8,7 @@ export const LoaderBackdrop = styled.div`
   right: 0;
   overflow: hidden;
   background-color: rgb(255, 255, 255);
-  opacity: 0.7;
+  opacity: 0.4;
   z-index: 900;
 `;
 

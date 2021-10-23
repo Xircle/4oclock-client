@@ -176,17 +176,20 @@ export default function PlacePage({ match, location }: Props) {
     <Container>
       <PageTitle title="맛집 정보" />
       {isLoading && (
-        <LoaderWrapper>
-          <ClipLoader
-            loading={isLoading}
-            color={colors.MidBlue}
-            css={{
-              name: "width",
-              styles: "border-width: 4px; z-index: 999;",
-            }}
-            size={30}
-          />
-        </LoaderWrapper>
+        <>
+          <LoaderBackdrop />
+          <LoaderWrapper top={"20%"}>
+            <ClipLoader
+              loading={isLoading}
+              color={colors.MidBlue}
+              css={{
+                name: "width",
+                styles: "border-width: 4px; z-index: 999;",
+              }}
+              size={30}
+            />
+          </LoaderWrapper>
+        </>
       )}
       {/* Cover Image */}
       <SHeader>

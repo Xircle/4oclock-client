@@ -232,7 +232,7 @@ export default function FriendsPage({ history }: Props) {
                 color={colors.MidBlue}
                 css={{
                   name: "width",
-                  styles: "border-width: 4px; opacity: 0.8",
+                  styles: "border-width: 4px;",
                 }}
                 size={30}
               />
