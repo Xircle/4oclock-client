@@ -6,7 +6,6 @@ interface Props extends IMessage {
   isEntering?: boolean;
 }
 
-
 export default function ChatMessage({
   isEntering,
   isMe,
@@ -27,7 +26,6 @@ export default function ChatMessage({
           )}
         </IndicatorContainer>
       )}
-
     </Container>
   );
 }

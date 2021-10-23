@@ -12,7 +12,7 @@ import {
 } from "../../styles/styles";
 import { useQuery } from "react-query";
 import { getMyRooms } from "../../lib/api/getMyRooms";
-import { IRoom } from "../../lib/api/types";
+import { GetMyRooms, IRoom } from "../../lib/api/types";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
 import ClipLoader from "react-spinners/ClipLoader";
 import storage from "../../lib/storage";
@@ -21,7 +21,7 @@ import routes from "../../routes";
 
 export default function ChatListPage() {
   const [chatCount, setChatCount] = useState(0);
-  const { data: myRooms, isLoading } = useQuery<IRoom[] | undefined>(
+  const { data, isLoading } = useQuery<GetMyRooms | undefined>(
     ["room"],
     () => getMyRooms(),
     {
@@ -42,9 +42,9 @@ export default function ChatListPage() {
   }, []);
 
   useEffect(() => {
-    if (!myRooms) return;
-    setChatCount(myRooms?.length);
-  }, [myRooms]);
+    if (!data?.myRooms) return;
+    setChatCount(data?.myRooms?.length);
+  }, [data]);
 
   if (isLoading) {
     <>
@@ -78,7 +78,7 @@ export default function ChatListPage() {
             </p>
           </ChatEmptyContainer>
         ) : (
-          <ChatList chatRooms={myRooms}></ChatList>
+          <ChatList chatRooms={data?.myRooms} />
         )}
       </SContainerwithLeftRightMargin>
       <BottomNavBar selectedItem="chat" />
@@ -101,6 +101,7 @@ const SubTextChat = styled(SubText)`
 const ChatEmptyContainer = styled.div`
   width: 100%;
   height: 30%;
+  margin-top: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -113,5 +114,6 @@ const ChatEmptyContainer = styled.div`
 `;
 
 const SContainerwithLeftRightMargin = styled(ContainerwithLeftRightMargin)`
-  height: 100vh;
+  min-height: 100vh;
+  margin-bottom: 50px;
 `;

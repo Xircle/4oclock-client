@@ -15,7 +15,6 @@ export default function RegisteredFeed({
   oneLineIntroText,
   participantsCount,
 }: Props) {
-  console.log(id);
   const history = useHistory();
   return (
     <FeedContainer onClick={() => history.push(`/place/${id}?myPlace=true`)}>

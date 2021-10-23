@@ -8,7 +8,7 @@ interface Props {}
 export default function AdminPage(props: Props) {
   return (
     <ContainerFlexColumn>
-      {/* <Link to={routes.createPlace} style={{ textDecoration: "none" }}>
+      <Link to={routes.createPlace} style={{ textDecoration: "none" }}>
         <SubContainer>모임 생성</SubContainer>
       </Link>
       <Link to={routes.editPlaces} style={{ textDecoration: "none" }}>
@@ -16,7 +16,7 @@ export default function AdminPage(props: Props) {
       </Link>
       <Link to={routes.admin} style={{ textDecoration: "none" }}>
         <SubContainer>모임 참가자보기</SubContainer>
-      </Link> */}
+      </Link>
     </ContainerFlexColumn>
   );
 }

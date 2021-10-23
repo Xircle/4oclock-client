@@ -18,19 +18,23 @@ import {
   placeLocationoptions,
   CURRENT_PLACE,
 } from "../../components/shared/constants";
-import { IRoom, PlaceFeedData } from "../../lib/api/types";
+import {
+  GetMyRooms,
+  GetPlacesByLocationOutput,
+  IRoom,
+} from "../../lib/api/types";
 import PlaceFeedRowsContainer from "../../components/placeFeed/PlaceFeedContainer";
 import storage from "../../lib/storage";
 import { toast } from "react-toastify";
 import PageTitle from "../../components/PageTitle";
 import queryString from "query-string";
-import InfoBox from "../../components/UI/InfoBox";
 import { getMyRooms } from "../../lib/api/getMyRooms";
 import { SetLocalStorageItemWithMyRoom } from "../../lib/helper";
 import PopUp from "../../components/UI/PopUp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faCheckCircle } from "@fortawesome/free-regular-svg-icons";
 import { faChevronRight, faMinus } from "@fortawesome/free-solid-svg-icons";
+import EventBanner from "../../components/UI/EventBanner";
 
 interface Props extends RouteComponentProps {}
 
@@ -55,8 +59,8 @@ export default function PlaceFeedPage({ history, location }: Props) {
     setSelectedPlaceLocation(option.value as PlaceLocation);
   };
 
-  const { data: placeFeedDataArray, isLoading, isError, isSuccess } = useQuery<
-    PlaceFeedData[] | undefined
+  const { data, isLoading, isError } = useQuery<
+    GetPlacesByLocationOutput | undefined
   >(
     ["place", selectedPlaceLocation, page],
     () => getPlacesByLocation(selectedPlaceLocation, page),
@@ -66,18 +70,19 @@ export default function PlaceFeedPage({ history, location }: Props) {
     }
   );
 
-  const { data: myRooms } = useQuery<IRoom[] | undefined>(
+  const { data: myRoomsData } = useQuery<GetMyRooms | undefined>(
     ["room"],
     () => getMyRooms(),
     {
       retry: 1,
+      refetchOnWindowFocus: false,
     }
   );
 
   useEffect(() => {
-    if (!myRooms || myRooms.length === 0) return;
-    SetLocalStorageItemWithMyRoom(myRooms);
-  }, [myRooms]);
+    if (!myRoomsData?.myRooms || myRoomsData.myRooms.length === 0) return;
+    SetLocalStorageItemWithMyRoom(myRoomsData.myRooms);
+  }, [myRoomsData]);
 
   useEffect(() => {
     if (!storage.getItem(CURRENT_USER)) {
@@ -112,11 +117,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
     }
   }, []);
 
-  useEffect(() => {
-    if (isSuccess) {
-      console.log("data retrival succeeded");
-    }
-  }, [isSuccess]);
+
 
   const OnScroll = () => {
     console.log(
@@ -154,18 +155,15 @@ export default function PlaceFeedPage({ history, location }: Props) {
         </Top>
       </TopWrapper>
 
-      {/* Header info text  */}
-      <InfoBox>
-        수시로 번개모임들이 올라와요 {"😄 "}가고 싶은 모임을{" "}
-        <b>확인하고{">"}놀러가기</b>를 누르면 신청 완료!
-      </InfoBox>
+      {/* 이벤트 배너  */}
+      <EventBanner bannerImageUrl={data?.eventBannerImageUrl} />
 
       {/* Places Feed Rows container */}
       <PlaceFeedRowsWrapper>
         <PlaceFeedRowsContainer
           hasError={isError}
           isLoading={isLoading}
-          placeFeedDataArray={placeFeedDataArray}
+          placeFeedDataArray={data?.places}
         />
       </PlaceFeedRowsWrapper>
 
@@ -291,23 +289,6 @@ const BottomInfoText = styled(SubText)`
   color: ${colors.MidGray};
   font-size: 13px;
   line-height: 16px;
-`;
-
-const Heading = styled.div`
-  width: 308px;
-  border-radius: 4px;
-  background: #dbedff;
-  margin-left: auto;
-  margin-right: auto;
-  color: #18a0fb;
-  font-size: 13px;
-  line-height: 18px;
-  font-weight: normal;
-  padding: 12px 18px;
-
-  b {
-    font-weight: bold;
-  }
 `;
 
 const TopWrapper = styled.div`

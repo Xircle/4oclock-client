@@ -179,7 +179,7 @@ export const SpaceForNavBar = styled.div`
   height: 100px;
 `;
 
-export const BottomNavBarContainer = styled.div`
+export const BottomNavBarContainer = styled.nav`
   height: 75px;
   display: flex;
   justify-content: center;

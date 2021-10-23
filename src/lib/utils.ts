@@ -122,7 +122,7 @@ export const ConvertSentTime = (sentTime: Date): string => {
 // (어제/오늘) (오전/오후) X:XX
 export const ConvertSentTimeForList = (sentAt: Date): string => {
   if (moment(sentAt).format("MMM Do YY") === moment().format("MMM Do YY")) {
-    return "오늘 " + ConvertSentTime(sentAt);
+    return ConvertSentTime(sentAt);
   } else if (
     moment(sentAt).add(1, "days").format("MMM Do YY") ===
     moment().format("MMM Do YY")

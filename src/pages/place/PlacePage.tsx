@@ -179,7 +179,9 @@ export default function PlacePage({ match, location, history }: Props) {
           <SHeaderCategoryIndicator>
             {placeData.participantsCount}명 신청중
           </SHeaderCategoryIndicator>
-          <SHeaderTextHeading>{placeData.name}</SHeaderTextHeading>
+          <SHeaderTextHeading>
+            {placeData.name} {placeData.isLightning && "⚡️"}
+          </SHeaderTextHeading>
           <FlexSpaceBetween>
             <SHeaderTextDescription>
               {parseHashTags(placeData.placeDetail.categories)}
@@ -284,34 +286,32 @@ export default function PlacePage({ match, location, history }: Props) {
             {AgeNumberToString(placeData.participantsInfo.average_age)}
           </PParticipant>
         </PParticipantContainer>
-        {!isClosed && (
-          <AvartarImgContainerParticipant
-            isParticipating={placeData.isParticipating}
-          >
-            {placeData.participants.map((participant) => (
-              <Avatar
-                key={participant.userId}
-                profileImgUrl={participant.profileImgUrl}
-                width="46px"
-                rightOffset={"8px"}
-                onClick={() => {
-                  if (placeData.isParticipating) {
-                    history.push(`${routes.userProfile}`, {
-                      id: participant.userId,
-                    });
-                  } else if (!isClosed) {
-                    history.push(
-                      `/participants-list/${encodeUrlSlug(placeData.name)}`,
-                      {
-                        placeId,
-                      }
-                    );
-                  }
-                }}
-              />
-            ))}
-          </AvartarImgContainerParticipant>
-        )}
+        <AvartarImgContainerParticipant
+          isParticipating={placeData.isParticipating}
+        >
+          {placeData.participants.map((participant) => (
+            <Avatar
+              key={participant.userId}
+              profileImgUrl={participant.profileImgUrl}
+              width="46px"
+              rightOffset={"8px"}
+              onClick={() => {
+                if (placeData.isParticipating) {
+                  history.push(`${routes.userProfile}`, {
+                    id: participant.userId,
+                  });
+                } else if (!isClosed) {
+                  history.push(
+                    `/participants-list/${encodeUrlSlug(placeData.name)}`,
+                    {
+                      placeId,
+                    }
+                  );
+                }
+              }}
+            />
+          ))}
+        </AvartarImgContainerParticipant>
       </Section>
 
       {/* 모임 안내 */}
@@ -404,6 +404,7 @@ export default function PlacePage({ match, location, history }: Props) {
           isParticipating={placeData.isParticipating}
           isFinal={isFinal}
           isClosed={isClosed}
+          isLightning={placeData.isLightning}
           showCancelBtn={showCancelBtn}
           disabled={(placeData.isParticipating && !showCancelBtn) || isClosed}
         >
@@ -414,6 +415,8 @@ export default function PlacePage({ match, location, history }: Props) {
               ? "마감 되었어요"
               : placeData.isParticipating
               ? "이미 참여 신청된 모임이예요"
+              : placeData.isLightning
+              ? " 이팅번개 놀러가기 ⚡️"
               : isFinal
               ? "오늘 마감! 이팅모임 놀러가기"
               : "이팅모임 놀러가기"}
@@ -529,11 +532,14 @@ const CTABottomFixedButtoninContainer = styled(BottomFixedButtoninContainer)<{
   isParticipating: boolean;
   isFinal: boolean;
   isClosed: boolean;
+  isLightning: boolean;
   showCancelBtn: boolean;
 }>`
-  background-color: ${(props) =>
+  background: ${(props) =>
     props.isParticipating || props.isClosed || props.showCancelBtn
       ? "#A7B0C0"
+      : props.isLightning
+      ? "linear-gradient(to right, #9640cd, #697ee7) border-box"
       : props.isFinal
       ? "#FF2343"
       : "#18a0fb"};

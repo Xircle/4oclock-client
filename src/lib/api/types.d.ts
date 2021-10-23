@@ -37,11 +37,12 @@ export interface PlaceFeedData {
   startDateAt: string;
   startTime: number;
   isClosed: boolean;
+  isLightning: boolean;
   participantsCount: number;
   startDateFromNow: string;
   participants: Participants[];
   isParticipating: boolean;
-  deadline?: string;
+  deadline: string;
   views: number;
 }
 
@@ -49,6 +50,7 @@ export interface ParticipantsListData extends Participants {}
 
 export interface GetPlacesByLocationOutput extends CoreOutput {
   places: PlaceFeedData[];
+  eventBannerImageUrl: string;
 }
 
 // Get Place By Id
@@ -69,6 +71,7 @@ export interface PlaceData {
   deadline: string;
   coverImage: string;
   isClosed: boolean;
+  isLightning: boolean;
   isParticipating: boolean;
   participants: PlaceDataParticipantsProfile[];
   participantsCount: number;
@@ -247,6 +250,7 @@ export interface IRoom {
 
 export interface GetMyRooms extends CoreOutput {
   myRooms: IRoom[];
+  hasUnreadMessage: boolean;
 }
 
 // My Room Messages

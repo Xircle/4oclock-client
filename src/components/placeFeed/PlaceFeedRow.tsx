@@ -16,6 +16,7 @@ export default function PlaceFeedRow({
   deadline,
   oneLineIntroText,
   isClosed,
+  isLightning,
   participantsCount,
   startDateFromNow,
   startTime,
@@ -33,11 +34,11 @@ export default function PlaceFeedRow({
           </>
         )}
         {deadline && (
-          <PlaceDeadline>
+          <PlaceDeadline isLightning={isLightning}>
             <p>{ModifyDeadline(deadline)}</p>
           </PlaceDeadline>
         )}
-        <PlaceCoverImage src={coverImage} />
+        <PlaceCoverImage src={coverImage} isLightning={isLightning} />
       </PlaceLeftContainer>
 
       <PlaceRightContainer>
@@ -54,24 +55,18 @@ export default function PlaceFeedRow({
           {participantsCount}명의
           <span className="bold"> 친구들 신청중</span>
         </PlaceSummary>
-        {!isClosed && (
-          <ParticipantsContainer>
-            <ParticipantsWrapper isParticipating={isParticipating}>
-              {participants.map((parti, idx) => {
-                if (idx < 4) {
-                  return (
-                    <Avatar
-                      key={parti.userId}
-                      rightOffset={"-10px"}
-                      {...parti}
-                    />
-                  );
-                }
-              })}
-            </ParticipantsWrapper>
-            {participantsCount > 4 ? <p>+{participantsCount - 4}</p> : null}
-          </ParticipantsContainer>
-        )}
+        <ParticipantsContainer>
+          <ParticipantsWrapper isParticipating={isParticipating}>
+            {participants.map((parti, idx) => {
+              if (idx < 4) {
+                return (
+                  <Avatar key={parti.userId} rightOffset={"-10px"} {...parti} />
+                );
+              }
+            })}
+          </ParticipantsWrapper>
+          {participantsCount > 4 ? <p>+{participantsCount - 4}</p> : null}
+        </ParticipantsContainer>
       </PlaceRightContainer>
     </Container>
   );
@@ -105,11 +100,16 @@ const PlaceLeftContainer = styled.div`
   padding: 0px;
   position: relative;
 `;
-const PlaceCoverImage = styled.img`
+const PlaceCoverImage = styled.img<{ isLightning: boolean }>`
+  object-fit: cover;
   width: 100%;
   height: 100%;
+  background: ${(props) =>
+    props.isLightning &&
+    "linear-gradient(to top, #E67255, #D3499C) border-box"};
+  border: ${(props) => props.isLightning && "3px solid transparent"};
   border-radius: 5px;
-  object-fit: cover;
+  display: inline-block;
 `;
 
 const PlaceRightContainer = styled.div`
@@ -118,26 +118,20 @@ const PlaceRightContainer = styled.div`
   padding-top: 5px;
 `;
 
-const PlaceRightWrapper = styled.div`
-  display: flex;
-  align-content: center;
-  justify-content: start;
-`;
-
-const PlaceDeadline = styled.div`
+const PlaceDeadline = styled.div<{ isLightning: boolean }>`
   position: absolute;
-  background-color: ${colors.MidBlue};
+  background-color: ${(props) => (props.isLightning ? "#000" : colors.MidBlue)};
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 3px;
+  border-radius: 3px 0px 3px 0;
   width: 52px;
-  height: 21px;
-  top: -10px;
-  left: 5px;
+  height: 23px;
+  top: ${(props) => (props.isLightning ? "3px" : "0px")};
+  left: ${(props) => (props.isLightning ? "3px" : "0px")};
   p {
     color: white;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 11px;
   }
 `;
