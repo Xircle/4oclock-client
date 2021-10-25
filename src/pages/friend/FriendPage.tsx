@@ -62,20 +62,13 @@ export default function FriendsPage({ history }: Props) {
     }
   );
 
-  const {
-    data: randomProfileData,
-    refetch,
-    isLoading,
-    isFetching,
-  } = useQuery<UserProfile | undefined>(
-    ["randomProfile"],
-    () => seeRandomProfile(isYkClub && isYkOnly),
-    {
-      retry: 1,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
+  const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
+    UserProfile | undefined
+  >(["randomProfile"], () => seeRandomProfile(isYkClub && isYkOnly), {
+    retry: 1,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
 
   const { data } = useQuery<GetMyRooms | undefined>(
     ["room"],
@@ -242,7 +235,7 @@ export default function FriendsPage({ history }: Props) {
       <BottomButtonsContainer>
         <ChatButton
           onClick={() => {
-            if (!randomProfileData) return;
+            if (!randomProfileData || isLoading) return;
             history.push(`/chatRoom/0`, {
               id: randomProfileData?.id,
               profileImageUrl: randomProfileData?.profileImageUrl,
