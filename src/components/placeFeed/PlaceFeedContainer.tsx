@@ -21,7 +21,7 @@ export default function PlaceFeedContainer({
 }: Props) {
   const history = useHistory();
   if (hasError) return <SHeading>에러가 발생했습니다.</SHeading>;
-  if (isLoading)
+  if (isLoading && (!placeFeedDataArray || placeFeedDataArray?.length === 0))
     return (
       <>
         <LoaderWrapper top={"40%"}>

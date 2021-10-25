@@ -1,10 +1,12 @@
 import { config } from "dotenv";
 import { use100vh } from "react-div-100vh";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import { GlobalStyles, AppContainer } from "./styles/styles";
 import routes from "./routes";
 import { PortalProvider } from "./providers/PortalProvider";
+import storage from "./lib/storage";
+import { POP_UP } from "./components/shared/constants";
 import { HelmetProvider } from "react-helmet-async";
 import ImageGalleryPage from "./pages/ImageGalleryPage";
 import SocialRedirect from "./pages/RedirectPage";
@@ -42,6 +44,11 @@ const EditPlacesPage = React.lazy(() => import("./pages/Admin/EditPlacesPage"));
 const EditPlacePage = React.lazy(() => import("./pages/Admin/EditPlacePage"));
 
 function App() {
+  useEffect(() => {
+    if (storage.getItem(POP_UP) === null) {
+      storage.setItem(POP_UP, "true");
+    }
+  }, []);
   const isUse100Vh = use100vh();
 
   return (
