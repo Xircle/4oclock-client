@@ -38,7 +38,7 @@ export default function FriendsPage({ history }: Props) {
   useEffect(() => {
     window.scrollTo(0, 0);
     if (storage.getItem(IS_YK_ONLY) === null) {
-      storage.setItem(IS_YK_ONLY, isYkOnly);
+      storage.setItem(IS_YK_ONLY, isYkOnly + "");
     } else if (storage.getItem(IS_YK_ONLY) === "true") {
       SetIsYkOnly(true);
     } else {
