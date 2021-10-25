@@ -74,12 +74,10 @@ export default function ParticipantProfilePage({ history }: Props) {
               onClick={() => {
                 if (!userProfileData?.profileImageUrl) return;
                 history.push("image/0", {
-                  payload: [
-                    {
-                      id: userProfileData?.profileImageUrl,
-                      imageUrl: userProfileData?.profileImageUrl,
-                    },
-                  ],
+                  payload: {
+                    id: userProfileData?.profileImageUrl,
+                    imageUrls: [userProfileData?.profileImageUrl],
+                  },
                 });
               }}
             />
