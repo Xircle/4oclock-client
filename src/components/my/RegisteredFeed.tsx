@@ -50,7 +50,6 @@ export default function RegisteredFeed({
 }
 
 const CancelLink = styled(Link)`
-  z-index: 999;
   text-decoration: none;
   &:hover {
     text-decoration: underline;
