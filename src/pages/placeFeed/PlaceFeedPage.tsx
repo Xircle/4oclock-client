@@ -22,6 +22,7 @@ import {
   GetMyRooms,
   GetPlacesByLocationOutput,
   IRoom,
+  PlaceFeedData,
 } from "../../lib/api/types";
 import PlaceFeedRowsContainer from "../../components/placeFeed/PlaceFeedContainer";
 import storage from "../../lib/storage";
@@ -35,10 +36,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faCheckCircle } from "@fortawesome/free-regular-svg-icons";
 import { faChevronRight, faMinus } from "@fortawesome/free-solid-svg-icons";
 import EventBanner from "../../components/UI/EventBanner";
+import ClipLoader from "react-spinners/ClipLoader";
 
 interface Props extends RouteComponentProps {}
 
 export default function PlaceFeedPage({ history, location }: Props) {
+  const [placeFeedData, setPlaceFeedData] = useState<PlaceFeedData[]>([]);
+  const [reloadFailed, setReloadFailed] = useState(false);
+  const [reloading, setReloading] = useState(false);
   const container = useRef<HTMLDivElement>(null);
   const historyH = useHistory();
   const UrlSearch = location.search;
@@ -58,8 +63,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
     storage.setItem(CURRENT_PLACE, option.value as PlaceLocation);
     setSelectedPlaceLocation(option.value as PlaceLocation);
   };
-
-  const { data, isLoading, isError } = useQuery<
+  const { data, isLoading, isError, isFetching, isFetched } = useQuery<
     GetPlacesByLocationOutput | undefined
   >(
     ["place", selectedPlaceLocation, page],
@@ -78,6 +82,42 @@ export default function PlaceFeedPage({ history, location }: Props) {
       refetchOnWindowFocus: false,
     }
   );
+
+  useEffect(() => {
+    setPage(1);
+    setReloadFailed(false);
+  }, [selectedPlaceLocation]);
+
+  useEffect(() => {
+    if (reloading && !isFetching && !reloadFailed) {
+      setPage(page + 1);
+      setReloading(false);
+    }
+  }, [reloading]);
+
+  useEffect(() => {
+    if (!isFetching) {
+      setReloading(false);
+    }
+  }, [isFetching]);
+
+  useEffect(() => {
+    if (isFetched) {
+      if (data?.places.length === 0) {
+        setReloadFailed(true);
+      }
+    }
+  }, [isFetched]);
+
+  useEffect(() => {
+    if (data?.places && !isFetching) {
+      if (page === 1) {
+        setPlaceFeedData(data.places);
+      } else {
+        setPlaceFeedData((prev) => [...prev, ...data?.places]);
+      }
+    }
+  }, [data, page, isFetching]);
 
   useEffect(() => {
     if (!myRoomsData?.myRooms || myRoomsData.myRooms.length === 0) return;
@@ -117,19 +157,18 @@ export default function PlaceFeedPage({ history, location }: Props) {
     }
   }, []);
 
-
-
   const OnScroll = () => {
-    console.log(
-      window.pageYOffset +
-        window.innerHeight +
-        " " +
-        container.current?.clientHeight
-    );
+    if (container.current) {
+      const { clientHeight } = container.current;
+      if (window.pageYOffset + window.innerHeight > clientHeight - 100) {
+        setReloading(true);
+      }
+    }
   };
 
   useEffect(() => {
     window.addEventListener("scroll", OnScroll);
+    window.scrollTo(0, 0);
     return () => {
       window.removeEventListener("scroll", OnScroll);
     };
@@ -162,9 +201,28 @@ export default function PlaceFeedPage({ history, location }: Props) {
       <PlaceFeedRowsWrapper>
         <PlaceFeedRowsContainer
           hasError={isError}
-          isLoading={isLoading}
-          placeFeedDataArray={data?.places}
+          isLoading={isFetching}
+          placeFeedDataArray={placeFeedData}
         />
+        {isFetching && page > 1 && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <ClipLoader
+              loading={isLoading}
+              color={colors.MidBlue}
+              css={{
+                name: "width",
+                styles: "border-width: 4px; z-index: 999;",
+              }}
+              size={30}
+            />
+          </div>
+        )}
       </PlaceFeedRowsWrapper>
 
       {/* Bottom Info text */}
@@ -179,7 +237,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
         </BottomInfoText>
       </BottomInfoTextContainer>
       <BottomNavBar selectedItem="places" />
-      {popUp && !isLoading && (
+      {popUp && !isFetching && (
         // change popup-onclose
         <PopUp isClose={!popUp}>
           <PopUpImg src="/popUps/HolloweenPopUp.png" />
