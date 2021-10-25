@@ -135,7 +135,7 @@ export default function ParticipantProfilePage({ history }: Props) {
             </InnerContent>
           </InnerContainer>
         </ContainerwithLeftRightMargin>
-        <SpaceForNavBar></SpaceForNavBar>
+        <div style={{ width: "100%", height: "50px" }}></div>
         {storage.getItem(CURRENT_USER).uid !== userProfileData?.id &&
           !cameFromChat && (
             <BottomButtonsContainer>
