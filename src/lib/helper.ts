@@ -1,6 +1,10 @@
 import { IRoom } from "./api/types";
 import storage from "./storage";
 
+export function scrollToTop() {
+  window.scrollTo(0, 0);
+}
+
 export function parseHashTags(string): string {
   const parsedString: string[] = JSON.parse(string);
   return "#" + parsedString.join(" #");

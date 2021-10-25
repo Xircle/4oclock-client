@@ -14,12 +14,12 @@ import {
 } from "../../styles/styles";
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
-import { UserProfile, UserData, IRoom, GetMyRooms } from "../../lib/api/types";
+import { UserProfile, UserData, GetMyRooms } from "../../lib/api/types";
 import { seeRandomProfile } from "../../lib/api/seeRandomProfile";
 import { getUser } from "../../lib/api/getUser";
 import { AgeNumberToString } from "../../lib/utils";
 import ClipLoader from "react-spinners/ClipLoader";
-import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
+import { LoaderWrapper } from "../../components/shared/Loader";
 import routes from "../../routes";
 import storage from "../../lib/storage";
 import { CURRENT_USER, IS_YK_ONLY } from "../../components/shared/constants";
@@ -226,12 +226,14 @@ export default function FriendsPage({ history }: Props) {
       {isLoading ||
         (isFetching && (
           <>
-            <LoaderBackdrop />
             <LoaderWrapper>
               <ClipLoader
                 loading={isLoading || isFetching}
                 color={colors.MidBlue}
-                css={{ name: "width", styles: "border-width: 4px;" }}
+                css={{
+                  name: "width",
+                  styles: "border-width: 4px; opacity: 0.8",
+                }}
                 size={30}
               />
             </LoaderWrapper>

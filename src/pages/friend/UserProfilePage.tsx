@@ -15,7 +15,7 @@ import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { UserProfile } from "../../lib/api/types";
 import ClipLoader from "react-spinners/ClipLoader";
-import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
+import { LoaderWrapper } from "../../components/shared/Loader";
 import routes from "../../routes";
 import storage from "../../lib/storage";
 import { CURRENT_USER } from "../../components/shared/constants";
@@ -160,7 +160,6 @@ export default function ParticipantProfilePage({ history }: Props) {
 
       {isLoading && (
         <>
-          <LoaderBackdrop />
           <LoaderWrapper>
             <ClipLoader
               loading={isLoading}

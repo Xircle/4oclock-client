@@ -17,6 +17,7 @@ import { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { LoaderBackdrop, LoaderWrapper } from "../components/shared/Loader";
 import { toast } from "react-toastify";
+import routes from "../routes";
 
 interface Props extends RouteComponentProps<{}, {}, { placeId: string }> {}
 
@@ -40,7 +41,7 @@ export default function CancelReservationPage({ history, location }: Props) {
     toast.info("예약이 취소되었습니다", {
       position: toast.POSITION.TOP_CENTER,
     });
-    history.push(`/place/${placeId}`);
+    history.replace(routes.myPlace);
   };
 
   return (

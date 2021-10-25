@@ -19,7 +19,7 @@ import { useSocket } from "../../hooks/useSocket";
 import { GetRoomMessagesOutput, IMessage } from "../../lib/api/types";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getRoomMessages } from "../../lib/api/getRoomMessages";
-import { LoaderWrapper } from "../../components/shared/Loader";
+import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
 import storage from "../../lib/storage";
 import { CURRENT_USER } from "../../components/shared/constants";
 import { useCallback } from "react";
@@ -46,9 +46,6 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   const isUse100Vh = use100vh();
   const containerHeight = isUse100Vh ? isUse100Vh : "100vh";
   const scrollbarRef = useRef<Scrollbars>(null);
-  useEffect(() => {
-    scrollbarRef.current?.scrollToBottom(); // 맨 밑으로 스크롤
-  }, [scrollbarRef.current]);
   const MessageInputRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
   const { roomId } = match.params;
@@ -87,20 +84,18 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   const [messageInput, SetMessageInput] = useState("");
   const [isCollapse, SetIsCollapse] = useState(false);
   const [showNewMessageAlert, setShowNewMessageAlert] = useState(false);
-  const [isLeaveRoomClicked, SetIsLeaveRoomClicked] = useState(false);
-  const [isBlockUserClicked, SetIsBlockUserClicked] = useState(false);
-  const [isReportUserClicked, SetIsReportUserClicked] = useState(false);
+  // const [isLeaveRoomClicked, SetIsLeaveRoomClicked] = useState(false);
+  // const [isBlockUserClicked, SetIsBlockUserClicked] = useState(false);
+  // const [isReportUserClicked, SetIsReportUserClicked] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
   const [page, setPage] = useState(1);
   const [isReceiverJoining, setIsReceiverJoining] = useState(false);
   const [socket, disconnect] = useSocket(
     storage.getItem(`chat-${receiverId}`) || ""
   );
-  const {
-    data: fetchedMessagesData,
-    isFetching,
-    isFetchedAfterMount,
-  } = useQuery<GetRoomMessagesOutput | undefined>(
+  const { data: fetchedMessagesData, isFetching } = useQuery<
+    GetRoomMessagesOutput | undefined
+  >(
     ["room-chat", roomId, page],
     () => getRoomMessages(roomId, receiverId, page, 40),
     {
@@ -113,6 +108,10 @@ export default function ChatRoomPage({ match, history, location }: Props) {
       keepPreviousData: true,
     }
   );
+
+  useEffect(() => {
+    if (page === 1) scrollbarRef.current?.scrollToBottom(); // 맨 밑으로 스크롤
+  }, [messages, page, scrollbarRef.current]);
 
   useEffect(() => {
     // 마운트 후, 모든 소켓 연결
@@ -148,18 +147,21 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   const { mutateAsync: mutateMessage } = useMutation(sendMessage);
 
   useEffect(() => {
-    // 캐시된 데이터가 아닌, 최신 메세지만 로컬 message와 동기화
     if (!fetchedMessagesData?.messages) return;
-    if (isFetching && !isFetchedAfterMount) return;
-    setMessages((prev) => [...prev, ...fetchedMessagesData?.messages]);
-  }, [fetchedMessagesData, isFetching]);
+    if (page === 1) {
+      setMessages(fetchedMessagesData?.messages);
+    } else {
+      // pagination 시에 이전 데이터와 함께 보여주기 위해서 prev 사용
+      setMessages((prev) => [...prev, ...fetchedMessagesData?.messages]);
+    }
+  }, [page, fetchedMessagesData]);
 
   useEffect(() => {
     // 만약 hasMore이면 미리 캐싱해놓는다.
     if (fetchedMessagesData?.meta?.hasMore) {
-      console.log("prefetch!!");
+      console.log("prefetch!");
       queryClient.prefetchQuery(["room-chat", roomId, page + 1], () =>
-        getRoomMessages(roomId, receiverId, page + 1, 40)
+        getRoomMessages(roomId, receiverId, page + 1)
       );
     }
   }, [fetchedMessagesData, queryClient, roomId, receiverId, page]);
@@ -219,6 +221,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     ) => {
       e.preventDefault();
       if (messageInput.trim().length === 0) return;
+      SetMessageInput("");
       SetIsLastMe(true);
       MessageInputRef.current?.focus();
       scrollbarRef.current?.scrollToBottom();
@@ -264,7 +267,6 @@ export default function ChatRoomPage({ match, history, location }: Props) {
         anonymouseId: storage.getItem(CURRENT_USER)?.uid,
         flag: false,
       });
-      SetMessageInput("");
     },
     [MessageInputRef, messageInput, receiverId, roomId, socket, mutateMessage]
   );
@@ -274,10 +276,13 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     history.goBack();
   }, [socket, roomId]);
 
-  if (isFetching && page === 1)
-    return (
-      <>
+  return (
+    <SContainer style={{ height: containerHeight }}>
+      <PageTitle title="채팅" />
+
+      {isFetching && page === 1 && (
         <LoaderWrapper>
+          <LoaderBackdrop />
           <ClipLoader
             loading={true}
             color={colors.MidBlue}
@@ -288,13 +293,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
             size={30}
           />
         </LoaderWrapper>
-      </>
-    );
-
-  return (
-    <SContainer style={{ height: containerHeight }}>
-      <PageTitle title="채팅" />
-
+      )}
       {/* Header */}
       <Header>
         <LeftHeaderContainer>
@@ -323,7 +322,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
             icon={faEllipsisV}
             color={colors.Black}
             size="lg"
-            onClick={() => SetIsCollapse(!isCollapse)}
+            // onClick={() => SetIsCollapse(!isCollapse)}
           />
         </RightHeaderContainer>
         <DropdownContainer>
@@ -371,12 +370,14 @@ export default function ChatRoomPage({ match, history, location }: Props) {
               isMe={false}
             ></ChatMessage>
           )}
-          {messages?.map((message, index) => (
-            <>
-              {/* {index > 0 && } */}
-              <ChatMessage key={index} {...message} />
-            </>
-          ))}
+          {messages.map((message, index) => {
+            return (
+              <React.Fragment key={index}>
+                {/* {index > 0 && } */}
+                <ChatMessage {...message} />
+              </React.Fragment>
+            );
+          })}
           {isFetching && page !== 1 && (
             <ChatLoadingWrapper>
               <ClipLoader
@@ -416,7 +417,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
           </SendButton>
         </form>
       </InputContainer>
-      {(isLeaveRoomClicked || isBlockUserClicked || isReportUserClicked) && (
+      {/* {(isLeaveRoomClicked || isBlockUserClicked || isReportUserClicked) && (
         <Modal
           isClose={
             !isLeaveRoomClicked && !isBlockUserClicked && !isReportUserClicked
@@ -490,7 +491,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
             </CloseModalButton>
           </ReservationModalWrapper>
         </Modal>
-      )}
+      )} */}
     </SContainer>
   );
 }

@@ -121,7 +121,7 @@ export default function ReservationPage({ match, location, history }: Props) {
               </TagBooking>
             </SelectionMainTextBooking>
             <SelectionSubTextBooking>
-              {participantsNumber || "0"}명의 친구들이 신청했어요
+              {participantsNumber || "N"}명의 친구들이 신청했어요
             </SelectionSubTextBooking>
             <CheckIcon>
               {selected ? (
