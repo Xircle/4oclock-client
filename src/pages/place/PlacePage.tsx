@@ -242,22 +242,24 @@ export default function PlacePage({ match, location }: Props) {
           {placeData?.placeDetail.description}
         </p>
       </DescriptionContainer>
+
       <AlbumnDescription>
         <strong>{placeData?.name || name} 이팅모임</strong>{" "}
-        <span>{placeData?.reviews.length || "N"}</span>
+        <span>{placeData?.reviews[0].imageUrls.length || "N"}</span>
         <p>사진을 클릭해서 살펴보세요</p>
       </AlbumnDescription>
+
       {/* Review Album  */}
       <GridContainer>
-        {placeData?.reviews.map((review, index) => {
+        {placeData?.reviews[0].imageUrls.map((imageUrl, index) => {
           if (index < 5) {
             return (
               <GridPic
-                key={review.id}
-                src={review.imageUrl}
+                key={placeData?.reviews[0].id}
+                src={imageUrl}
                 onClick={() =>
                   history.push(`/image/${index}`, {
-                    payload: placeData?.reviews,
+                    payload: placeData?.reviews[0],
                   })
                 }
               />
@@ -265,19 +267,19 @@ export default function PlacePage({ match, location }: Props) {
           } else if (index == 5) {
             return (
               <OverlayContainer
-                key={review.id}
+                key={placeData?.reviews[0].id}
                 onClick={() =>
                   history.push(`/image/${index}`, {
-                    payload: placeData?.reviews,
+                    payload: placeData?.reviews[0],
                   })
                 }
               >
-                <GridPic src={review.imageUrl} />
+                <GridPic src={imageUrl} />
                 <Overlay />
                 <OverlayText>
-                  {placeData?.reviews.length - 6 > 0 && (
+                  {placeData?.reviews[0].imageUrls.length - 6 > 0 && (
                     <>
-                      +{placeData?.reviews.length - 6}
+                      +{placeData?.reviews[0].imageUrls.length - 6}
                       <br />
                     </>
                   )}

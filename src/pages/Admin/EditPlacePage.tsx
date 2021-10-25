@@ -109,7 +109,7 @@ export default function EditPlacePage({ match }: Props) {
 
     if (placeData?.reviews) {
       for (let i = 0; i < placeData.reviews.length; i++) {
-        setSubFilesUrl((prev) => [...prev, placeData.reviews[i].imageUrl]);
+        setSubFilesUrl((prev) => [...prev, placeData.reviews[0].imageUrls[i]]);
       }
     }
     if (placeData?.coverImage) {
