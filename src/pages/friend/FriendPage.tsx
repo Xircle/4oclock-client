@@ -164,12 +164,10 @@ export default function FriendsPage({ history }: Props) {
             onClick={() => {
               if (!randomProfileData?.profileImageUrl) return;
               history.push(`/image/${0}`, {
-                payload: [
-                  {
-                    id: randomProfileData?.id,
-                    imageUrl: randomProfileData.profileImageUrl,
-                  },
-                ],
+                payload: {
+                  id: randomProfileData?.id,
+                  imageUrls: [randomProfileData?.profileImageUrl],
+                },
               });
             }}
           />
