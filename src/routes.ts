@@ -22,6 +22,7 @@ const routes = {
   createPlace: "/createPlace",
   editPlaces: "/editPlaces",
   editPlace: "/editPlace/:placeId",
+  reviews: "/reviews",
 };
 
 export default routes;
