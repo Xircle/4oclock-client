@@ -2,22 +2,27 @@ import styled from "styled-components";
 import { Container } from "../../styles/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
+import { useHistory } from "react-router-dom";
 
 interface Props {
   title: string;
 }
 
 export default function ReviewSmallContainer({ title }: Props) {
+  const history = useHistory();
   return (
     <Container>
       <Seperator></Seperator>
       <InnerWrapper>
         <Heading>
           <Title>{title}</Title>
-          <CTAText>
-            구경하기{" "}
+          <CTAText
+            onClick={() => {
+              history.push(`/reviews`);
+            }}
+          >
+            구경하기
             <FontAwesomeIcon
               icon={faChevronRight}
               color={"#6f7789"}
