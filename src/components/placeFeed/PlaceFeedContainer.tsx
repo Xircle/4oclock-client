@@ -5,6 +5,8 @@ import { LoaderWrapper } from "../shared/Loader";
 import PlaceFeedRow from "./PlaceFeedRow";
 import ClipLoader from "react-spinners/ClipLoader";
 import styled from "styled-components";
+import ReviewSmallContainer from "../review/ReviewSmallContainer";
+import { Fragment } from "react";
 
 interface Props {
   isAdminEditPlace?: boolean;
@@ -43,46 +45,52 @@ export default function PlaceFeedContainer({
 
   return (
     <>
-      {placeFeedDataArray?.map((placeFeedData) => (
-        <PlaceFeedRow
-          key={placeFeedData.id}
-          onClick={() => {
-            const {
-              coverImage,
-              name,
-              participantsCount,
-              isLightning,
-              views,
-              startDateFromNow,
-              startTime,
-              isParticipating,
-              participants,
-              startDateAt,
-            } = placeFeedData;
-            if (!isAdminEditPlace) {
-              history.push(
-                `/place/${placeFeedData.id}?isFinal=${
-                  placeFeedData.deadline === "오늘 마감"
-                }&isClosed=${placeFeedData.isClosed}`,
-                {
-                  coverImage,
-                  name,
-                  participantsCount,
-                  isLightning,
-                  views,
-                  startDateFromNow,
-                  startTime,
-                  isParticipating,
-                  participants,
-                  startDateAt,
-                }
-              );
-            } else {
-              history.push(`/editPlace/${placeFeedData.id}`);
-            }
-          }}
-          {...placeFeedData}
-        />
+      {placeFeedDataArray?.map((placeFeedData, idx) => (
+        <Fragment key={placeFeedData.id}>
+          <PlaceFeedRow
+            onClick={() => {
+              const {
+                coverImage,
+                name,
+                participantsCount,
+                isLightning,
+                views,
+                startDateFromNow,
+                startTime,
+                isParticipating,
+                participants,
+                startDateAt,
+              } = placeFeedData;
+              if (!isAdminEditPlace) {
+                history.push(
+                  `/place/${placeFeedData.id}?isFinal=${
+                    placeFeedData.deadline === "오늘 마감"
+                  }&isClosed=${placeFeedData.isClosed}`,
+                  {
+                    coverImage,
+                    name,
+                    participantsCount,
+                    isLightning,
+                    views,
+                    startDateFromNow,
+                    startTime,
+                    isParticipating,
+                    participants,
+                    startDateAt,
+                  }
+                );
+              } else {
+                history.push(`/editPlace/${placeFeedData.id}`);
+              }
+            }}
+            {...placeFeedData}
+          />
+          {idx === 2 && (
+            <ReviewSmallContainer
+              title={"이팅모임 후기들"}
+            ></ReviewSmallContainer>
+          )}
+        </Fragment>
       ))}
     </>
   );
