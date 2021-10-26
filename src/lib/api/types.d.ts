@@ -273,3 +273,12 @@ export interface SendMessageInput {
   receiverId: string;
   content: string;
 }
+
+export interface ReviewData {
+  imgUrls: string[];
+  description: string;
+}
+
+export interface GetReviewsOutput extends CoreOutput {
+  reviews: ReviewData[];
+}
