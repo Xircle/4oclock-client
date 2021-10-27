@@ -4,12 +4,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { Carousel } from "react-responsive-carousel";
 import { useHistory } from "react-router-dom";
+import type { Review } from "../../lib/api/types";
+import { useState } from "react";
 
 interface Props {
   title: string;
+  reviews: Review[];
 }
 
-export default function ReviewSmallContainer({ title }: Props) {
+export default function ReviewSmallContainer({ title, reviews }: Props) {
+  const [page, setPage] = useState(1);
+
   const history = useHistory();
   return (
     <Container>
@@ -30,6 +35,7 @@ export default function ReviewSmallContainer({ title }: Props) {
             />
           </CTAText>
         </Heading>
+
         <SCarousel
           infiniteLoop={false}
           showArrows={false}
@@ -38,22 +44,14 @@ export default function ReviewSmallContainer({ title }: Props) {
           showStatus={false}
           centerMode={true}
         >
-          <CarouselWrapper>
-            <CarouselImg src="/avatar/Avartar001.jpeg" />
-            <CarouselDescription>#10.10 신촌 술익는 마을</CarouselDescription>
-          </CarouselWrapper>
-          <CarouselWrapper>
-            <CarouselImg src="/avatar/Avartar001.jpeg" />
-            <CarouselDescription>#10.10 신촌 술익는 마을</CarouselDescription>
-          </CarouselWrapper>
-          <CarouselWrapper>
-            <CarouselImg src="/avatar/Avartar001.jpeg" />
-            <CarouselDescription>#10.10 신촌 술익는 마을</CarouselDescription>
-          </CarouselWrapper>
-          <CarouselWrapper>
-            <CarouselImg src="/avatar/Avartar001.jpeg" />
-            <CarouselDescription>#10.10 신촌 술익는 마을</CarouselDescription>
-          </CarouselWrapper>
+          {reviews?.slice(reviews.length - 2, reviews.length).map((review) => {
+            return (
+              <CarouselWrapper key={review.id}>
+                <CarouselImg src={review.imageUrls[0]} />
+                <CarouselDescription>{review.description}</CarouselDescription>
+              </CarouselWrapper>
+            );
+          })}
         </SCarousel>
       </InnerWrapper>
       <Seperator></Seperator>
@@ -114,6 +112,6 @@ const CarouselDescription = styled.div`
   bottom: 15px;
   width: 70%;
   color: white;
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 500;
 `;

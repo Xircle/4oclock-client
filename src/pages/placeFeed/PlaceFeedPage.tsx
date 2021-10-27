@@ -37,6 +37,8 @@ import { faCircle, faCheckCircle } from "@fortawesome/free-regular-svg-icons";
 import { faChevronRight, faMinus } from "@fortawesome/free-solid-svg-icons";
 import EventBanner from "../../components/UI/EventBanner";
 import ClipLoader from "react-spinners/ClipLoader";
+import type { Review } from "../../lib/api/types";
+import { getReviews } from "../../lib/api/getReviews";
 
 interface Props extends RouteComponentProps {}
 
@@ -68,6 +70,14 @@ export default function PlaceFeedPage({ history, location }: Props) {
   >(
     ["place", selectedPlaceLocation, page],
     () => getPlacesByLocation(selectedPlaceLocation, page),
+    {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    }
+  );
+  const { data: reviews } = useQuery<Review[]>(
+    ["reviews"],
+    () => getReviews(),
     {
       retry: 1,
       refetchOnWindowFocus: false,
@@ -200,6 +210,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
       {/* Places Feed Rows container */}
       <PlaceFeedRowsWrapper>
         <PlaceFeedRowsContainer
+          reviews={reviews}
           hasError={isError}
           isLoading={isFetching}
           placeFeedDataArray={placeFeedData}
@@ -254,7 +265,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
             <span>다시는 보지 않겠습니다</span>
           </NoShowTodaySpan>
           <CloseButton onClick={() => setPopUp(false)}>닫기</CloseButton>
-          <PopUpCTAButton onClick={() => setPopUp(false)}>
+          <PopUpCTAButton>
             파티 입장하기
             <FontAwesomeIcon
               icon={faMinus}

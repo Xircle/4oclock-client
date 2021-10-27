@@ -5,11 +5,11 @@ import { Carousel } from "react-responsive-carousel";
 import { useHistory } from "react-router-dom";
 import BottomNavBar from "../../components/shared/BottomNavBar";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { GetReviewsOutput, Review } from "../../lib/api/types";
+import { Review } from "../../lib/api/types";
 import ClipLoader from "react-spinners/ClipLoader";
 import { getReviews } from "../../lib/api/getReviews";
 import { useQuery } from "react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ReviewThumbNail from "../../components/review/ReviewThumbNail";
 
 interface Props {}
@@ -27,14 +27,7 @@ export default function ReviewsPage(props: Props) {
     }
   );
 
-  useEffect(() => {
-    console.log(reviews);
-  }, [reviews]);
-
-  const ReviewClickHandler = (review : Review) => {
-      
-  }
-
+  const ReviewClickHandler = (review: Review) => {};
 
   return (
     <Container>
@@ -54,7 +47,7 @@ export default function ReviewsPage(props: Props) {
         뭐든 함께 나누면 즐거워진다! 친구들과 놀러가요😊🥰
       </SubHeading>
       <GridContainer>
-        {reviews?.reverse().map((review) => {
+        {reviews?.map((review) => {
           if (review.imageUrls.length !== 0) {
             return (
               <ReviewThumbNail

@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import type { PlaceFeedData } from "../../lib/api/types";
+import type { PlaceFeedData, Review } from "../../lib/api/types";
 import { colors, Heading } from "../../styles/styles";
 import { LoaderWrapper } from "../shared/Loader";
 import PlaceFeedRow from "./PlaceFeedRow";
@@ -13,6 +13,7 @@ interface Props {
   placeFeedDataArray?: PlaceFeedData[];
   isLoading: boolean;
   hasError: boolean;
+  reviews?: Review[];
 }
 
 export default function PlaceFeedContainer({
@@ -20,6 +21,7 @@ export default function PlaceFeedContainer({
   isLoading,
   hasError,
   placeFeedDataArray,
+  reviews,
 }: Props) {
   const history = useHistory();
   if (hasError) return <SHeading>에러가 발생했습니다.</SHeading>;
@@ -85,9 +87,10 @@ export default function PlaceFeedContainer({
             }}
             {...placeFeedData}
           />
-          {idx === 2 && (
+          {idx === 2 && reviews && (
             <ReviewSmallContainer
               title={"이팅모임 후기들"}
+              reviews={reviews}
             ></ReviewSmallContainer>
           )}
         </Fragment>
