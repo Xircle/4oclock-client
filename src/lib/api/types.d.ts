@@ -280,5 +280,5 @@ export interface SendMessageInput {
 }
 
 export interface GetReviewsOutput extends CoreOutput {
-  reviews: ReviewData[];
+  reviews: Review[];
 }

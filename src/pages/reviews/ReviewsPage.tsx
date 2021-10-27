@@ -5,11 +5,37 @@ import { Carousel } from "react-responsive-carousel";
 import { useHistory } from "react-router-dom";
 import BottomNavBar from "../../components/shared/BottomNavBar";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { GetReviewsOutput, Review } from "../../lib/api/types";
+import ClipLoader from "react-spinners/ClipLoader";
+import { getReviews } from "../../lib/api/getReviews";
+import { useQuery } from "react-query";
+import { useEffect, useState } from "react";
+import ReviewThumbNail from "../../components/review/ReviewThumbNail";
 
 interface Props {}
 
 export default function ReviewsPage(props: Props) {
   const history = useHistory();
+  const [page, setPage] = useState(1);
+
+  const { data: reviews, isLoading, isError, isFetching } = useQuery<Review[]>(
+    ["reviews", page],
+    () => getReviews(page),
+    {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  useEffect(() => {
+    console.log(reviews);
+  }, [reviews]);
+
+  const ReviewClickHandler = (review : Review) => {
+      
+  }
+
+
   return (
     <Container>
       <TopHeading>
@@ -28,14 +54,17 @@ export default function ReviewsPage(props: Props) {
         뭐든 함께 나누면 즐거워진다! 친구들과 놀러가요😊🥰
       </SubHeading>
       <GridContainer>
-        <GridImg src="/avatar/Avartar001.jpeg" />
-        <GridImg src="/avatar/Avartar001.jpeg" />
-        <GridImg src="/avatar/Avartar001.jpeg" />
-        <GridImg src="/avatar/Avartar001.jpeg" />
-        <GridImg src="/avatar/Avartar001.jpeg" />
-        <GridImg src="/avatar/Avartar001.jpeg" />
-        <GridImg src="/avatar/Avartar001.jpeg" />
-        <GridImg src="/avatar/Avartar001.jpeg" />
+        {reviews?.reverse().map((review) => {
+          if (review.imageUrls.length !== 0) {
+            return (
+              <ReviewThumbNail
+                key={review.id}
+                {...review}
+                onClick={() => {}}
+              ></ReviewThumbNail>
+            );
+          }
+        })}
       </GridContainer>
       <BottomNavBar selectedItem="places" />
     </Container>
