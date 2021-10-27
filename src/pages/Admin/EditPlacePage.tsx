@@ -312,7 +312,7 @@ export default function EditPlacePage({ match }: Props) {
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
             dispatch({
               type: "setReviewDescriptions",
-              payload: ModifyStringToStringArray(e.target.value, "%"),
+              payload: e.target.value,
             })
           }
         />

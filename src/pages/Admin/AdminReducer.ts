@@ -16,7 +16,7 @@ export type AdminPlaceAction =
   | { type: "setCategories"; payload: string[] }
   | { type: "setDetailAddress"; payload: string }
   | { type: "setDetailLink"; payload: string }
-  | { type: "setReviewDescriptions"; payload: string[] }
+  | { type: "setReviewDescriptions"; payload: string }
   | { type: "setCoverImageUrl"; payload: string }
   | { type: "setCoverImageFile"; payload: File }
   | { type: "setReviewImagesUrl"; payload: string[] }
@@ -37,7 +37,7 @@ export const placeInitialState: AdminPlaceOutput = {
   categories: [],
   detailAddress: "미정",
   detailLink: "미정",
-  reviewDescriptions: [],
+  reviewDescriptions: "미정",
   coverImageUrl: "미정",
   coverImageFile: undefined,
   reviewImagesUrl: [],

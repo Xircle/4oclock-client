@@ -221,7 +221,7 @@ export default function CreatePlacePage(props: Props) {
         </div>
       </SubContainer>
       <SubContainer>
-        리뷰(서브사진 숫자와 맞추어주시고 %로 나누어주세요)
+        리뷰(string 하나로)
         <br />
         <BigTextArea
           name="reviewDescriptions"
@@ -229,7 +229,7 @@ export default function CreatePlacePage(props: Props) {
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
             dispatch({
               type: "setReviewDescriptions",
-              payload: ModifyStringToStringArray(e.target.value, "%"),
+              payload: e.target.value,
             })
           }
         />
@@ -260,7 +260,7 @@ export default function CreatePlacePage(props: Props) {
         />
       </SubContainer>
       <SubContainer>
-        카테고리(%로 나누어주세요 / 현재 사용 ㄴㄴ)
+        카테고리(%로 나누어주세요)
         <br />
         <MidInput
           name="categories"
