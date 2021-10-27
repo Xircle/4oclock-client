@@ -73,7 +73,7 @@ export default function ReservationConfirmPage({ history, location }: Props) {
               <span>
                 {startDateFromNow}{" "}
                 {TimeNumberToString(startTime, { hasIndicator: true })} (
-                {participantsNumberLimit(startTime)})
+                {/* {participantsNumberLimit(startTime)}) */}
               </span>
             </Row>
             <Row>
