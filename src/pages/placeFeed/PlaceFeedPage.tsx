@@ -254,7 +254,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
             <span>다시는 보지 않겠습니다</span>
           </NoShowTodaySpan>
           <CloseButton onClick={() => setPopUp(false)}>닫기</CloseButton>
-          <PopUpCTAButton>
+          <PopUpCTAButton onClick={() => setPopUp(false)}>
             파티 입장하기
             <FontAwesomeIcon
               icon={faMinus}
