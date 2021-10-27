@@ -255,7 +255,7 @@ export default function PlacePage({ match, location }: Props) {
           if (index < 5) {
             return (
               <GridPic
-                key={placeData?.reviews[0].id}
+                key={index}
                 src={imageUrl}
                 onClick={() =>
                   history.push(`/image/${index}`, {
