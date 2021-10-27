@@ -72,7 +72,7 @@ const GridContainer = styled.div`
   grid-gap: 3px;
   background-color: #fff;
   color: #444;
-  padding-top: 10px;
+  padding-top: 20px;
 `;
 
 const GridImg = styled.img`

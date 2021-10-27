@@ -58,7 +58,7 @@ interface PlaceDataParticipantsProfile extends Participants {}
 
 export interface ReviewData {
   id: string;
-  imageUrl: string;
+  imageUrls: string[];
   description: string;
 }
 
@@ -272,11 +272,6 @@ export interface SendMessageInput {
   isRead?: boolean;
   receiverId: string;
   content: string;
-}
-
-export interface ReviewData {
-  imgUrls: string[];
-  description: string;
 }
 
 export interface GetReviewsOutput extends CoreOutput {
