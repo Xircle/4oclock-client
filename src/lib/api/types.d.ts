@@ -279,11 +279,6 @@ export interface SendMessageInput {
   content: string;
 }
 
-export interface ReviewData {
-  imgUrls: string[];
-  description: string;
-}
-
 export interface GetReviewsOutput extends CoreOutput {
-  reviews: ReviewData[];
+  reviews: Review[];
 }

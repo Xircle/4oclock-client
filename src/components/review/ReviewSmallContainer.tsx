@@ -87,6 +87,7 @@ const Title = styled.div`
 const CTAText = styled.div`
   color: #6f7789;
   font-size: 12px;
+  cursor: pointer;
 `;
 
 const SCarousel = styled(Carousel)`
