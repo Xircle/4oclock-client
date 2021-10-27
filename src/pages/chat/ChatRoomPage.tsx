@@ -148,13 +148,15 @@ export default function ChatRoomPage({ match, history, location }: Props) {
 
   useEffect(() => {
     if (!fetchedMessagesData?.messages) return;
+    console.log(messages, fetchedMessagesData?.messages, page);
+
     if (page === 1) {
       setMessages(fetchedMessagesData?.messages);
-    } else {
+    } else if (page > 1 && !isFetching) {
       // pagination 시에 이전 데이터와 함께 보여주기 위해서 prev 사용
       setMessages((prev) => [...prev, ...fetchedMessagesData?.messages]);
     }
-  }, [page, fetchedMessagesData]);
+  }, [page, fetchedMessagesData, isFetching]);
 
   useEffect(() => {
     // 만약 hasMore이면 미리 캐싱해놓는다.
@@ -183,7 +185,8 @@ export default function ChatRoomPage({ match, history, location }: Props) {
 
   const onScrollFram = (values: positionValues) => {
     if (values.top <= 0.4) {
-      if (messages.length >= CHAT_NUMBER_PER_PAGE * page) {
+      console.log(isFetching);
+      if (!isFetching && messages.length >= CHAT_NUMBER_PER_PAGE * page) {
         console.log("axios 요청!");
         setPage((old) => old + 1);
       }
@@ -282,13 +285,12 @@ export default function ChatRoomPage({ match, history, location }: Props) {
 
       {isFetching && page === 1 && (
         <LoaderWrapper>
-          <LoaderBackdrop />
           <ClipLoader
             loading={true}
             color={colors.MidBlue}
             css={{
               name: "width",
-              styles: "border-width: 4px; z-index: 999;",
+              styles: "border-width: 4px; opacity: 0.4; z-index: 999;",
             }}
             size={30}
           />

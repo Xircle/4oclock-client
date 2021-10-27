@@ -7,14 +7,14 @@ import { useEffect } from "react";
 
 export interface ImageGalleryPayload {
   id: string;
-  imageUrl: string;
+  imageUrls: string[];
   description?: string;
 }
 interface Props
   extends RouteComponentProps<
     { index: string },
     {},
-    { payload: ImageGalleryPayload[] }
+    { payload: ImageGalleryPayload }
   > {}
 
 export default function ImageGalleryPage({ match, history, location }: Props) {
@@ -27,12 +27,12 @@ export default function ImageGalleryPage({ match, history, location }: Props) {
       ?.scrollIntoView({ block: "center" });
   }, []);
 
-  if (!payload[0]) {
+  if (!payload) {
     history.goBack();
   }
-  const images: ReactImageGalleryItem[] = payload.map((payload) => ({
-    original: payload.imageUrl,
-    thumbnail: payload.imageUrl,
+  const images: ReactImageGalleryItem[] = payload.imageUrls.map((imageUrl) => ({
+    original: imageUrl,
+    thumbnail: imageUrl,
   }));
 
   const HistoryPop = () => {
@@ -54,7 +54,7 @@ export default function ImageGalleryPage({ match, history, location }: Props) {
           items={images}
           startIndex={+index}
           showIndex={true}
-          showBullets={payload.length === 1 ? false : true}
+          showBullets={payload.imageUrls.length === 1 ? false : true}
           infinite={true}
           showThumbnails={false}
           showNav={true}

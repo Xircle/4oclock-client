@@ -8,7 +8,6 @@ import {
   FlexDiv,
   MainBtn,
   SpaceForNavBar,
-  BottomNavBarContainer,
   Container,
 } from "../../styles/styles";
 import { useEffect } from "react";
@@ -75,12 +74,10 @@ export default function ParticipantProfilePage({ history }: Props) {
               onClick={() => {
                 if (!userProfileData?.profileImageUrl) return;
                 history.push("image/0", {
-                  payload: [
-                    {
-                      id: userProfileData?.profileImageUrl,
-                      imageUrl: userProfileData?.profileImageUrl,
-                    },
-                  ],
+                  payload: {
+                    id: userProfileData?.profileImageUrl,
+                    imageUrls: [userProfileData?.profileImageUrl],
+                  },
                 });
               }}
             />
@@ -136,7 +133,7 @@ export default function ParticipantProfilePage({ history }: Props) {
             </InnerContent>
           </InnerContainer>
         </ContainerwithLeftRightMargin>
-        <SpaceForNavBar></SpaceForNavBar>
+        <div style={{ width: "100%", height: "50px" }}></div>
         {storage.getItem(CURRENT_USER).uid !== userProfileData?.id &&
           !cameFromChat && (
             <BottomButtonsContainer>

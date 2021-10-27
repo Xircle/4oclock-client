@@ -157,12 +157,10 @@ export default function FriendsPage({ history }: Props) {
             onClick={() => {
               if (!randomProfileData?.profileImageUrl) return;
               history.push(`/image/${0}`, {
-                payload: [
-                  {
-                    id: randomProfileData?.id,
-                    imageUrl: randomProfileData.profileImageUrl,
-                  },
-                ],
+                payload: {
+                  id: randomProfileData?.id,
+                  imageUrls: [randomProfileData?.profileImageUrl],
+                },
               });
             }}
           />
@@ -225,7 +223,7 @@ export default function FriendsPage({ history }: Props) {
                 color={colors.MidBlue}
                 css={{
                   name: "width",
-                  styles: "border-width: 4px; opacity: 0.8",
+                  styles: "border-width: 4px;",
                 }}
                 size={30}
               />

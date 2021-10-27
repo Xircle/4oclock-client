@@ -56,10 +56,15 @@ export interface GetPlacesByLocationOutput extends CoreOutput {
 // Get Place By Id
 interface PlaceDataParticipantsProfile extends Participants {}
 
-export interface ReviewData {
+export interface Review {
   id: string;
   imageUrls: string[];
+  isRepresentative: boolean;
   description: string;
+  user_id: string;
+  likesNumber: number;
+  place_id: string;
+  ratings?: number | null;
 }
 
 export interface PlaceData {
@@ -77,7 +82,7 @@ export interface PlaceData {
   participantsCount: number;
   views: number;
   startDateAt: string;
-  reviews: ReviewData[];
+  reviews: Review[];
   isLightning?: boolean;
   participantsInfo: {
     total_count: number;
