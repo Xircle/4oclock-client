@@ -43,14 +43,21 @@ export default function ReviewSmallContainer({ title, reviews }: Props) {
           showThumbs={false}
           showStatus={false}
           centerMode={true}
+          emulateTouch={true}
         >
-          {reviews?.slice(reviews.length - 2, reviews.length).map((review) => {
-            return (
-              <CarouselWrapper key={review.id}>
-                <CarouselImg src={review.imageUrls[0]} />
-                <CarouselDescription>{review.description}</CarouselDescription>
-              </CarouselWrapper>
-            );
+          {reviews?.map((review) => {
+            if (review.imageUrls.length > 0) {
+              return (
+                <CarouselWrapper key={review.id}>
+                  <CarouselImg src={review.imageUrls[0]} />
+                  <CarouselDescription>
+                    {review.description}
+                  </CarouselDescription>
+                </CarouselWrapper>
+              );
+            } else {
+              return <></>;
+            }
           })}
         </SCarousel>
       </InnerWrapper>

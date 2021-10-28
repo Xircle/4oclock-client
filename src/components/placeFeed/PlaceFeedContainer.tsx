@@ -87,12 +87,12 @@ export default function PlaceFeedContainer({
             }}
             {...placeFeedData}
           />
-          {idx === 2 && reviews && (
+          {/* {idx === 2 && reviews && (
             <ReviewSmallContainer
               title={"이팅모임 후기들"}
               reviews={reviews}
             ></ReviewSmallContainer>
-          )}
+          )} */}
         </Fragment>
       ))}
     </>
