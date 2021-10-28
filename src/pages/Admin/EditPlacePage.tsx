@@ -107,11 +107,11 @@ export default function EditPlacePage({ match }: Props) {
         payload: placeData?.placeDetail?.detailLink,
       });
 
-    if (placeData?.reviews) {
-      for (let i = 0; i < placeData.reviews.length; i++) {
-        setSubFilesUrl((prev) => [...prev, placeData.reviews[0].imageUrls[i]]);
-      }
-    }
+    // if (placeData?.reviews.length > 0) {
+    //   for (let i = 0; i < placeData.reviews.length; i++) {
+    //     setSubFilesUrl((prev) => [...prev, placeData.reviews[0].imageUrls[i]]);
+    //   }
+    // }
     if (placeData?.coverImage) {
       setMainFileUrl(placeData?.coverImage);
       dispatch({ type: "setCoverImageUrl", payload: placeData?.coverImage });

@@ -113,7 +113,8 @@ export default function PlacePage({ match, location }: Props) {
   const CTAClickedHandler = () => {
     if (!placeData) return;
     if (showCancelBtn) {
-      setIsCancleBtnClicked(true);
+      alert("취소를 원할 시 카카오톡으로 문의 부탁드립니다");
+      //setIsCancleBtnClicked(true);
     } else if (!placeData.isParticipating) {
       history.push(`/reservation/${encodeUrlSlug(placeData.name)}`, {
         placeId,
@@ -245,13 +246,13 @@ export default function PlacePage({ match, location }: Props) {
 
       <AlbumnDescription>
         <strong>{placeData?.name || name} 이팅모임</strong>{" "}
-        <span>{placeData?.reviews[0].imageUrls.length || "N"}</span>
+        <span>{placeData?.reviews?.[0].imageUrls?.length || "N"}</span>
         <p>사진을 클릭해서 살펴보세요</p>
       </AlbumnDescription>
 
       {/* Review Album  */}
       <GridContainer>
-        {placeData?.reviews[0].imageUrls.map((imageUrl, index) => {
+        {placeData?.reviews?.[0].imageUrls?.map((imageUrl, index) => {
           if (index < 5) {
             return (
               <GridPic
