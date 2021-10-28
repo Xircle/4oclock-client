@@ -212,8 +212,7 @@ export interface CancelReservationOutput extends CoreOutput {}
 
 export interface EditPlaceInput {
   placeId: string;
-  editedPlace: string;
-  editedPlaceDetail: string;
+  state: AdminPlaceOutput;
 }
 
 export interface EditPlaceOutput extends CoreOutput {}
