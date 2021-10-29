@@ -14,9 +14,6 @@ export default function PopUp({ children, isClose, onClose }: Props) {
   };
   return (
     <PortalConsumer>
-      {/* <ModalContainer close={isClose} onClick={onClose}>
-        <ModalWrapper onClick={clickHandler} close={isClose}></ModalWrapper>
-      </ModalContainer> */}
       <PopUpContainer close={false}>
         <PopUpWrapper>{children}</PopUpWrapper>
       </PopUpContainer>
