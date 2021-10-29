@@ -4,19 +4,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Carousel } from "react-responsive-carousel";
 import { useHistory } from "react-router-dom";
 import BottomNavBar from "../../components/shared/BottomNavBar";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Review } from "../../lib/api/types";
 import ClipLoader from "react-spinners/ClipLoader";
 import { getReviews } from "../../lib/api/getReviews";
 import { useQuery } from "react-query";
 import { useState } from "react";
 import ReviewThumbNail from "../../components/review/ReviewThumbNail";
+import ReviewCarousel from "../../components/review/ReviewCarousel";
 
 interface Props {}
 
 export default function ReviewsPage(props: Props) {
   const history = useHistory();
   const [page, setPage] = useState(1);
+  const [review, setReview] = useState<Review | undefined>();
+  const [showCarousel, setShowCarousel] = useState(false);
 
   const { data: reviews, isLoading, isError, isFetching } = useQuery<Review[]>(
     ["reviews", page],
@@ -27,14 +30,18 @@ export default function ReviewsPage(props: Props) {
     }
   );
 
-  const ReviewClickHandler = (review: Review) => {};
+  const ReviewClickHandler = (review: Review) => {
+    console.log(review);
+    setReview(review);
+    setShowCarousel(true);
+  };
 
   return (
     <Container>
       <TopHeading>
         <FontAwesomeIcon
           icon={faArrowLeft}
-          style={{ position: "absolute", left: "25px" }}
+          style={{ position: "absolute", left: "25px", cursor: "pointer" }}
           onClick={() => {
             history.goBack();
           }}
@@ -53,16 +60,36 @@ export default function ReviewsPage(props: Props) {
               <ReviewThumbNail
                 key={review.id}
                 {...review}
-                onClick={() => {}}
+                onClick={() => {
+                  ReviewClickHandler(review);
+                }}
               ></ReviewThumbNail>
             );
           }
         })}
       </GridContainer>
       <BottomNavBar selectedItem="places" />
+
+      {/*BEGIN: carousel */}
+      {showCarousel && review && (
+        <ReviewCarousel {...review}>
+          <FontAwesomeIcon
+            icon={faTimes}
+            size={"2x"}
+            color={"white"}
+            onClick={() => {
+              setReview(undefined);
+              setShowCarousel(false);
+            }}
+          ></FontAwesomeIcon>
+        </ReviewCarousel>
+      )}
+      {/*END: carousel */}
     </Container>
   );
 }
+
+
 
 const BackButton = styled.div``;
 

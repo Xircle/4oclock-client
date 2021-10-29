@@ -7,11 +7,15 @@ interface Props extends Review {
   onClick: () => void;
 }
 
-export default function ReviewThumbNail({ imageUrls, description }: Props) {
+export default function ReviewThumbNail({
+  imageUrls,
+  description,
+  onClick,
+}: Props) {
   const empty = imageUrls.length === 0;
   const many = imageUrls.length > 1;
   return (
-    <Container empty={empty}>
+    <Container empty={empty} onClick={() => onClick()}>
       {!empty && <GridImg src={imageUrls[0]} />}
       {many && (
         <FontAwesomeIcon
