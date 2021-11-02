@@ -71,8 +71,9 @@ export default function ReservationPage({ match, location, history }: Props) {
     setReservationClicked((prev) => !prev);
   };
 
-  const { mutateAsync: mutateReservation, isLoading } =
-    useMutation(makeReservation);
+  const { mutateAsync: mutateReservation, isLoading } = useMutation(
+    makeReservation
+  );
 
   const makeReservationHandler = async () => {
     if (!selected || !placeId) return;
@@ -116,9 +117,9 @@ export default function ReservationPage({ match, location, history }: Props) {
             <SelectionMainTextBooking>
               {startDateFromNow}{" "}
               {TimeNumberToString(startTime, { hasIndicator: true })}
-              <TagBooking>
+              {/* <TagBooking>
                 <p>{startTime >= 18 ? "2" : "4"}인 모임</p>
-              </TagBooking>
+              </TagBooking> */}
             </SelectionMainTextBooking>
             <SelectionSubTextBooking>
               {participantsNumber || "N"}명의 친구들이 신청했어요
@@ -147,7 +148,7 @@ export default function ReservationPage({ match, location, history }: Props) {
           <Instruction>
             <InstructionHeading>💖 연고이팅 이용가이드 💖</InstructionHeading>
             <InstructionDetail>
-              1. 같은 연고이팅 모임을 신청한 친구들과 4인 or 2인 단톡을 <br />
+              1. 같은 연고이팅 모임을 신청한 친구들과 단톡을 <br />
               &nbsp; &nbsp; &nbsp;모임 전날 만들어드려요!
               <br />
               2. 단톡에서 친구들을 알아가고 친해지는 시간을 가져보세요!

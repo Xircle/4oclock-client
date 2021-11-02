@@ -8,14 +8,16 @@ import {
   FlexDiv,
   BigTextArea,
   colors,
+  MainBtn,
 } from "../../styles/styles";
 import { getPlaceById } from "../../lib/api/getPlaceById";
 import type { PlaceData } from "../../lib/api/types";
 import { RouteComponentProps, useHistory } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { ModifyStringToStringArray } from "../../lib/utils";
 import { placeInitialState, reducer } from "./AdminReducer";
 import DatePicker from "react-date-picker";
+import { editPlace } from "../../lib/api/editPlace";
 
 interface Props {}
 
@@ -107,9 +109,12 @@ export default function EditPlacePage({ match }: Props) {
         payload: placeData?.placeDetail?.detailLink,
       });
 
-    if (placeData?.reviews) {
-      for (let i = 0; i < placeData.reviews.length; i++) {
-        setSubFilesUrl((prev) => [...prev, placeData.reviews[0].imageUrls[i]]);
+    if (placeData?.reviews?.[0].imageUrls) {
+      for (let i = 0; i < placeData?.reviews?.[0].imageUrls.length; i++) {
+        setSubFilesUrl((prev) => [
+          ...prev,
+          placeData?.reviews?.[0].imageUrls[i],
+        ]);
       }
     }
     if (placeData?.coverImage) {
@@ -140,6 +145,16 @@ export default function EditPlacePage({ match }: Props) {
       payload: subFiles,
     });
   }, [subFiles]);
+  const { mutateAsync: mutateEditPlace, isLoading: isPatching } = useMutation(
+    editPlace
+  );
+  const onClickHandler = async () => {
+    if (!placeId) return;
+    const { data } = await mutateEditPlace({ placeId, state });
+    if (!data.ok) {
+      throw new Error(data.error);
+    }
+  };
 
   const handleFileOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return null;
@@ -312,7 +327,7 @@ export default function EditPlacePage({ match }: Props) {
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
             dispatch({
               type: "setReviewDescriptions",
-              payload: ModifyStringToStringArray(e.target.value, "%"),
+              payload: e.target.value,
             })
           }
         />
@@ -463,6 +478,15 @@ export default function EditPlacePage({ match }: Props) {
           }}
         />
       </SubContainer>
+      <MainBtn
+        onClick={() => {
+          if (!isLoading) {
+            onClickHandler();
+          }
+        }}
+      >
+        장소 생성
+      </MainBtn>
     </Container>
   );
 }

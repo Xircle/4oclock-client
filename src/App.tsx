@@ -42,6 +42,7 @@ const CreatePlacePage = React.lazy(
 );
 const EditPlacesPage = React.lazy(() => import("./pages/Admin/EditPlacesPage"));
 const EditPlacePage = React.lazy(() => import("./pages/Admin/EditPlacePage"));
+const ReviewsPage = React.lazy(() => import("./pages/reviews/ReviewsPage"));
 
 function App() {
   useEffect(() => {
@@ -110,6 +111,7 @@ function App() {
               <Route path={routes.createPlace} component={CreatePlacePage} />
               <Route path={routes.editPlaces} component={EditPlacesPage} />
               <Route path={routes.editPlace} component={EditPlacePage} />
+              <Route path={routes.reviews} component={ReviewsPage} />
               {/* insert editPlace in the future*/}
               <Route component={NotFoundPage} />
             </Switch>

@@ -72,8 +72,8 @@ export default function ReservationConfirmPage({ history, location }: Props) {
               <span className="bold">시간</span>
               <span>
                 {startDateFromNow}{" "}
-                {TimeNumberToString(startTime, { hasIndicator: true })} (
-                {participantsNumberLimit(startTime)})
+                {TimeNumberToString(startTime, { hasIndicator: true })}
+                {/* {participantsNumberLimit(startTime)}) */}
               </span>
             </Row>
             <Row>

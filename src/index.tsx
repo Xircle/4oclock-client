@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import routes from "./routes";
 import "bootstrap/dist/css/bootstrap.css";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({

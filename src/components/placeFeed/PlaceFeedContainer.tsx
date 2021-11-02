@@ -1,16 +1,19 @@
 import { useHistory } from "react-router-dom";
-import type { PlaceFeedData } from "../../lib/api/types";
+import type { PlaceFeedData, Review } from "../../lib/api/types";
 import { colors, Heading } from "../../styles/styles";
 import { LoaderWrapper } from "../shared/Loader";
 import PlaceFeedRow from "./PlaceFeedRow";
 import ClipLoader from "react-spinners/ClipLoader";
 import styled from "styled-components";
+import ReviewSmallContainer from "../review/ReviewSmallContainer";
+import { Fragment } from "react";
 
 interface Props {
   isAdminEditPlace?: boolean;
   placeFeedDataArray?: PlaceFeedData[];
   isLoading: boolean;
   hasError: boolean;
+  reviews?: Review[];
 }
 
 export default function PlaceFeedContainer({
@@ -18,6 +21,7 @@ export default function PlaceFeedContainer({
   isLoading,
   hasError,
   placeFeedDataArray,
+  reviews,
 }: Props) {
   const history = useHistory();
   if (hasError) return <SHeading>에러가 발생했습니다.</SHeading>;
@@ -43,46 +47,53 @@ export default function PlaceFeedContainer({
 
   return (
     <>
-      {placeFeedDataArray?.map((placeFeedData) => (
-        <PlaceFeedRow
-          key={placeFeedData.id}
-          onClick={() => {
-            const {
-              coverImage,
-              name,
-              participantsCount,
-              isLightning,
-              views,
-              startDateFromNow,
-              startTime,
-              isParticipating,
-              participants,
-              startDateAt,
-            } = placeFeedData;
-            if (!isAdminEditPlace) {
-              history.push(
-                `/place/${placeFeedData.id}?isFinal=${
-                  placeFeedData.deadline === "오늘 마감"
-                }&isClosed=${placeFeedData.isClosed}`,
-                {
-                  coverImage,
-                  name,
-                  participantsCount,
-                  isLightning,
-                  views,
-                  startDateFromNow,
-                  startTime,
-                  isParticipating,
-                  participants,
-                  startDateAt,
-                }
-              );
-            } else {
-              history.push(`/editPlace/${placeFeedData.id}`);
-            }
-          }}
-          {...placeFeedData}
-        />
+      {placeFeedDataArray?.map((placeFeedData, idx) => (
+        <Fragment key={placeFeedData.id}>
+          <PlaceFeedRow
+            onClick={() => {
+              const {
+                coverImage,
+                name,
+                participantsCount,
+                isLightning,
+                views,
+                startDateFromNow,
+                startTime,
+                isParticipating,
+                participants,
+                startDateAt,
+              } = placeFeedData;
+              if (!isAdminEditPlace) {
+                history.push(
+                  `/place/${placeFeedData.id}?isFinal=${
+                    placeFeedData.deadline === "오늘 마감"
+                  }&isClosed=${placeFeedData.isClosed}`,
+                  {
+                    coverImage,
+                    name,
+                    participantsCount,
+                    isLightning,
+                    views,
+                    startDateFromNow,
+                    startTime,
+                    isParticipating,
+                    participants,
+                    startDateAt,
+                  }
+                );
+              } else {
+                history.push(`/editPlace/${placeFeedData.id}`);
+              }
+            }}
+            {...placeFeedData}
+          />
+          {/* {idx === 2 && reviews && (
+            <ReviewSmallContainer
+              title={"이팅모임 후기들"}
+              reviews={reviews}
+            ></ReviewSmallContainer>
+          )} */}
+        </Fragment>
       ))}
     </>
   );

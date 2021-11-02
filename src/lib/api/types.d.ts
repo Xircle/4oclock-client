@@ -115,7 +115,7 @@ export interface AdminPlaceData {
   categories: string[];
   detailAddress: string;
   detailLink: string;
-  reviewDescriptions: string[];
+  reviewDescriptions: string;
   coverImageUrl?: string;
   coverImageFile?: File;
   reviewImagesUrl?: string[];
@@ -212,8 +212,7 @@ export interface CancelReservationOutput extends CoreOutput {}
 
 export interface EditPlaceInput {
   placeId: string;
-  editedPlace: string;
-  editedPlaceDetail: string;
+  state: AdminPlaceOutput;
 }
 
 export interface EditPlaceOutput extends CoreOutput {}
@@ -277,4 +276,8 @@ export interface SendMessageInput {
   isRead?: boolean;
   receiverId: string;
   content: string;
+}
+
+export interface GetReviewsOutput extends CoreOutput {
+  reviews: Review[];
 }
