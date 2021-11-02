@@ -115,7 +115,7 @@ export interface AdminPlaceData {
   categories: string[];
   detailAddress: string;
   detailLink: string;
-  reviewDescriptions: string;
+  reviewDescription: string;
   coverImageUrl?: string;
   coverImageFile?: File;
   reviewImagesUrl?: string[];

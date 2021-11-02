@@ -145,9 +145,8 @@ export default function EditPlacePage({ match }: Props) {
       payload: subFiles,
     });
   }, [subFiles]);
-  const { mutateAsync: mutateEditPlace, isLoading: isPatching } = useMutation(
-    editPlace
-  );
+  const { mutateAsync: mutateEditPlace, isLoading: isPatching } =
+    useMutation(editPlace);
   const onClickHandler = async () => {
     if (!placeId) return;
     const { data } = await mutateEditPlace({ placeId, state });
@@ -322,7 +321,7 @@ export default function EditPlacePage({ match }: Props) {
         <br />
         <BigTextArea
           name="reviewDescriptions"
-          value={state.reviewDescriptions}
+          value={state.reviewDescription}
           placeholder="ex. 정말 꿀잼인듯!% 와 이런장소가 있었다니 또 와야겠네요"
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
             dispatch({

@@ -1,7 +1,5 @@
 import { AdminPlaceOutput, AdminPlaceData } from "./types.d";
 import AxiosClient from "../apiClient";
-import moment from "moment";
-import "moment/locale/ko";
 
 export const createPlace = async (
   placeData: AdminPlaceData
@@ -17,11 +15,7 @@ export const createPlace = async (
   }
   formData.append(
     "reviewDescription",
-<<<<<<< HEAD
-    JSON.stringify(placeData.reviewDescriptions)
-=======
-    placeData.reviewDescriptions
->>>>>>> 9379fbb0e825d0208ab10e92ceeac8632bbe116b
+    placeData.reviewDescription
   );
   formData.append("name", placeData.name);
   formData.append("isLightning", placeData.isLightning + "");

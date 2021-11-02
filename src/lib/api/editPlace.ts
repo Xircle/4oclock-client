@@ -24,7 +24,7 @@ export const editPlace = async (
   }
   editedPlaceDetail.append(
     "reviewDescription",
-    editPlaceInput.state.reviewDescriptions
+    editPlaceInput.state.reviewDescription
   );
   editedPlace.append("name", editPlaceInput.state.name);
   editedPlace.append("isLightning", editPlaceInput.state.isLightning + "");
