@@ -211,7 +211,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
           reviews={reviews}
           hasError={isError}
           isLoading={isFetching}
-          placeFeedDataArray={placeFeedData}
+          placeFeedDataArray={page === 1 ? data?.places : placeFeedData}
         />
         {isFetching && page > 1 && (
           <div
