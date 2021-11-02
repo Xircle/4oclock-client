@@ -52,10 +52,8 @@ export default function PlaceFeedPage({ history, location }: Props) {
   const [page, setPage] = useState(1);
   const [popUp, setPopUp] = useState(false);
   const [popUpNoShow, setPopUpNoShow] = useState(true);
-  const [
-    selectedPlaceLocation,
-    setSelectedPlaceLocation,
-  ] = useState<PlaceLocation>(placeLocationoptions[0].value as PlaceLocation);
+  const [selectedPlaceLocation, setSelectedPlaceLocation] =
+    useState<PlaceLocation>(placeLocationoptions[0].value as PlaceLocation);
   const isLoggedIn = Boolean(
     queryString.parse(UrlSearch).isLoggedIn === "true"
   );
@@ -213,7 +211,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
           reviews={reviews}
           hasError={isError}
           isLoading={isFetching}
-          placeFeedDataArray={placeFeedData}
+          placeFeedDataArray={page === 1 ? data?.places : placeFeedData}
         />
         {isFetching && page > 1 && (
           <div

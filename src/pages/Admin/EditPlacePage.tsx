@@ -145,9 +145,8 @@ export default function EditPlacePage({ match }: Props) {
       payload: subFiles,
     });
   }, [subFiles]);
-  const { mutateAsync: mutateEditPlace, isLoading: isPatching } = useMutation(
-    editPlace
-  );
+  const { mutateAsync: mutateEditPlace, isLoading: isPatching } =
+    useMutation(editPlace);
   const onClickHandler = async () => {
     if (!placeId) return;
     const { data } = await mutateEditPlace({ placeId, state });

@@ -1,7 +1,5 @@
 import { AdminPlaceOutput, AdminPlaceData } from "./types.d";
 import AxiosClient from "../apiClient";
-import moment from "moment";
-import "moment/locale/ko";
 
 export const createPlace = async (
   placeData: AdminPlaceData
