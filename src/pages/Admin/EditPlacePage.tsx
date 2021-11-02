@@ -109,7 +109,7 @@ export default function EditPlacePage({ match }: Props) {
         payload: placeData?.placeDetail?.detailLink,
       });
 
-    if (placeData?.reviews?.[0].imageUrls) {
+    if (placeData?.reviews?.[0]?.imageUrls) {
       for (let i = 0; i < placeData?.reviews?.[0].imageUrls.length; i++) {
         setSubFilesUrl((prev) => [
           ...prev,
@@ -153,6 +153,8 @@ export default function EditPlacePage({ match }: Props) {
     const { data } = await mutateEditPlace({ placeId, state });
     if (!data.ok) {
       throw new Error(data.error);
+    } else {
+      history.goBack();
     }
   };
 
@@ -322,7 +324,7 @@ export default function EditPlacePage({ match }: Props) {
         <br />
         <BigTextArea
           name="reviewDescriptions"
-          value={state.reviewDescriptions}
+          value={state.reviewDescription}
           placeholder="ex. 정말 꿀잼인듯!% 와 이런장소가 있었다니 또 와야겠네요"
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
             dispatch({

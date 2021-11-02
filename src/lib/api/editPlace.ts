@@ -24,7 +24,7 @@ export const editPlace = async (
   }
   editedPlaceDetail.append(
     "reviewDescription",
-    editPlaceInput.state.reviewDescriptions
+    editPlaceInput.state.reviewDescription
   );
   editedPlace.append("name", editPlaceInput.state.name);
   editedPlace.append("isLightning", editPlaceInput.state.isLightning + "");
@@ -51,9 +51,8 @@ export const editPlace = async (
     editPlaceInput.state.participationFee
   );
   editedPlace.append("oneLineIntroText", editPlaceInput.state.oneLineIntroText);
-  console.log(editedPlace);
-  return AxiosClient.patch<EditPlaceOutput>(`place/${editPlaceInput.placeId}`, {
+  return AxiosClient.patch<EditPlaceOutput>(`place/${editPlaceInput.placeId}`, JSON.stringify({
     editedPlace: editedPlace,
     editedPlaceDetail: editedPlaceDetail,
-  });
+  }));
 };
