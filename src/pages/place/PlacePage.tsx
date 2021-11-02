@@ -246,7 +246,11 @@ export default function PlacePage({ match, location }: Props) {
 
       <AlbumnDescription>
         <strong>{placeData?.name || name} 이팅모임</strong>{" "}
-        <span>{placeData?.reviews?.[0].imageUrls?.length || "N"}</span>
+        <span>
+          {placeData?.reviews && placeData?.reviews?.[0].imageUrls
+            ? placeData?.reviews?.[0].imageUrls?.length
+            : "N"}
+        </span>
         <p>사진을 클릭해서 살펴보세요</p>
       </AlbumnDescription>
 

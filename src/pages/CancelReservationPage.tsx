@@ -25,8 +25,10 @@ export default function CancelReservationPage({ history, location }: Props) {
   const { placeId } = location.state;
   const [cancelReason, SetReasonMain] = useState<string>("");
   const [detailReason, SetReasonDetail] = useState<string>("");
-  const { mutateAsync: mutateCancelReservation, isLoading: isPatching } =
-    useMutation(cancelReservation);
+  const {
+    mutateAsync: mutateCancelReservation,
+    isLoading: isPatching,
+  } = useMutation(cancelReservation);
 
   const onClickHandler = async () => {
     if (!placeId) return;

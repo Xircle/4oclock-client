@@ -22,6 +22,7 @@ export default function ReviewCarousel(props: Props) {
             useKeyboardArrows={true}
             emulateTouch={true}
             showStatus={false}
+            dynamicHeight={true}
           >
             {props.imageUrls?.map((imageUrl, idx) => (
               <ReviewPicture key={idx} src={imageUrl} />
@@ -39,6 +40,7 @@ const CloseButton = styled.div`
   top: 20px;
   left: 20px;
   z-index: 999;
+  cursor: pointer;
 `;
 
 const SCarousel = styled(Carousel)`

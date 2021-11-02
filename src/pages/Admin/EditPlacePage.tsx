@@ -109,7 +109,7 @@ export default function EditPlacePage({ match }: Props) {
         payload: placeData?.placeDetail?.detailLink,
       });
 
-    if (placeData?.reviews?.[0].imageUrls) {
+    if (placeData?.reviews?.[0]?.imageUrls) {
       for (let i = 0; i < placeData?.reviews?.[0].imageUrls.length; i++) {
         setSubFilesUrl((prev) => [
           ...prev,
@@ -152,6 +152,8 @@ export default function EditPlacePage({ match }: Props) {
     const { data } = await mutateEditPlace({ placeId, state });
     if (!data.ok) {
       throw new Error(data.error);
+    } else {
+      history.goBack();
     }
   };
 
