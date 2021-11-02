@@ -248,7 +248,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
         </BottomInfoText>
       </BottomInfoTextContainer>
       <BottomNavBar selectedItem="places" />
-      {popUp && !isFetching && (
+      {false && popUp && !isFetching && (
         // change popup-onclose
         <PopUp isClose={!popUp}>
           <PopUpImg src="/popUps/HolloweenPopUp.png" />

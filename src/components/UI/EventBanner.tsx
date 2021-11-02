@@ -7,7 +7,8 @@ interface Props {
 export default function EventBanner({ bannerImageUrl }: Props) {
   return (
     <Container>
-      <BannerImage src={bannerImageUrl || "/banner/default.png"} />
+      {/* <BannerImage src={bannerImageUrl || "/banner/default.png"} /> */}
+      <BannerImage src={"/banner/default.png"} />
     </Container>
   );
 }
@@ -24,4 +25,5 @@ const BannerImage = styled.img`
   height: 100%;
   object-fit: cover;
   overflow: hidden;
+  border-radius: 5px;
 `;

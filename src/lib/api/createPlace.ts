@@ -17,7 +17,7 @@ export const createPlace = async (
   }
   formData.append(
     "reviewDescription",
-    placeData.reviewDescriptions
+    placeData.reviewDescription
   );
   formData.append("name", placeData.name);
   formData.append("isLightning", placeData.isLightning + "");
