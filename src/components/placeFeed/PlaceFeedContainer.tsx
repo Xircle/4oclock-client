@@ -89,7 +89,7 @@ export default function PlaceFeedContainer({
           />
           {idx === 2 && reviews && (
             <ReviewSmallContainer
-              title={"이팅모임 후기들"}
+              title={"이팅모임 사진들"}
               reviews={reviews}
             ></ReviewSmallContainer>
           )}
