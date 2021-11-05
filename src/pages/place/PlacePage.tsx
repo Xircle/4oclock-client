@@ -247,7 +247,7 @@ export default function PlacePage({ match, location }: Props) {
       <AlbumnDescription>
         <strong>{placeData?.name || name} 이팅모임</strong>{" "}
         <span>
-          {placeData?.reviews && placeData?.reviews?.[0].imageUrls
+          {placeData?.reviews && placeData?.reviews?.[0]?.imageUrls
             ? placeData?.reviews?.[0].imageUrls?.length
             : "N"}
         </span>
@@ -256,7 +256,7 @@ export default function PlacePage({ match, location }: Props) {
 
       {/* Review Album  */}
       <GridContainer>
-        {placeData?.reviews?.[0].imageUrls?.map((imageUrl, index) => {
+        {placeData?.reviews?.[0]?.imageUrls?.map((imageUrl, index) => {
           if (index < 5) {
             return (
               <GridPic
