@@ -9,35 +9,91 @@ import { Review } from "../../lib/api/types";
 import ClipLoader from "react-spinners/ClipLoader";
 import { getReviews } from "../../lib/api/getReviews";
 import { useQuery } from "react-query";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReviewThumbNail from "../../components/review/ReviewThumbNail";
 import ReviewCarousel from "../../components/review/ReviewCarousel";
 
 interface Props {}
 
 export default function ReviewsPage(props: Props) {
+  const container = useRef<HTMLDivElement>(null);
   const history = useHistory();
   const [page, setPage] = useState(1);
   const [review, setReview] = useState<Review | undefined>();
   const [showCarousel, setShowCarousel] = useState(false);
+  const [reloading, setReloading] = useState(false);
+  const [reloadFailed, setReloadFailed] = useState(false);
+  const [reviewsI, setReviewsI] = useState<Review[]>([]);
+  const [first, setFirst] = useState(false);
 
-  const { data: reviews, isLoading, isError, isFetching } = useQuery<Review[]>(
-    ["reviews", page],
-    () => getReviews(page),
-    {
-      retry: 1,
-      refetchOnWindowFocus: false,
+  const { data: reviews, isLoading, isError, isFetching, isFetched } = useQuery<
+    Review[]
+  >(["reviews", page, 3], () => getReviews(page, 3), {
+    retry: 1,
+    refetchOnWindowFocus: false,
+  });
+
+  useEffect(() => {
+    if (reloading && !isFetching && !reloadFailed) {
+      setPage(page + 1);
+      setReloading(false);
     }
-  );
+  }, [reloading]);
+
+  useEffect(() => {
+    if (!isFetching) {
+      setReloading(false);
+    }
+  }, [isFetching]);
+
+  useEffect(() => {
+    if (isFetched) {
+      if (reviews?.length === 0) {
+        setReloadFailed(true);
+      } else if (
+        container.current &&
+        container.current?.clientHeight < window.innerHeight
+      ) {
+        console.log("reloadneeded");
+        setReloading(true);
+      }
+    }
+  }, [isFetched]);
+
+  useEffect(() => {
+    if (reviews && !isFetching) {
+      if (page === 1) {
+        setReviewsI(reviews);
+      } else {
+        setReviewsI((prev) => [...prev, ...reviews]);
+      }
+    }
+  }, [reviews, page, isFetching]);
+
+  const OnScroll = () => {
+    if (container.current) {
+      const { clientHeight } = container.current;
+      if (window.pageYOffset + window.innerHeight > clientHeight - 100) {
+        setFirst(true);
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", OnScroll);
+    window.scrollTo(0, 0);
+    return () => {
+      window.removeEventListener("scroll", OnScroll);
+    };
+  }, []);
 
   const ReviewClickHandler = (review: Review) => {
-    console.log(review);
     setReview(review);
     setShowCarousel(true);
   };
 
   return (
-    <Container>
+    <Container ref={container}>
       <TopHeading>
         <FontAwesomeIcon
           icon={faArrowLeft}
@@ -46,7 +102,7 @@ export default function ReviewsPage(props: Props) {
             history.goBack();
           }}
         />
-        # 열렸던 이팅모임 후기
+        # 열렸던 이팅모임 사진들
       </TopHeading>
       <SubHeading>
         지금까지 열린 이팅모임후기에요
@@ -54,7 +110,7 @@ export default function ReviewsPage(props: Props) {
         뭐든 함께 나누면 즐거워진다! 친구들과 놀러가요😊🥰
       </SubHeading>
       <GridContainer>
-        {reviews?.map((review) => {
+        {reviewsI?.map((review) => {
           if (review.imageUrls.length !== 0) {
             return (
               <ReviewThumbNail
@@ -88,8 +144,6 @@ export default function ReviewsPage(props: Props) {
     </Container>
   );
 }
-
-
 
 const BackButton = styled.div``;
 

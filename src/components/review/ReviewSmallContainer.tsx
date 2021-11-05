@@ -50,9 +50,9 @@ export default function ReviewSmallContainer({ title, reviews }: Props) {
               return (
                 <CarouselWrapper key={review.id}>
                   <CarouselImg src={review.imageUrls[0]} />
-                  <CarouselDescription>
+                  {/* <CarouselDescription>
                     {review.description}
-                  </CarouselDescription>
+                  </CarouselDescription> */}
                 </CarouselWrapper>
               );
             } else {
@@ -102,14 +102,14 @@ const SCarousel = styled(Carousel)`
 
 const CarouselImg = styled.img`
   width: 230px;
-  height: 150px;
-  margin-right: 2px;
+  height: 170px;
+  margin-right: 8px;
   object-fit: cover;
   border-radius: 3px;
 `;
 
 const CarouselWrapper = styled.div`
-  margin-right: 2px;
+  margin-right: 8px;
   position: relative;
 `;
 
