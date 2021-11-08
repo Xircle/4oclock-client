@@ -28,7 +28,7 @@ export default function ReviewsPage(props: Props) {
 
   const { data: reviews, isLoading, isError, isFetching, isFetched } = useQuery<
     Review[]
-  >(["reviews", page, 3], () => getReviews(page, 3), {
+  >(["reviews", page, 15], () => getReviews(page, 15), {
     retry: 1,
     refetchOnWindowFocus: false,
   });
@@ -51,10 +51,9 @@ export default function ReviewsPage(props: Props) {
       if (reviews?.length === 0) {
         setReloadFailed(true);
       } else if (
-        container.current &&
-        container.current?.clientHeight < window.innerHeight
+        !isFetching &&
+        document.body.scrollHeight === window.innerHeight
       ) {
-        console.log("reloadneeded");
         setReloading(true);
       }
     }
@@ -73,8 +72,9 @@ export default function ReviewsPage(props: Props) {
   const OnScroll = () => {
     if (container.current) {
       const { clientHeight } = container.current;
+
       if (window.pageYOffset + window.innerHeight > clientHeight - 100) {
-        setFirst(true);
+        setReloading(true);
       }
     }
   };
@@ -111,7 +111,7 @@ export default function ReviewsPage(props: Props) {
       </SubHeading>
       <GridContainer>
         {reviewsI?.map((review) => {
-          if (review.imageUrls.length !== 0) {
+          if (review.imageUrls.length !== 0 && !review.isRepresentative) {
             return (
               <ReviewThumbNail
                 key={review.id}
@@ -128,7 +128,13 @@ export default function ReviewsPage(props: Props) {
 
       {/*BEGIN: carousel */}
       {showCarousel && review && (
-        <ReviewCarousel {...review}>
+        <ReviewCarousel
+          {...review}
+          onClick={() => {
+            setShowCarousel(false);
+            setReview(undefined);
+          }}
+        >
           <FontAwesomeIcon
             icon={faTimes}
             size={"2x"}

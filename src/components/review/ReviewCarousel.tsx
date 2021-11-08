@@ -6,6 +6,7 @@ import { Carousel } from "react-responsive-carousel";
 
 interface Props extends Review {
   children: React.ReactNode | React.ReactNode[];
+  onClick: () => void;
 }
 
 export default function ReviewCarousel(props: Props) {
@@ -14,7 +15,18 @@ export default function ReviewCarousel(props: Props) {
   };
   return (
     <PortalConsumer>
-      <CarouselContainer close={false}>
+      <CarouselContainer
+        data-value="parent"
+        close={false}
+        onClick={(event: React.MouseEvent) => {
+          if (
+            (event.target as HTMLElement).getAttribute("data-value") ===
+            "parent"
+          ) {
+            props.onClick();
+          }
+        }}
+      >
         <CloseButton>{props.children}</CloseButton>
         <InnerContainer>
           <SCarousel
@@ -38,7 +50,7 @@ export default function ReviewCarousel(props: Props) {
 const CloseButton = styled.div`
   position: absolute;
   top: 20px;
-  left: 20px;
+  right: 20px;
   z-index: 999;
   cursor: pointer;
 `;
