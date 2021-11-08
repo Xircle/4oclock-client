@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Container } from "../../styles/styles";
+import { colors, Container } from "../../styles/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Carousel } from "react-responsive-carousel";
 import { useHistory } from "react-router-dom";
@@ -124,6 +124,25 @@ export default function ReviewsPage(props: Props) {
           }
         })}
       </GridContainer>
+      {isFetching && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <ClipLoader
+              loading={isLoading}
+              color={colors.MidBlue}
+              css={{
+                name: "width",
+                styles: "border-width: 4px; z-index: 999;",
+              }}
+              size={30}
+            />
+          </div>
+        )}
       <BottomNavBar selectedItem="places" />
 
       {/*BEGIN: carousel */}
