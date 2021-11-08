@@ -52,7 +52,7 @@ export default function ReviewsPage(props: Props) {
         setReloadFailed(true);
       } else if (
         !isFetching &&
-        document.body.scrollHeight === window.innerHeight
+        document.body.scrollHeight <= window.innerHeight
       ) {
         setReloading(true);
       }
