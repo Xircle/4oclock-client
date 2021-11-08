@@ -5,7 +5,7 @@ import { CURRENT_USER } from "../../components/shared/constants";
 
 export const getReviews = async (
   page: number = 1,
-  limit: number = 18
+  limit: number = 12
 ): Promise<Review[]> => {
   if (!storage.getItem(CURRENT_USER)) return [];
   const { data } = await AxiosClient.get<GetReviewsOutput>(

@@ -15,7 +15,7 @@ export default function EditPlacesPage(props: Props) {
   const [page, setPage] = useState(1);
   const { data, isLoading, isError } = useQuery<
     GetPlacesByLocationOutput | undefined
-  >(["place", page], () => getPlacesByLocation("전체", page), {
+  >(["place", page, 100], () => getPlacesByLocation("전체", page, 100), {
     retry: 1,
     refetchOnWindowFocus: false,
   });

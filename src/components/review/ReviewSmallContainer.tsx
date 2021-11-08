@@ -5,7 +5,7 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { Carousel } from "react-responsive-carousel";
 import { useHistory } from "react-router-dom";
 import type { Review } from "../../lib/api/types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Props {
   title: string;
@@ -14,6 +14,18 @@ interface Props {
 
 export default function ReviewSmallContainer({ title, reviews }: Props) {
   const [page, setPage] = useState(1);
+  useEffect(() => {
+    let i = 0;
+    let length = reviews.length;
+    while (i < length) {
+      if (reviews[i].isRepresentative) {
+        reviews.splice(i, 1);
+        --length;
+      } else {
+        i++;
+      }
+    }
+  }, []);
 
   const history = useHistory();
   return (
@@ -50,9 +62,9 @@ export default function ReviewSmallContainer({ title, reviews }: Props) {
               return (
                 <CarouselWrapper key={review.id}>
                   <CarouselImg src={review.imageUrls[0]} />
-                  <CarouselDescription>
+                  {/* <CarouselDescription>
                     {review.description}
-                  </CarouselDescription>
+                  </CarouselDescription> */}
                 </CarouselWrapper>
               );
             } else {
@@ -102,14 +114,14 @@ const SCarousel = styled(Carousel)`
 
 const CarouselImg = styled.img`
   width: 230px;
-  height: 150px;
-  margin-right: 2px;
+  height: 170px;
+  margin-right: 8px;
   object-fit: cover;
   border-radius: 3px;
 `;
 
 const CarouselWrapper = styled.div`
-  margin-right: 2px;
+  margin-right: 8px;
   position: relative;
 `;
 
