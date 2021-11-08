@@ -14,18 +14,17 @@ interface Props {
 
 export default function ReviewSmallContainer({ title, reviews }: Props) {
   const [page, setPage] = useState(1);
-  useEffect(() => {
-    let i = 0;
-    let length = reviews.length;
-    while (i < length) {
-      if (reviews[i].isRepresentative) {
-        reviews.splice(i, 1);
-        --length;
-      } else {
-        i++;
-      }
+
+  let i = 0;
+  let length = reviews.length;
+  while (i < length) {
+    if (reviews[i].isRepresentative) {
+      reviews.splice(i, 1);
+      --length;
+    } else {
+      i++;
     }
-  }, []);
+  }
 
   const history = useHistory();
   return (
