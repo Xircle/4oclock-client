@@ -3,6 +3,7 @@ import type { Review } from "../../lib/api/types";
 import { PortalConsumer } from "../../providers/PortalProvider";
 import { BACKDROP_Z_INDEX } from "../shared/constants";
 import { Carousel } from "react-responsive-carousel";
+import optimizeImage from "../../lib/optimizeImage";
 
 interface Props extends Review {
   children: React.ReactNode | React.ReactNode[];
@@ -37,7 +38,7 @@ export default function ReviewCarousel(props: Props) {
             dynamicHeight={true}
           >
             {props.imageUrls?.map((imageUrl, idx) => (
-              <ReviewPicture key={idx} src={imageUrl} />
+              <ReviewPicture key={idx} src={optimizeImage(imageUrl)} />
             ))}
           </SCarousel>
           <ReviewDescription>{props.description}</ReviewDescription>

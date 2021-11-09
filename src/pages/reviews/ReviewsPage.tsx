@@ -26,9 +26,12 @@ export default function ReviewsPage(props: Props) {
   const [reviewsI, setReviewsI] = useState<Review[]>([]);
   const [first, setFirst] = useState(false);
 
-  const { data: reviews, isLoading, isError, isFetching, isFetched } = useQuery<
-    Review[]
-  >(["reviews", page, 15], () => getReviews(page, 15), {
+  const {
+    data: reviews,
+    isLoading,
+    isFetching,
+    isFetched,
+  } = useQuery<Review[]>(["reviews", page, 15], () => getReviews(page, 15), {
     retry: 1,
     refetchOnWindowFocus: false,
   });
@@ -111,7 +114,7 @@ export default function ReviewsPage(props: Props) {
       </SubHeading>
       <GridContainer>
         {reviewsI?.map((review) => {
-          if (review.imageUrls.length !== 0 && !review.isRepresentative) {
+          if (review?.imageUrls.length !== 0) {
             return (
               <ReviewThumbNail
                 key={review.id}
@@ -119,30 +122,30 @@ export default function ReviewsPage(props: Props) {
                 onClick={() => {
                   ReviewClickHandler(review);
                 }}
-              ></ReviewThumbNail>
+              />
             );
           }
         })}
       </GridContainer>
       {isFetching && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ClipLoader
+            loading={isLoading}
+            color={colors.MidBlue}
+            css={{
+              name: "width",
+              styles: "border-width: 4px; z-index: 999;",
             }}
-          >
-            <ClipLoader
-              loading={isLoading}
-              color={colors.MidBlue}
-              css={{
-                name: "width",
-                styles: "border-width: 4px; z-index: 999;",
-              }}
-              size={30}
-            />
-          </div>
-        )}
+            size={30}
+          />
+        </div>
+      )}
       <BottomNavBar selectedItem="places" />
 
       {/*BEGIN: carousel */}
@@ -162,7 +165,7 @@ export default function ReviewsPage(props: Props) {
               setReview(undefined);
               setShowCarousel(false);
             }}
-          ></FontAwesomeIcon>
+          />
         </ReviewCarousel>
       )}
       {/*END: carousel */}

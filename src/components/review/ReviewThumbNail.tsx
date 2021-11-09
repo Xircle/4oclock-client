@@ -2,6 +2,7 @@ import styled from "styled-components";
 import type { Review } from "../../lib/api/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClone } from "@fortawesome/free-solid-svg-icons";
+import optimizeImage from "../../lib/optimizeImage";
 
 interface Props extends Review {
   onClick: () => void;
@@ -14,9 +15,10 @@ export default function ReviewThumbNail({
 }: Props) {
   const empty = imageUrls.length === 0;
   const many = imageUrls.length > 1;
+
   return (
     <Container empty={empty} onClick={() => onClick()}>
-      {!empty && <GridImg src={imageUrls[0]} />}
+      {!empty && <GridImg src={optimizeImage(imageUrls[0])} />}
       {many && (
         <FontAwesomeIcon
           icon={faClone}

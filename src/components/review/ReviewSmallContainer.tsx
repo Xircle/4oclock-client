@@ -6,6 +6,7 @@ import { Carousel } from "react-responsive-carousel";
 import { useHistory } from "react-router-dom";
 import type { Review } from "../../lib/api/types";
 import { useState, useEffect } from "react";
+import optimizeImage from "../../lib/optimizeImage";
 
 interface Props {
   title: string;
@@ -60,7 +61,7 @@ export default function ReviewSmallContainer({ title, reviews }: Props) {
             if (review.imageUrls.length > 0) {
               return (
                 <CarouselWrapper key={review.id}>
-                  <CarouselImg src={review.imageUrls[0]} />
+                  <CarouselImg src={optimizeImage(review.imageUrls[0])} />
                   {/* <CarouselDescription>
                     {review.description}
                   </CarouselDescription> */}
