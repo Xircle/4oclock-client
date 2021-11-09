@@ -36,6 +36,7 @@ import Modal from "../../components/UI/Modal";
 import PageTitle from "../../components/PageTitle";
 import { ReservationModalWrapper } from "../reservation/ReservationPage";
 import { parseHashTags } from "../../lib/helper";
+import optimizeImage from "../../lib/optimizeImage";
 
 const kakao = window.kakao;
 declare global {
@@ -195,7 +196,7 @@ export default function PlacePage({ match, location }: Props) {
       {/* Cover Image */}
       <SHeader>
         <SHeaderPic
-          src={placeData?.coverImage || coverImage}
+          src={optimizeImage(placeData?.coverImage || coverImage)}
           alt={placeData && placeData?.name + "사진"}
         />
         <TempToBeDeleted></TempToBeDeleted>
@@ -261,7 +262,7 @@ export default function PlacePage({ match, location }: Props) {
             return (
               <GridPic
                 key={index}
-                src={imageUrl}
+                src={optimizeImage(imageUrl)}
                 onClick={() =>
                   history.push(`/image/${index}`, {
                     payload: placeData?.reviews[0],
@@ -279,7 +280,7 @@ export default function PlacePage({ match, location }: Props) {
                   })
                 }
               >
-                <GridPic src={imageUrl} />
+                <GridPic src={optimizeImage(imageUrl)} />
                 <Overlay />
                 <OverlayText>
                   {placeData?.reviews[0].imageUrls.length - 6 > 0 && (

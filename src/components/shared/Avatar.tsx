@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import optimizeImage from "../../lib/optimizeImage";
 
 interface Props {
   profileImgUrl: string;
@@ -15,7 +16,7 @@ export default function Avatar({
 }: Props) {
   return (
     <AvartarImg
-      src={profileImgUrl}
+      src={optimizeImage(profileImgUrl)}
       rightOffset={rightOffset}
       onClick={onClick}
       width={width}

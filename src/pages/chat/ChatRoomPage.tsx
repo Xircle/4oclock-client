@@ -27,6 +27,7 @@ import { sendMessage } from "../../lib/api/sendMessage";
 import { toast } from "react-toastify";
 import routes from "../../routes";
 import { use100vh } from "react-div-100vh";
+import optimizeImage from "../../lib/optimizeImage";
 
 interface Props
   extends RouteComponentProps<
@@ -307,7 +308,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
             onClick={exitRoomHandler}
           />
           <SAvartar
-            src={receiverProfileImageUrl}
+            src={optimizeImage(receiverProfileImageUrl)}
             onClick={() =>
               history.push(routes.userProfile + "?cameFromChat=true", {
                 id: receiverId,

@@ -31,6 +31,7 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import "./FriendPage.css";
 import { getMyRooms } from "../../lib/api/getMyRooms";
 import { SetLocalStorageItemWithMyRoom } from "../../lib/helper";
+import optimizeImage from "../../lib/optimizeImage";
 
 interface Props extends RouteComponentProps {}
 
@@ -62,13 +63,20 @@ export default function FriendsPage({ history }: Props) {
     }
   );
 
-  const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
-    UserProfile | undefined
-  >(["randomProfile"], () => seeRandomProfile(isYkClub && isYkOnly), {
-    retry: 1,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
+  const {
+    data: randomProfileData,
+    refetch,
+    isLoading,
+    isFetching,
+  } = useQuery<UserProfile | undefined>(
+    ["randomProfile"],
+    () => seeRandomProfile(isYkClub && isYkOnly),
+    {
+      retry: 1,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   const { data } = useQuery<GetMyRooms | undefined>(
     ["room"],
@@ -150,9 +158,9 @@ export default function FriendsPage({ history }: Props) {
 
         <FlexDiv style={{ position: "relative" }}>
           <AvartarBig
-            src={
+            src={optimizeImage(
               randomProfileData?.profileImageUrl || "/avatar/anonymous_user.png"
-            }
+            )}
             alt="friend-profile"
             onClick={() => {
               if (!randomProfileData?.profileImageUrl) return;

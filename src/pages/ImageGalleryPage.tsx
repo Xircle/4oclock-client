@@ -4,6 +4,7 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import React from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { useEffect } from "react";
+import optimizeImage from "../lib/optimizeImage";
 
 export interface ImageGalleryPayload {
   id: string;
@@ -31,8 +32,8 @@ export default function ImageGalleryPage({ match, history, location }: Props) {
     history.goBack();
   }
   const images: ReactImageGalleryItem[] = payload.imageUrls.map((imageUrl) => ({
-    original: imageUrl,
-    thumbnail: imageUrl,
+    original: optimizeImage(imageUrl),
+    thumbnail: optimizeImage(imageUrl),
   }));
 
   const HistoryPop = () => {

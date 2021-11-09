@@ -27,6 +27,7 @@ import { CURRENT_USER } from "../../components/shared/constants";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
 import PageTitle from "../../components/PageTitle";
 import * as links from "../../components/shared/Links";
+import optimizeImage from "../../lib/optimizeImage";
 
 export default function MyPage() {
   useEffect(() => {
@@ -64,7 +65,9 @@ export default function MyPage() {
           <Heading>마이페이지</Heading>
           <ProfileInfoDiv>
             <MyAvartarImg
-              src={userData?.profileImageUrl || "/avatar/anonymous_user.png"}
+              src={optimizeImage(
+                userData?.profileImageUrl || "/avatar/anonymous_user.png"
+              )}
             />
             <ProfileTextWrapper>
               <UserName>{userData?.username || ""}</UserName>
@@ -88,7 +91,7 @@ export default function MyPage() {
               />
             </MainSubContainer>
           </Link>
-          {userData?.accountType === 'Admin' && (
+          {userData?.accountType === "Admin" && (
             <Link to={routes.admin} style={{ textDecoration: "none" }}>
               <SubContainer style={{ color: "red" }}>
                 어드민 페이지

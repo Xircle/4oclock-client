@@ -23,6 +23,7 @@ import { RouteComponentProps, useLocation } from "react-router-dom";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
 import PageTitle from "../../components/PageTitle";
 import queryString from "query-string";
+import optimizeImage from "../../lib/optimizeImage";
 
 interface LocationState {
   id: string;
@@ -65,11 +66,11 @@ export default function ParticipantProfilePage({ history }: Props) {
           </Heading>
           <FlexDiv>
             <AvartarBig
-              src={
+              src={optimizeImage(
                 location.state?.profileImageUrl ||
-                userProfileData?.profileImageUrl ||
-                "/avatar/anonymous_user.png"
-              }
+                  userProfileData?.profileImageUrl ||
+                  "/avatar/anonymous_user.png"
+              )}
               alt="friend-profile"
               onClick={() => {
                 if (!userProfileData?.profileImageUrl) return;

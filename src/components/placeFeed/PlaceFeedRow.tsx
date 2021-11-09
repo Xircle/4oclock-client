@@ -4,6 +4,7 @@ import type { PlaceFeedData } from "../../lib/api/types";
 import Avatar from "../shared/Avatar";
 import { ModifyDeadline } from "../../lib/utils";
 import { TimeNumberToString } from "../../lib/utils";
+import optimizeImage from "../../lib/optimizeImage";
 
 interface Props extends PlaceFeedData {
   onClick: () => void;
@@ -38,7 +39,10 @@ export default function PlaceFeedRow({
             <p>{ModifyDeadline(deadline)}</p>
           </PlaceDeadline>
         )}
-        <PlaceCoverImage src={coverImage} isLightning={isLightning} />
+        <PlaceCoverImage
+          src={optimizeImage(coverImage)}
+          isLightning={isLightning}
+        />
       </PlaceLeftContainer>
 
       <PlaceRightContainer>

@@ -34,6 +34,7 @@ import { editProfile } from "../../lib/api/editProfile";
 import { toast } from "react-toastify";
 import routes from "../../routes";
 import { RouteComponentProps } from "react-router-dom";
+import optimizeImage from "../../lib/optimizeImage";
 
 export interface ProfileData {
   username?: string;
@@ -66,15 +67,16 @@ export default function EditProfilePage({ history }: Props) {
   ]);
   const [detailAddress, setDetailAddress] = useState(localProfileData.location);
 
-  const { data: userData, isLoading, isSuccess } = useQuery<
-    UserData | undefined
-  >("userProfile", () => getUser(), {
+  const {
+    data: userData,
+    isLoading,
+    isSuccess,
+  } = useQuery<UserData | undefined>("userProfile", () => getUser(), {
     retry: 2,
   });
 
-  const { mutateAsync: mutateUserProfile, isLoading: isUpdating } = useMutation(
-    editProfile
-  );
+  const { mutateAsync: mutateUserProfile, isLoading: isUpdating } =
+    useMutation(editProfile);
 
   useEffect(() => {
     if (isSuccess) {
@@ -337,10 +339,10 @@ export default function EditProfilePage({ history }: Props) {
             <FileLabel htmlFor="input-file">
               <FlexDiv>
                 <AvartarProfile
-                  src={
+                  src={optimizeImage(
                     localProfileData.profileImageUrl ||
-                    "/avatar/anonymous_user.png"
-                  }
+                      "/avatar/anonymous_user.png"
+                  )}
                 />
               </FlexDiv>
               <input

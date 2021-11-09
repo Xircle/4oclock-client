@@ -3,6 +3,7 @@ import { Avartar, colors } from "../../styles/styles";
 import { ConvertSentTimeForList } from "../../lib/utils";
 import { IRoom } from "../../lib/api/types";
 import { useHistory } from "react-router-dom";
+import optimizeImage from "../../lib/optimizeImage";
 
 interface Props {
   room: IRoom;
@@ -22,7 +23,7 @@ export default function ChatListRow({ room }: Props) {
       }
     >
       <LeftContainer>
-        <SAvatar src={room.receiver.profileImageUrl} />
+        <SAvatar src={optimizeImage(room.receiver.profileImageUrl)} />
         <LeftTextContainer>
           <UsernameText isRead={room.lastMessage.isRead}>
             {room.receiver.username}
