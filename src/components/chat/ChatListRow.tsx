@@ -23,7 +23,12 @@ export default function ChatListRow({ room }: Props) {
       }
     >
       <LeftContainer>
-        <SAvatar src={optimizeImage(room.receiver.profileImageUrl)} />
+        <SAvatar
+          src={optimizeImage(room.receiver.profileImageUrl, {
+            width: 55,
+            height: 55,
+          })}
+        />
         <LeftTextContainer>
           <UsernameText isRead={room.lastMessage.isRead}>
             {room.receiver.username}

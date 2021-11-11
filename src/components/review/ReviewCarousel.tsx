@@ -40,7 +40,10 @@ export default function ReviewCarousel(props: Props) {
             {props.imageUrls?.map((imageUrl, idx) => (
               <ReviewPicture
                 key={idx}
-                src={optimizeImage(imageUrl, { width: 250, height: 170 })}
+                src={optimizeImage(imageUrl, {
+                  width: 400,
+                  height: 300,
+                })}
               />
             ))}
           </SCarousel>

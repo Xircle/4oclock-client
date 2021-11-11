@@ -63,8 +63,8 @@ export default function ReviewSmallContainer({ title, reviews }: Props) {
                 <CarouselWrapper key={review.id}>
                   <CarouselImg
                     src={optimizeImage(review.imageUrls[0], {
-                      width: 100,
-                      height: 100,
+                      width: 250,
+                      height: 170,
                     })}
                   />
                   {/* <CarouselDescription>

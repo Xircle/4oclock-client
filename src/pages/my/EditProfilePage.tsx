@@ -341,7 +341,8 @@ export default function EditProfilePage({ history }: Props) {
                 <AvartarProfile
                   src={optimizeImage(
                     localProfileData.profileImageUrl ||
-                      "/avatar/anonymous_user.png"
+                      "/avatar/anonymous_user.png",
+                    { width: 125, height: 125 }
                   )}
                 />
               </FlexDiv>

@@ -16,7 +16,7 @@ export default function Avatar({
 }: Props) {
   return (
     <AvartarImg
-      src={optimizeImage(profileImgUrl, { width: 38, height: 38 })}
+      src={optimizeImage(profileImgUrl, { width: 46, height: 46 })}
       rightOffset={rightOffset}
       onClick={onClick}
       width={width}

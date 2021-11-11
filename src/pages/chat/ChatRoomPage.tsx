@@ -308,7 +308,10 @@ export default function ChatRoomPage({ match, history, location }: Props) {
             onClick={exitRoomHandler}
           />
           <SAvartar
-            src={optimizeImage(receiverProfileImageUrl)}
+            src={optimizeImage(receiverProfileImageUrl, {
+              width: 40,
+              height: 40,
+            })}
             onClick={() =>
               history.push(routes.userProfile + "?cameFromChat=true", {
                 id: receiverId,

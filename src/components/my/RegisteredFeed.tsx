@@ -1,6 +1,7 @@
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { MyPlaceData } from "../../lib/api/types";
+import optimizeImage from "../../lib/optimizeImage";
 import { colors } from "../../styles/styles";
 import { PlaceFull, PlaceFullText } from "../placeFeed/PlaceFeedRow";
 
@@ -25,7 +26,7 @@ export default function RegisteredFeed({
             <PlaceFullText>마감 되었어요</PlaceFullText>
           </>
         )}
-        <FeedImg src={coverImage} />
+        <FeedImg src={optimizeImage(coverImage, { width: 120, height: 120 })} />
       </FeedLeftContainer>
       <FeedDescription>
         <div>

@@ -69,7 +69,8 @@ export default function ParticipantProfilePage({ history }: Props) {
               src={optimizeImage(
                 location.state?.profileImageUrl ||
                   userProfileData?.profileImageUrl ||
-                  "/avatar/anonymous_user.png"
+                  "/avatar/anonymous_user.png",
+                { width: 174, height: 174 }
               )}
               alt="friend-profile"
               onClick={() => {
