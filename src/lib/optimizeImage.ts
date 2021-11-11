@@ -3,11 +3,13 @@ const IMAGE_ORIGIN = process.env.REACT_APP_IMAGE_ORIGIN;
 interface options {
   width: number;
   height: number;
+  quality?: number;
 }
 export default function optimizeImage(
   url: string,
   resizeOptions?: options
 ): string {
+  if (!url) return "";
   if (!url.includes(IMAGE_ORIGIN!)) return url;
   if (url.includes(".svg")) return url;
 
@@ -16,6 +18,6 @@ export default function optimizeImage(
   if (!resizeOptions) {
     return replaced;
   }
-  const { width, height } = resizeOptions;
-  return replaced.concat(`?w=${width}&h=${height}&q=80`);
+  const { width, height, quality } = resizeOptions;
+  return replaced.concat(`?w=${width}&h=${height}&q=${quality || 80}`);
 }
