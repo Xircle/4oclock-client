@@ -38,7 +38,10 @@ export default function ReviewCarousel(props: Props) {
             dynamicHeight={true}
           >
             {props.imageUrls?.map((imageUrl, idx) => (
-              <ReviewPicture key={idx} src={optimizeImage(imageUrl)} />
+              <ReviewPicture
+                key={idx}
+                src={optimizeImage(imageUrl, { width: 250, height: 170 })}
+              />
             ))}
           </SCarousel>
           <ReviewDescription>{props.description}</ReviewDescription>

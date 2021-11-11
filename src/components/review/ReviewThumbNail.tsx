@@ -18,7 +18,11 @@ export default function ReviewThumbNail({
 
   return (
     <Container empty={empty} onClick={() => onClick()}>
-      {!empty && <GridImg src={optimizeImage(imageUrls[0])} />}
+      {!empty && (
+        <GridImg
+          src={optimizeImage(imageUrls[0], { width: 123, height: 123 })}
+        />
+      )}
       {many && (
         <FontAwesomeIcon
           icon={faClone}
