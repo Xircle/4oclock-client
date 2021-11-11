@@ -21,28 +21,11 @@ Following items are core frontend technologies used in this project:
 - React-query
 - Styled-components
 
-### Server
-
-Following items are core backend technologies used in this project:
-
-- NestJs
-- TypeScript
-- TypeORM
-- PostgreSQL
-
-### Infra
-
-- Netlify for clinet
-- Heroku for server
-- AWS S3 for static image
-
 ### Trouble shooting
 
 - Cross-browsing problem with old version of `Samsung Internet Browser`
 
 ## Upcoming Feature
 
-- [ ] Chatting
-- [ ] Review other participants, After meeting
-- [ ] Push notification
-- [ ] Thumbnail image with Lambda
+- [x] Chatting
+- [x] Review other participants, After meeting
