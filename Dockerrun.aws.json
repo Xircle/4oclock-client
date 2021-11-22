@@ -1,0 +1,12 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "frontend",
+      "image": "2donny/4oclock-frontend",
+      "hostname": "frontend",
+      "essential": false,
+      "memory": 128
+    }
+  ]
+}
