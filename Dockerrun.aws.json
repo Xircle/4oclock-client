@@ -5,7 +5,13 @@
       "name": "frontend",
       "image": "2donny/4oclock-frontend",
       "hostname": "frontend",
-      "memory": 128
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 3000
+        }
+      ]
     }
   ]
 }
