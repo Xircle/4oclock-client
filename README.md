@@ -33,7 +33,7 @@ Following items are core frontend technologies used in this project:
 
 ## AWS Infra
 
-- [x] Deployment with AWS Amplify 
+- [x] CI/CD with AWS Amplify 
 - [x] Monitoring with AWS CloudWatch
 - [x] CDN with AWS CloudFront 
 - [x] Image resizing with AWS Lambda 
