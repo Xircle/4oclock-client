@@ -82,12 +82,12 @@ export default function PlacePage({ match, location }: Props) {
   const isFinal = Boolean(queryString.parse(UrlSearch).isFinal === "true");
   const isClosed = Boolean(queryString.parse(UrlSearch).isClosed === "true");
   const showCancelBtn = Boolean(
-    queryString.parse(UrlSearch).showCancelBtn === "true"
+    queryString.parse(UrlSearch).showCancelBtn === "true",
   );
   const [isCancleBtnClicked, setIsCancleBtnClicked] = useState(false);
 
   const scrollToProfile = Boolean(
-    queryString.parse(UrlSearch).scrollToProfile === "true"
+    queryString.parse(UrlSearch).scrollToProfile === "true",
   );
   const { data: placeData, isLoading } = useQuery<PlaceData | undefined>(
     ["place-detail", placeId],
@@ -99,7 +99,7 @@ export default function PlacePage({ match, location }: Props) {
       },
       retry: 1,
       refetchOnWindowFocus: false,
-    }
+    },
   );
 
   // Scroll Conditionally
@@ -310,22 +310,6 @@ export default function PlacePage({ match, location }: Props) {
         <DescriptionText>
           <b>프로필을 클릭</b>해서 신청한 친구들의 정보를 구경해보세요!
         </DescriptionText>
-        <PParticipantContainer>
-          <PParticipant>
-            남 {placeData?.participantsInfo.male_count}{" "}
-          </PParticipant>
-          <PParticipant MarginLeft={"10px"}>
-            여{" "}
-            {placeData &&
-              placeData.participantsInfo.total_count -
-                placeData.participantsInfo.male_count}
-          </PParticipant>
-          <PParticipant MarginLeft={"10px"}>
-            평균 나이{" "}
-            {placeData &&
-              AgeNumberToString(placeData.participantsInfo.average_age)}
-          </PParticipant>
-        </PParticipantContainer>
         <AvartarImgContainerParticipant
           isParticipating={placeData?.isParticipating || isParticipating}
         >
@@ -343,11 +327,11 @@ export default function PlacePage({ match, location }: Props) {
                 } else if (!isClosed) {
                   history.push(
                     `/participants-list/${encodeUrlSlug(
-                      placeData?.name || name
+                      placeData?.name || name,
                     )}`,
                     {
                       placeId,
-                    }
+                    },
                   );
                 }
               }}
