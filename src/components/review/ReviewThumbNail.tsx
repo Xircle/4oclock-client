@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import type { Review } from "../../lib/api/types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClone } from "@fortawesome/free-solid-svg-icons";
-import optimizeImage from "../../lib/optimizeImage";
+import styled from 'styled-components';
+import type { Review } from '../../lib/api/types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClone } from '@fortawesome/free-solid-svg-icons';
+import optimizeImage from '../../lib/optimizeImage';
 
 interface Props extends Review {
   onClick: () => void;
@@ -20,15 +20,19 @@ export default function ReviewThumbNail({
     <Container empty={empty} onClick={() => onClick()}>
       {!empty && (
         <GridImg
-          src={optimizeImage(imageUrls[0], { width: 123, height: 123 })}
+          src={optimizeImage(imageUrls[0], {
+            width: 123,
+            height: 123,
+            quality: 100,
+          })}
         />
       )}
       {many && (
         <FontAwesomeIcon
           icon={faClone}
-          color={"white"}
-          size={"xs"}
-          style={{ position: "absolute", right: "3px", top: "3px" }}
+          color={'white'}
+          size={'xs'}
+          style={{ position: 'absolute', right: '3px', top: '3px' }}
         />
       )}
     </Container>
@@ -39,7 +43,7 @@ const Container = styled.div<{ empty: boolean }>`
   position: relative;
   width: 123px;
   height: 123px;
-  background-color: ${(props) => (props.empty ? "#f8fafd" : "transparent")};
+  background-color: ${(props) => (props.empty ? '#f8fafd' : 'transparent')};
   cursor: pointer;
 `;
 
