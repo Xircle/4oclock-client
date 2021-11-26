@@ -7,7 +7,7 @@ import { colors, Container, SubText } from "../../styles/styles";
 import BottomNavBar from "../../components/shared/BottomNavBar";
 import { Link, RouteComponentProps, useHistory } from "react-router-dom";
 import routes from "../../routes";
-import { useEffect, useState, useRef, Component } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useQuery } from "react-query";
 import {
   getPlacesByLocation,
@@ -55,7 +55,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
   const [selectedPlaceLocation, setSelectedPlaceLocation] =
     useState<PlaceLocation>(placeLocationoptions[0].value as PlaceLocation);
   const isLoggedIn = Boolean(
-    queryString.parse(UrlSearch).isLoggedIn === "true"
+    queryString.parse(UrlSearch).isLoggedIn === "true",
   );
   const isSignup = Boolean(queryString.parse(UrlSearch).isSignup === "true");
 
@@ -71,7 +71,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
     {
       retry: 1,
       refetchOnWindowFocus: false,
-    }
+    },
   );
   const { data: reviews } = useQuery<Review[]>(
     ["reviews"],
@@ -79,7 +79,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
     {
       retry: 1,
       refetchOnWindowFocus: false,
-    }
+    },
   );
 
   const { data: myRoomsData } = useQuery<GetMyRooms | undefined>(
@@ -88,7 +88,7 @@ export default function PlaceFeedPage({ history, location }: Props) {
     {
       retry: 1,
       refetchOnWindowFocus: false,
-    }
+    },
   );
 
   useEffect(() => {
