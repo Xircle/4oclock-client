@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { colors, FlexDiv } from "../../styles/styles";
 import type { PlaceFeedData } from "../../lib/api/types";
-import Avatar from "../shared/Avatar";
-import { getStartDateFromNow, ModifyDeadline } from "../../lib/utils";
+import { getStartDateFromNow } from "../../lib/utils";
 import optimizeImage from "../../lib/optimizeImage";
 import { useEffect, useState } from "react";
 import moment from "moment";
 
+const LEFT_HOUR_BEFORE_CLOSE = 3;
 interface Props extends PlaceFeedData {
   onClick: () => void;
 }
@@ -27,14 +27,25 @@ export default function PlaceFeedRow({
     string | undefined
   >();
 
-  const isTodayPlace = (startDateAt: string) => {
-    if (moment(startDateAt).diff(moment(), "days") === 0) return true;
-    return false;
+  const shouldShowTimer = (startDateAt: string) => {
+    const isToday = moment(startDateAt).diff(moment(), "days") === 0;
+    if (!isToday) return false;
+    return true;
+
+    // const isLeftDuration = moment.duration(moment(startDateAt).diff(moment()));
+    // if (+isLeftDuration.asHours().toFixed(2) < LEFT_HOUR_BEFORE_CLOSE + 5)
+    //   // 마감되기 5시간 전에 보여준다.
+    //   return true;
+
+    // return false;
   };
 
   useEffect(() => {
-    if (isClosed || !isTodayPlace(startDateAt)) return;
-    const deadlineDate = moment(startDateAt).subtract(3, "hours");
+    if (isClosed || !shouldShowTimer(startDateAt)) return;
+    const deadlineDate = moment(startDateAt).subtract(
+      LEFT_HOUR_BEFORE_CLOSE,
+      "hours",
+    );
     const interval = 1000;
     const countdown = setInterval(() => {
       let duration = moment.duration(deadlineDate.diff(moment()));
@@ -43,7 +54,6 @@ export default function PlaceFeedRow({
         clearInterval(countdown);
       } else {
         const countDownCaption = `${duration.hours()}:${duration.minutes()}:${duration.seconds()} 후 마감`;
-        console.log(countDownCaption);
         setCountDownCaption(countDownCaption);
       }
     }, interval);
