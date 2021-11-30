@@ -28,12 +28,12 @@ export default function ImageGalleryPage({ match, history, location }: Props) {
       ?.scrollIntoView({ block: "center" });
   }, []);
 
-  if (!payload) {
+  if (!payload?.imageUrls || payload.imageUrls.length === 0) {
     history.goBack();
   }
   const images: ReactImageGalleryItem[] = payload.imageUrls.map((imageUrl) => ({
-    original: optimizeImage(imageUrl, { width: 375, height: 375 }),
-    thumbnail: optimizeImage(imageUrl, { width: 375, height: 375 }),
+    original: imageUrl,
+    thumbnail: imageUrl,
   }));
 
   const HistoryPop = () => {

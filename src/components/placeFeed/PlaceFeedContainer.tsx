@@ -55,12 +55,9 @@ export default function PlaceFeedContainer({
                 coverImage,
                 name,
                 participantsCount,
-                isLightning,
                 views,
                 startDateFromNow,
-                startTime,
                 isParticipating,
-                participants,
                 startDateAt,
               } = placeFeedData;
               if (!isAdminEditPlace) {
@@ -72,14 +69,11 @@ export default function PlaceFeedContainer({
                     coverImage,
                     name,
                     participantsCount,
-                    isLightning,
                     views,
                     startDateFromNow,
-                    startTime,
                     isParticipating,
-                    participants,
                     startDateAt,
-                  }
+                  },
                 );
               } else {
                 history.push(`/editPlace/${placeFeedData.id}`);

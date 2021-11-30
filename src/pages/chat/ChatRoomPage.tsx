@@ -92,7 +92,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   const [page, setPage] = useState(1);
   const [isReceiverJoining, setIsReceiverJoining] = useState(false);
   const [socket, disconnect] = useSocket(
-    storage.getItem(`chat-${receiverId}`) || ""
+    storage.getItem(`chat-${receiverId}`) || "",
   );
   const { data: fetchedMessagesData, isFetching } = useQuery<
     GetRoomMessagesOutput | undefined
@@ -107,7 +107,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
       retry: 1,
       refetchOnWindowFocus: false,
       keepPreviousData: true,
-    }
+    },
   );
 
   useEffect(() => {
@@ -149,7 +149,6 @@ export default function ChatRoomPage({ match, history, location }: Props) {
 
   useEffect(() => {
     if (!fetchedMessagesData?.messages) return;
-    console.log(messages, fetchedMessagesData?.messages, page);
 
     if (page === 1) {
       setMessages(fetchedMessagesData?.messages);
@@ -164,7 +163,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     if (fetchedMessagesData?.meta?.hasMore) {
       console.log("prefetch!");
       queryClient.prefetchQuery(["room-chat", roomId, page + 1], () =>
-        getRoomMessages(roomId, receiverId, page + 1)
+        getRoomMessages(roomId, receiverId, page + 1),
       );
     }
   }, [fetchedMessagesData, queryClient, roomId, receiverId, page]);
@@ -186,7 +185,6 @@ export default function ChatRoomPage({ match, history, location }: Props) {
 
   const onScrollFram = (values: positionValues) => {
     if (values.top <= 0.4) {
-      console.log(isFetching);
       if (!isFetching && messages.length >= CHAT_NUMBER_PER_PAGE * page) {
         console.log("axios 요청!");
         setPage((old) => old + 1);
@@ -204,7 +202,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
         return [{ content, isMe: false, sentAt }, ...prev];
       });
     },
-    [messages]
+    [messages],
   );
 
   const handleMessageInputChange = useCallback(
@@ -216,12 +214,12 @@ export default function ChatRoomPage({ match, history, location }: Props) {
         flag: e.currentTarget.value.trim().length > 0 ? true : false,
       });
     },
-    [socket, roomId]
+    [socket, roomId],
   );
 
   const onSubmitHandler = useCallback(
     (
-      e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
+      e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>,
     ) => {
       e.preventDefault();
       if (messageInput.trim().length === 0) return;
@@ -256,7 +254,6 @@ export default function ChatRoomPage({ match, history, location }: Props) {
         }
         if (roomId === "0" && res.data.createdRoomId) {
           // 만약 unmount되었을 때 이 promise는 실행이 될까?
-          console.log("created room Id", res.data.createdRoomId);
           storage.setItem(`chat-${receiverId}`, res.data.createdRoomId);
         }
       });
@@ -272,7 +269,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
         flag: false,
       });
     },
-    [MessageInputRef, messageInput, receiverId, roomId, socket, mutateMessage]
+    [MessageInputRef, messageInput, receiverId, roomId, socket, mutateMessage],
   );
 
   const exitRoomHandler = useCallback(() => {

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import PageTitle from "../../components/PageTitle";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
 import BottomNavBar from "../../components/shared/BottomNavBar";
-import { participantsNumberLimit, TimeNumberToString } from "../../lib/utils";
+import { StartDateFromNowToString } from "../../lib/utils";
 import routes from "../../routes";
 import {
   Container,
@@ -70,11 +70,7 @@ export default function ReservationConfirmPage({ history, location }: Props) {
             </Row>
             <Row>
               <span className="bold">시간</span>
-              <span>
-                {startDateFromNow}{" "}
-                {TimeNumberToString(startTime, { hasIndicator: true })}
-                {/* {participantsNumberLimit(startTime)}) */}
-              </span>
+              <span>{StartDateFromNowToString(startDateFromNow)}</span>
             </Row>
             <Row>
               <span className="bold">장소</span>

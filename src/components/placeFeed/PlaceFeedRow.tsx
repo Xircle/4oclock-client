@@ -2,9 +2,10 @@ import styled from "styled-components";
 import { colors, FlexDiv } from "../../styles/styles";
 import type { PlaceFeedData } from "../../lib/api/types";
 import Avatar from "../shared/Avatar";
-import { ModifyDeadline } from "../../lib/utils";
-import { TimeNumberToString } from "../../lib/utils";
+import { getStartDateFromNow, ModifyDeadline } from "../../lib/utils";
 import optimizeImage from "../../lib/optimizeImage";
+import { useEffect, useState } from "react";
+import moment from "moment";
 
 interface Props extends PlaceFeedData {
   onClick: () => void;
@@ -15,16 +16,42 @@ export default function PlaceFeedRow({
   name,
   coverImage,
   deadline,
-  oneLineIntroText,
   isClosed,
-  isLightning,
-  participantsCount,
+  leftParticipantsCount,
   startDateFromNow,
-  startTime,
-  participants,
-  isParticipating,
+  startDateAt,
+  placeDetail,
   views,
 }: Props) {
+  const [countDownCaption, setCountDownCaption] = useState<
+    string | undefined
+  >();
+
+  const isTodayPlace = (startDateAt: string) => {
+    if (moment(startDateAt).diff(moment(), "days") === 0) return true;
+    return false;
+  };
+
+  useEffect(() => {
+    if (isClosed || !isTodayPlace(startDateAt)) return;
+    const deadlineDate = moment(startDateAt).subtract(3, "hours");
+    const interval = 1000;
+    const countdown = setInterval(() => {
+      let duration = moment.duration(deadlineDate.diff(moment()));
+      if (duration.asSeconds() <= 0) {
+        setCountDownCaption("마감");
+        clearInterval(countdown);
+      } else {
+        const countDownCaption = `${duration.hours()}:${duration.minutes()}:${duration.seconds()} 후 마감`;
+        console.log(countDownCaption);
+        setCountDownCaption(countDownCaption);
+      }
+    }, interval);
+    return () => {
+      clearInterval(countdown);
+    };
+  }, [startDateAt]);
+
   return (
     <Container onClick={onClick}>
       <PlaceLeftContainer>
@@ -34,43 +61,38 @@ export default function PlaceFeedRow({
             <PlaceFullText>마감 되었어요</PlaceFullText>
           </>
         )}
-        {deadline && (
-          <PlaceDeadline isLightning={isLightning}>
-            <p>{ModifyDeadline(deadline)}</p>
-          </PlaceDeadline>
+        {deadline && !isClosed && (
+          <PlaceIndicator isRed={leftParticipantsCount <= 2}>
+            <p>잔여{leftParticipantsCount}석</p>
+          </PlaceIndicator>
         )}
         <PlaceCoverImage
           src={optimizeImage(coverImage, { width: 120, height: 120 })}
-          isLightning={isLightning}
         />
       </PlaceLeftContainer>
 
       <PlaceRightContainer>
-        <FlexSpaceBetween>
-          <PlaceName>{name}</PlaceName>
-          <ViewCount>
-            <img src="/icons/eye.svg" />
-            {views}
-          </ViewCount>
-        </FlexSpaceBetween>
-        <PlaceOneLineIntroText>{oneLineIntroText}</PlaceOneLineIntroText>
-        <PlaceSummary>
-          {startDateFromNow} {!isClosed && TimeNumberToString(startTime)} /{" "}
-          {participantsCount}명의
-          <span className="bold"> 친구들 신청중</span>
-        </PlaceSummary>
-        <ParticipantsContainer>
-          <ParticipantsWrapper isParticipating={isParticipating}>
-            {participants.map((parti, idx) => {
-              if (idx < 4) {
-                return (
-                  <Avatar key={parti.userId} rightOffset={"-10px"} {...parti} />
-                );
-              }
-            })}
-          </ParticipantsWrapper>
-          {participantsCount > 4 ? <p>+{participantsCount - 4}</p> : null}
-        </ParticipantsContainer>
+        <div>
+          <FlexSpaceBetween>
+            <PlaceSummary>
+              <span className="bold">
+                {" "}
+                {getStartDateFromNow(startDateFromNow)}
+              </span>
+            </PlaceSummary>
+            <ViewCount>
+              <img src="/icons/eye.svg" />
+              {views}
+            </ViewCount>
+          </FlexSpaceBetween>
+          <FlexSpaceBetween>
+            <PlaceName>{name}</PlaceName>
+          </FlexSpaceBetween>
+          <PlaceSummary>{placeDetail?.description}</PlaceSummary>
+        </div>
+        <PlaceDeadline isTimerStart={!!countDownCaption}>
+          {countDownCaption || deadline}
+        </PlaceDeadline>
       </PlaceRightContainer>
     </Container>
   );
@@ -104,14 +126,10 @@ const PlaceLeftContainer = styled.div`
   padding: 0px;
   position: relative;
 `;
-const PlaceCoverImage = styled.img<{ isLightning: boolean }>`
+const PlaceCoverImage = styled.img`
   object-fit: cover;
   width: 100%;
   height: 100%;
-  background: ${(props) =>
-    props.isLightning &&
-    "linear-gradient(to top, #E67255, #D3499C) border-box"};
-  border: ${(props) => props.isLightning && "3px solid transparent"};
   border-radius: 5px;
   display: inline-block;
 `;
@@ -120,22 +138,26 @@ const PlaceRightContainer = styled.div`
   width: 205px;
   padding-left: 10px;
   padding-top: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
-const PlaceDeadline = styled.div<{ isLightning: boolean }>`
+const PlaceIndicator = styled.div<{ isRed: boolean }>`
   position: absolute;
-  background-color: ${(props) => (props.isLightning ? "#000" : colors.MidBlue)};
+  background-color: ${(props) =>
+    props.isRed ? "rgba(255, 51, 51, 0.9)" : colors.MidBlue};
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 3px 0px 3px 0;
   width: 52px;
   height: 23px;
-  top: ${(props) => (props.isLightning ? "3px" : "0px")};
-  left: ${(props) => (props.isLightning ? "3px" : "0px")};
+  top: 0px;
+  left: 0px;
   p {
     color: white;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 11px;
   }
 `;
@@ -153,12 +175,16 @@ export const PlaceFull = styled.div`
 `;
 
 const PlaceSummary = styled.p`
-  font-weight: 500;
   font-size: 10.5px;
   line-height: 13px;
-  color: #12121d;
+  color: #6f7789;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  -webkit-line-clamp: 1;
   .bold {
-    color: #8c94a4;
+    font-weight: 500;
+    color: #6f7789;
   }
 `;
 
@@ -200,14 +226,17 @@ const PlaceTags = styled.p`
   color: ${colors.MidGray};
 `;
 
-const PlaceOneLineIntroText = styled.p`
+const PlaceDeadline = styled.p<{ isTimerStart: boolean }>`
   margin: 8px 0 6px;
   font-size: 10.5px;
-  color: #8c94a4;
+  color: ${(props) => (props.isTimerStart ? "#FF3333" : "#929da9")};
+  align-self: end;
 `;
 
 const PlaceName = styled.span`
-  color: #1c43b7;
-  font-size: 15px;
-  font-weight: 500;
+  color: #12121dd4;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  margin: 5px 0;
 `;

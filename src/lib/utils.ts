@@ -35,32 +35,23 @@ export function AgeNumberToString(age: number): string {
 /**
  *
  * @param time
- * @param options hasIndicator의 디폴트는 false 입니다.
  * @returns 1, 5, 오후 4시, 오전 9시,
  */
 
-export function TimeNumberToString(
-  time: number,
-  options?: { hasIndicator: boolean }
-): string {
+export function StartDateFromNowToString(
+  startDateFromNow?: string,
+): string | undefined {
+  if (!startDateFromNow) return;
+  if (startDateFromNow === "마감") return startDateFromNow;
+  const date = startDateFromNow.split(" ")[0];
+  const time = +startDateFromNow.split(" ")[1];
   let timeString: string = "";
   if (time > 12) {
     timeString = `오후 ${time - 12}시`;
   } else {
     timeString = `오전 ${time}시`;
   }
-  if (!options?.hasIndicator) {
-    return timeString.slice(3);
-  }
-  return timeString;
-}
-
-export function participantsNumberLimit(time: number): string {
-  if (time < 18) {
-    return "4인";
-  } else {
-    return "2인";
-  }
+  return `${date} ${timeString}`;
 }
 
 export const encodeUrlSlug = (url: string): string => {
@@ -155,14 +146,13 @@ export const SetMessageDividorText = (prevM: Date): string => {
 
 export const ModifyStringToStringArray = (
   text: string,
-  divider: string
+  divider: string,
 ): string[] => {
   const words = text.split("%");
   return words;
 };
 
-// export const IsSentDatesDifferent = (prevM: Date, curM: Date): boolean => {
-//   const curMessageMoment = moment(curM);
-//   const prevMessageMoment = moment(prevM);
-
-// }
+export const getStartDateFromNow = (startDateFromNow) => {
+  if (startDateFromNow === "마감") return startDateFromNow;
+  return `${startDateFromNow}시에 모여`;
+};
