@@ -33,17 +33,18 @@ export interface PlaceFeedData {
   id: string;
   name: string;
   coverImage: string;
-  oneLineIntroText: string;
-  startDateAt: string;
-  startTime: number;
   isClosed: boolean;
-  isLightning: boolean;
   participantsCount: number;
+  leftParticipantsCount: number;
   startDateFromNow: string;
-  participants: Participants[];
+  startDateAt: string;
+  // participants: Participants[];
   isParticipating: boolean;
   deadline: string;
   views: number;
+  placeDetail: {
+    description: string;
+  };
 }
 
 export interface ParticipantsListData extends Participants {}
@@ -69,12 +70,13 @@ export interface Review {
 
 export interface PlaceData {
   name: string;
+  coverImage: string;
+  subImages: string[];
   oneLineIntroText: string;
   recommendation: string;
   startDateFromNow: string;
   startTime: number;
   deadline: string;
-  coverImage: string;
   isClosed: boolean;
   isLightning: boolean;
   isParticipating: boolean;

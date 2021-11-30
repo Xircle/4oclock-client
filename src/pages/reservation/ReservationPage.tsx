@@ -20,7 +20,7 @@ import routes from "../../routes";
 import BackButtonLayout from "../../components/shared/BackButtonLayout";
 import { useMutation, useQuery } from "react-query";
 import { makeReservation } from "../../lib/api/makeReservation";
-import { decodeUrlSlug, TimeNumberToString } from "../../lib/utils";
+import { decodeUrlSlug, StartDateFromNowToString } from "../../lib/utils";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
 import ClipLoader from "react-spinners/ClipLoader";
 import { getReservationParticipantNumber } from "../../lib/api/getReservationParticipantNumber";
@@ -64,16 +64,15 @@ export default function ReservationPage({ match, location, history }: Props) {
     {
       retry: 1,
       refetchOnWindowFocus: false,
-    }
+    },
   );
 
   const toggleReservation = () => {
     setReservationClicked((prev) => !prev);
   };
 
-  const { mutateAsync: mutateReservation, isLoading } = useMutation(
-    makeReservation
-  );
+  const { mutateAsync: mutateReservation, isLoading } =
+    useMutation(makeReservation);
 
   const makeReservationHandler = async () => {
     if (!selected || !placeId) return;
@@ -115,11 +114,7 @@ export default function ReservationPage({ match, location, history }: Props) {
 
           <SelectionBoxBooking onClick={() => setSelected((prev) => !prev)}>
             <SelectionMainTextBooking>
-              {startDateFromNow}{" "}
-              {TimeNumberToString(startTime, { hasIndicator: true })}
-              {/* <TagBooking>
-                <p>{startTime >= 18 ? "2" : "4"}인 모임</p>
-              </TagBooking> */}
+              {StartDateFromNowToString(startDateFromNow)}
             </SelectionMainTextBooking>
             <SelectionSubTextBooking>
               {participantsNumber || "N"}명의 친구들이 신청했어요
