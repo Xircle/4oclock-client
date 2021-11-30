@@ -25,7 +25,7 @@ import {
   CalculateDDay,
   encodeUrlSlug,
   CalculateCloseDay,
-  TimeNumberToString,
+  StartDateFromNowToString,
 } from "../../lib/utils";
 import Avatar from "../../components/shared/Avatar";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
@@ -68,15 +68,12 @@ export default function PlacePage({ match, location }: Props) {
   const { placeId } = match.params;
   const UrlSearch = location.search;
   const {
-    coverImage,
     name,
+    coverImage,
     participantsCount,
-    isLightning,
     views,
     startDateFromNow,
-    startTime,
     isParticipating,
-    participants,
     startDateAt,
   } = location?.state || {};
   const isFinal = Boolean(queryString.parse(UrlSearch).isFinal === "true");
@@ -212,14 +209,8 @@ export default function PlacePage({ match, location }: Props) {
           <SHeaderCategoryIndicator>
             {placeData?.participantsCount || "N"}명 신청중
           </SHeaderCategoryIndicator>
-          <SHeaderTextHeading>
-            {placeData?.name || name}{" "}
-            {(placeData?.isLightning || isLightning) && "⚡️"}
-          </SHeaderTextHeading>
+          <SHeaderTextHeading>{placeData?.name || name} </SHeaderTextHeading>
           <FlexSpaceBetween>
-            <SHeaderTextDescription>
-              {placeData && parseHashTags(placeData.placeDetail.categories)}
-            </SHeaderTextDescription>
             <ViewCount>
               <FontAwesomeIcon icon={faEye} style={{ marginRight: "4px" }} />{" "}
               {placeData?.views || views}
@@ -231,11 +222,8 @@ export default function PlacePage({ match, location }: Props) {
       <PlaceSummaryInformation>
         <span>{placeData?.recommendation || "모든"}</span> 나이만 참여가능해요.
         <br />
-        <span>
-          {placeData?.startDateFromNow || startDateFromNow}{" "}
-          {TimeNumberToString(placeData?.startTime || startTime)}에
-        </span>{" "}
-        열리는 모임이에요!
+        <span>{StartDateFromNowToString(startDateFromNow)}에 </span> 열리는
+        모임이에요!
       </PlaceSummaryInformation>
       {/* Desccription  */}
       <DescriptionContainer>
@@ -250,17 +238,13 @@ export default function PlacePage({ match, location }: Props) {
 
       <AlbumnDescription>
         <strong>{placeData?.name || name} 이팅모임</strong>{" "}
-        <span>
-          {placeData?.reviews && placeData?.reviews?.[0]?.imageUrls
-            ? placeData?.reviews?.[0].imageUrls?.length
-            : "N"}
-        </span>
+        <span>{placeData?.subImages ? placeData?.subImages.length : "N"}</span>
         <p>사진을 클릭해서 살펴보세요</p>
       </AlbumnDescription>
 
-      {/* Review Album  */}
+      {/* SubImages Album  */}
       <GridContainer>
-        {placeData?.reviews?.[0]?.imageUrls?.map((imageUrl, index) => {
+        {placeData?.subImages?.map((imageUrl, index) => {
           if (index < 5) {
             return (
               <GridPic
@@ -268,7 +252,9 @@ export default function PlacePage({ match, location }: Props) {
                 src={optimizeImage(imageUrl, { width: 112, height: 112 })}
                 onClick={() =>
                   history.push(`/image/${index}`, {
-                    payload: placeData?.reviews[0],
+                    payload: {
+                      imageUrls: placeData?.subImages,
+                    },
                   })
                 }
               />
@@ -276,10 +262,12 @@ export default function PlacePage({ match, location }: Props) {
           } else if (index == 5) {
             return (
               <OverlayContainer
-                key={placeData?.reviews[0].id}
+                key={imageUrl}
                 onClick={() =>
                   history.push(`/image/${index}`, {
-                    payload: placeData?.reviews[0],
+                    payload: {
+                      imageUrls: placeData?.subImages,
+                    },
                   })
                 }
               >
@@ -288,9 +276,9 @@ export default function PlacePage({ match, location }: Props) {
                 />
                 <Overlay />
                 <OverlayText>
-                  {placeData?.reviews[0].imageUrls.length - 6 > 0 && (
+                  {placeData?.subImages.length - 6 > 0 && (
                     <>
-                      +{placeData?.reviews[0].imageUrls.length - 6}
+                      +{placeData?.subImages.length - 6}
                       <br />
                     </>
                   )}
@@ -307,7 +295,7 @@ export default function PlacePage({ match, location }: Props) {
           현재 {placeData?.participantsCount || participantsCount}명의 친구들이
           신청했어요!
         </PrimaryText>
-        <DescriptionText>
+        {/* <DescriptionText>
           <b>프로필을 클릭</b>해서 신청한 친구들의 정보를 구경해보세요!
         </DescriptionText>
         <AvartarImgContainerParticipant
@@ -337,7 +325,7 @@ export default function PlacePage({ match, location }: Props) {
               }}
             />
           ))}
-        </AvartarImgContainerParticipant>
+        </AvartarImgContainerParticipant> */}
       </Section>
       {/* 모임 안내 */}
       <Section>
@@ -345,9 +333,8 @@ export default function PlacePage({ match, location }: Props) {
         <Row>
           <span className="bold">시간</span>
           <span>
-            {placeData?.startDateFromNow || startDateFromNow}{" "}
-            {placeData &&
-              TimeNumberToString(placeData.startTime, { hasIndicator: true })}
+            {placeData?.startDateFromNow &&
+              StartDateFromNowToString(placeData.startDateFromNow)}{" "}
           </span>
         </Row>
         <Row>
@@ -427,7 +414,6 @@ export default function PlacePage({ match, location }: Props) {
           isParticipating={placeData?.isParticipating || isParticipating}
           isFinal={isFinal}
           isClosed={isClosed}
-          isLightning={placeData?.isLightning || isLightning}
           showCancelBtn={showCancelBtn}
           disabled={
             ((placeData?.isParticipating || isParticipating) &&
@@ -442,8 +428,6 @@ export default function PlacePage({ match, location }: Props) {
               ? "마감 되었어요"
               : placeData?.isParticipating || isParticipating
               ? "이미 참여 신청된 모임이예요"
-              : placeData?.isLightning || isLightning
-              ? " 이팅번개 놀러가기 ⚡️"
               : isFinal
               ? "오늘 마감! 이팅모임 놀러가기"
               : "이팅모임 놀러가기"}
@@ -553,14 +537,11 @@ const CTABottomFixedButtoninContainer = styled(BottomFixedButtoninContainer)<{
   isParticipating: boolean;
   isFinal: boolean;
   isClosed: boolean;
-  isLightning: boolean;
   showCancelBtn: boolean;
 }>`
   background: ${(props) =>
     props.isParticipating || props.isClosed || props.showCancelBtn
       ? "#A7B0C0"
-      : props.isLightning
-      ? "linear-gradient(to right, #9640cd, #697ee7) border-box"
       : props.isFinal
       ? "#FF2343"
       : "#18a0fb"};
