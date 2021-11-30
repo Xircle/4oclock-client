@@ -88,6 +88,8 @@ export default function PlaceFeedPage({ history, location }: Props) {
     {
       retry: 1,
       refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      refetchOnMount: false,
     },
   );
 
