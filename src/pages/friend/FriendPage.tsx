@@ -152,7 +152,9 @@ export default function FriendsPage({ history }: Props) {
         <FlexDiv style={{ position: "relative" }}>
           <AvartarBig
             src={optimizeImage(
-              randomProfileData?.profileImageUrl || "/avatar/anonymous_user.png"
+              randomProfileData?.profileImageUrl ||
+                "/avatar/anonymous_user.png",
+              { width: 174, height: 174 }
             )}
             alt="friend-profile"
             onClick={() => {

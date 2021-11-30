@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import type { Review } from "../../lib/api/types";
-import { PortalConsumer } from "../../providers/PortalProvider";
-import { BACKDROP_Z_INDEX } from "../shared/constants";
-import { Carousel } from "react-responsive-carousel";
-import optimizeImage from "../../lib/optimizeImage";
+import styled from 'styled-components';
+import type { Review } from '../../lib/api/types';
+import { PortalConsumer } from '../../providers/PortalProvider';
+import { BACKDROP_Z_INDEX } from '../shared/constants';
+import { Carousel } from 'react-responsive-carousel';
+import optimizeImage from '../../lib/optimizeImage';
 
 interface Props extends Review {
   children: React.ReactNode | React.ReactNode[];
@@ -21,8 +21,8 @@ export default function ReviewCarousel(props: Props) {
         close={false}
         onClick={(event: React.MouseEvent) => {
           if (
-            (event.target as HTMLElement).getAttribute("data-value") ===
-            "parent"
+            (event.target as HTMLElement).getAttribute('data-value') ===
+            'parent'
           ) {
             props.onClick();
           }
@@ -38,7 +38,14 @@ export default function ReviewCarousel(props: Props) {
             dynamicHeight={true}
           >
             {props.imageUrls?.map((imageUrl, idx) => (
-              <ReviewPicture key={idx} src={optimizeImage(imageUrl)} />
+              <ReviewPicture
+                key={idx}
+                src={optimizeImage(imageUrl, {
+                  width: 400,
+                  height: 300,
+                  quality: 100,
+                })}
+              />
             ))}
           </SCarousel>
           <ReviewDescription>{props.description}</ReviewDescription>
@@ -64,7 +71,8 @@ const SCarousel = styled(Carousel)`
 const InnerContainer = styled.div`
   position: relative;
   width: 100%;
-  max-width: 500px;
+  max-width: 400px;
+  max-height: 400px;
 `;
 
 const ReviewPicture = styled.img``;

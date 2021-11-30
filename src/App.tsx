@@ -21,6 +21,7 @@ import LandingPage from "./pages/LandingPage";
 import UserProfilePage from "./pages/friend/UserProfilePage";
 import MyPlacePage from "./pages/my/MyPlacePage";
 import ParticipantsListPage from "./pages/participantsList/ParticipantsListPage";
+import ReviewsPage from "./pages/reviews/ReviewsPage";
 config();
 
 const ReservationConfirmPage = React.lazy(
@@ -42,7 +43,6 @@ const CreatePlacePage = React.lazy(
 );
 const EditPlacesPage = React.lazy(() => import("./pages/Admin/EditPlacesPage"));
 const EditPlacePage = React.lazy(() => import("./pages/Admin/EditPlacePage"));
-const ReviewsPage = React.lazy(() => import("./pages/reviews/ReviewsPage"));
 
 function App() {
   useEffect(() => {

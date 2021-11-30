@@ -40,7 +40,7 @@ export default function PlaceFeedRow({
           </PlaceDeadline>
         )}
         <PlaceCoverImage
-          src={optimizeImage(coverImage)}
+          src={optimizeImage(coverImage, { width: 120, height: 120 })}
           isLightning={isLightning}
         />
       </PlaceLeftContainer>

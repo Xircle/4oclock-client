@@ -66,7 +66,8 @@ export default function MyPage() {
           <ProfileInfoDiv>
             <MyAvartarImg
               src={optimizeImage(
-                userData?.profileImageUrl || "/avatar/anonymous_user.png"
+                userData?.profileImageUrl || "/avatar/anonymous_user.png",
+                { width: 70, height: 70 }
               )}
             />
             <ProfileTextWrapper>

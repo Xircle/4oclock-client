@@ -196,7 +196,10 @@ export default function PlacePage({ match, location }: Props) {
       {/* Cover Image */}
       <SHeader>
         <SHeaderPic
-          src={optimizeImage(placeData?.coverImage || coverImage)}
+          src={optimizeImage(placeData?.coverImage || coverImage, {
+            width: 375,
+            height: 230,
+          })}
           alt={placeData && placeData?.name + "사진"}
         />
         <TempToBeDeleted></TempToBeDeleted>
@@ -262,7 +265,7 @@ export default function PlacePage({ match, location }: Props) {
             return (
               <GridPic
                 key={index}
-                src={optimizeImage(imageUrl)}
+                src={optimizeImage(imageUrl, { width: 112, height: 112 })}
                 onClick={() =>
                   history.push(`/image/${index}`, {
                     payload: placeData?.reviews[0],
@@ -280,7 +283,9 @@ export default function PlacePage({ match, location }: Props) {
                   })
                 }
               >
-                <GridPic src={optimizeImage(imageUrl)} />
+                <GridPic
+                  src={optimizeImage(imageUrl, { width: 112, height: 112 })}
+                />
                 <Overlay />
                 <OverlayText>
                   {placeData?.reviews[0].imageUrls.length - 6 > 0 && (

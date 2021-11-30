@@ -32,8 +32,8 @@ export default function ImageGalleryPage({ match, history, location }: Props) {
     history.goBack();
   }
   const images: ReactImageGalleryItem[] = payload.imageUrls.map((imageUrl) => ({
-    original: optimizeImage(imageUrl),
-    thumbnail: optimizeImage(imageUrl),
+    original: optimizeImage(imageUrl, { width: 375, height: 375 }),
+    thumbnail: optimizeImage(imageUrl, { width: 375, height: 375 }),
   }));
 
   const HistoryPop = () => {

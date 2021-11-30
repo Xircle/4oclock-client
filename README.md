@@ -1,7 +1,5 @@
 # 네시모해, Xircle
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/e9113e2f-2781-4ef5-bd13-d649c290ce76/deploy-status)](https://app.netlify.com/sites/4oclock/deploys)
-
 This project is source code of `4o'clock` v1. After v2 update, this project is now archived. For source code of v2, check out the links below:
 
 - https://github.com/Xircle/4oclock-client
@@ -15,34 +13,28 @@ This project is source code of `4o'clock` v1. After v2 update, this project is n
 
 Following items are core frontend technologies used in this project:
 
-- Typescript
 - React
+- Typescript
 - React Router v4
 - React-query
 - Styled-components
 
-### Server
-
-Following items are core backend technologies used in this project:
-
-- NestJs
-- TypeScript
-- TypeORM
-- PostgreSQL
-
-### Infra
-
-- Netlify for clinet
-- Heroku for server
-- AWS S3 for static image
-
 ### Trouble shooting
 
 - Cross-browsing problem with old version of `Samsung Internet Browser`
+- Bundle Lazy loading
+- Query caching, using react-query
+- Pagination 
 
 ## Upcoming Feature
 
-- [ ] Chatting
-- [ ] Review other participants, After meeting
-- [ ] Push notification
-- [ ] Thumbnail image with Lambda
+- [x] Chatting
+- [x] Review page after meeting
+
+## AWS Infra
+
+- [x] CI/CD with AWS Amplify 
+- [x] Monitoring with AWS CloudWatch
+- [x] CDN with AWS CloudFront 
+- [x] Image resizing with AWS Lambda 
+- [x] Static files for AWS S3
