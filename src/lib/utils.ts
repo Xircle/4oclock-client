@@ -42,6 +42,7 @@ export function StartDateFromNowToString(
   startDateFromNow?: string,
 ): string | undefined {
   if (!startDateFromNow) return;
+  if (startDateFromNow === "마감") return startDateFromNow;
   const date = startDateFromNow.split(" ")[0];
   const time = +startDateFromNow.split(" ")[1];
   let timeString: string = "";

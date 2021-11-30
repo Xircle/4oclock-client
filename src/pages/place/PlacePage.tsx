@@ -222,13 +222,16 @@ export default function PlacePage({ match, location }: Props) {
       <PlaceSummaryInformation>
         <span>{placeData?.recommendation || "모든"}</span> 나이만 참여가능해요.
         <br />
-        <span>{StartDateFromNowToString(startDateFromNow)}에 </span> 열리는
-        모임이에요!
+        {startDateFromNow !== "마감" && (
+          <span>
+            {StartDateFromNowToString(startDateFromNow)}에 열리는 모임이에요!
+          </span>
+        )}
       </PlaceSummaryInformation>
       {/* Desccription  */}
       <DescriptionContainer>
         <h3 style={{ fontSize: "13px", margin: "3px 0", lineHeight: "18px" }}>
-          {placeData?.placeDetail.title}
+          {placeData?.placeDetail?.title}
         </h3>
         <p style={{ fontSize: "13px", lineHeight: "18px" }}>
           {" "}

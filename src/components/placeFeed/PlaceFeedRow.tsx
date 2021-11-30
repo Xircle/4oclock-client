@@ -88,7 +88,7 @@ export default function PlaceFeedRow({
           <FlexSpaceBetween>
             <PlaceName>{name}</PlaceName>
           </FlexSpaceBetween>
-          <PlaceSummary>{placeDetail.description}</PlaceSummary>
+          <PlaceSummary>{placeDetail?.description}</PlaceSummary>
         </div>
         <PlaceDeadline isTimerStart={!!countDownCaption}>
           {countDownCaption || deadline}
