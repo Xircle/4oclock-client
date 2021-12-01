@@ -43,8 +43,18 @@ export function StartDateFromNowToString(
 ): string | undefined {
   if (!startDateFromNow) return;
   if (startDateFromNow === "마감") return startDateFromNow;
-  const date = startDateFromNow.split(" ")[0];
-  const time = +startDateFromNow.split(" ")[1];
+
+  const startDateFromNowArray = startDateFromNow.split(" ");
+  let date;
+  let time;
+  if (startDateFromNowArray.length === 2) {
+    date = startDateFromNowArray[0];
+    time = +startDateFromNowArray[1];
+  } else if (startDateFromNowArray.length === 3) {
+    date = `${startDateFromNowArray[0]} ${startDateFromNowArray[1]}`;
+    time = +startDateFromNowArray[2];
+  }
+
   let timeString: string = "";
   if (time > 12) {
     timeString = `오후 ${time - 12}시`;
