@@ -71,7 +71,7 @@ export default function PlaceFeedRow({
             <PlaceFullText>마감 되었어요</PlaceFullText>
           </>
         )}
-        {deadline && !isClosed && (
+        {!isClosed && (
           <PlaceIndicator isRed={leftParticipantsCount <= 2}>
             <p>잔여{leftParticipantsCount}석</p>
           </PlaceIndicator>
