@@ -5,6 +5,7 @@ import { getStartDateFromNow } from "../../lib/utils";
 import optimizeImage from "../../lib/optimizeImage";
 import { useEffect, useState } from "react";
 import moment from "moment";
+import Avatar from "../shared/Avatar";
 
 const LEFT_HOUR_BEFORE_CLOSE = 3;
 interface Props extends PlaceFeedData {
@@ -21,6 +22,8 @@ export default function PlaceFeedRow({
   startDateFromNow,
   startDateAt,
   placeDetail,
+  participants,
+  participantsCount,
   views,
 }: Props) {
   const [countDownCaption, setCountDownCaption] = useState<
@@ -31,13 +34,6 @@ export default function PlaceFeedRow({
     const isToday = moment(startDateAt).diff(moment(), "days") === 0;
     if (!isToday) return false;
     return true;
-
-    // const isLeftDuration = moment.duration(moment(startDateAt).diff(moment()));
-    // if (+isLeftDuration.asHours().toFixed(2) < LEFT_HOUR_BEFORE_CLOSE + 5)
-    //   // 마감되기 5시간 전에 보여준다.
-    //   return true;
-
-    // return false;
   };
 
   useEffect(() => {
@@ -99,6 +95,22 @@ export default function PlaceFeedRow({
             <PlaceName>{name}</PlaceName>
           </FlexSpaceBetween>
           <PlaceSummary>{placeDetail?.description}</PlaceSummary>
+          <ParticipantsContainer>
+            <ParticipantsWrapper>
+              {participants.map((parti, idx) => {
+                if (idx < 4) {
+                  return (
+                    <Avatar
+                      key={parti.userId}
+                      rightOffset={"-10px"}
+                      {...parti}
+                    />
+                  );
+                }
+              })}
+            </ParticipantsWrapper>
+            {participantsCount > 4 ? <p>+{participantsCount - 4}</p> : null}
+          </ParticipantsContainer>
         </div>
         <PlaceDeadline isTimerStart={!!countDownCaption}>
           {countDownCaption || deadline}
@@ -223,11 +235,11 @@ const ParticipantsContainer = styled.div`
   }
 `;
 
-const ParticipantsWrapper = styled.div<{ isParticipating: boolean }>`
+const ParticipantsWrapper = styled.div<{ isParticipating?: boolean }>`
   display: flex;
   align-items: center;
   position: relative;
-  filter: ${(props) => !props.isParticipating && "blur(1px)"};
+  /* filter: ${(props) => !props.isParticipating && "blur(1px)"}; */
 `;
 
 const PlaceTags = styled.p`

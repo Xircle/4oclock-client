@@ -38,7 +38,7 @@ export interface PlaceFeedData {
   leftParticipantsCount: number;
   startDateFromNow: string;
   startDateAt: string;
-  // participants: Participants[];
+  participants: Participants[];
   isParticipating: boolean;
   deadline: string;
   views: number;
