@@ -24,7 +24,7 @@ Following items are core frontend technologies used in this project:
 - Cross-browsing problem with old version of `Samsung Internet Browser`
 - Bundle Lazy loading
 - Query caching, using react-query
-- Pagination 
+- Pagination
 
 ## Upcoming Feature
 
@@ -33,8 +33,8 @@ Following items are core frontend technologies used in this project:
 
 ## AWS Infra
 
-- [x] CI/CD with AWS Amplify 
+- [x] CI/CD with AWS Amplify
 - [x] Monitoring with AWS CloudWatch
-- [x] CDN with AWS CloudFront 
-- [x] Image resizing with AWS Lambda 
+- [x] CDN with AWS CloudFront
+- [x] Image resizing with AWS Lambda
 - [x] Static files for AWS S3
