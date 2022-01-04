@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { colors, FlexDiv } from "../../styles/styles";
 import type { PlaceFeedData } from "../../lib/api/types";
-import Avatar from "../shared/Avatar";
-import { getStartDateFromNow, ModifyDeadline } from "../../lib/utils";
+import { getStartDateFromNow } from "../../lib/utils";
 import optimizeImage from "../../lib/optimizeImage";
 import { useEffect, useState } from "react";
 import moment from "moment";
+import Avatar from "../shared/Avatar";
 
+const LEFT_HOUR_BEFORE_CLOSE = 3;
 interface Props extends PlaceFeedData {
   onClick: () => void;
 }
@@ -21,20 +22,26 @@ export default function PlaceFeedRow({
   startDateFromNow,
   startDateAt,
   placeDetail,
+  participants,
+  participantsCount,
   views,
 }: Props) {
   const [countDownCaption, setCountDownCaption] = useState<
     string | undefined
   >();
 
-  const isTodayPlace = (startDateAt: string) => {
-    if (moment(startDateAt).diff(moment(), "days") === 0) return true;
-    return false;
+  const shouldShowTimer = (startDateAt: string) => {
+    const isToday = moment(startDateAt).diff(moment(), "days") === 0;
+    if (!isToday) return false;
+    return true;
   };
 
   useEffect(() => {
-    if (isClosed || !isTodayPlace(startDateAt)) return;
-    const deadlineDate = moment(startDateAt).subtract(3, "hours");
+    if (isClosed || !shouldShowTimer(startDateAt)) return;
+    const deadlineDate = moment(startDateAt).subtract(
+      LEFT_HOUR_BEFORE_CLOSE,
+      "hours",
+    );
     const interval = 1000;
     const countdown = setInterval(() => {
       let duration = moment.duration(deadlineDate.diff(moment()));
@@ -43,7 +50,6 @@ export default function PlaceFeedRow({
         clearInterval(countdown);
       } else {
         const countDownCaption = `${duration.hours()}:${duration.minutes()}:${duration.seconds()} 후 마감`;
-        console.log(countDownCaption);
         setCountDownCaption(countDownCaption);
       }
     }, interval);
@@ -61,7 +67,7 @@ export default function PlaceFeedRow({
             <PlaceFullText>마감 되었어요</PlaceFullText>
           </>
         )}
-        {deadline && !isClosed && (
+        {!isClosed && (
           <PlaceIndicator isRed={leftParticipantsCount <= 2}>
             <p>잔여{leftParticipantsCount}석</p>
           </PlaceIndicator>
@@ -89,6 +95,22 @@ export default function PlaceFeedRow({
             <PlaceName>{name}</PlaceName>
           </FlexSpaceBetween>
           <PlaceSummary>{placeDetail?.description}</PlaceSummary>
+          <ParticipantsContainer>
+            <ParticipantsWrapper>
+              {participants.map((parti, idx) => {
+                if (idx < 4) {
+                  return (
+                    <Avatar
+                      key={parti.userId}
+                      rightOffset={"-10px"}
+                      {...parti}
+                    />
+                  );
+                }
+              })}
+            </ParticipantsWrapper>
+            {participantsCount > 4 ? <p>+{participantsCount - 4}</p> : null}
+          </ParticipantsContainer>
         </div>
         <PlaceDeadline isTimerStart={!!countDownCaption}>
           {countDownCaption || deadline}
@@ -213,11 +235,11 @@ const ParticipantsContainer = styled.div`
   }
 `;
 
-const ParticipantsWrapper = styled.div<{ isParticipating: boolean }>`
+const ParticipantsWrapper = styled.div<{ isParticipating?: boolean }>`
   display: flex;
   align-items: center;
   position: relative;
-  filter: ${(props) => !props.isParticipating && "blur(1px)"};
+  /* filter: ${(props) => !props.isParticipating && "blur(1px)"}; */
 `;
 
 const PlaceTags = styled.p`

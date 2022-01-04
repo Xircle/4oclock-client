@@ -59,6 +59,7 @@ export default function PlaceFeedContainer({
                 startDateFromNow,
                 isParticipating,
                 startDateAt,
+                participants,
               } = placeFeedData;
               if (!isAdminEditPlace) {
                 history.push(
@@ -68,6 +69,7 @@ export default function PlaceFeedContainer({
                   {
                     coverImage,
                     name,
+                    participants,
                     participantsCount,
                     views,
                     startDateFromNow,

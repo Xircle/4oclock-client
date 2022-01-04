@@ -21,7 +21,6 @@ import React, { useEffect, useState } from "react";
 import { getPlaceById } from "../../lib/api/getPlaceById";
 import type { Participants, PlaceData } from "../../lib/api/types";
 import {
-  AgeNumberToString,
   CalculateDDay,
   encodeUrlSlug,
   CalculateCloseDay,
@@ -35,7 +34,6 @@ import routes from "../../routes";
 import Modal from "../../components/UI/Modal";
 import PageTitle from "../../components/PageTitle";
 import { ReservationModalWrapper } from "../reservation/ReservationPage";
-import { parseHashTags } from "../../lib/helper";
 import optimizeImage from "../../lib/optimizeImage";
 
 const kakao = window.kakao;
@@ -75,6 +73,7 @@ export default function PlacePage({ match, location }: Props) {
     startDateFromNow,
     isParticipating,
     startDateAt,
+    participants,
   } = location?.state || {};
   const isFinal = Boolean(queryString.parse(UrlSearch).isFinal === "true");
   const isClosed = Boolean(queryString.parse(UrlSearch).isClosed === "true");
@@ -111,8 +110,8 @@ export default function PlacePage({ match, location }: Props) {
   const CTAClickedHandler = () => {
     if (!placeData) return;
     if (showCancelBtn) {
-      alert("취소를 원할 시 카카오톡으로 문의 부탁드립니다");
-      //setIsCancleBtnClicked(true);
+      // alert("취소를 원할 시 카카오톡으로 문의 부탁드립니다");
+      setIsCancleBtnClicked(true);
     } else if (!placeData.isParticipating) {
       history.push(`/reservation/${encodeUrlSlug(placeData.name)}`, {
         placeId,
@@ -298,12 +297,10 @@ export default function PlacePage({ match, location }: Props) {
           현재 {placeData?.participantsCount || participantsCount}명의 친구들이
           신청했어요!
         </PrimaryText>
-        {/* <DescriptionText>
+        <DescriptionText>
           <b>프로필을 클릭</b>해서 신청한 친구들의 정보를 구경해보세요!
         </DescriptionText>
-        <AvartarImgContainerParticipant
-          isParticipating={placeData?.isParticipating || isParticipating}
-        >
+        <AvartarImgContainerParticipant>
           {(placeData?.participants || participants)?.map((participant) => (
             <Avatar
               key={participant.userId}
@@ -328,7 +325,7 @@ export default function PlacePage({ match, location }: Props) {
               }}
             />
           ))}
-        </AvartarImgContainerParticipant> */}
+        </AvartarImgContainerParticipant>
       </Section>
       {/* 모임 안내 */}
       <Section>
@@ -646,7 +643,7 @@ const AvartarImgContainerParticipant = styled.div<{
   isParticipating?: boolean;
 }>`
   margin-top: 15px;
-  filter: ${(props) => !props.isParticipating && "blur(1px)"};
+  /* filter: ${(props) => !props.isParticipating && "blur(1px)"}; */
   transform: translate(-3px, 0);
 `;
 
