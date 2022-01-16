@@ -26,7 +26,7 @@ import queryString from "query-string";
 import optimizeImage from "../../lib/optimizeImage";
 
 interface LocationState {
-  id: string;
+  receiverId: string;
   profileImageUrl?: string;
   username?: string;
 }
@@ -40,14 +40,18 @@ export default function ParticipantProfilePage({ history }: Props) {
   const location = useLocation<LocationState>();
   const UrlSearch = location.search;
   const cameFromChat = Boolean(
-    queryString.parse(UrlSearch).cameFromChat === "true"
+    queryString.parse(UrlSearch).cameFromChat === "true",
   );
 
   const { data: userProfileData, isLoading } = useQuery<
     UserProfile | undefined
-  >(["User", location.state.id], () => seeUserById(location.state.id), {
-    refetchOnWindowFocus: false,
-  });
+  >(
+    ["User", location.state.receiverId],
+    () => seeUserById(location.state.receiverId),
+    {
+      refetchOnWindowFocus: false,
+    },
+  );
 
   useEffect(() => {
     if (!storage.getItem(CURRENT_USER)) {
@@ -70,7 +74,7 @@ export default function ParticipantProfilePage({ history }: Props) {
                 location.state?.profileImageUrl ||
                   userProfileData?.profileImageUrl ||
                   "/avatar/anonymous_user.png",
-                { width: 174, height: 174 }
+                { width: 174, height: 174 },
               )}
               alt="friend-profile"
               onClick={() => {
@@ -136,13 +140,14 @@ export default function ParticipantProfilePage({ history }: Props) {
           </InnerContainer>
         </ContainerwithLeftRightMargin>
         <div style={{ width: "100%", height: "50px" }}></div>
-        {storage.getItem(CURRENT_USER).uid !== userProfileData?.id &&
+        {storage.getItem(CURRENT_USER).uid !== userProfileData?.fk_user_id &&
           !cameFromChat && (
             <BottomButtonsContainer>
               <ChatButton
                 onClick={() => {
                   history.push(`/chatRoom/0`, {
-                    id: location.state?.id || userProfileData?.id,
+                    receiverId:
+                      location.state?.receiverId || userProfileData?.fk_user_id,
                     profileImageUrl:
                       location.state?.profileImageUrl ||
                       userProfileData?.profileImageUrl,

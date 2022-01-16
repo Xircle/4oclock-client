@@ -34,7 +34,7 @@ interface Props
     { roomId: string },
     {},
     {
-      id: string;
+      receiverId: string;
       profileImageUrl: string;
       username: string;
     }
@@ -51,7 +51,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
   const queryClient = useQueryClient();
   const { roomId } = match.params;
   const {
-    id: receiverId,
+    receiverId,
     profileImageUrl: receiverProfileImageUrl,
     username: receiverUsername,
   } = location.state;
@@ -74,7 +74,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     const existingRoomId = storage.getItem(`chat-${receiverId}`);
     if (roomId === "0" && existingRoomId) {
       history.replace(`/chatRoom/${existingRoomId}`, {
-        id: receiverId,
+        receiverId,
         profileImageUrl: receiverProfileImageUrl,
         username: receiverUsername,
       });
@@ -311,7 +311,7 @@ export default function ChatRoomPage({ match, history, location }: Props) {
             })}
             onClick={() =>
               history.push(routes.userProfile + "?cameFromChat=true", {
-                id: receiverId,
+                receiverId,
                 profileImageUrl: receiverProfileImageUrl,
                 username: receiverUsername,
               })

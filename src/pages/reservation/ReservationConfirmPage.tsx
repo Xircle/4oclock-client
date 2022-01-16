@@ -34,7 +34,6 @@ export default function ReservationConfirmPage({ history, location }: Props) {
   const {
     placeId,
     startDateFromNow,
-    startTime,
     detailAddress,
     recommendation,
     participationFee,
