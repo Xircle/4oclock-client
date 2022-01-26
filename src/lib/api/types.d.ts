@@ -172,6 +172,7 @@ export interface GetMyPlaceOutput extends CoreOutput {
 // See Random Profile
 interface UserProfile {
   id: string;
+  fk_user_id: string;
   profileImageUrl: string;
   location?: string;
   username: string;

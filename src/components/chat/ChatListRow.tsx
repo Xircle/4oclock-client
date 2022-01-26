@@ -16,7 +16,7 @@ export default function ChatListRow({ room }: Props) {
     <SContainer
       onClick={() =>
         history.push(`/chatRoom/${room.id}`, {
-          id: room.receiver.id,
+          receiverId: room.receiver.id,
           profileImageUrl: room.receiver.profileImageUrl,
           username: room.receiver.username,
         })

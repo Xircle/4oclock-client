@@ -60,7 +60,7 @@ export default function FriendsPage({ history }: Props) {
     {
       retry: 1,
       refetchOnWindowFocus: false,
-    }
+    },
   );
 
   const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
@@ -76,7 +76,7 @@ export default function FriendsPage({ history }: Props) {
     () => getMyRooms(),
     {
       retry: 1,
-    }
+    },
   );
 
   useEffect(() => {
@@ -154,14 +154,14 @@ export default function FriendsPage({ history }: Props) {
             src={optimizeImage(
               randomProfileData?.profileImageUrl ||
                 "/avatar/anonymous_user.png",
-              { width: 174, height: 174 }
+              { width: 174, height: 174 },
             )}
             alt="friend-profile"
             onClick={() => {
               if (!randomProfileData?.profileImageUrl) return;
               history.push(`/image/${0}`, {
                 payload: {
-                  id: randomProfileData?.id,
+                  id: randomProfileData?.fk_user_id,
                   imageUrls: [randomProfileData?.profileImageUrl],
                 },
               });
@@ -237,7 +237,7 @@ export default function FriendsPage({ history }: Props) {
           onClick={() => {
             if (!randomProfileData || isLoading) return;
             history.push(`/chatRoom/0`, {
-              id: randomProfileData?.id,
+              receiverId: randomProfileData?.fk_user_id,
               profileImageUrl: randomProfileData?.profileImageUrl,
               username: randomProfileData?.username,
             });
