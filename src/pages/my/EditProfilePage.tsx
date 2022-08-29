@@ -10,8 +10,6 @@ import {
   colors,
   SpaceForNavBar,
   MidInput,
-  SmallInput,
-  GenderText,
   BigTextArea,
   Label,
   LabelSpan,
@@ -26,7 +24,6 @@ import { getUser } from "../../lib/api/getUser";
 import { useMutation, useQuery } from "react-query";
 import ClipLoader from "react-spinners/ClipLoader";
 import { UserData } from "../../lib/api/types";
-import { AgeNumberToString } from "../../lib/utils";
 import { LoaderBackdrop, LoaderWrapper } from "../../components/shared/Loader";
 import diff from "object-diff";
 import _ from "lodash";
@@ -67,16 +64,15 @@ export default function EditProfilePage({ history }: Props) {
   ]);
   const [detailAddress, setDetailAddress] = useState(localProfileData.location);
 
-  const {
-    data: userData,
-    isLoading,
-    isSuccess,
-  } = useQuery<UserData | undefined>("userProfile", () => getUser(), {
+  const { data: userData, isLoading, isSuccess } = useQuery<
+    UserData | undefined
+  >("userProfile", () => getUser(), {
     retry: 2,
   });
 
-  const { mutateAsync: mutateUserProfile, isLoading: isUpdating } =
-    useMutation(editProfile);
+  const { mutateAsync: mutateUserProfile, isLoading: isUpdating } = useMutation(
+    editProfile
+  );
 
   useEffect(() => {
     if (isSuccess) {
@@ -309,6 +305,8 @@ export default function EditProfilePage({ history }: Props) {
     }
 
     const fileReader = new FileReader();
+    console.log(__file);
+    
     fileReader.readAsDataURL(__file);
     fileReader.onload = (e) => {
       setLocalProfileData((prev) => ({

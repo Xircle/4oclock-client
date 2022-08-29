@@ -67,6 +67,7 @@ export default function ReviewSmallContainer({ title, reviews }: Props) {
                       height: 170,
                     })}
                   />
+
                   {/* <CarouselDescription>
                     {review.description}
                   </CarouselDescription> */}

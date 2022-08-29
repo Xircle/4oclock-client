@@ -63,20 +63,13 @@ export default function FriendsPage({ history }: Props) {
     },
   );
 
-  const {
-    data: randomProfileData,
-    refetch,
-    isLoading,
-    isFetching,
-  } = useQuery<UserProfile | undefined>(
-    ["randomProfile"],
-    () => seeRandomProfile(isYkClub && isYkOnly),
-    {
-      retry: 1,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-    },
-  );
+  const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
+    UserProfile | undefined
+  >(["randomProfile"], () => seeRandomProfile(isYkClub && isYkOnly), {
+    retry: 1,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
 
   const { data } = useQuery<GetMyRooms | undefined>(
     ["room"],
@@ -206,7 +199,6 @@ export default function FriendsPage({ history }: Props) {
         </InnerContainer>
         <InnerContainer style={{ marginTop: "10px" }}>
           <InnerContent>
-            {" "}
             <GraySubText>
               {randomProfileData?.location
                 ? randomProfileData?.location
