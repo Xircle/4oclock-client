@@ -23,6 +23,7 @@ const routes = {
   editPlaces: "/editPlaces",
   editPlace: "/editPlace/:placeId",
   reviews: "/reviews",
+  payments: "/payments",
 };
 
 export default routes;
