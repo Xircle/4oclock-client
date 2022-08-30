@@ -25,24 +25,26 @@ import ReviewsPage from "./pages/reviews/ReviewsPage";
 config();
 
 const ReservationConfirmPage = React.lazy(
-  () => import("./pages/reservation/ReservationConfirmPage")
+  () => import("./pages/reservation/ReservationConfirmPage"),
 );
 const ReservationPage = React.lazy(
-  () => import("./pages/reservation/ReservationPage")
+  () => import("./pages/reservation/ReservationPage"),
 );
 const RequestPage = React.lazy(() => import("./pages/RequestPage"));
 const AuthPage = React.lazy(() => import("./pages/auth/Auth"));
 const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage"));
 const CancelReservationPage = React.lazy(
-  () => import("./pages/CancelReservationPage")
+  () => import("./pages/CancelReservationPage"),
 );
 
 const AdminPage = React.lazy(() => import("./pages/Admin/AdminPage"));
 const CreatePlacePage = React.lazy(
-  () => import("./pages/Admin/CreatePlacePage")
+  () => import("./pages/Admin/CreatePlacePage"),
 );
 const EditPlacesPage = React.lazy(() => import("./pages/Admin/EditPlacesPage"));
 const EditPlacePage = React.lazy(() => import("./pages/Admin/EditPlacePage"));
+
+const PaymentPage = React.lazy(() => import("./pages/payment/PaymentPage"));
 
 function App() {
   useEffect(() => {
@@ -104,6 +106,7 @@ function App() {
                 path={routes.participantsList}
                 component={ParticipantsListPage}
               />
+              <Route path={routes.payments} component={PaymentPage} />
               {/* REMINDER Delete*/}
               <Route path={routes.chatList} component={ChatListPage} />
               <Route path={routes.chatRoom} component={ChatRoomPage} />
