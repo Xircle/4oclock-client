@@ -8,43 +8,47 @@ import { PortalProvider } from "./providers/PortalProvider";
 import storage from "./lib/storage";
 import { POP_UP } from "./components/shared/constants";
 import { HelmetProvider } from "react-helmet-async";
-import ImageGalleryPage from "./pages/ImageGalleryPage";
-import SocialRedirect from "./pages/RedirectPage";
-import PlaceFeedPage from "./pages/placeFeed/PlaceFeedPage";
-import FriendsPage from "./pages/friend/FriendPage";
-import MyPage from "./pages/my/MyPage";
-import ChatListPage from "./pages/chat/ChatListPage";
-import ChatRoomPage from "./pages/chat/ChatRoomPage";
-import EditProfilePage from "./pages/my/EditProfilePage";
-import PlacePage from "./pages/place/PlacePage";
-import LandingPage from "./pages/LandingPage";
-import UserProfilePage from "./pages/friend/UserProfilePage";
-import MyPlacePage from "./pages/my/MyPlacePage";
-import ParticipantsListPage from "./pages/participantsList/ParticipantsListPage";
-import ReviewsPage from "./pages/reviews/ReviewsPage";
+import ImageGalleryPage from "./pages/v1/ImageGalleryPage";
+import SocialRedirect from "./pages/v1/RedirectPage";
+import PlaceFeedPage from "./pages/v1/placeFeed/PlaceFeedPage";
+import FriendsPage from "./pages/v1/friend/FriendPage";
+import MyPage from "./pages/v1/my/MyPage";
+import ChatListPage from "./pages/v1/chat/ChatListPage";
+import ChatRoomPage from "./pages/v1/chat/ChatRoomPage";
+import EditProfilePage from "./pages/v1/my/EditProfilePage";
+import PlacePage from "./pages/v1/place/PlacePage";
+import LandingPage from "./pages/v1/LandingPage";
+import UserProfilePage from "./pages/v1/friend/UserProfilePage";
+import MyPlacePage from "./pages/v1/my/MyPlacePage";
+import ParticipantsListPage from "./pages/v1/participantsList/ParticipantsListPage";
+import ReviewsPage from "./pages/v1/reviews/ReviewsPage";
 config();
 
 const ReservationConfirmPage = React.lazy(
-  () => import("./pages/reservation/ReservationConfirmPage"),
+  () => import("./pages/v1/reservation/ReservationConfirmPage"),
 );
 const ReservationPage = React.lazy(
-  () => import("./pages/reservation/ReservationPage"),
+  () => import("./pages/v1/reservation/ReservationPage"),
 );
-const RequestPage = React.lazy(() => import("./pages/RequestPage"));
-const AuthPage = React.lazy(() => import("./pages/auth/Auth"));
-const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage"));
+const RequestPage = React.lazy(() => import("./pages/v1/RequestPage"));
+const AuthPage = React.lazy(() => import("./pages/v1/auth/Auth"));
+const NotFoundPage = React.lazy(() => import("./pages/v1/NotFoundPage"));
 const CancelReservationPage = React.lazy(
-  () => import("./pages/CancelReservationPage"),
+  () => import("./pages/v1/CancelReservationPage"),
 );
 
-const AdminPage = React.lazy(() => import("./pages/Admin/AdminPage"));
+const AdminPage = React.lazy(() => import("./pages/v1/Admin/AdminPage"));
 const CreatePlacePage = React.lazy(
-  () => import("./pages/Admin/CreatePlacePage"),
+  () => import("./pages/v1/Admin/CreatePlacePage"),
 );
-const EditPlacesPage = React.lazy(() => import("./pages/Admin/EditPlacesPage"));
-const EditPlacePage = React.lazy(() => import("./pages/Admin/EditPlacePage"));
+const EditPlacesPage = React.lazy(
+  () => import("./pages/v1/Admin/EditPlacesPage"),
+);
+const EditPlacePage = React.lazy(
+  () => import("./pages/v1/Admin/EditPlacePage"),
+);
 
-const PaymentPage = React.lazy(() => import("./pages/payment/PaymentPage"));
+const PaymentPage = React.lazy(() => import("./pages/v1/payment/PaymentPage"));
 
 function App() {
   useEffect(() => {
