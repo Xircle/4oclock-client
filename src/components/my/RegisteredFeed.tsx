@@ -18,7 +18,7 @@ export default function RegisteredFeed({
 }: Props) {
   const history = useHistory();
   return (
-    <FeedContainer onClick={() => history.push(`/place/${id}?myPlace=true`)}>
+    <FeedContainer onClick={() => history.push(`/v1/place/${id}?myPlace=true`)}>
       <FeedLeftContainer>
         {isClosed && (
           <>
