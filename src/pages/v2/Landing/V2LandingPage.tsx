@@ -1,7 +1,7 @@
 import { faBars, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Drawer } from "@material-ui/core";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import { colors, Container } from "../../../styles/styles";
 
@@ -26,10 +26,9 @@ function V2LandingPage() {
         <HeaderItem>로그인</HeaderItem>
       </Body>
       <Drawer open={drawerOpened} onClose={() => setDrawerOpened(false)}>
-        <HeaderItem>로그인</HeaderItem>
-        <HeaderItem>로그인</HeaderItem>
-        <HeaderItem>로그인</HeaderItem>
-        <HeaderItem>로그인</HeaderItem>
+        <DrawerItem>내 지원서 보기</DrawerItem>
+        <DrawerItem>인스타 후기보기</DrawerItem>
+        <DrawerItem>문의하기</DrawerItem>
       </Drawer>
     </SContainer>
   );
@@ -40,8 +39,14 @@ const SContainer = styled(Container)`
 `;
 
 const Body = styled.div`
-  background-color: blue;
   min-height: 300vh;
+`;
+
+const DrawerItem = styled.div`
+  font-size: 20px;
+  font-weight: 600;
+  padding: 20px;
+  cursor: pointer;
 `;
 
 const Header = styled.div`
@@ -57,6 +62,7 @@ const Header = styled.div`
 
 const HeaderItem = styled.div`
   align-self: center;
+  cursor: pointer;
 `;
 
 export default V2LandingPage;
