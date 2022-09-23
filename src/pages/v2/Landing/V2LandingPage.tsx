@@ -1,13 +1,20 @@
 import { faBars, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Drawer } from "@material-ui/core";
+import { useState } from "react";
 import styled from "styled-components";
 import { colors, Container } from "../../../styles/styles";
 
 function V2LandingPage() {
+  const [drawerOpened, setDrawerOpened] = useState(false);
   return (
     <SContainer>
       <Header>
-        <HeaderItem>
+        <HeaderItem
+          onClick={() => {
+            setDrawerOpened(true);
+          }}
+        >
           <FontAwesomeIcon icon={faBars} color={colors.Black} size="2x" />
         </HeaderItem>
         <HeaderItem>로그인</HeaderItem>
@@ -18,6 +25,12 @@ function V2LandingPage() {
         <HeaderItem>로그인</HeaderItem>
         <HeaderItem>로그인</HeaderItem>
       </Body>
+      <Drawer open={drawerOpened} onClose={() => setDrawerOpened(false)}>
+        <HeaderItem>로그인</HeaderItem>
+        <HeaderItem>로그인</HeaderItem>
+        <HeaderItem>로그인</HeaderItem>
+        <HeaderItem>로그인</HeaderItem>
+      </Drawer>
     </SContainer>
   );
 }
