@@ -284,3 +284,13 @@ export interface SendMessageInput {
 export interface GetReviewsOutput extends CoreOutput {
   reviews: Review[];
 }
+
+export interface CategoryData {
+  id: string;
+  name: string;
+  image?: string;
+}
+
+export interface SeeAllCategoryOutput extends CoreOutput {
+  data?: CategoryData[];
+}
