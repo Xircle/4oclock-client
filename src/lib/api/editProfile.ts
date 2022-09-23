@@ -1,11 +1,11 @@
 import { CreateAccountOutput } from "./types";
 import AxiosClient from "../apiClient";
 import { CoreOutput } from "../../components/shared/types";
-import { ProfileData } from "../../pages/my/EditProfilePage";
+import { ProfileData } from "../../pages/v1/my/EditProfilePage";
 import { AxiosResponse } from "axios";
 
 export const editProfile = async (
-  editedProfileData: ProfileData
+  editedProfileData: ProfileData,
 ): Promise<AxiosResponse<CoreOutput>> => {
   const formData = new FormData();
   editedProfileData.profileImageFile &&
