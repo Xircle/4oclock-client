@@ -4,6 +4,7 @@ import { Drawer } from "@material-ui/core";
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
+import { seeTeamsWithFilter } from "../../../lib/api/getTeamsWithFilter";
 import { seeAllCategory } from "../../../lib/api/seeAllCategory";
 import { CategoryData } from "../../../lib/api/types";
 import { colors, Container } from "../../../styles/styles";
@@ -13,7 +14,7 @@ function V2LandingPage() {
   const [categories, setCategories] = useState<CategoryData[]>([]);
 
   const { data: categoryData } = useQuery<CategoryData[] | undefined>(
-    ["place-detail"],
+    ["categories"],
     () => seeAllCategory(),
     {
       onError: (err: any) => {
@@ -24,6 +25,15 @@ function V2LandingPage() {
       refetchOnWindowFocus: false,
     },
   );
+
+  const { data: teamData } = useQuery(["teams"], () => seeTeamsWithFilter(), {
+    onError: (err: any) => {
+      alert(err);
+      return;
+    },
+    retry: 1,
+    refetchOnWindowFocus: false,
+  });
 
   useEffect(() => {
     if (categoryData !== undefined && categoryData.length > 0) {
