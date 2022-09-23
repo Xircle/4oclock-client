@@ -63,7 +63,7 @@ export default function PlaceFeedContainer({
               } = placeFeedData;
               if (!isAdminEditPlace) {
                 history.push(
-                  `/place/${placeFeedData.id}?isFinal=${
+                  `/v1/place/${placeFeedData.id}?isFinal=${
                     placeFeedData.deadline === "오늘 마감"
                   }&isClosed=${placeFeedData.isClosed}`,
                   {
@@ -78,7 +78,7 @@ export default function PlaceFeedContainer({
                   },
                 );
               } else {
-                history.push(`/editPlace/${placeFeedData.id}`);
+                history.push(`/v1/editPlace/${placeFeedData.id}`);
               }
             }}
             {...placeFeedData}
