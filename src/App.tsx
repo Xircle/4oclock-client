@@ -22,6 +22,7 @@ import UserProfilePage from "./pages/v1/friend/UserProfilePage";
 import MyPlacePage from "./pages/v1/my/MyPlacePage";
 import ParticipantsListPage from "./pages/v1/participantsList/ParticipantsListPage";
 import ReviewsPage from "./pages/v1/reviews/ReviewsPage";
+import V2LandingPage from "./pages/v2/Landing/V2LandingPage";
 config();
 
 const ReservationConfirmPage = React.lazy(
@@ -78,6 +79,8 @@ function App() {
             }
           >
             <Switch>
+              <Route path={routes.v2Root} component={V2LandingPage} exact />
+
               <Route path={routes.root} component={LandingPage} exact />
               <Route
                 path={routes.socialRedirect}
