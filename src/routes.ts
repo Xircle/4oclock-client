@@ -28,6 +28,7 @@ const routes = {
   v2Root: "/",
   v2Login: "/v2/login",
   socialRedirect: "/v2/social/redirect",
+  v2MyPage: "/v2/mypage",
 };
 
 export default routes;
