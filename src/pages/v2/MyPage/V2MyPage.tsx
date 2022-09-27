@@ -23,6 +23,16 @@ export default function V2MyPage() {
 
 const Body = styled.div``;
 
-const BodyItem = styled.div``;
+const BodyItem = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  margin-bottom: 20px;
+  min-height: 100px;
+`;
 
-const BodyItemHeading = styled.div``;
+const BodyItemHeading = styled.div`
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+`;
