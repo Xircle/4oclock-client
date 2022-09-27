@@ -21,7 +21,7 @@ interface Props {
 
 export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
   const [localImageSrc, setLocalImageSrc] = useState<string | undefined>(
-    state.profileImgUrl
+    state.profileImgUrl,
   );
 
   const handleFileOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +33,7 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
 
     if (__size > 10000000) {
       return alert(
-        "사진 최대 용량을 초과했습니다. 사진 용량은 최대 10MB입니다. "
+        "사진 최대 용량을 초과했습니다. 사진 용량은 최대 10MB입니다. ",
       );
     }
 
