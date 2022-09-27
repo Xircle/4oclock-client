@@ -10,6 +10,7 @@ export interface CreateAccountOutput extends CoreOutput {
     profile: {
       id: string;
       thumbnail: string;
+      role: string;
     };
   };
 }
