@@ -9,7 +9,7 @@ import storage from "./lib/storage";
 import { POP_UP } from "./components/shared/constants";
 import { HelmetProvider } from "react-helmet-async";
 import ImageGalleryPage from "./pages/v1/ImageGalleryPage";
-import SocialRedirect from "./pages/v1/RedirectPage";
+import SocialRedirect from "./pages/v2/RedirectPage";
 import PlaceFeedPage from "./pages/v1/placeFeed/PlaceFeedPage";
 import FriendsPage from "./pages/v1/friend/FriendPage";
 import MyPage from "./pages/v1/my/MyPage";
@@ -23,6 +23,7 @@ import MyPlacePage from "./pages/v1/my/MyPlacePage";
 import ParticipantsListPage from "./pages/v1/participantsList/ParticipantsListPage";
 import ReviewsPage from "./pages/v1/reviews/ReviewsPage";
 import V2LandingPage from "./pages/v2/Landing/V2LandingPage";
+import V2LoginPage from "./pages/v2/Login/V2LoginPage";
 config();
 
 const ReservationConfirmPage = React.lazy(
@@ -84,7 +85,7 @@ function App() {
           >
             <Switch>
               <Route path={routes.v2Root} component={V2LandingPage} exact />
-
+              <Route path={routes.v2Login} component={V2LoginPage} />
               <Route path={routes.root} component={LandingPage} exact />
               <Route
                 path={routes.socialRedirect}
