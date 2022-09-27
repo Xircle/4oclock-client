@@ -47,7 +47,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
       latitude: number;
       longitude: number;
     },
-    callback: (result: any, status: boolean) => void
+    callback: (result: any, status: boolean) => void,
   ) => {
     const geocoder = new window.kakao.maps.services.Geocoder();
 
@@ -72,7 +72,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
                 const fullAddr = result[0].address.address_name;
                 const newAddr = fullAddr.split(" ");
                 setDetailAddress(
-                  newAddr[0] + " " + newAddr[1] + " " + newAddr[2]
+                  newAddr[0] + " " + newAddr[1] + " " + newAddr[2],
                 );
                 setLocationLoading(false);
                 dispatch({
@@ -80,12 +80,12 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
                   payload: newAddr[0] + " " + newAddr[1] + " " + newAddr[2],
                 });
               }
-            }
+            },
           );
         },
         (err) => {
           if (err.code === err.PERMISSION_DENIED) setLocationLoading(false);
-        }
+        },
       );
     }
   };
@@ -113,7 +113,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
 
   function Validate(
     univ: string = state.university,
-    gender: string = state.gender
+    gender: string = state.gender,
   ): void {
     if (state.name.length <= 0 || state.name.length > 20) {
       SetErrorAll(false);
