@@ -351,3 +351,8 @@ export const V2Header = styled.div`
   padding: 0px 10px;
   top: 0px;
 `;
+
+export const HeaderItem = styled.div`
+  align-self: center;
+  cursor: pointer;
+`;
