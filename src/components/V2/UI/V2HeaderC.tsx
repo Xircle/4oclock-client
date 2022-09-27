@@ -32,6 +32,12 @@ export default function V2HeaderC({ title }: Props) {
       history.push(routes.v2MyPage);
     }
   };
+
+  const goToHome = () => {
+    history.push(routes.v2Root);
+    setDrawerOpened(false);
+  };
+
   return (
     <>
       <V2Header>
@@ -48,9 +54,10 @@ export default function V2HeaderC({ title }: Props) {
         </HeaderItem>
       </V2Header>
       <Drawer open={drawerOpened} onClose={() => setDrawerOpened(false)}>
-        <DrawerItem>내 지원서 보기</DrawerItem>
-        <DrawerItem>인스타 후기보기</DrawerItem>
-        <DrawerItem>문의하기</DrawerItem>
+        <DrawerItem>드로어 1</DrawerItem>
+        <DrawerItem>드로어 2</DrawerItem>
+        <DrawerItem>드로어 2</DrawerItem>
+        <DrawerItem onClick={goToHome}>홈으로 가기</DrawerItem>
       </Drawer>
     </>
   );
