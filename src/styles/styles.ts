@@ -341,3 +341,13 @@ export const FileLabel = styled.label`
 export const SLink = styled(Link)`
   text-decoration: none;
 `;
+
+export const V2Header = styled.div`
+  position: sticky;
+  width: 375px;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 10px;
+  top: 0px;
+`;
