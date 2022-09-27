@@ -3,15 +3,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Drawer } from "@material-ui/core";
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { CURRENT_USER } from "../../../components/shared/constants";
 import { seeTeamsWithFilter } from "../../../lib/api/getTeamsWithFilter";
 import { seeAllCategory } from "../../../lib/api/seeAllCategory";
 import { CategoryData } from "../../../lib/api/types";
 import storage from "../../../lib/storage";
+import routes from "../../../routes";
 import { colors, Container } from "../../../styles/styles";
 
 function V2LandingPage() {
+  const history = useHistory();
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [categories, setCategories] = useState<CategoryData[]>([]);
   const [isLoggedin, setIsLoggedin] = useState(false);
@@ -53,7 +56,9 @@ function V2LandingPage() {
     }
   }, []);
 
-  const loginOnClick = () => {};
+  const loginOnClick = () => {
+    history.push(routes.v2Login, {});
+  };
 
   return (
     <SContainer>
@@ -65,7 +70,7 @@ function V2LandingPage() {
         >
           <FontAwesomeIcon icon={faBars} color={colors.Black} size="2x" />
         </HeaderItem>
-        <HeaderItem>
+        <HeaderItem onClick={loginOnClick}>
           {isLoggedin ? storage.getItem(CURRENT_USER).username : "로그인"}
         </HeaderItem>
       </Header>
