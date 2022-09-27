@@ -5,24 +5,14 @@ import { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { CURRENT_USER } from "../../../components/shared/constants";
+import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
 import { seeTeamsWithFilter } from "../../../lib/api/getTeamsWithFilter";
 import { seeAllCategory } from "../../../lib/api/seeAllCategory";
 import { CategoryData } from "../../../lib/api/types";
-import storage from "../../../lib/storage";
-import routes from "../../../routes";
-import {
-  colors,
-  Container,
-  HeaderItem,
-  V2Header,
-} from "../../../styles/styles";
+import { Container } from "../../../styles/styles";
 
 function V2LandingPage() {
-  const history = useHistory();
-  const [drawerOpened, setDrawerOpened] = useState(false);
   const [categories, setCategories] = useState<CategoryData[]>([]);
-  const [isLoggedin, setIsLoggedin] = useState(false);
 
   const { data: categoryData } = useQuery<CategoryData[] | undefined>(
     ["categories"],
@@ -53,41 +43,9 @@ function V2LandingPage() {
     console.log(categoryData);
   }, [categoryData]);
 
-  useEffect(() => {
-    if (storage.getItem(CURRENT_USER)?.token) {
-      setIsLoggedin(true);
-    } else {
-      setIsLoggedin(false);
-    }
-  }, []);
-
-  const loginOnClick = () => {
-    if (!isLoggedin) {
-      history.push(routes.v2Login);
-    } else {
-      history.push(routes.v2MyPage);
-    }
-  };
-
   return (
     <SContainer>
-      <V2Header>
-        <HeaderItem
-          onClick={() => {
-            setDrawerOpened(true);
-          }}
-        >
-          <FontAwesomeIcon icon={faBars} color={colors.Black} size="2x" />
-        </HeaderItem>
-        <HeaderItem onClick={loginOnClick}>
-          {isLoggedin ? storage.getItem(CURRENT_USER).username : "로그인"}
-        </HeaderItem>
-      </V2Header>
-      <Drawer open={drawerOpened} onClose={() => setDrawerOpened(false)}>
-        <DrawerItem>내 지원서 보기</DrawerItem>
-        <DrawerItem>인스타 후기보기</DrawerItem>
-        <DrawerItem>문의하기</DrawerItem>
-      </Drawer>
+      <V2HeaderC />
       <Body>
         <FilterContainer>
           {categories.map((item) => {
@@ -95,11 +53,6 @@ function V2LandingPage() {
           })}
         </FilterContainer>
       </Body>
-      <Drawer open={drawerOpened} onClose={() => setDrawerOpened(false)}>
-        <DrawerItem>내 지원서 보기</DrawerItem>
-        <DrawerItem>인스타 후기보기</DrawerItem>
-        <DrawerItem>문의하기</DrawerItem>
-      </Drawer>
     </SContainer>
   );
 }
@@ -131,13 +84,6 @@ const SContainer = styled(Container)`
 const Body = styled.div`
   min-height: 300vh;
   padding-top: 30px;
-`;
-
-const DrawerItem = styled.div`
-  font-size: 20px;
-  font-weight: 600;
-  padding: 20px;
-  cursor: pointer;
 `;
 
 export default V2LandingPage;
