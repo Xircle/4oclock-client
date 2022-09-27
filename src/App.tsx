@@ -63,7 +63,11 @@ function App() {
     <PortalProvider>
       <HelmetProvider>
         <GlobalStyles />
-        <AppContainer style={{ minHeight: isUse100Vh ? isUse100Vh : "100vh" }}>
+        <AppContainer
+          style={{
+            minHeight: isUse100Vh ? isUse100Vh : "100vh",
+          }}
+        >
           <Suspense
             fallback={
               <div
