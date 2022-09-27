@@ -27,12 +27,12 @@ export default function AuthProfileDetailData({
   dispatch,
 }: Props) {
   const [drinkingStyle, SetDrinkingStyle] = useState<number>(
-    state.drinkingStyle
+    state.drinkingStyle,
   );
   function Validate(
     MBTI: string = state.MBTI,
     personality: string = state.personality,
-    drinkingStyle: number = state.drinkingStyle
+    drinkingStyle: number = state.drinkingStyle,
   ): void {
     if (
       MBTI !== "" &&
