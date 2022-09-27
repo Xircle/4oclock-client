@@ -9,7 +9,11 @@ import storage from "../../../lib/storage";
 import routes from "../../../routes";
 import { colors, HeaderItem, V2Header } from "../../../styles/styles";
 
-export default function V2HeaderC() {
+interface Props {
+  title?: string;
+}
+
+export default function V2HeaderC({ title }: Props) {
   const history = useHistory();
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [isLoggedin, setIsLoggedin] = useState(false);
@@ -38,6 +42,7 @@ export default function V2HeaderC() {
         >
           <FontAwesomeIcon icon={faBars} color={colors.Black} size="2x" />
         </HeaderItem>
+        {title && <TitleDiv>{title}</TitleDiv>}
         <HeaderItem onClick={loginOnClick}>
           {isLoggedin ? storage.getItem(CURRENT_USER).username : "로그인"}
         </HeaderItem>
@@ -50,6 +55,12 @@ export default function V2HeaderC() {
     </>
   );
 }
+
+const TitleDiv = styled.div`
+  font-weight: bold;
+  font-size: 22px;
+  align-self: center;
+`;
 
 const DrawerItem = styled.div`
   font-size: 20px;
