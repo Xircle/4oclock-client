@@ -39,7 +39,7 @@ function LandingPage() {
     profile?: any;
   }) => {
     process.env.NODE_ENV === "development" && console.log(response);
-    history.push("/v1/social/redirect", {
+    history.push("/v2/social/redirect", {
       uid: response.profile?.id,
       thumbnail: response.profile?.kakao_account.profile.profile_image_url,
       username: response.profile?.properties.nickname,
