@@ -60,6 +60,9 @@ function V2LoginPage() {
           </ModalWrapper>
         </Modal>
       )}
+
+      <img src="/club_logo.png" width="285px" height="160px" />
+
       <KakaoLogin
         token={process.env.REACT_APP_KAKAO_KEY!}
         onSuccess={kakaoSuccessCallback}
