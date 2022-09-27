@@ -4,14 +4,17 @@ import { Drawer } from "@material-ui/core";
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
+import { CURRENT_USER } from "../../../components/shared/constants";
 import { seeTeamsWithFilter } from "../../../lib/api/getTeamsWithFilter";
 import { seeAllCategory } from "../../../lib/api/seeAllCategory";
 import { CategoryData } from "../../../lib/api/types";
+import storage from "../../../lib/storage";
 import { colors, Container } from "../../../styles/styles";
 
 function V2LandingPage() {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [categories, setCategories] = useState<CategoryData[]>([]);
+  const [isLoggedin, setIsLoggedin] = useState(false);
 
   const { data: categoryData } = useQuery<CategoryData[] | undefined>(
     ["categories"],
@@ -42,6 +45,16 @@ function V2LandingPage() {
     console.log(categoryData);
   }, [categoryData]);
 
+  useEffect(() => {
+    if (storage.getItem(CURRENT_USER)?.token) {
+      setIsLoggedin(true);
+    } else {
+      setIsLoggedin(false);
+    }
+  }, []);
+
+  const loginOnClick = () => {};
+
   return (
     <SContainer>
       <Header>
@@ -52,7 +65,9 @@ function V2LandingPage() {
         >
           <FontAwesomeIcon icon={faBars} color={colors.Black} size="2x" />
         </HeaderItem>
-        <HeaderItem>로그인</HeaderItem>
+        <HeaderItem>
+          {isLoggedin ? storage.getItem(CURRENT_USER).username : "로그인"}
+        </HeaderItem>
       </Header>
       <Body>
         <FilterContainer>
