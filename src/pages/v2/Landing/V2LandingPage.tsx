@@ -11,7 +11,7 @@ import { seeAllCategory } from "../../../lib/api/seeAllCategory";
 import { CategoryData } from "../../../lib/api/types";
 import storage from "../../../lib/storage";
 import routes from "../../../routes";
-import { colors, Container } from "../../../styles/styles";
+import { colors, Container, V2Header } from "../../../styles/styles";
 
 function V2LandingPage() {
   const history = useHistory();
@@ -66,7 +66,7 @@ function V2LandingPage() {
 
   return (
     <SContainer>
-      <Header>
+      <V2Header>
         <HeaderItem
           onClick={() => {
             setDrawerOpened(true);
@@ -77,7 +77,7 @@ function V2LandingPage() {
         <HeaderItem onClick={loginOnClick}>
           {isLoggedin ? storage.getItem(CURRENT_USER).username : "로그인"}
         </HeaderItem>
-      </Header>
+      </V2Header>
       <Body>
         <FilterContainer>
           {categories.map((item) => {
@@ -128,18 +128,6 @@ const DrawerItem = styled.div`
   font-weight: 600;
   padding: 20px;
   cursor: pointer;
-`;
-
-const Header = styled.div`
-  position: sticky;
-  width: 375px;
-  height: 80px;
-  display: flex;
-  justify-content: space-between;
-  padding: 0px 10px;
-  top: 0px;
-  -webkit-box-shadow: 0px 12px 13px -9px rgba(0, 0, 0, 0.43);
-  box-shadow: 0px 12px 13px -9px rgba(0, 0, 0, 0.43);
 `;
 
 const HeaderItem = styled.div`
