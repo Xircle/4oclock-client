@@ -57,7 +57,9 @@ function V2LandingPage() {
   }, []);
 
   const loginOnClick = () => {
-    history.push(routes.v2Login, {});
+    if (!isLoggedin) {
+      history.push(routes.v2Login, {});
+    }
   };
 
   return (
