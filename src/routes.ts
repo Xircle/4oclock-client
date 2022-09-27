@@ -1,6 +1,5 @@
 const routes = {
   root: "/v1",
-  socialRedirect: "/v1/social/redirect",
   placeFeed: "/v1/place-feed",
   place: "/v1/place/:placeId",
   imageGallery: "/v1/image/:index",
@@ -24,7 +23,11 @@ const routes = {
   editPlace: "/v1/editPlace/:placeId",
   reviews: "/v1/reviews",
   payments: "/v1/payments",
+
+  // v2
   v2Root: "/",
+  v2Login: "/v2/login",
+  socialRedirect: "/v2/social/redirect",
 };
 
 export default routes;
