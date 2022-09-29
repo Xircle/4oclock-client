@@ -2,7 +2,7 @@ import { faBars, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Drawer } from "@material-ui/core";
 import { useEffect, useRef, useState } from "react";
-import { useQuery } from "react-query";
+import { useInfiniteQuery, useQuery } from "react-query";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
@@ -28,35 +28,28 @@ function V2LandingPage() {
     },
   );
 
-  const { data: teamData } = useQuery(
-    ["teams", page],
-    () => seeTeamsWithFilter(page),
+  const {
+    data: teamData,
+    isLoading: teamDataLoading,
+    hasNextPage: hasNextPageTeam,
+    fetchNextPage: fetchNextPageTeam,
+  } = useInfiniteQuery(
+    ["teams"],
+    // @ts-ignore
+    ({ pageParam = 0 }) => seeTeamsWithFilter(pageParam),
     {
-      onError: (err: any) => {
-        alert(err);
-        return;
+      getNextPageParam: (currentPage) => {
+        const nextPage = currentPage.meta.page + 1;
+        return nextPage > currentPage.meta.totalPages ? null : nextPage;
       },
-      retry: 1,
-      refetchOnWindowFocus: false,
     },
   );
 
-  // const {
-  //   data: mainLightningData,
-  //   isLoading: mainLightningDataLoading,
-  //   hasNextPage: hasNextPageLightning,
-  //   fetchNextPage: fetchNextPageLightning,
-  // } = useInfiniteQuery<GetPlacesByLocationOutput | undefined>(
-  //   ["places", "Lightning"],
-  //   // @ts-ignore
-  //   () => getPlacesLightning,
-  //   {
-  //     getNextPageParam: (currentPage) => {
-  //       const nextPage = currentPage.meta.page + 1;
-  //       return nextPage > currentPage.meta.totalPages ? null : nextPage;
-  //     },
-  //   },
-  // );
+  const loadMoreTeam = () => {
+    if (hasNextPageTeam) {
+      fetchNextPageTeam();
+    }
+  };
 
   useEffect(() => {
     if (categoryData !== undefined && categoryData.length > 0) {
@@ -66,10 +59,8 @@ function V2LandingPage() {
   }, [categoryData]);
 
   useEffect(() => {
-    if (teamData !== undefined && teamData?.teams.length > 0) {
-      console.log(teamData);
-    }
-  }, [teamData?.teams]);
+    console.log(teamData);
+  }, [teamData]);
 
   return (
     <SContainer>
@@ -77,7 +68,11 @@ function V2LandingPage() {
       <Body>
         <FilterContainer>
           {categories.map((item) => {
-            return <FilterOption key={item.id}>{item.name}</FilterOption>;
+            return (
+              <FilterOption key={item.id} onClick={loadMoreTeam}>
+                {item.name}
+              </FilterOption>
+            );
           })}
         </FilterContainer>
       </Body>
