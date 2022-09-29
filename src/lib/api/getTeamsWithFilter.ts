@@ -11,5 +11,5 @@ export const seeTeamsWithFilter = async (
   if (!data.ok) {
     throw new Error(data.error);
   }
-  return data.data;
+  return data;
 };
