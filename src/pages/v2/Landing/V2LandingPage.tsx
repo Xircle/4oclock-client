@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery, useQuery } from "react-query";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import TeamFeedRenderItem from "../../../components/V2/Team/TeamFeedRenderItem";
 import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
 import { seeTeamsWithFilter } from "../../../lib/api/getTeamsWithFilter";
 import { seeAllCategory } from "../../../lib/api/seeAllCategory";
@@ -77,13 +78,15 @@ function V2LandingPage() {
         </FilterContainer>
         <FeedContainer>
           {teamData?.pages
-            ?.map((page) => page.teams)
+            ?.map((page) => page?.teams)
             .flat()
             .map((item) => {
               return (
-                <FilterOption key={item.id} onClick={loadMoreTeam}>
-                  {item.name}
-                </FilterOption>
+                <TeamFeedRenderItem
+                  key={item.id}
+                  name={item.name}
+                  image={item.images?.[0]}
+                />
               );
             })}
         </FeedContainer>
