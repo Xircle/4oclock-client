@@ -8,7 +8,7 @@ export type PlaceLocation = "전체" | "안암" | "신촌";
 export const getPlacesByLocation = async (
   selectedLocation: PlaceLocation,
   page: number = 1,
-  limit: number = 10
+  limit: number = 10,
 ): Promise<GetPlacesByLocationOutput | undefined> => {
   if (!storage.getItem(CURRENT_USER)) return;
   const { data } = await AxiosClient.get<GetPlacesByLocationOutput>(
@@ -17,7 +17,7 @@ export const getPlacesByLocation = async (
       headers: {
         Authorization: `Bearer ${storage.getItem(CURRENT_USER)["token"]}`,
       },
-    }
+    },
   );
   if (!data.ok) {
     throw new Error(data.error);
