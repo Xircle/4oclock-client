@@ -14,4 +14,5 @@ const Conatiner = styled.div`
   width: 100%;
   min-height: 100px;
   margin-bottom: 10px;
+  background-color: red;
 `;
