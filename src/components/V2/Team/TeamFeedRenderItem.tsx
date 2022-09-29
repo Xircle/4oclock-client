@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-interface Props {
-  image: string;
-  name: string;
-  key: string;
+interface IProps {
+  image?: string;
+  name?: string;
+  key?: string;
 }
 
-export default function TeamFeedRenderItem(props: Props) {
-  return <Conatiner></Conatiner>;
+export default function TeamFeedRenderItem({ image, name, key }: IProps) {
+  return <Conatiner>{name}</Conatiner>;
 }
 
 const Conatiner = styled.div`
