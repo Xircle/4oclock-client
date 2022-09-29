@@ -350,6 +350,7 @@ export const V2Header = styled.div`
   justify-content: space-between;
   padding: 0px 10px;
   top: 0px;
+  background-color: white;
 `;
 
 export const HeaderItem = styled.div`
