@@ -22,7 +22,6 @@ const Conatiner = styled.div`
   padding: 10px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 `;
 
 const LeftContainer = styled.div`
