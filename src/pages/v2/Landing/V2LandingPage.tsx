@@ -75,10 +75,24 @@ function V2LandingPage() {
             );
           })}
         </FilterContainer>
+        <FeedContainer>
+          {teamData?.pages
+            ?.map((page) => page.teams)
+            .flat()
+            .map((item) => {
+              return (
+                <FilterOption key={item.id} onClick={loadMoreTeam}>
+                  {item.name}
+                </FilterOption>
+              );
+            })}
+        </FeedContainer>
       </Body>
     </SContainer>
   );
 }
+
+const FeedContainer = styled.div``;
 
 const FilterContainer = styled.div`
   width: 100%;
