@@ -13,6 +13,7 @@ import { Container } from "../../../styles/styles";
 
 function V2LandingPage() {
   const [categories, setCategories] = useState<CategoryData[]>([]);
+  const [page, setPage] = useState(1);
 
   const { data: categoryData } = useQuery<CategoryData[] | undefined>(
     ["categories"],
@@ -27,14 +28,35 @@ function V2LandingPage() {
     },
   );
 
-  const { data: teamData } = useQuery(["teams"], () => seeTeamsWithFilter(), {
-    onError: (err: any) => {
-      alert(err);
-      return;
+  const { data: teamData } = useQuery(
+    ["teams", page],
+    () => seeTeamsWithFilter(page),
+    {
+      onError: (err: any) => {
+        alert(err);
+        return;
+      },
+      retry: 1,
+      refetchOnWindowFocus: false,
     },
-    retry: 1,
-    refetchOnWindowFocus: false,
-  });
+  );
+
+  // const {
+  //   data: mainLightningData,
+  //   isLoading: mainLightningDataLoading,
+  //   hasNextPage: hasNextPageLightning,
+  //   fetchNextPage: fetchNextPageLightning,
+  // } = useInfiniteQuery<GetPlacesByLocationOutput | undefined>(
+  //   ["places", "Lightning"],
+  //   // @ts-ignore
+  //   () => getPlacesLightning,
+  //   {
+  //     getNextPageParam: (currentPage) => {
+  //       const nextPage = currentPage.meta.page + 1;
+  //       return nextPage > currentPage.meta.totalPages ? null : nextPage;
+  //     },
+  //   },
+  // );
 
   useEffect(() => {
     if (categoryData !== undefined && categoryData.length > 0) {
@@ -42,6 +64,12 @@ function V2LandingPage() {
     }
     console.log(categoryData);
   }, [categoryData]);
+
+  useEffect(() => {
+    if (teamData !== undefined && teamData?.teams.length > 0) {
+      console.log(teamData);
+    }
+  }, [teamData?.teams]);
 
   return (
     <SContainer>
