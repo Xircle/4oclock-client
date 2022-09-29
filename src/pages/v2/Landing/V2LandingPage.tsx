@@ -95,7 +95,9 @@ function V2LandingPage() {
   );
 }
 
-const FeedContainer = styled.div``;
+const FeedContainer = styled.div`
+  width: 100%;
+`;
 
 const FilterContainer = styled.div`
   width: 100%;
@@ -122,7 +124,6 @@ const SContainer = styled(Container)`
 `;
 
 const Body = styled.div`
-  min-height: 300vh;
   padding-top: 30px;
 `;
 
