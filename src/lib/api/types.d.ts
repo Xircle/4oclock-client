@@ -290,6 +290,7 @@ export interface CategoryData {
   id: string;
   name: string;
   image?: string;
+  selected?: boolean;
 }
 
 export interface SeeAllCategoryOutput extends CoreOutput {
