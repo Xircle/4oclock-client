@@ -108,20 +108,16 @@ function V2LandingPage() {
         PaperProps={{
           style: {
             width: 375,
-            alignContent: "center",
+            height: 500,
+            justifyContent: "center",
           },
         }}
         ModalProps={{
-          style: {
-            alignItems: "center",
-            alignSelf: "center",
-          },
+          style: {},
         }}
         SlideProps={{
           style: {
             alignItems: "center",
-            alignSelf: "center",
-            alignContent: "center",
             marginLeft: "auto",
             marginRight: "auto",
             borderTopLeftRadius: 10,
