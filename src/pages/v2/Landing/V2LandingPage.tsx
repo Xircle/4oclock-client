@@ -19,6 +19,7 @@ interface SelectionData {
 }
 
 function V2LandingPage() {
+  const [drawerOpened, setDrawerOpened] = useState(false);
   const [categories, setCategories] = useState<CategoryData[]>([]);
   const container = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState(1);
@@ -102,6 +103,13 @@ function V2LandingPage() {
   return (
     <SContainer ref={container}>
       <V2HeaderC />
+      <Drawer
+        open={drawerOpened}
+        onClose={() => setDrawerOpened(false)}
+        anchor="bottom"
+      >
+        <FilterOption>드로어 1</FilterOption>
+      </Drawer>
       <Body>
         <FilterContainer>
           {categories.map((item) => {
