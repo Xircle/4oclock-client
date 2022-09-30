@@ -87,6 +87,7 @@ function V2LandingPage() {
 
   useEffect(() => {
     if (categoryData !== undefined && categoryData.length > 0) {
+      setCategories([]);
       categoryData.map((category) => {
         setCategories((prev) => [
           ...prev,
@@ -104,6 +105,29 @@ function V2LandingPage() {
     <SContainer ref={container}>
       <V2HeaderC />
       <Drawer
+        PaperProps={{
+          style: {
+            width: 375,
+            alignContent: "center",
+          },
+        }}
+        ModalProps={{
+          style: {
+            alignItems: "center",
+            alignSelf: "center",
+          },
+        }}
+        SlideProps={{
+          style: {
+            alignItems: "center",
+            alignSelf: "center",
+            alignContent: "center",
+            marginLeft: "auto",
+            marginRight: "auto",
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
+          },
+        }}
         open={drawerOpened}
         onClose={() => setDrawerOpened(false)}
         anchor="bottom"
@@ -113,7 +137,11 @@ function V2LandingPage() {
       <Body>
         <FilterContainer>
           {categories.map((item) => {
-            return <FilterOption key={item.id}>{item.name}</FilterOption>;
+            return (
+              <FilterOption key={item.id} onClick={() => setDrawerOpened(true)}>
+                {item.name}
+              </FilterOption>
+            );
           })}
         </FilterContainer>
         <FeedContainer>
