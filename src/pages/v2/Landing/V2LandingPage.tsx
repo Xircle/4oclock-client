@@ -1,7 +1,7 @@
 import { faBars, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Drawer } from "@material-ui/core";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useInfiniteQuery, useQuery } from "react-query";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -21,8 +21,8 @@ interface SelectionData {
 function V2LandingPage() {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [categories, setCategories] = useState<CategoryData[]>([]);
+  const [refetchInitialized, setRefetchInitialized] = useState(false);
   const container = useRef<HTMLDivElement>(null);
-  const [page, setPage] = useState(1);
 
   const { data: categoryData } = useQuery<CategoryData[] | undefined>(
     ["categories"],
@@ -49,41 +49,36 @@ function V2LandingPage() {
     {
       getNextPageParam: (currentPage) => {
         const nextPage = currentPage.meta.page + 1;
-        return nextPage > currentPage.meta.totalPages ? null : nextPage;
+        console.log("next: " + nextPage);
+        console.log("total : " + currentPage.meta.totalPages);
+        return nextPage <= currentPage.meta.totalPages ? nextPage : null;
       },
       refetchOnWindowFocus: false,
     },
   );
 
-  const loadMoreTeam = () => {
-    if (hasNextPageTeam) {
-      fetchNextPageTeam();
-    }
-  };
-
-  const OnScroll = () => {
+  const OnScroll = useCallback((event) => {
     if (container.current) {
       const { clientHeight } = container.current;
       if (window.pageYOffset + window.innerHeight > clientHeight - 100) {
-        loadMoreTeam();
+        fetchNextPageTeam();
       }
     }
-  };
+  }, []);
 
   useEffect(() => {
-    if (hasNextPageTeam) {
-      window.addEventListener("scroll", OnScroll);
-    } else {
+    console.log("1scroll hasNextPageTeam : " + hasNextPageTeam);
+    if (hasNextPageTeam === false) {
+      console.log("1scroll removed");
       window.removeEventListener("scroll", OnScroll);
     }
-  }, [hasNextPageTeam]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    return () => {
-      window.removeEventListener("scroll", OnScroll);
-    };
-  }, []);
+    if (!refetchInitialized && hasNextPageTeam === true) {
+      console.log("1scroll added");
+      window.addEventListener("scroll", OnScroll);
+      setRefetchInitialized(true);
+    }
+  }, [hasNextPageTeam]);
 
   useEffect(() => {
     if (categoryData !== undefined && categoryData.length > 0) {
