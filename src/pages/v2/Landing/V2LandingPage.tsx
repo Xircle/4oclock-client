@@ -12,6 +12,12 @@ import { seeAllCategory } from "../../../lib/api/seeAllCategory";
 import { CategoryData } from "../../../lib/api/types";
 import { Container } from "../../../styles/styles";
 
+interface SelectionData {
+  id: string;
+  name: string;
+  isSelected: boolean;
+}
+
 function V2LandingPage() {
   const [categories, setCategories] = useState<CategoryData[]>([]);
   const container = useRef<HTMLDivElement>(null);
@@ -36,14 +42,15 @@ function V2LandingPage() {
     hasNextPage: hasNextPageTeam,
     fetchNextPage: fetchNextPageTeam,
   } = useInfiniteQuery(
-    ["teams"],
+    ["teams", categories],
     // @ts-ignore
-    ({ pageParam = 0 }) => seeTeamsWithFilter(pageParam),
+    ({ pageParam = 0 }) => seeTeamsWithFilter(categories, pageParam),
     {
       getNextPageParam: (currentPage) => {
         const nextPage = currentPage.meta.page + 1;
         return nextPage > currentPage.meta.totalPages ? null : nextPage;
       },
+      refetchOnWindowFocus: false,
     },
   );
 
@@ -79,9 +86,13 @@ function V2LandingPage() {
 
   useEffect(() => {
     if (categoryData !== undefined && categoryData.length > 0) {
-      setCategories(categoryData);
+      categoryData.map((category) => {
+        setCategories((prev) => [
+          ...prev,
+          { id: category.id, name: category.name, isSelected: true },
+        ]);
+      });
     }
-    console.log(categoryData);
   }, [categoryData]);
 
   useEffect(() => {
