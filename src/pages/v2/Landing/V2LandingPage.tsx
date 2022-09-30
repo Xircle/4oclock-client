@@ -14,6 +14,7 @@ import { Container } from "../../../styles/styles";
 
 function V2LandingPage() {
   const [categories, setCategories] = useState<CategoryData[]>([]);
+  const container = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState(1);
 
   const { data: categoryData } = useQuery<CategoryData[] | undefined>(
@@ -52,6 +53,30 @@ function V2LandingPage() {
     }
   };
 
+  const OnScroll = () => {
+    if (container.current) {
+      const { clientHeight } = container.current;
+      if (window.pageYOffset + window.innerHeight > clientHeight - 100) {
+        loadMoreTeam();
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (hasNextPageTeam) {
+      window.addEventListener("scroll", OnScroll);
+    } else {
+      window.removeEventListener("scroll", OnScroll);
+    }
+  }, [hasNextPageTeam]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    return () => {
+      window.removeEventListener("scroll", OnScroll);
+    };
+  }, []);
+
   useEffect(() => {
     if (categoryData !== undefined && categoryData.length > 0) {
       setCategories(categoryData);
@@ -64,16 +89,12 @@ function V2LandingPage() {
   }, [teamData]);
 
   return (
-    <SContainer>
+    <SContainer ref={container}>
       <V2HeaderC />
       <Body>
         <FilterContainer>
           {categories.map((item) => {
-            return (
-              <FilterOption key={item.id} onClick={loadMoreTeam}>
-                {item.name}
-              </FilterOption>
-            );
+            return <FilterOption key={item.id}>{item.name}</FilterOption>;
           })}
         </FilterContainer>
         <FeedContainer>
