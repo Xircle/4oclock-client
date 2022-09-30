@@ -3,12 +3,11 @@ import styled from "styled-components";
 interface IProps {
   image?: string;
   name?: string;
-  key?: string;
 }
 
-export default function TeamFeedRenderItem({ image, name, key }: IProps) {
+export default function TeamFeedRenderItem({ image, name }: IProps) {
   return (
-    <Conatiner key={key}>
+    <Conatiner>
       <LeftContainer>
         <Title>{name}</Title>
       </LeftContainer>
