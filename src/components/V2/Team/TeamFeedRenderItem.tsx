@@ -8,7 +8,7 @@ interface IProps {
 
 export default function TeamFeedRenderItem({ image, name, key }: IProps) {
   return (
-    <Conatiner>
+    <Conatiner key={key}>
       <LeftContainer>
         <Title>{name}</Title>
       </LeftContainer>
