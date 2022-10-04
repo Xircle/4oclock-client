@@ -12,6 +12,12 @@ import { seeAllCategory } from "../../../lib/api/seeAllCategory";
 import { CategoryData } from "../../../lib/api/types";
 import { Container } from "../../../styles/styles";
 
+interface ClubTime {
+  day: number;
+  hour: number;
+  minute: number;
+}
+
 function V2LandingPage() {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [categories, setCategories] = useState<CategoryData[]>([]);
