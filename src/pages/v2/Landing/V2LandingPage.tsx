@@ -12,12 +12,6 @@ import { seeAllCategory } from "../../../lib/api/seeAllCategory";
 import { CategoryData } from "../../../lib/api/types";
 import { Container } from "../../../styles/styles";
 
-interface SelectionData {
-  id: string;
-  name: string;
-  isSelected: boolean;
-}
-
 function V2LandingPage() {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [categories, setCategories] = useState<CategoryData[]>([]);
