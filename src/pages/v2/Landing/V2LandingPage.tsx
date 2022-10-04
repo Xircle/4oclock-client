@@ -61,14 +61,11 @@ function V2LandingPage() {
   }, []);
 
   useEffect(() => {
-    console.log("1scroll hasNextPageTeam : " + hasNextPageTeam);
     if (hasNextPageTeam === false) {
-      console.log("1scroll removed");
       window.removeEventListener("scroll", OnScroll);
     }
 
     if (!refetchInitialized && hasNextPageTeam === true) {
-      console.log("1scroll added");
       window.addEventListener("scroll", OnScroll);
       setRefetchInitialized(true);
     }
