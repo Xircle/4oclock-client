@@ -87,6 +87,10 @@ function V2LandingPage() {
     console.log(teamData);
   }, [teamData]);
 
+  const openDrawer = () => {
+    setDrawerOpened(true);
+  };
+
   return (
     <SContainer ref={container}>
       <V2HeaderC />
@@ -118,13 +122,9 @@ function V2LandingPage() {
       </Drawer>
       <Body>
         <FilterContainer>
-          {categories.map((item) => {
-            return (
-              <FilterOption key={item.id} onClick={() => setDrawerOpened(true)}>
-                {item.name}
-              </FilterOption>
-            );
-          })}
+          <FilterOption onClick={openDrawer}>시간</FilterOption>
+          <FilterOption onClick={openDrawer}>테마</FilterOption>
+          <FilterOption onClick={openDrawer}>나이</FilterOption>
         </FilterContainer>
         <FeedContainer>
           {teamData?.pages
