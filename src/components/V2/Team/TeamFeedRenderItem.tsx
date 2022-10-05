@@ -18,6 +18,7 @@ export default function TeamFeedRenderItem({
   name,
   max_age,
   min_age,
+  description,
 }: IProps) {
   return (
     <Conatiner>
@@ -30,6 +31,7 @@ export default function TeamFeedRenderItem({
         <LeftContainer>
           <LeftBodyContainer>
             <Title>{name}</Title>
+            <Description>{description}</Description>
           </LeftBodyContainer>
         </LeftContainer>
         <RightContainer>
@@ -39,6 +41,13 @@ export default function TeamFeedRenderItem({
     </Conatiner>
   );
 }
+
+const Description = styled.div`
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  text-overflow: clip;
+`;
 
 const Tag = styled.span`
   border: 1px solid #21e19c;
@@ -88,6 +97,7 @@ const LeftBodyContainer = styled.div`
 
 const LeftContainer = styled.div`
   flex: 1;
+  max-width: 210px;
 `;
 
 const Title = styled.div`
