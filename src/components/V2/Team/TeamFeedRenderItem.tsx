@@ -18,10 +18,18 @@ export default function TeamFeedRenderItem({
       <LeftContainer>
         <TagContainer>
           <Tag>
-            {min_age} ~ {max_age}
+            {min_age}~{max_age}efefef
+          </Tag>
+          <Tag>
+            {min_age}~{max_age}
+          </Tag>
+          <Tag>
+            {min_age}~{max_age}
           </Tag>
         </TagContainer>
-        <Title>{name}</Title>
+        <LeftBodyContainer>
+          <Title>{name}</Title>
+        </LeftBodyContainer>
       </LeftContainer>
       <RightContainer>
         <FeedImg src={image} />
@@ -30,9 +38,18 @@ export default function TeamFeedRenderItem({
   );
 }
 
-const Tag = styled.span``;
+const Tag = styled.span`
+  border: 1px solid #21e19c;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 10px;
+  margin-right: 5px;
+`;
 
-const TagContainer = styled.div``;
+const TagContainer = styled.div`
+  max-width: 220px;
+  height: 20px;
+`;
 
 const Conatiner = styled.div`
   width: 100%;
@@ -49,10 +66,13 @@ const Conatiner = styled.div`
     opacity: 0.8;
   }
 `;
+const LeftBodyContainer = styled.div`
+  padding: 5px;
+`;
 
 const LeftContainer = styled.div`
-  padding: 10px;
   flex: 1;
+  padding-left: 10px;
 `;
 
 const Title = styled.div`
