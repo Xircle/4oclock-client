@@ -1,29 +1,27 @@
-export const DayNumToKor = (day?: number) => {
+export const DayNumToKor = (day?: string) => {
   let result;
   switch (day) {
-    case 0:
+    case "0":
       result = "일";
       break;
-    case 1:
+    case "1":
       result = "월";
       break;
-    case 2:
+    case "2":
       result = "화";
       break;
-    case 3:
+    case "3":
       result = "수";
       break;
-    case 4:
+    case "4":
       result = "목";
       break;
-    case 5:
+    case "5":
       result = "금";
       break;
-    case 6:
+    case "6":
       result = "토";
       break;
-    default:
-      result = "일";
   }
   return result;
 };
