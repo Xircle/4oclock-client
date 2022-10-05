@@ -146,7 +146,7 @@ function V2LandingPage() {
         onClose={() => setDrawerOpened(false)}
         anchor="bottom"
       >
-        <FilterOption>{drawerText}</FilterOption>
+        <DrawerTitle>{drawerText}</DrawerTitle>
       </Drawer>
       <Body>
         <FilterContainer>
@@ -181,6 +181,8 @@ function V2LandingPage() {
     </SContainer>
   );
 }
+
+const DrawerTitle = styled.div``;
 
 const FeedContainer = styled.div`
   width: 100%;
