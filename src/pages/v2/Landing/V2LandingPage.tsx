@@ -20,6 +20,8 @@ interface ClubTime {
 
 enum DrawerType {
   Category = "Category",
+  Time = "Time",
+  Age = "Age",
 }
 
 function V2LandingPage() {
@@ -107,6 +109,16 @@ function V2LandingPage() {
     setDrawerOpened(true);
   };
 
+  const openTimeDrawer = () => {
+    setDrawerText(DrawerType.Time);
+    setDrawerOpened(true);
+  };
+
+  const openAgeDrawer = () => {
+    setDrawerText(DrawerType.Age);
+    setDrawerOpened(true);
+  };
+
   return (
     <SContainer ref={container}>
       <V2HeaderC />
@@ -138,9 +150,9 @@ function V2LandingPage() {
       </Drawer>
       <Body>
         <FilterContainer>
-          <FilterOption onClick={openDrawer}>시간</FilterOption>
+          <FilterOption onClick={openTimeDrawer}>시간</FilterOption>
           <FilterOption onClick={openCategoryDrawer}>테마</FilterOption>
-          <FilterOption onClick={openDrawer}>나이</FilterOption>
+          <FilterOption onClick={openAgeDrawer}>나이</FilterOption>
         </FilterContainer>
         <FeedContainer>
           {teamData?.pages
