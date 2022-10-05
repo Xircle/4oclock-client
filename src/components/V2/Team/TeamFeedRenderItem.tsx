@@ -5,6 +5,9 @@ interface IProps {
   name?: string;
   max_age?: number;
   min_age?: number;
+  leader_username?: string;
+  leader_id?: string;
+  leader_image?: string;
 }
 
 export default function TeamFeedRenderItem({
