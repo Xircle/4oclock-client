@@ -34,8 +34,36 @@ export interface TimeData {
 
 const day = ["일", "월", "화", "수", "목", "금", "토"];
 
-export let myTimeData: TimeData[] = [];
+export const ITimeData: TimeData[] = [];
 
 for (let i = 0; i < 7; i++) {
-  myTimeData.push({ day: day[i], numV: i, selected: true });
+  ITimeData.push({ day: day[i], numV: i, selected: true });
 }
+
+export interface AgeData {
+  title: string;
+  minAge: number;
+  maxAge: number;
+  selected: boolean;
+}
+
+export const IAgeData: AgeData[] = [
+  {
+    title: "20~21",
+    minAge: 20,
+    maxAge: 21,
+    selected: true,
+  },
+  {
+    title: "22~25",
+    minAge: 22,
+    maxAge: 24,
+    selected: true,
+  },
+  {
+    title: "25이상",
+    minAge: 25,
+    maxAge: 30,
+    selected: true,
+  },
+];
