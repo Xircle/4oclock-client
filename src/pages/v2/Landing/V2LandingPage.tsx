@@ -1,10 +1,6 @@
-import { faBars, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Checkbox, Drawer, FormControlLabel } from "@material-ui/core";
-import { map } from "lodash";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useInfiniteQuery, useQuery } from "react-query";
-import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import TeamFeedRenderItem from "../../../components/V2/Team/TeamFeedRenderItem";
 import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
@@ -12,12 +8,6 @@ import { seeTeamsWithFilter } from "../../../lib/api/getTeamsWithFilter";
 import { seeAllCategory } from "../../../lib/api/seeAllCategory";
 import { CategoryData } from "../../../lib/api/types";
 import { Container } from "../../../styles/styles";
-
-interface ClubTime {
-  day: number;
-  hour: number;
-  minute: number;
-}
 
 enum DrawerType {
   Category = "Category",
