@@ -41,7 +41,6 @@ function V2LandingPage() {
     isLoading: teamDataLoading,
     hasNextPage: hasNextPageTeam,
     fetchNextPage: fetchNextPageTeam,
-    refetch: teamDataRefetch,
   } = useInfiniteQuery(
     ["teams", categories, refilterCount],
     // @ts-ignore
