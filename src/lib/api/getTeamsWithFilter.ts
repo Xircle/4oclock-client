@@ -5,10 +5,18 @@ export const seeTeamsWithFilter = async (
   categories: CategoryData[],
   page: number = 0,
 ) => {
-  let categoryquery = "";
+  let categoryQuery: string[] = [];
+  categories.map((category) => {
+    if (category.selected) {
+      categoryQuery.push(category.id);
+    }
+  });
+  console.log(categoryQuery);
+
   const { data } = await AxiosClient.get(`team/all/filter`, {
     params: {
       page: page,
+      categoryIds: categoryQuery,
     },
   });
 
