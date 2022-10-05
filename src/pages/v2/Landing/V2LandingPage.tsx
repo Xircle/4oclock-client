@@ -150,6 +150,7 @@ function V2LandingPage() {
                   meeting_day={item.meeting_day}
                   meeting_hour={item.meeting_hour}
                   description={item.description}
+                  category_name={item.category_name}
                 />
               );
             })}
