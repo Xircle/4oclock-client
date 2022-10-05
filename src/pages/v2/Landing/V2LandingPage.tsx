@@ -188,8 +188,8 @@ const FeedContainer = styled.div`
 
 const FilterContainer = styled.div`
   width: 100%;
-  padding-left: 5px;
-  padding-right: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
 `;
 
 const FilterOption = styled.span`
