@@ -144,6 +144,9 @@ function V2LandingPage() {
                   min_age={item.min_age}
                   max_age={item.max_age}
                   image={item.images?.[0]}
+                  leader_id={item.leader_id}
+                  leader_image={item.leader_image}
+                  leader_username={item.leader_username}
                 />
               );
             })}
