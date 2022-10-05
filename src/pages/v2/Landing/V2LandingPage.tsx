@@ -7,7 +7,7 @@ import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
 import { seeTeamsWithFilter } from "../../../lib/api/getTeamsWithFilter";
 import { seeAllCategory } from "../../../lib/api/seeAllCategory";
 import { CategoryData } from "../../../lib/api/types";
-import { myTimeData, TimeData } from "../../../lib/v2/utils";
+import { AgeData, IAgeData, ITimeData, TimeData } from "../../../lib/v2/utils";
 import { Container } from "../../../styles/styles";
 
 enum DrawerType {
@@ -23,7 +23,8 @@ function V2LandingPage() {
   const [drawerText, setDrawerText] = useState<DrawerType>(DrawerType.Category);
   const container = useRef<HTMLDivElement>(null);
   const [refilterCount, setRefeilterCount] = useState(0);
-  const [dayData, setDayData] = useState<TimeData[]>(myTimeData);
+  const [dayData, setDayData] = useState<TimeData[]>(ITimeData);
+  const [ageData, setAgeData] = useState<AgeData[]>(IAgeData);
 
   const { data: categoryData } = useQuery<CategoryData[] | undefined>(
     ["categories"],
@@ -44,9 +45,10 @@ function V2LandingPage() {
     hasNextPage: hasNextPageTeam,
     fetchNextPage: fetchNextPageTeam,
   } = useInfiniteQuery(
-    ["teams", categories, dayData, refilterCount],
+    ["teams", categories, dayData, ageData, refilterCount],
     // @ts-ignore
-    ({ pageParam }) => seeTeamsWithFilter(categories, dayData, pageParam),
+    ({ pageParam }) =>
+      seeTeamsWithFilter(categories, dayData, ageData, pageParam),
     {
       getNextPageParam: (currentPage) => {
         const nextPage = currentPage.meta.page + 1;
@@ -91,11 +93,11 @@ function V2LandingPage() {
   }, [categoryData]);
 
   useEffect(() => {
-    if (categories && dayData) {
+    if (categories && dayData && ageData) {
       setRefeilterCount(refilterCount + 1);
       window.addEventListener("scroll", OnScroll);
     }
-  }, [categories, dayData]);
+  }, [categories, dayData, ageData]);
 
   const openDrawer = () => {
     setDrawerOpened(true);
@@ -148,47 +150,62 @@ function V2LandingPage() {
         anchor="bottom"
       >
         <DrawerTitle>{drawerText}</DrawerTitle>
-        {drawerText === DrawerType.Category ? (
-          categories.map((item, index) => {
-            return (
-              <FormControlLabel
-                key={item.id}
-                control={
-                  <Checkbox
-                    checked={item.selected}
-                    onChange={() => {
-                      let temp = [...categories];
-                      temp[index].selected = !temp[index].selected;
-                      setCategories(temp);
-                    }}
-                  />
-                }
-                label={categories[index].name}
-              />
-            );
-          })
-        ) : drawerText === DrawerType.Time ? (
-          dayData.map((item, index) => {
-            return (
-              <FormControlLabel
-                key={index}
-                control={
-                  <Checkbox
-                    checked={item.selected}
-                    onChange={() => {
-                      let temp = [...dayData];
-                      temp[index].selected = !temp[index].selected;
-                      setDayData(temp);
-                    }}
-                  />
-                }
-                label={dayData[index].day}
-              />
-            );
-          })
-        ) : (
-          <></>
-        )}
+        {drawerText === DrawerType.Category
+          ? categories.map((item, index) => {
+              return (
+                <FormControlLabel
+                  key={item.id}
+                  control={
+                    <Checkbox
+                      checked={item.selected}
+                      onChange={() => {
+                        let temp = [...categories];
+                        temp[index].selected = !temp[index].selected;
+                        setCategories(temp);
+                      }}
+                    />
+                  }
+                  label={categories[index].name}
+                />
+              );
+            })
+          : drawerText === DrawerType.Time
+          ? dayData.map((item, index) => {
+              return (
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      checked={item.selected}
+                      onChange={() => {
+                        let temp = [...dayData];
+                        temp[index].selected = !temp[index].selected;
+                        setDayData(temp);
+                      }}
+                    />
+                  }
+                  label={dayData[index].day}
+                />
+              );
+            })
+          : ageData.map((item, index) => {
+              return (
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      checked={item.selected}
+                      onChange={() => {
+                        let temp = [...ageData];
+                        temp[index].selected = !temp[index].selected;
+                        setAgeData(temp);
+                      }}
+                    />
+                  }
+                  label={ageData[index].title}
+                />
+              );
+            })}
       </Drawer>
       <Body>
         <FilterContainer>
