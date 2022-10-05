@@ -21,6 +21,7 @@ function V2LandingPage() {
   const [refetchInitialized, setRefetchInitialized] = useState(false);
   const [drawerText, setDrawerText] = useState<DrawerType>(DrawerType.Category);
   const container = useRef<HTMLDivElement>(null);
+  const [refilterCount, setRefeilterCount] = useState(0);
 
   const { data: categoryData } = useQuery<CategoryData[] | undefined>(
     ["categories"],
@@ -40,10 +41,11 @@ function V2LandingPage() {
     isLoading: teamDataLoading,
     hasNextPage: hasNextPageTeam,
     fetchNextPage: fetchNextPageTeam,
+    refetch: teamDataRefetch,
   } = useInfiniteQuery(
-    ["teams", categories],
+    ["teams", categories, refilterCount],
     // @ts-ignore
-    ({ pageParam = 0 }) => seeTeamsWithFilter(categories, pageParam),
+    ({ pageParam }) => seeTeamsWithFilter(categories, pageParam),
     {
       getNextPageParam: (currentPage) => {
         const nextPage = currentPage.meta.page + 1;
@@ -86,6 +88,13 @@ function V2LandingPage() {
       });
     }
   }, [categoryData]);
+
+  useEffect(() => {
+    if (categories) {
+      setRefeilterCount(refilterCount + 1);
+      window.addEventListener("scroll", OnScroll);
+    }
+  }, [categories]);
 
   const openDrawer = () => {
     setDrawerOpened(true);
@@ -168,27 +177,28 @@ function V2LandingPage() {
           <FilterOption onClick={openAgeDrawer}>나이</FilterOption>
         </FilterContainer>
         <FeedContainer>
-          {teamData?.pages
-            ?.map((page) => page?.teams)
-            .flat()
-            .map((item) => {
-              return (
-                <TeamFeedRenderItem
-                  key={item.id}
-                  name={item.name}
-                  min_age={item.min_age}
-                  max_age={item.max_age}
-                  image={item.images?.[0]}
-                  leader_id={item.leader_id}
-                  leader_image={item.leader_image}
-                  leader_username={item.leader_username}
-                  meeting_day={item.meeting_day}
-                  meeting_hour={item.meeting_hour}
-                  description={item.description}
-                  category_name={item.category_name}
-                />
-              );
-            })}
+          {!teamDataLoading &&
+            teamData?.pages
+              ?.map((page) => page?.teams)
+              .flat()
+              .map((item) => {
+                return (
+                  <TeamFeedRenderItem
+                    key={item.id}
+                    name={item.name}
+                    min_age={item.min_age}
+                    max_age={item.max_age}
+                    image={item.images?.[0]}
+                    leader_id={item.leader_id}
+                    leader_image={item.leader_image}
+                    leader_username={item.leader_username}
+                    meeting_day={item.meeting_day}
+                    meeting_hour={item.meeting_hour}
+                    description={item.description}
+                    category_name={item.category_name}
+                  />
+                );
+              })}
         </FeedContainer>
       </Body>
     </SContainer>
