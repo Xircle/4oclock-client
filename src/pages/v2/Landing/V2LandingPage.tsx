@@ -18,10 +18,15 @@ interface ClubTime {
   minute: number;
 }
 
+enum DrawerType {
+  Category = "Category",
+}
+
 function V2LandingPage() {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [categories, setCategories] = useState<CategoryData[]>([]);
   const [refetchInitialized, setRefetchInitialized] = useState(false);
+  const [drawerText, setDrawerText] = useState<DrawerType>(DrawerType.Category);
   const container = useRef<HTMLDivElement>(null);
 
   const { data: categoryData } = useQuery<CategoryData[] | undefined>(
@@ -97,6 +102,11 @@ function V2LandingPage() {
     setDrawerOpened(true);
   };
 
+  const openCategoryDrawer = () => {
+    setDrawerText(DrawerType.Category);
+    setDrawerOpened(true);
+  };
+
   return (
     <SContainer ref={container}>
       <V2HeaderC />
@@ -124,12 +134,12 @@ function V2LandingPage() {
         onClose={() => setDrawerOpened(false)}
         anchor="bottom"
       >
-        <FilterOption>드로어 1</FilterOption>
+        <FilterOption>{drawerText}</FilterOption>
       </Drawer>
       <Body>
         <FilterContainer>
           <FilterOption onClick={openDrawer}>시간</FilterOption>
-          <FilterOption onClick={openDrawer}>테마</FilterOption>
+          <FilterOption onClick={openCategoryDrawer}>테마</FilterOption>
           <FilterOption onClick={openDrawer}>나이</FilterOption>
         </FilterContainer>
         <FeedContainer>
