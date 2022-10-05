@@ -12,6 +12,7 @@ interface IProps {
   meeting_day?: number;
   meeting_hour?: string;
   description?: string;
+  category_name?: string;
 }
 
 export default function TeamFeedRenderItem({
@@ -22,6 +23,7 @@ export default function TeamFeedRenderItem({
   description,
   meeting_day,
   meeting_hour,
+  category_name,
 }: IProps) {
   return (
     <Conatiner>
@@ -36,6 +38,7 @@ export default function TeamFeedRenderItem({
         ) : (
           <></>
         )}
+        <Tag>{category_name}</Tag>
       </TagContainer>
       <Wrapper>
         <LeftContainer>
