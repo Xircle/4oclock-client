@@ -147,6 +147,9 @@ function V2LandingPage() {
                   leader_id={item.leader_id}
                   leader_image={item.leader_image}
                   leader_username={item.leader_username}
+                  meeting_day={item.meeting_day}
+                  meeting_hour={item.meeting_hour}
+                  description={item.description}
                 />
               );
             })}
