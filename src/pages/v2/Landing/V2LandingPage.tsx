@@ -1,6 +1,6 @@
 import { faBars, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Checkbox, Drawer } from "@material-ui/core";
+import { Checkbox, Drawer, FormControlLabel } from "@material-ui/core";
 import { map } from "lodash";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useInfiniteQuery, useQuery } from "react-query";
@@ -28,7 +28,6 @@ enum DrawerType {
 function V2LandingPage() {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [categories, setCategories] = useState<CategoryData[]>([]);
-  const [categorySelected, setCategorySelected] = useState<boolean[]>([]);
   const [refetchInitialized, setRefetchInitialized] = useState(false);
   const [drawerText, setDrawerText] = useState<DrawerType>(DrawerType.Category);
   const container = useRef<HTMLDivElement>(null);
@@ -92,9 +91,8 @@ function V2LandingPage() {
       categoryData.map((category) => {
         setCategories((prev) => [
           ...prev,
-          { id: category.id, name: category.name, isSelected: true },
+          { id: category.id, name: category.name, selected: true },
         ]);
-        setCategorySelected((prev) => [...prev, true]);
       });
     }
   }, [categoryData]);
@@ -157,13 +155,18 @@ function V2LandingPage() {
         {drawerText === DrawerType.Category ? (
           categories.map((item, index) => {
             return (
-              <Checkbox
-                checked={categorySelected[index]}
-                onChange={() => {
-                  let temp = [...categorySelected];
-                  temp[index] = !temp[index];
-                  setCategorySelected(temp);
-                }}
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={item.selected}
+                    onChange={() => {
+                      let temp = [...categories];
+                      temp[index].selected = !temp[index].selected;
+                      setCategories(temp);
+                    }}
+                  />
+                }
+                label={categories[index].name}
               />
             );
           })
