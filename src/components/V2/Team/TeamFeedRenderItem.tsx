@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { DayNumToKor } from "../../../lib/v2/utils";
 
 interface IProps {
   image?: string;
@@ -8,7 +9,7 @@ interface IProps {
   leader_username?: string;
   leader_id?: string;
   leader_image?: string;
-  meeting_day?: string;
+  meeting_day?: number;
   meeting_hour?: string;
   description?: string;
 }
@@ -19,6 +20,8 @@ export default function TeamFeedRenderItem({
   max_age,
   min_age,
   description,
+  meeting_day,
+  meeting_hour,
 }: IProps) {
   return (
     <Conatiner>
@@ -26,6 +29,13 @@ export default function TeamFeedRenderItem({
         <Tag>
           {min_age} ~ {max_age}
         </Tag>
+        {meeting_day ? (
+          <Tag>
+            {DayNumToKor(meeting_day)} {meeting_hour}시
+          </Tag>
+        ) : (
+          <></>
+        )}
       </TagContainer>
       <Wrapper>
         <LeftContainer>
