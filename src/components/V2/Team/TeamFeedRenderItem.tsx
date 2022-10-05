@@ -34,7 +34,7 @@ export default function TeamFeedRenderItem({
           {min_age} ~ {max_age}
         </Tag>
         <Tag>
-          {DayNumToKor(meeting_day)} {meeting_hour}시
+          {DayNumToKor(meeting_day?.toString())} {meeting_hour}시
         </Tag>
 
         <Tag>{category_name}</Tag>
