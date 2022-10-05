@@ -17,13 +17,7 @@ export default function TeamFeedRenderItem({
     <Conatiner>
       <TagContainer>
         <Tag>
-          {min_age}~{max_age}efefef
-        </Tag>
-        <Tag>
-          {min_age}~{max_age}
-        </Tag>
-        <Tag>
-          {min_age}~{max_age}
+          {min_age} ~ {max_age}
         </Tag>
       </TagContainer>
       <Wrapper>
