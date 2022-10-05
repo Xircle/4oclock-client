@@ -161,8 +161,6 @@ const FilterContainer = styled.div`
   padding-right: 5px;
 `;
 
-const FilterWrapper = styled.div``;
-
 const FilterOption = styled.span`
   margin: 10px;
   background-color: #fff8d1;
