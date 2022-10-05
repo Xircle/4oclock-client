@@ -24,6 +24,8 @@ export default function TeamFeedRenderItem({
   meeting_day,
   meeting_hour,
   category_name,
+  leader_image,
+  leader_username,
 }: IProps) {
   return (
     <Conatiner>
@@ -44,6 +46,15 @@ export default function TeamFeedRenderItem({
         <LeftContainer>
           <LeftBodyContainer>
             <Title>{name}</Title>
+            {leader_image && leader_username ? (
+              <LeaderContainer>
+                <LeaderImg src={leader_image} />{" "}
+                <LeaderText>{leader_username} leader</LeaderText>
+              </LeaderContainer>
+            ) : (
+              <></>
+            )}
+
             <Description>{description}</Description>
           </LeftBodyContainer>
         </LeftContainer>
@@ -55,11 +66,30 @@ export default function TeamFeedRenderItem({
   );
 }
 
+const LeaderContainer = styled.div`
+  margin-top: 14px;
+  white-space: nowrap;
+  overflow-x: hidden;
+  max-width: 200px;
+  align-items: center;
+  display: flex;
+`;
+
+const LeaderText = styled.span`
+  margin-left: 5px;
+  color: #8c94a4;
+  font-size: 11px;
+  font-weight: bold;
+`;
+
 const Description = styled.div`
   white-space: nowrap;
   overflow: hidden;
   width: 100%;
   text-overflow: clip;
+  color: #8c94a4;
+  margin-top: 10px;
+  font-size: 11px; ;
 `;
 
 const Tag = styled.span`
@@ -128,4 +158,12 @@ const FeedImg = styled.img`
   height: 100%;
   border-radius: 10%;
   object-fit: cover;
+`;
+
+const LeaderImg = styled.img`
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  object-fit: cover;
+  display: inline-block;
 `;
