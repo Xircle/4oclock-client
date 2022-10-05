@@ -96,6 +96,7 @@ function V2LandingPage() {
     if (categories && dayData && ageData) {
       setRefeilterCount(refilterCount + 1);
       window.addEventListener("scroll", OnScroll);
+      // v
     }
   }, [categories, dayData, ageData]);
 
