@@ -127,7 +127,8 @@ function V2LandingPage() {
           style: {
             width: 375,
             height: 500,
-            justifyContent: "center",
+            justifyContent: "flex-start",
+            padding: 20,
           },
         }}
         ModalProps={{
