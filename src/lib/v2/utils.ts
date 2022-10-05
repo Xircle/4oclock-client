@@ -25,3 +25,17 @@ export const DayNumToKor = (day: number) => {
   }
   return result;
 };
+
+export interface TimeData {
+  day: string;
+  numV: number;
+  selected: boolean;
+}
+
+const day = ["월", "화", "수", "목", "금", "토", "일"];
+
+export let myTimeData: TimeData[] = [];
+
+for (let i = 0; i < 7; i++) {
+  myTimeData.push({ day: day[i], numV: i, selected: true });
+}
