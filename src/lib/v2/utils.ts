@@ -1,4 +1,4 @@
-export const DayNumToKor = (day: number) => {
+export const DayNumToKor = (day?: number) => {
   let result;
   switch (day) {
     case 0:
@@ -22,6 +22,8 @@ export const DayNumToKor = (day: number) => {
     case 6:
       result = "토";
       break;
+    default:
+      result = "일";
   }
   return result;
 };
@@ -32,7 +34,7 @@ export interface TimeData {
   selected: boolean;
 }
 
-const day = ["월", "화", "수", "목", "금", "토", "일"];
+const day = ["일", "월", "화", "수", "목", "금", "토"];
 
 export let myTimeData: TimeData[] = [];
 
