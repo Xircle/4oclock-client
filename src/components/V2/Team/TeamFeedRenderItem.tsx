@@ -33,13 +33,10 @@ export default function TeamFeedRenderItem({
         <Tag>
           {min_age} ~ {max_age}
         </Tag>
-        {meeting_day ? (
-          <Tag>
-            {DayNumToKor(meeting_day)} {meeting_hour}시
-          </Tag>
-        ) : (
-          <></>
-        )}
+        <Tag>
+          {DayNumToKor(meeting_day)} {meeting_hour}시
+        </Tag>
+
         <Tag>{category_name}</Tag>
       </TagContainer>
       <Wrapper>
