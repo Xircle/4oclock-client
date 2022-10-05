@@ -1,6 +1,7 @@
 import { faBars, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Drawer } from "@material-ui/core";
+import { Checkbox, Drawer } from "@material-ui/core";
+import { map } from "lodash";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useInfiniteQuery, useQuery } from "react-query";
 import { useHistory } from "react-router-dom";
@@ -27,6 +28,7 @@ enum DrawerType {
 function V2LandingPage() {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [categories, setCategories] = useState<CategoryData[]>([]);
+  const [categorySelected, setCategorySelected] = useState<boolean[]>([]);
   const [refetchInitialized, setRefetchInitialized] = useState(false);
   const [drawerText, setDrawerText] = useState<DrawerType>(DrawerType.Category);
   const container = useRef<HTMLDivElement>(null);
@@ -92,6 +94,7 @@ function V2LandingPage() {
           ...prev,
           { id: category.id, name: category.name, isSelected: true },
         ]);
+        setCategorySelected((prev) => [...prev, true]);
       });
     }
   }, [categoryData]);
@@ -151,6 +154,22 @@ function V2LandingPage() {
         anchor="bottom"
       >
         <DrawerTitle>{drawerText}</DrawerTitle>
+        {drawerText === DrawerType.Category ? (
+          categories.map((item, index) => {
+            return (
+              <Checkbox
+                checked={categorySelected[index]}
+                onChange={() => {
+                  let temp = [...categorySelected];
+                  temp[index] = !temp[index];
+                  setCategorySelected(temp);
+                }}
+              />
+            );
+          })
+        ) : (
+          <></>
+        )}
       </Drawer>
       <Body>
         <FilterContainer>
