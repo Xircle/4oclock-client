@@ -8,6 +8,9 @@ interface IProps {
   leader_username?: string;
   leader_id?: string;
   leader_image?: string;
+  meeting_day?: string;
+  meeting_hour?: string;
+  description?: string;
 }
 
 export default function TeamFeedRenderItem({
@@ -62,6 +65,9 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   padding-top: 5px;
+
+  padding-bottom: 15px;
+  border-bottom: 1px solid #dadada;
 `;
 
 const Conatiner = styled.div`
@@ -69,7 +75,6 @@ const Conatiner = styled.div`
   padding-left: 30px;
   padding-right: 20px;
   padding-top: 10px;
-  padding-bottom: 10px;
 
   color: #505050;
 
