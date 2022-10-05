@@ -15,25 +15,27 @@ export default function TeamFeedRenderItem({
 }: IProps) {
   return (
     <Conatiner>
-      <LeftContainer>
-        <TagContainer>
-          <Tag>
-            {min_age}~{max_age}efefef
-          </Tag>
-          <Tag>
-            {min_age}~{max_age}
-          </Tag>
-          <Tag>
-            {min_age}~{max_age}
-          </Tag>
-        </TagContainer>
-        <LeftBodyContainer>
-          <Title>{name}</Title>
-        </LeftBodyContainer>
-      </LeftContainer>
-      <RightContainer>
-        <FeedImg src={image} />
-      </RightContainer>
+      <TagContainer>
+        <Tag>
+          {min_age}~{max_age}efefef
+        </Tag>
+        <Tag>
+          {min_age}~{max_age}
+        </Tag>
+        <Tag>
+          {min_age}~{max_age}
+        </Tag>
+      </TagContainer>
+      <Wrapper>
+        <LeftContainer>
+          <LeftBodyContainer>
+            <Title>{name}</Title>
+          </LeftBodyContainer>
+        </LeftContainer>
+        <RightContainer>
+          <FeedImg src={image} />
+        </RightContainer>
+      </Wrapper>
     </Conatiner>
   );
 }
@@ -44,22 +46,34 @@ const Tag = styled.span`
   padding-right: 8px;
   border-radius: 10px;
   margin-right: 5px;
+  display: inline-block;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-size: 14px;
 `;
 
 const TagContainer = styled.div`
-  max-width: 220px;
-  height: 20px;
+  width: 100%;
+  max-width: 375px;
+  white-space: nowrap;
+  overflow-x: hidden;
+`;
+
+const Wrapper = styled.div`
+  min-height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 5px;
 `;
 
 const Conatiner = styled.div`
   width: 100%;
-  min-height: 100px;
-  padding-left: 20px;
+  padding-left: 30px;
   padding-right: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
+
   color: #505050;
 
   &:hover {
@@ -72,7 +86,6 @@ const LeftBodyContainer = styled.div`
 
 const LeftContainer = styled.div`
   flex: 1;
-  padding-left: 10px;
 `;
 
 const Title = styled.div`
