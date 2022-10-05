@@ -141,6 +141,8 @@ function V2LandingPage() {
                 <TeamFeedRenderItem
                   key={item.id}
                   name={item.name}
+                  min_age={item.min_age}
+                  max_age={item.max_age}
                   image={item.images?.[0]}
                 />
               );
