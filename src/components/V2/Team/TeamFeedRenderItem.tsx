@@ -3,12 +3,24 @@ import styled from "styled-components";
 interface IProps {
   image?: string;
   name?: string;
+  max_age?: number;
+  min_age?: number;
 }
 
-export default function TeamFeedRenderItem({ image, name }: IProps) {
+export default function TeamFeedRenderItem({
+  image,
+  name,
+  max_age,
+  min_age,
+}: IProps) {
   return (
     <Conatiner>
       <LeftContainer>
+        <TagContainer>
+          <Tag>
+            {min_age} ~ {max_age}
+          </Tag>
+        </TagContainer>
         <Title>{name}</Title>
       </LeftContainer>
       <RightContainer>
@@ -17,6 +29,10 @@ export default function TeamFeedRenderItem({ image, name }: IProps) {
     </Conatiner>
   );
 }
+
+const Tag = styled.span``;
+
+const TagContainer = styled.div``;
 
 const Conatiner = styled.div`
   width: 100%;
