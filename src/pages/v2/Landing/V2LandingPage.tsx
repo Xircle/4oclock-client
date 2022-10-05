@@ -97,10 +97,6 @@ function V2LandingPage() {
     }
   }, [categoryData]);
 
-  useEffect(() => {
-    console.log(teamData);
-  }, [teamData]);
-
   const openDrawer = () => {
     setDrawerOpened(true);
   };
@@ -156,6 +152,7 @@ function V2LandingPage() {
           categories.map((item, index) => {
             return (
               <FormControlLabel
+                key={item.id}
                 control={
                   <Checkbox
                     checked={item.selected}
