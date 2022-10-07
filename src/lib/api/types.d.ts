@@ -297,7 +297,15 @@ export interface SeeAllCategoryOutput extends CoreOutput {
   data?: CategoryData[];
 }
 
-export interface ApplicationData {}
+export interface ApplicationData {
+  id: string;
+  status: string;
+  user_id: string;
+  team_id: number;
+  paid: boolean;
+  createdAt: Date;
+  isCanceled: boolean;
+}
 
 export interface LeaderData {
   id: string;
