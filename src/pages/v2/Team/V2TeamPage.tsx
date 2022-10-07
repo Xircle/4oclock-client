@@ -50,14 +50,39 @@ export default function V2TeamPage({ match, location, history }: Props) {
       </MainPicContainer>
       <SectionWithPadding>
         <TeamName>{teamData?.name}</TeamName>
+        <LeaderSection>
+          <LeaderImg src={teamData?.leader?.profileImageUrl} />
+          <LeaderNameText>{teamData?.leader?.username} leader</LeaderNameText>
+        </LeaderSection>
       </SectionWithPadding>
     </Container>
   );
 }
 
+const LeaderNameText = styled.div`
+  font-weight: 700;
+  font-size: 14px;
+  color: #8c94a4;
+  margin-left: 10px;
+`;
+
+const LeaderSection = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 18px;
+`;
+const LeaderImg = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  object-fit: cover;
+  display: inline-block;
+  border: 3px solid #e67255;
+`;
+
 const TeamName = styled.div`
   font-weight: 700;
-  font-size: 20px;
+  font-size: 30px;
 `;
 
 const SectionWithPadding = styled.div`
