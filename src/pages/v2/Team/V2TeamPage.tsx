@@ -1,3 +1,5 @@
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery } from "react-query";
 import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
@@ -11,7 +13,7 @@ interface LocationState {}
 
 interface Props extends RouteComponentProps<MatchParms, {}, LocationState> {}
 
-export default function V2TeamPage({ match, location }: Props) {
+export default function V2TeamPage({ match, location, history }: Props) {
   const { teamId } = match.params;
   const { data: teamData } = useQuery<TeamData | undefined>(
     ["team", teamId],
@@ -28,27 +30,57 @@ export default function V2TeamPage({ match, location }: Props) {
 
   return (
     <Container>
-      <SHeader>
-        <SHeaderPic
+      <Header>
+        <SFontAwesomeIcon
+          onClick={() => history.goBack()}
+          icon={faArrowLeft}
+          size="lg"
+          color="black"
+        />
+        <HeaderText>정모 활동 정보</HeaderText>
+      </Header>
+      <MainPicContainer>
+        <MainPic
           src={optimizeImage(teamData?.images?.[0] || "hi", {
             width: 375,
             height: 230,
           })}
           alt={teamData && teamData?.name + "사진"}
         />
-      </SHeader>
+      </MainPicContainer>
     </Container>
   );
 }
 
+const SFontAwesomeIcon = styled(FontAwesomeIcon)`
+  cursor: pointer;
+  position: absolute;
+  left: 5px;
+`;
+
+const Header = styled.div`
+  width: 100%;
+  height: 50px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const HeaderText = styled.div`
+  color: #505050;
+  font-weight: 700;
+  font-size: 20px;
+`;
+
 const Container = styled.div``;
 
-const SHeader = styled.div`
+const MainPicContainer = styled.div`
   height: 160px;
   position: relative;
 `;
 
-const SHeaderPic = styled.img`
+const MainPic = styled.img`
   width: 100%;
   height: 160px;
   object-fit: cover;
