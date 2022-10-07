@@ -326,5 +326,5 @@ export interface TeamData {
 }
 
 export interface GetTeamByIdOutput extends CoreOutput {
-  data?: TeamData;
+  data: TeamData;
 }
