@@ -1,1 +1,19 @@
-export const getTeamById = async (teamId: string) => {};
+import { CURRENT_USER } from "./../../components/shared/constants";
+import { GetTeamByIdOutput, TeamData } from "./types.d";
+import AxiosClient from "../apiClient";
+import storage from "../storage";
+
+export const getTeamById = async (teamId: string): Promise<TeamData> => {
+  const { data } = await AxiosClient.get<GetTeamByIdOutput>(
+    `/team/id?teamId=${teamId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${storage.getItem(CURRENT_USER)["token"]}`,
+      },
+    },
+  );
+  if (!data.ok) {
+    throw new Error(data.error);
+  }
+  return data.data;
+};
