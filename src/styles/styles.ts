@@ -13,6 +13,7 @@ interface Colors {
   LightGray: string;
   BareGray: string;
   Red: string;
+  Orange: string;
 }
 
 export const GlobalStyles = createGlobalStyle`
@@ -75,6 +76,7 @@ export const colors: Colors = {
   LightGray: "#A7B0C0",
   BareGray: "#C4CBD8",
   Red: "#FF2343",
+  Orange: "#F86023",
 };
 
 export const AppContainer = styled.div`
@@ -356,4 +358,20 @@ export const V2Header = styled.div`
 export const HeaderItem = styled.div`
   align-self: center;
   cursor: pointer;
+`;
+
+export const V2OrangeButton = styled.div`
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
+  width: 265px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${colors.Orange};
+  font-weight: 500;
+  font-size: 16px;
+  border: 2px solid ${colors.Orange};
+  border-radius: 8px;
 `;
