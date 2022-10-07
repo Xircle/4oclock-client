@@ -139,6 +139,7 @@ const Conatiner = styled.div`
   &:hover {
     opacity: 0.8;
   }
+  cursor: pointer;
 `;
 const LeftBodyContainer = styled.div`
   padding: 5px;
