@@ -51,13 +51,48 @@ export default function V2TeamPage({ match, location, history }: Props) {
       <SectionWithPadding>
         <TeamName>{teamData?.name}</TeamName>
         <LeaderSection>
-          <LeaderImg src={teamData?.leader?.profileImageUrl} />
-          <LeaderNameText>{teamData?.leader?.username} leader</LeaderNameText>
+          <LeaderAvatar>
+            <LeaderImg src={teamData?.leader?.profileImageUrl} />
+            <LeaderNameText>{teamData?.leader?.username} leader</LeaderNameText>
+          </LeaderAvatar>
+          <SubTextDiv>🙋‍♀️리더 자기 소개</SubTextDiv>
+          <LeaderIntro>
+            {teamData?.leader?.shortBio
+              ? teamData?.leader?.shortBio
+              : "반가워요"}
+          </LeaderIntro>
         </LeaderSection>
       </SectionWithPadding>
     </Container>
   );
 }
+
+const SubTextDiv = styled.div`
+  font-weight: 700;
+  font-size: 18px;
+  margin-top: 20px;
+`;
+
+const LeaderIntro = styled.div`
+  margin: 5px;
+  padding: 10px 18px;
+  background-color: #feffc2;
+  min-height: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 22px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 22px;
+  color: #50555c;
+`;
+
+const LeaderAvatar = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 const LeaderNameText = styled.div`
   font-weight: 700;
@@ -67,8 +102,6 @@ const LeaderNameText = styled.div`
 `;
 
 const LeaderSection = styled.div`
-  display: flex;
-  align-items: center;
   margin-top: 18px;
 `;
 const LeaderImg = styled.img`
