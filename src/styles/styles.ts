@@ -14,6 +14,7 @@ interface Colors {
   BareGray: string;
   Red: string;
   Orange: string;
+  Lime: string;
 }
 
 export const GlobalStyles = createGlobalStyle`
@@ -77,6 +78,7 @@ export const colors: Colors = {
   BareGray: "#C4CBD8",
   Red: "#FF2343",
   Orange: "#F86023",
+  Lime: "rgba(33, 225, 156, 0.31)",
 };
 
 export const AppContainer = styled.div`
