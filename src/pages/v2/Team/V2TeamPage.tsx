@@ -48,9 +48,21 @@ export default function V2TeamPage({ match, location, history }: Props) {
           alt={teamData && teamData?.name + "사진"}
         />
       </MainPicContainer>
+      <SectionWithPadding>
+        <TeamName>{teamData?.name}</TeamName>
+      </SectionWithPadding>
     </Container>
   );
 }
+
+const TeamName = styled.div`
+  font-weight: 700;
+  font-size: 20px;
+`;
+
+const SectionWithPadding = styled.div`
+  padding: 21px;
+`;
 
 const SFontAwesomeIcon = styled(FontAwesomeIcon)`
   cursor: pointer;
