@@ -374,4 +374,8 @@ export const V2OrangeButton = styled.div`
   font-size: 16px;
   border: 2px solid ${colors.Orange};
   border-radius: 8px;
+
+  &:hover {
+    opacity: 0.5;
+  }
 `;
