@@ -297,7 +297,19 @@ export interface SeeAllCategoryOutput extends CoreOutput {
   data?: CategoryData[];
 }
 
-export interface TeamData {}
+export interface ApplicationData {}
+
+export interface LeaderData {}
+export interface TeamData {
+  id: number;
+  name: string;
+  season?: number;
+  startDate?: Date;
+  description?: string;
+  images?: string[];
+  applications?: ApplicationData[];
+  leader?: LeaderData;
+}
 
 export interface GetTeamByIdOutput extends CoreOutput {
   data?: TeamData;
