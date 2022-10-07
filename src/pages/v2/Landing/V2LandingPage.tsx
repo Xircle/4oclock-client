@@ -219,21 +219,22 @@ function V2LandingPage() {
             teamData?.pages
               ?.map((page) => page?.teams)
               .flat()
-              .map((item) => {
+              .map((team) => {
                 return (
                   <TeamFeedRenderItem
-                    key={item.id}
-                    name={item.name}
-                    min_age={item.min_age}
-                    max_age={item.max_age}
-                    image={item.images?.[0]}
-                    leader_id={item.leader_id}
-                    leader_image={item.leader_image}
-                    leader_username={item.leader_username}
-                    meeting_day={item.meeting_day}
-                    meeting_hour={item.meeting_hour}
-                    description={item.description}
-                    category_name={item.category_name}
+                    id={team.id}
+                    key={team.id}
+                    name={team.name}
+                    min_age={team.min_age}
+                    max_age={team.max_age}
+                    image={team.images?.[0]}
+                    leader_id={team.leader_id}
+                    leader_image={team.leader_image}
+                    leader_username={team.leader_username}
+                    meeting_day={team.meeting_day}
+                    meeting_hour={team.meeting_hour}
+                    description={team.description}
+                    category_name={team.category_name}
                   />
                 );
               })}
