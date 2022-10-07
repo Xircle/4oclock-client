@@ -296,3 +296,9 @@ export interface CategoryData {
 export interface SeeAllCategoryOutput extends CoreOutput {
   data?: CategoryData[];
 }
+
+export interface TeamData {}
+
+export interface GetTeamByIdOutput extends CoreOutput {
+  data?: TeamData;
+}
