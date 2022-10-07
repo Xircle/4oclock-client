@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { getTeamById } from "../../../lib/api/getTeamById";
 import { TeamData } from "../../../lib/api/types";
 import optimizeImage from "../../../lib/optimizeImage";
+import { V2OrangeButton } from "../../../styles/styles";
 interface MatchParms {
   teamId: string;
 }
@@ -62,10 +63,15 @@ export default function V2TeamPage({ match, location, history }: Props) {
               : "반가워요"}
           </LeaderIntro>
         </LeaderSection>
+        <SOrangeButton>신청서 작성하러 가기</SOrangeButton>
       </SectionWithPadding>
     </Container>
   );
 }
+
+const SOrangeButton = styled(V2OrangeButton)`
+  margin-top: 40px;
+`;
 
 const SubTextDiv = styled.div`
   font-weight: 700;
