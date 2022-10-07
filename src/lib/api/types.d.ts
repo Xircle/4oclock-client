@@ -299,7 +299,12 @@ export interface SeeAllCategoryOutput extends CoreOutput {
 
 export interface ApplicationData {}
 
-export interface LeaderData {}
+export interface LeaderData {
+  id: string;
+  username: string;
+  profileImageUrl: string;
+  shortBio?: string;
+}
 export interface TeamData {
   id: number;
   name: string;
