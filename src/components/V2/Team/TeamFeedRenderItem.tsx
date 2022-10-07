@@ -1,3 +1,4 @@
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { DayNumToKor } from "../../../lib/v2/utils";
 
@@ -13,6 +14,7 @@ interface IProps {
   meeting_hour?: string;
   description?: string;
   category_name?: string;
+  id: string;
 }
 
 export default function TeamFeedRenderItem({
@@ -26,9 +28,16 @@ export default function TeamFeedRenderItem({
   category_name,
   leader_image,
   leader_username,
+  id,
 }: IProps) {
+  const history = useHistory();
+
+  const onClickHandler = () => {
+    history.push(`/v2/team/${id}`);
+  };
+
   return (
-    <Conatiner>
+    <Conatiner onClick={onClickHandler}>
       <TagContainer>
         <Tag>
           {min_age} ~ {max_age}
