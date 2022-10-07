@@ -305,6 +305,7 @@ export interface ApplicationData {
   paid: boolean;
   createdAt: Date;
   isCanceled: boolean;
+  image: string;
 }
 
 export interface LeaderData {
