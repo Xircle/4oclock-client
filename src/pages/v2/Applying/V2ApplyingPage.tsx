@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { CURRENT_USER } from "../../../components/shared/constants";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
 import { createApplication } from "../../../lib/api/createApplication";
+import { ApplicationStatus } from "../../../lib/api/types";
 import storage from "../../../lib/storage";
 import { dayArr } from "../../../lib/v2/utils";
 import { BigTextArea, colors } from "../../../styles/styles";
@@ -38,11 +39,16 @@ export default function V2ApplyingPage({ match, location }: Props) {
   const { mutateAsync: mutateCreateApplication, isLoading } =
     useMutation(createApplication);
 
-  const applyTeam = () => {
+  const applyTeam = async () => {
     if (!storage.getItem(CURRENT_USER)?.token) {
       alert("로그인 후 이용해주세요");
       return;
     }
+    const data = await mutateCreateApplication({
+      teamId: parseInt(teamId),
+      content,
+      status: ApplicationStatus.Pending,
+    });
   };
 
   return (
