@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 import styled from "styled-components";
 import { CURRENT_USER } from "../../../components/shared/constants";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
 import storage from "../../../lib/storage";
 import { dayArr } from "../../../lib/v2/utils";
-import { BigTextArea } from "../../../styles/styles";
+import { BigTextArea, colors } from "../../../styles/styles";
 
 interface MatchParms {
   teamId: string;
@@ -29,19 +30,35 @@ interface Props extends RouteComponentProps<MatchParms, {}, LocationState> {
 
 export default function V2ApplyingPage({ match, location }: Props) {
   const { teamId } = match.params;
+  const [isLoading, setIsLoading] = useState(false);
   const [textValue, setTextValue] = useState("");
   const { clubName, meetingHour, meetingDay, price, maxParticipant } =
     location.state;
 
   const applyTeam = () => {
+    setIsLoading(true);
     if (!storage.getItem(CURRENT_USER)?.token) {
       alert("로그인 후 이용해주세요");
       return;
     }
+
+    setIsLoading(false);
   };
 
   return (
     <Container>
+      <LoaderWrapper top={"40%"}>
+        <ClipLoader
+          loading={isLoading}
+          color={colors.MidBlue}
+          css={{
+            name: "width",
+            styles: "border-width: 4px; z-index: 999;",
+          }}
+          size={40}
+        />
+      </LoaderWrapper>
+
       <V2SubHeaderC title={"정모 신청서 작성"} />
       <InfoContainer>
         <Title>{clubName}</Title>
@@ -86,6 +103,14 @@ export default function V2ApplyingPage({ match, location }: Props) {
     </Container>
   );
 }
+
+export const LoaderWrapper = styled.div<{ top?: string }>`
+  position: absolute;
+  left: 50%;
+  top: ${(props) => props.top || "40%"};
+  transform: translate(-50%, -50%);
+  z-index: 999;
+`;
 
 const SubmitButton = styled.div`
   display: flex;
