@@ -6,7 +6,7 @@ import styled from "styled-components";
 interface LocationState {}
 
 interface Props {
-  title: string;
+  title?: string;
 }
 
 export default function V2SubHeaderC({ title }: Props) {
