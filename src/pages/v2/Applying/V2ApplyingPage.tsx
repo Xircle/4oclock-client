@@ -65,12 +65,30 @@ export default function V2ApplyingPage({ match, location }: Props) {
           <CrewInputLabel>🙋‍♀️클럽에 신청한 이유 + 자기소개</CrewInputLabel>
           <CrewInputField name="crew" />
         </CrewInputContainer>
+        <SubmitButton>신청서 제출하기</SubmitButton>
       </InfoContainer>
     </Container>
   );
 }
 
-const CrewInputField = styled(BigTextArea)``;
+const SubmitButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #21e19c;
+  height: 50px;
+  font-weight: 700;
+  font-size: 22px;
+  -webkit-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.31);
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.31);
+  &:hover {
+    opacity: 0.5;
+  }
+`;
+
+const CrewInputField = styled(BigTextArea)`
+  width: 100%;
+`;
 
 const Container = styled.div``;
 
