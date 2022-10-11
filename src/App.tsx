@@ -52,6 +52,10 @@ const EditPlacePage = React.lazy(
   () => import("./pages/v1/Admin/EditPlacePage"),
 );
 
+const V2ApplyingPage = React.lazy(
+  () => import("./pages/v2/Applying/V2ApplyingPage"),
+);
+
 const PaymentPage = React.lazy(() => import("./pages/v1/payment/PaymentPage"));
 
 function App() {
@@ -90,6 +94,7 @@ function App() {
               <Route path={routes.v2Login} component={V2LoginPage} />
               <Route path={routes.v2MyPage} component={V2MyPage} />
               <Route path={routes.v2TeamPage} component={V2TeamPage} />
+              <Route path={routes.v2ApplyPage} component={V2ApplyingPage} />
               <Route path={routes.root} component={LandingPage} exact />
               <Route
                 path={routes.socialRedirect}
