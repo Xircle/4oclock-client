@@ -323,6 +323,10 @@ export interface TeamData {
   images?: string[];
   applications?: ApplicationData[];
   leader?: LeaderData;
+  price?: number;
+  meetingDay?: number;
+  meetingHour?: number;
+  maxParticipant?: number;
 }
 
 export interface GetTeamByIdOutput extends CoreOutput {
