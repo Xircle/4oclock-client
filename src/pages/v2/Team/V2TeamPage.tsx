@@ -30,6 +30,10 @@ export default function V2TeamPage({ match, location, history }: Props) {
     },
   );
 
+  const applyHandler = () => {
+    history.push(`/v2/apply/${teamId}`);
+  };
+
   return (
     <Container>
       <V2SubHeaderC title="정모 활동 정보" />
@@ -56,7 +60,9 @@ export default function V2TeamPage({ match, location, history }: Props) {
               : "반가워요"}
           </LeaderIntro>
         </LeaderSection>
-        <SOrangeButton>신청서 작성하러 가기</SOrangeButton>
+        <SOrangeButton onClick={applyHandler}>
+          신청서 작성하러 가기
+        </SOrangeButton>
         <Dividor>✨클럽 지원 정보✨</Dividor>
       </SectionWithPadding>
     </Container>
