@@ -332,3 +332,16 @@ export interface TeamData {
 export interface GetTeamByIdOutput extends CoreOutput {
   data: TeamData;
 }
+
+export enum ApplicationStatus {
+  Approved = "Approved",
+  Disapproved = "Disapproved",
+  Enrolled = "Enrolled",
+  Pending = "Pending",
+}
+
+export interface CreateApplicationInput {
+  teamId: number;
+  status?: ApplicationStatus;
+  content?: string;
+}
