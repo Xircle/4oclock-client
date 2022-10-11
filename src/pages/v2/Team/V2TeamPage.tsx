@@ -1,5 +1,3 @@
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery } from "react-query";
 import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
@@ -31,7 +29,13 @@ export default function V2TeamPage({ match, location, history }: Props) {
   );
 
   const applyHandler = () => {
-    history.push(`/v2/apply/${teamId}`);
+    history.push(`/v2/apply/${teamId}`, {
+      clubName: teamData?.name,
+      meetingHour: teamData?.meetingHour,
+      meetingDay: teamData?.meetingDay,
+      price: teamData?.price,
+      maxParticipant: teamData?.maxParticipant,
+    });
   };
 
   return (
