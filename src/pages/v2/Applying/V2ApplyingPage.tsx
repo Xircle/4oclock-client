@@ -1,3 +1,3 @@
 export default function V2ApplyingPage() {
-  return <div></div>;
+  return <div>hi</div>;
 }
