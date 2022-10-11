@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useMutation } from "react-query";
 import { RouteComponentProps } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import styled from "styled-components";
 import { CURRENT_USER } from "../../../components/shared/constants";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
+import { createApplication } from "../../../lib/api/createApplication";
 import storage from "../../../lib/storage";
 import { dayArr } from "../../../lib/v2/utils";
 import { BigTextArea, colors } from "../../../styles/styles";
@@ -30,19 +32,17 @@ interface Props extends RouteComponentProps<MatchParms, {}, LocationState> {
 
 export default function V2ApplyingPage({ match, location }: Props) {
   const { teamId } = match.params;
-  const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState("");
   const { clubName, meetingHour, meetingDay, price, maxParticipant } =
     location.state;
+  const { mutateAsync: mutateCreateApplication, isLoading } =
+    useMutation(createApplication);
 
   const applyTeam = () => {
-    setIsLoading(true);
     if (!storage.getItem(CURRENT_USER)?.token) {
       alert("로그인 후 이용해주세요");
       return;
     }
-
-    setIsLoading(false);
   };
 
   return (
