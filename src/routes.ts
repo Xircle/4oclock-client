@@ -30,7 +30,7 @@ const routes = {
   socialRedirect: "/v2/social/redirect",
   v2MyPage: "/v2/mypage",
   v2TeamPage: "/v2/team/:teamId",
-  v2ApplyPage: "/v2/team/apply",
+  v2ApplyPage: "/v2/apply",
 };
 
 export default routes;
