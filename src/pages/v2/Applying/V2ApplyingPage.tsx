@@ -6,7 +6,6 @@ import styled from "styled-components";
 import { CURRENT_USER } from "../../../components/shared/constants";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
 import { createApplication } from "../../../lib/api/createApplication";
-import { ApplicationStatus } from "../../../lib/api/types";
 import storage from "../../../lib/storage";
 import { dayArr } from "../../../lib/v2/utils";
 import { BigTextArea, colors } from "../../../styles/styles";
@@ -47,8 +46,12 @@ export default function V2ApplyingPage({ match, location }: Props) {
     const data = await mutateCreateApplication({
       teamId: parseInt(teamId),
       content,
-      status: ApplicationStatus.Pending,
+      status: "Pending",
     });
+    if (data.data.ok) {
+    } else {
+      alert(data.data.error);
+    }
   };
 
   return (
