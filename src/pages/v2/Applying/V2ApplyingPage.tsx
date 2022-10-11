@@ -39,6 +39,7 @@ export default function V2ApplyingPage({ match, location }: Props) {
     useMutation(createApplication);
 
   const applyTeam = async () => {
+    if (isLoading) return;
     if (!storage.getItem(CURRENT_USER)?.token) {
       alert("로그인 후 이용해주세요");
       return;
