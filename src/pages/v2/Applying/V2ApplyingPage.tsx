@@ -60,7 +60,9 @@ export default function V2ApplyingPage({ match, location }: Props) {
           <InfoQuestion>활동비</InfoQuestion>
           <InfoAnswer>{price} 원</InfoAnswer>
         </InfoRow>
-        <CrewInputContainer></CrewInputContainer>
+        <CrewInputContainer>
+          <CrewInputLabel>🙋‍♀️클럽에 신청한 이유 + 자기소개</CrewInputLabel>
+        </CrewInputContainer>
       </InfoContainer>
     </Container>
   );
@@ -108,4 +110,7 @@ const CrewInputContainer = styled.div`
   min-height: 200px;
   border-top: 1px solid #dadada;
   margin-top: 24px;
+  padding: 20px;
 `;
+
+const CrewInputLabel = styled.div``;
