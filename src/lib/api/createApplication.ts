@@ -1,14 +1,17 @@
 import { CoreOutput } from "./../../components/shared/types.d";
 import { CreateApplicationInput } from "./types.d";
 import AxiosClient from "../apiClient";
+import { AxiosResponse } from "axios";
 
 export const createApplication = async (
   createApplicationInput: CreateApplicationInput,
-): Promise<CoreOutput> => {
+): Promise<AxiosResponse<CoreOutput>> => {
   const { teamId, status, content } = createApplicationInput;
-  return AxiosClient.post(`/application/create`, {
+  const data = await AxiosClient.post(`/application/create`, {
     teamId,
     status,
     content,
   });
+
+  return data;
 };
