@@ -6,6 +6,7 @@ interface Props {
   meeting_hour?: number;
   meeting_day?: number;
   price?: number;
+  max_participant?: number;
 }
 
 export default function V2ApplyingPage({
