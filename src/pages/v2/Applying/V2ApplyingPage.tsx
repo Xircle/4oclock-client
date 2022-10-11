@@ -31,7 +31,7 @@ interface Props extends RouteComponentProps<MatchParms, {}, LocationState> {
 export default function V2ApplyingPage({ match, location }: Props) {
   const { teamId } = match.params;
   const [isLoading, setIsLoading] = useState(false);
-  const [textValue, setTextValue] = useState("");
+  const [content, setContent] = useState("");
   const { clubName, meetingHour, meetingDay, price, maxParticipant } =
     location.state;
 
@@ -94,7 +94,7 @@ export default function V2ApplyingPage({ match, location }: Props) {
           <CrewInputField
             name="crew"
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-              setTextValue(e.target.value);
+              setContent(e.target.value);
             }}
           />
         </CrewInputContainer>
