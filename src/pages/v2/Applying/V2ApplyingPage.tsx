@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
@@ -26,6 +27,7 @@ interface Props extends RouteComponentProps<MatchParms, {}, LocationState> {
 
 export default function V2ApplyingPage({ match, location }: Props) {
   const { teamId } = match.params;
+  const [textValue, setTextValue] = useState("");
   const { clubName, meetingHour, meetingDay, price, maxParticipant } =
     location.state;
 
@@ -63,9 +65,14 @@ export default function V2ApplyingPage({ match, location }: Props) {
         </InfoRow>
         <CrewInputContainer>
           <CrewInputLabel>🙋‍♀️클럽에 신청한 이유 + 자기소개</CrewInputLabel>
-          <CrewInputField name="crew" />
+          <CrewInputField
+            name="crew"
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+              setTextValue(e.target.value);
+            }}
+          />
         </CrewInputContainer>
-        <SubmitButton>신청서 제출하기</SubmitButton>
+        <SubmitButton onClick={() => {}}>신청서 제출하기</SubmitButton>
       </InfoContainer>
     </Container>
   );
@@ -79,8 +86,8 @@ const SubmitButton = styled.div`
   height: 50px;
   font-weight: 700;
   font-size: 22px;
-  -webkit-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.31);
-  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.31);
+  -webkit-box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   &:hover {
     opacity: 0.5;
   }
