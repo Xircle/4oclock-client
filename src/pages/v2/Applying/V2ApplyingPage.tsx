@@ -2,6 +2,7 @@ import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
 import { dayArr } from "../../../lib/v2/utils";
+import { BigTextArea } from "../../../styles/styles";
 
 interface MatchParms {
   teamId: string;
@@ -62,11 +63,14 @@ export default function V2ApplyingPage({ match, location }: Props) {
         </InfoRow>
         <CrewInputContainer>
           <CrewInputLabel>🙋‍♀️클럽에 신청한 이유 + 자기소개</CrewInputLabel>
+          <CrewInputField name="crew" />
         </CrewInputContainer>
       </InfoContainer>
     </Container>
   );
 }
+
+const CrewInputField = styled(BigTextArea)``;
 
 const Container = styled.div``;
 
