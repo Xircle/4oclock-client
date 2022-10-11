@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
+import { CURRENT_USER } from "../../../components/shared/constants";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
+import storage from "../../../lib/storage";
 import { dayArr } from "../../../lib/v2/utils";
 import { BigTextArea } from "../../../styles/styles";
 
@@ -30,6 +32,13 @@ export default function V2ApplyingPage({ match, location }: Props) {
   const [textValue, setTextValue] = useState("");
   const { clubName, meetingHour, meetingDay, price, maxParticipant } =
     location.state;
+
+  const applyTeam = () => {
+    if (!storage.getItem(CURRENT_USER)?.token) {
+      alert("로그인 후 이용해주세요");
+      return;
+    }
+  };
 
   return (
     <Container>
@@ -72,7 +81,7 @@ export default function V2ApplyingPage({ match, location }: Props) {
             }}
           />
         </CrewInputContainer>
-        <SubmitButton onClick={() => {}}>신청서 제출하기</SubmitButton>
+        <SubmitButton onClick={applyTeam}>신청서 제출하기</SubmitButton>
       </InfoContainer>
     </Container>
   );
