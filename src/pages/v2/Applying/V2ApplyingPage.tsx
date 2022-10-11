@@ -60,6 +60,7 @@ export default function V2ApplyingPage({ match, location }: Props) {
           <InfoQuestion>활동비</InfoQuestion>
           <InfoAnswer>{price} 원</InfoAnswer>
         </InfoRow>
+        <CrewInputContainer></CrewInputContainer>
       </InfoContainer>
     </Container>
   );
@@ -100,4 +101,11 @@ const InfoTime = styled(InfoAnswer)`
   font-weight: 700;
   font-size: 18px;
   color: #fd8a66;
+`;
+
+const CrewInputContainer = styled.div`
+  width: 100%;
+  min-height: 200px;
+  border-top: 1px solid #dadada;
+  margin-top: 24px;
 `;
