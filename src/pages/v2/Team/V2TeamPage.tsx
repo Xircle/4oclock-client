@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery } from "react-query";
 import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
+import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
 import { getTeamById } from "../../../lib/api/getTeamById";
 import { TeamData } from "../../../lib/api/types";
 import optimizeImage from "../../../lib/optimizeImage";
@@ -31,15 +32,7 @@ export default function V2TeamPage({ match, location, history }: Props) {
 
   return (
     <Container>
-      <Header>
-        <SFontAwesomeIcon
-          onClick={() => history.goBack()}
-          icon={faArrowLeft}
-          size="lg"
-          color="black"
-        />
-        <HeaderText>정모 활동 정보</HeaderText>
-      </Header>
+      <V2SubHeaderC title="정모 활동 정보" />
       <MainPicContainer>
         <MainPic
           src={optimizeImage(teamData?.images?.[0] || "hi", {
@@ -143,27 +136,6 @@ const TeamName = styled.div`
 
 const SectionWithPadding = styled.div`
   padding: 21px;
-`;
-
-const SFontAwesomeIcon = styled(FontAwesomeIcon)`
-  cursor: pointer;
-  position: absolute;
-  left: 5px;
-`;
-
-const Header = styled.div`
-  width: 100%;
-  height: 50px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const HeaderText = styled.div`
-  color: #505050;
-  font-weight: 700;
-  font-size: 20px;
 `;
 
 const Container = styled.div``;
