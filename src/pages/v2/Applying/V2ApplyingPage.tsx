@@ -6,26 +6,30 @@ interface MatchParms {
   teamId: string;
 }
 
-interface Props extends RouteComponentProps<MatchParms> {
+interface LocationState {
   clubName?: string;
-  meeting_hour?: number;
-  meeting_day?: number;
+  meetingHour?: number;
+  meetingDay?: number;
   price?: number;
-  max_participant?: number;
+  maxParticipant?: number;
 }
 
-export default function V2ApplyingPage({
-  clubName,
-  meeting_day,
-  meeting_hour,
-  price,
-  match,
-}: Props) {
+interface Props extends RouteComponentProps<MatchParms, {}, LocationState> {
+  clubName?: string;
+  meetingHour?: number;
+  meetingDay?: number;
+  price?: number;
+  maxParticipant?: number;
+}
+
+export default function V2ApplyingPage({ match, location }: Props) {
   const { teamId } = match.params;
+  const { clubName, meetingHour, meetingDay, price, maxParticipant } =
+    location.state;
 
   return (
     <Container>
-      <V2SubHeaderC title="정모 활동 정보" />
+      <V2SubHeaderC title={clubName} />
     </Container>
   );
 }
