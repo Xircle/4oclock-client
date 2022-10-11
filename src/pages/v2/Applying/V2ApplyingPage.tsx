@@ -1,6 +1,7 @@
 import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
+import { dayArr } from "../../../lib/v2/utils";
 
 interface MatchParms {
   teamId: string;
@@ -32,17 +33,32 @@ export default function V2ApplyingPage({ match, location }: Props) {
       <V2SubHeaderC title={"정모 신청서 작성"} />
       <InfoContainer>
         <Title>{clubName}</Title>
+        {typeof meetingDay === "number" && typeof meetingHour === "number" && (
+          <InfoRow>
+            <InfoQuestion>모임시간</InfoQuestion>
+            <InfoTime>
+              매주{" "}
+              {meetingDay && meetingDay >= 0 && meetingDay < 7
+                ? dayArr[meetingDay] + "요일 "
+                : ""}
+              {meetingHour
+                ? meetingHour > 12
+                  ? "오후 " + (meetingHour - 12) + "시"
+                  : "오전 " + meetingHour + "시"
+                : ""}
+            </InfoTime>
+          </InfoRow>
+        )}
+        {typeof maxParticipant === "number" && (
+          <InfoRow>
+            <InfoQuestion>모집인원</InfoQuestion>
+            <InfoAnswer>총 {maxParticipant} 명</InfoAnswer>
+          </InfoRow>
+        )}
+
         <InfoRow>
-          <InfoQuestion>모임시간</InfoQuestion>
-          <InforAnswer>매주 금요일 6시</InforAnswer>
-        </InfoRow>
-        <InfoRow>
-          <InfoQuestion>모임시간</InfoQuestion>
-          <InforAnswer>매주 금요일 6시</InforAnswer>
-        </InfoRow>
-        <InfoRow>
-          <InfoQuestion>모임시간</InfoQuestion>
-          <InforAnswer>매주 금요일 6시</InforAnswer>
+          <InfoQuestion>활동비</InfoQuestion>
+          <InfoAnswer>{price} 원</InfoAnswer>
         </InfoRow>
       </InfoContainer>
     </Container>
@@ -65,13 +81,23 @@ const InfoRow = styled.div`
   display: flex;
   margin-top: 20px;
   text-align: center;
+  align-items: baseline;
 `;
 
 const InfoQuestion = styled.div`
   font-weight: 500;
-  font-size: 18px;
+  font-size: 14px;
   color: #6f7789;
   width: 100px;
 `;
 
-const InforAnswer = styled.div``;
+const InfoAnswer = styled.div`
+  font-size: 15px;
+  color: #505050;
+`;
+
+const InfoTime = styled(InfoAnswer)`
+  font-weight: 700;
+  font-size: 18px;
+  color: #fd8a66;
+`;
