@@ -32,12 +32,12 @@ export interface TimeData {
   selected: boolean;
 }
 
-const day = ["일", "월", "화", "수", "목", "금", "토"];
+export const dayArr = ["일", "월", "화", "수", "목", "금", "토"];
 
 export const ITimeData: TimeData[] = [];
 
 for (let i = 0; i < 7; i++) {
-  ITimeData.push({ day: day[i], numV: i, selected: true });
+  ITimeData.push({ day: dayArr[i], numV: i, selected: true });
 }
 
 export interface AgeData {
