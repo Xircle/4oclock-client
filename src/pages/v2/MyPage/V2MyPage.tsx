@@ -44,9 +44,19 @@ export default function V2MyPage() {
       <Body>
         <BodyItem>
           <BodyItemHeading>승인 대기중</BodyItemHeading>
-          {pendings?.map((pending) => {
-            return <MyApplicationRow />;
-          })}
+          <BodyScroll>
+            {pendings?.map((pending) => {
+              return (
+                <MyApplicationRow
+                  id={pending.id}
+                  teamImage={pending.teamImage}
+                  status={pending.status}
+                  teamId={pending.teamId}
+                  paid={pending.paid}
+                />
+              );
+            })}
+          </BodyScroll>
         </BodyItem>
         <BodyItem>
           <BodyItemHeading>승인된 모임</BodyItemHeading>
@@ -67,6 +77,12 @@ const BodyItem = styled.div`
   width: 90%;
   margin-bottom: 20px;
   min-height: 100px;
+`;
+
+const BodyScroll = styled.div`
+  width: 100%;
+  height: 230px;
+  overflow: scroll;
 `;
 
 const BodyItemHeading = styled.div`
