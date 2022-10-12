@@ -29,7 +29,11 @@ export default function V2HeaderC({ title }: Props) {
     if (!isLoggedin) {
       history.push(routes.v2Login);
     } else {
-      history.push(routes.v2MyPage);
+      if (storage.getItem(CURRENT_USER)?.profile.role === "Owner") {
+        history.push(routes.v2LeaderPage);
+      } else {
+        history.push(routes.v2MyPage);
+      }
     }
   };
 
