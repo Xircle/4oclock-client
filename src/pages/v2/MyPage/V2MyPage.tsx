@@ -49,6 +49,7 @@ export default function V2MyPage() {
             {pendings?.map((pending) => {
               return (
                 <MyApplicationRow
+                  key={pending.id}
                   id={pending.id}
                   teamImage={pending.teamImage}
                   status={pending.status}
