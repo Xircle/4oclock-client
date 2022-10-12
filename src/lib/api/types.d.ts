@@ -347,6 +347,7 @@ export interface MyApplication {
   teamName: string;
   isCanceled: boolean;
   paid?: boolean;
+  teamImage: string;
 }
 
 export interface MyApplicationsByStatus {
