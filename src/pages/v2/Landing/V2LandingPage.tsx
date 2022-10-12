@@ -1,12 +1,15 @@
 import { Checkbox, Drawer, FormControlLabel } from "@material-ui/core";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useInfiniteQuery, useQuery } from "react-query";
+import { useInfiniteQuery, useMutation, useQuery } from "react-query";
 import styled from "styled-components";
+import { CURRENT_USER } from "../../../components/shared/constants";
 import TeamFeedRenderItem from "../../../components/V2/Team/TeamFeedRenderItem";
 import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
 import { seeTeamsWithFilter } from "../../../lib/api/getTeamsWithFilter";
+import { getUser } from "../../../lib/api/getUser";
 import { seeAllCategory } from "../../../lib/api/seeAllCategory";
-import { CategoryData } from "../../../lib/api/types";
+import { CategoryData, UserData } from "../../../lib/api/types";
+import storage from "../../../lib/storage";
 import { AgeData, IAgeData, ITimeData, TimeData } from "../../../lib/v2/utils";
 import { Container } from "../../../styles/styles";
 
@@ -25,6 +28,31 @@ function V2LandingPage() {
   const [refilterCount, setRefeilterCount] = useState(0);
   const [dayData, setDayData] = useState<TimeData[]>(ITimeData);
   const [ageData, setAgeData] = useState<AgeData[]>(IAgeData);
+  const { mutateAsync: mutateUserData, isLoading: isFetching } =
+    useMutation(getUser);
+
+  const fetchNewUserData = async () => {
+    if (storage.getItem(CURRENT_USER)?.token) {
+      const userData = await mutateUserData();
+      console.log("hi");
+      console.log(userData);
+      const temp = storage.getItem(CURRENT_USER);
+      temp.profile.role = userData?.accountType;
+      storage.setItem(CURRENT_USER, temp!);
+      console.log("done");
+    }
+  };
+
+  useEffect(() => {
+    let mounted = true;
+    if (mounted) {
+      fetchNewUserData();
+    }
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const { data: categoryData } = useQuery<CategoryData[] | undefined>(
     ["categories"],
