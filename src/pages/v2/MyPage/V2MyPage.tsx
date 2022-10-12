@@ -86,7 +86,7 @@ const BodyItem = styled.div`
 const BodyScroll = styled.div`
   width: 100%;
   height: 150px;
-  overflow: scroll;
+  overflow-y: scroll;
 `;
 
 const BodyItemHeading = styled.div`
