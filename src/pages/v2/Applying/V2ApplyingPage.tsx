@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation } from "react-query";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, useHistory } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import styled from "styled-components";
 import { CURRENT_USER } from "../../../components/shared/constants";
@@ -8,6 +8,7 @@ import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
 import { createApplication } from "../../../lib/api/createApplication";
 import storage from "../../../lib/storage";
 import { dayArr } from "../../../lib/v2/utils";
+import routes from "../../../routes";
 import { BigTextArea, colors } from "../../../styles/styles";
 
 interface MatchParms {
@@ -31,6 +32,7 @@ interface Props extends RouteComponentProps<MatchParms, {}, LocationState> {
 }
 
 export default function V2ApplyingPage({ match, location }: Props) {
+  const history = useHistory();
   const { teamId } = match.params;
   const [content, setContent] = useState("");
   const { clubName, meetingHour, meetingDay, price, maxParticipant } =
@@ -50,6 +52,7 @@ export default function V2ApplyingPage({ match, location }: Props) {
       status: "Pending",
     });
     if (data.data.ok) {
+      history.push(routes.v2MyPage);
     } else {
       alert(data.data.error);
     }
