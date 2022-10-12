@@ -7,6 +7,9 @@ export default function V2LeaderPage() {
       <V2SubHeaderC title="리더 page" />
       <Body>
         <BodyItem>
+          <BodyItemHeading>my 클럽</BodyItemHeading>
+        </BodyItem>
+        <BodyItem>
           <BodyItemHeading>회원 정보</BodyItemHeading>
         </BodyItem>
       </Body>
