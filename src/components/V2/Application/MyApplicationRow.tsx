@@ -2,8 +2,10 @@ import {
   QueryObserverResult,
   RefetchOptions,
   RefetchQueryFilters,
+  useMutation,
 } from "react-query";
 import styled from "styled-components";
+import { editApplication } from "../../../lib/api/editApplication";
 import { GetMyApplicationsOutput } from "../../../lib/api/types";
 
 interface IProps {
@@ -24,10 +26,23 @@ export default function MyApplicationRow({
   teamImage,
   teamName,
   status,
+  id,
   refetch,
 }: IProps) {
+  const { mutateAsync: mutateEditApplication, isLoading: isFetching } =
+    useMutation(editApplication);
+
   const cancelCTA = async () => {
-    await refetch();
+    const { data } = await mutateEditApplication({
+      applicationId: id,
+      isCanceled: "true",
+    });
+    if (data.ok) {
+      await refetch();
+    } else {
+      console.log(data.error);
+      alert(data.error);
+    }
   };
 
   return (
@@ -38,7 +53,7 @@ export default function MyApplicationRow({
       <RightContainer>
         <TeamNameTag>{teamName}</TeamNameTag>
         {status === "Pending" && (
-          <CTAButton style={{ backgroundColor: "#C4CBD8" }}>
+          <CTAButton style={{ backgroundColor: "#C4CBD8" }} onClick={cancelCTA}>
             신청 취소하기
           </CTAButton>
         )}
