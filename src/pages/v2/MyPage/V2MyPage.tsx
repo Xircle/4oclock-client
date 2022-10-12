@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
+import MyApplicationRow from "../../../components/V2/Application/MyApplicationRow";
 import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
 import { getMyApplications } from "../../../lib/api/getMyApplications";
 import { GetMyApplicationsOutput, MyApplication } from "../../../lib/api/types";
@@ -43,6 +44,9 @@ export default function V2MyPage() {
       <Body>
         <BodyItem>
           <BodyItemHeading>승인 대기중</BodyItemHeading>
+          {pendings?.map((pending) => {
+            return <MyApplicationRow />;
+          })}
         </BodyItem>
         <BodyItem>
           <BodyItemHeading>승인된 모임</BodyItemHeading>
