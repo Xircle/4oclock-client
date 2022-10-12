@@ -25,7 +25,7 @@ export default function CancelReservationPage({ history, location }: Props) {
   const { placeId } = location.state;
   const [cancelReason, SetReasonMain] = useState<string>("");
   const [detailReason, SetReasonDetail] = useState<string>("");
-  const { mutateAsync: mutateCancelReservation, isLoading: isPatching } =
+  const { mutateAsync: mutateCancelReservation, isLoading: isFetching } =
     useMutation(cancelReservation);
 
   const onClickHandler = async () => {
@@ -94,12 +94,12 @@ export default function CancelReservationPage({ history, location }: Props) {
             신청 취소하기
           </MainBtnCancelReservation>
         </ContainerwithLeftRightMargin>
-        {isPatching && (
+        {isFetching && (
           <>
             <LoaderBackdrop />
             <LoaderWrapper>
               <ClipLoader
-                loading={isPatching}
+                loading={isFetching}
                 color={colors.MidBlue}
                 css={{ name: "width", styles: "border-width: 4px;" }}
                 size={30}
