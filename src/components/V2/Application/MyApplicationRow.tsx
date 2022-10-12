@@ -1,4 +1,10 @@
+import {
+  QueryObserverResult,
+  RefetchOptions,
+  RefetchQueryFilters,
+} from "react-query";
 import styled from "styled-components";
+import { GetMyApplicationsOutput } from "../../../lib/api/types";
 
 interface IProps {
   id: string;
@@ -7,7 +13,11 @@ interface IProps {
   teamImage: string;
   status: string;
   teamName: string;
-  refetch: () => Promise<void>;
+  refetch: (
+    options?:
+      | (RefetchOptions & RefetchQueryFilters<GetMyApplicationsOutput>)
+      | undefined,
+  ) => Promise<QueryObserverResult<GetMyApplicationsOutput, unknown>>;
 }
 
 export default function MyApplicationRow({
