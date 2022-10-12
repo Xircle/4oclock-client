@@ -8,10 +8,12 @@ interface IProps {
   status: string;
 }
 
-export default function MyApplicationRow({}: IProps) {
+export default function MyApplicationRow({ teamImage }: IProps) {
   return (
     <Container>
-      <LeftContainer></LeftContainer>
+      <LeftContainer>
+        <TeamImage src={teamImage} />
+      </LeftContainer>
       <RightContainer></RightContainer>
     </Container>
   );
@@ -21,15 +23,21 @@ const Container = styled.div`
   width: 100%;
   height: 80px;
   display: flex;
-  background-color: black;
   margin-bottom: 10px;
 `;
 
+const TeamImage = styled.img`
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+`;
+
 const LeftContainer = styled.div`
-  background-color: red;
-  width: 80px;
+  width: 100px;
+  padding-left: 10px;
+  padding-right: 10px;
 `;
 const RightContainer = styled.div`
   height: 100%;
-  background-color: blue;
 `;
