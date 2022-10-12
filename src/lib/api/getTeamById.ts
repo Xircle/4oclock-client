@@ -8,7 +8,7 @@ export const getTeamById = async (teamId: string): Promise<TeamData> => {
     `/team/id?teamId=${teamId}`,
     {
       headers: {
-        Authorization: `Bearer ${storage.getItem(CURRENT_USER)["token"]}`,
+        Authorization: `Bearer ${storage.getItem(CURRENT_USER)?.token || ""}`,
       },
     },
   );
