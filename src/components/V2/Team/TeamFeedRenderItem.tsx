@@ -1,5 +1,6 @@
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import optimizeImage from "../../../lib/optimizeImage";
 import { DayNumToKor } from "../../../lib/v2/utils";
 
 interface IProps {
@@ -54,7 +55,12 @@ export default function TeamFeedRenderItem({
             <Title>{name}</Title>
             {leader_image && leader_username ? (
               <LeaderContainer>
-                <LeaderImg src={leader_image} />{" "}
+                <LeaderImg
+                  src={optimizeImage(leader_image, {
+                    width: 30,
+                    height: 30,
+                  })}
+                />{" "}
                 <LeaderText>{leader_username} leader</LeaderText>
               </LeaderContainer>
             ) : (
@@ -65,7 +71,12 @@ export default function TeamFeedRenderItem({
           </LeftBodyContainer>
         </LeftContainer>
         <RightContainer>
-          <FeedImg src={image} />
+          <FeedImg
+            src={optimizeImage(image, {
+              width: 100,
+              height: 100,
+            })}
+          />
         </RightContainer>
       </Wrapper>
     </Conatiner>
