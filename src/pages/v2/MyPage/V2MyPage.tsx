@@ -1,8 +1,42 @@
+import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import styled from "styled-components";
 import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
+import { getMyApplications } from "../../../lib/api/getMyApplications";
+import { GetMyApplicationsOutput, MyApplication } from "../../../lib/api/types";
 import { Container } from "../../../styles/styles";
 
 export default function V2MyPage() {
+  const [approveds, setApproveds] = useState<MyApplication[] | undefined>([]);
+  const [disapproveds, setDisapproveds] = useState<MyApplication[] | undefined>(
+    [],
+  );
+  const [pendings, setPendings] = useState<MyApplication[] | undefined>([]);
+  const [enrolleds, setEnrolleds] = useState<MyApplication[] | undefined>([]);
+
+  const { data: applicationOutput } = useQuery<GetMyApplicationsOutput>(
+    ["Applications"],
+    () => getMyApplications(),
+    {
+      onError: (err: any) => {
+        alert(err);
+        return;
+      },
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  );
+
+  useEffect(() => {
+    if (applicationOutput?.applications) {
+      console.log(applicationOutput);
+      setApproveds(applicationOutput.applications.approveds);
+      setDisapproveds(applicationOutput.applications.disapproveds);
+      setPendings(applicationOutput.applications.pendings);
+      setEnrolleds(applicationOutput.applications.enrolleds);
+    }
+  }, [applicationOutput]);
+
   return (
     <Container>
       <V2HeaderC title="my page" />
