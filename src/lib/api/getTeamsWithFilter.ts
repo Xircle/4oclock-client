@@ -25,8 +25,6 @@ export const seeTeamsWithFilter = async (
       timeQuery.push(time.numV);
     }
   });
-  let minAge = 100;
-  let maxAge = 0;
   let ageQuery: AgeQuery[] = [];
   ageData.map((age) => {
     if (age.selected) {
