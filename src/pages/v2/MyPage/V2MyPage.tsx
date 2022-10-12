@@ -15,18 +15,19 @@ export default function V2MyPage() {
   const [pendings, setPendings] = useState<MyApplication[] | undefined>([]);
   const [enrolleds, setEnrolleds] = useState<MyApplication[] | undefined>([]);
 
-  const { data: applicationOutput } = useQuery<GetMyApplicationsOutput>(
-    ["Applications"],
-    () => getMyApplications(),
-    {
-      onError: (err: any) => {
-        alert(err);
-        return;
+  const { data: applicationOutput, refetch } =
+    useQuery<GetMyApplicationsOutput>(
+      ["Applications"],
+      () => getMyApplications(),
+      {
+        onError: (err: any) => {
+          alert(err);
+          return;
+        },
+        retry: 1,
+        refetchOnWindowFocus: false,
       },
-      retry: 1,
-      refetchOnWindowFocus: false,
-    },
-  );
+    );
 
   useEffect(() => {
     if (applicationOutput?.applications) {
@@ -53,6 +54,8 @@ export default function V2MyPage() {
                   status={pending.status}
                   teamId={pending.teamId}
                   paid={pending.paid}
+                  teamName={pending.teamName}
+                  refetch={refetch}
                 />
               );
             })}
@@ -81,7 +84,7 @@ const BodyItem = styled.div`
 
 const BodyScroll = styled.div`
   width: 100%;
-  height: 230px;
+  height: 150px;
   overflow: scroll;
 `;
 
