@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
+import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
 
 export default function V2LeaderPage() {
   return (
     <Container>
-      <V2SubHeaderC title="리더 page" />
+      <V2HeaderC title="리더 page" />
       <Body>
         <BodyItem>
           <BodyItemHeading>my 클럽</BodyItemHeading>
