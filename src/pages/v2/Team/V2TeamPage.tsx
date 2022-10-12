@@ -43,7 +43,7 @@ export default function V2TeamPage({ match, location, history }: Props) {
       <V2SubHeaderC title="정모 활동 정보" />
       <MainPicContainer>
         <MainPic
-          src={optimizeImage(teamData?.images?.[0] || "hi", {
+          src={optimizeImage(teamData?.images?.[0], {
             width: 375,
             height: 230,
           })}
@@ -54,7 +54,12 @@ export default function V2TeamPage({ match, location, history }: Props) {
         <TeamName>{teamData?.name}</TeamName>
         <LeaderSection>
           <LeaderAvatar>
-            <LeaderImg src={teamData?.leader?.profileImageUrl} />
+            <LeaderImg
+              src={optimizeImage(teamData?.leader?.profileImageUrl, {
+                width: 50,
+                height: 50,
+              })}
+            />
             <LeaderNameText>{teamData?.leader?.username} leader</LeaderNameText>
           </LeaderAvatar>
           <SubTextDiv>🙋‍♀️리더 자기 소개</SubTextDiv>
