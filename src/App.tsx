@@ -24,7 +24,6 @@ import ParticipantsListPage from "./pages/v1/participantsList/ParticipantsListPa
 import ReviewsPage from "./pages/v1/reviews/ReviewsPage";
 import V2LandingPage from "./pages/v2/Landing/V2LandingPage";
 import V2LoginPage from "./pages/v2/Login/V2LoginPage";
-import V2MyPage from "./pages/v2/MyPage/V2MyPage";
 import V2TeamPage from "./pages/v2/Team/V2TeamPage";
 config();
 
@@ -55,6 +54,10 @@ const EditPlacePage = React.lazy(
 const V2ApplyingPage = React.lazy(
   () => import("./pages/v2/Applying/V2ApplyingPage"),
 );
+
+const V2MyPage = React.lazy(() => import("./pages/v2/MyPage/V2MyPage"));
+
+const V2LeaderPage = React.lazy(() => import("./pages/v2/MyPage/V2LeaderPage"));
 
 const PaymentPage = React.lazy(() => import("./pages/v1/payment/PaymentPage"));
 
@@ -93,6 +96,7 @@ function App() {
               <Route path={routes.v2Root} component={V2LandingPage} exact />
               <Route path={routes.v2Login} component={V2LoginPage} />
               <Route path={routes.v2MyPage} component={V2MyPage} />
+              <Route path={routes.v2LeaderPage} component={V2LeaderPage} />
               <Route path={routes.v2TeamPage} component={V2TeamPage} />
               <Route path={routes.v2ApplyPage} component={V2ApplyingPage} />
               <Route path={routes.root} component={LandingPage} exact />
