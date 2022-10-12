@@ -55,7 +55,7 @@ export const IAgeData: AgeData[] = [
     selected: true,
   },
   {
-    title: "22~25",
+    title: "22~24",
     minAge: 22,
     maxAge: 24,
     selected: true,
