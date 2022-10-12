@@ -338,3 +338,23 @@ export interface CreateApplicationInput {
   status?: string;
   content?: string;
 }
+
+export interface MyApplication {
+  id: string;
+  status: string;
+  appliedAt: Date;
+  teamId: number;
+  teamName: string;
+  isCanceled: boolean;
+  paid?: boolean;
+}
+
+export interface MyApplicationsByStatus {
+  approveds?: MyApplication[];
+  pendings?: MyApplication[];
+  disapproveds?: MyApplication[];
+  enrolleds?: MyApplication[];
+}
+export interface GetMyApplicationsOutput extends CoreOutput {
+  applications?: MyApplicationsByStatus;
+}
