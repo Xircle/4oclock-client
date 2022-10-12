@@ -6,8 +6,8 @@ interface options {
   quality?: number;
 }
 export default function optimizeImage(
-  url: string,
-  resizeOptions?: options
+  url?: string,
+  resizeOptions?: options,
 ): string {
   if (!url) return "";
   if (!url.includes(IMAGE_ORIGIN!)) return url;
