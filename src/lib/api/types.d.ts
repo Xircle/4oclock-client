@@ -359,3 +359,10 @@ export interface MyApplicationsByStatus {
 export interface GetMyApplicationsOutput extends CoreOutput {
   applications?: MyApplicationsByStatus;
 }
+
+export interface EditApplicationInput {
+  applicationId: string;
+  status?: ApplicationStatus;
+  isCanceled?: string;
+  paid?: string;
+}
