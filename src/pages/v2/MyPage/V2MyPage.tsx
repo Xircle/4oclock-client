@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 import MyApplicationRow from "../../../components/V2/Application/MyApplicationRow";
 import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
+import V2SmallProfile from "../../../components/V2/UI/V2SmallProfile";
 import { getMyApplications } from "../../../lib/api/getMyApplications";
 import { GetMyApplicationsOutput, MyApplication } from "../../../lib/api/types";
 import { Container } from "../../../styles/styles";
@@ -67,6 +68,7 @@ export default function V2MyPage() {
         </BodyItem>
         <BodyItem>
           <BodyItemHeading>회원 정보</BodyItemHeading>
+          <V2SmallProfile />
         </BodyItem>
       </Body>
     </Container>
