@@ -46,22 +46,20 @@ export default function V2MyPage() {
       <Body>
         <BodyItem>
           <BodyItemHeading>승인 대기중</BodyItemHeading>
-          <BodyScroll>
-            {pendings?.map((pending) => {
-              return (
-                <MyApplicationRow
-                  key={pending.id}
-                  id={pending.id}
-                  teamImage={pending.teamImage}
-                  status={pending.status}
-                  teamId={pending.teamId}
-                  paid={pending.paid}
-                  teamName={pending.teamName}
-                  refetch={refetch}
-                />
-              );
-            })}
-          </BodyScroll>
+          {pendings?.map((pending) => {
+            return (
+              <MyApplicationRow
+                key={pending.id}
+                id={pending.id}
+                teamImage={pending.teamImage}
+                status={pending.status}
+                teamId={pending.teamId}
+                paid={pending.paid}
+                teamName={pending.teamName}
+                refetch={refetch}
+              />
+            );
+          })}
         </BodyItem>
         <BodyItem>
           <BodyItemHeading>승인된 모임</BodyItemHeading>
@@ -75,7 +73,9 @@ export default function V2MyPage() {
   );
 }
 
-const Body = styled.div``;
+const Body = styled.div`
+  margin-top: 10px;
+`;
 
 const BodyItem = styled.div`
   margin-left: auto;
