@@ -38,6 +38,8 @@ function V2LandingPage() {
       console.log(userData);
       const temp = storage.getItem(CURRENT_USER);
       temp.profile.role = userData?.accountType;
+      temp.username = userData?.username;
+      temp.profile.thumbnail = userData?.profileImageUrl;
       storage.setItem(CURRENT_USER, temp!);
       console.log("done");
     }
