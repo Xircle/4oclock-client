@@ -1,7 +1,6 @@
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import optimizeImage from "../../../lib/optimizeImage";
-import { DayNumToKor } from "../../../lib/v2/utils";
 import routes from "../../../routes";
 
 interface IProps {
@@ -9,7 +8,7 @@ interface IProps {
   name?: string;
   id: number;
   total: number;
-  count: number;
+  count?: number;
 }
 
 export default function LeaderTeamRow({
@@ -19,6 +18,7 @@ export default function LeaderTeamRow({
   total,
   count,
 }: IProps) {
+  const myCount = count ? count : 0;
   const history = useHistory();
 
   const onClickHandler = () => {
@@ -39,8 +39,8 @@ export default function LeaderTeamRow({
         <RightContainer>
           <RightBodyContainer>
             <Title>{name}</Title>
-            {total - count > 0 && (
-              <WarningText>잔여 {total - count}석 승인 필요</WarningText>
+            {total - myCount > 0 && (
+              <WarningText>잔여 {total - myCount}석 승인 필요</WarningText>
             )}
 
             <ButtonContainer>
@@ -57,19 +57,15 @@ export default function LeaderTeamRow({
 
 const Wrapper = styled.div`
   min-height: 100px;
-  width: 100%;
   display: flex;
   justify-content: space-between;
   padding-top: 5px;
 
   padding-bottom: 15px;
-  border-bottom: 1px solid #dadada;
 `;
 
 const Conatiner = styled.div`
   width: 100%;
-  padding-left: 30px;
-  padding-right: 20px;
   padding-top: 10px;
 
   color: #505050;
