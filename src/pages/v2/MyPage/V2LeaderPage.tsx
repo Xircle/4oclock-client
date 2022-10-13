@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 import LeaderTeamRow from "../../../components/V2/Team/LeaderTeamRow";
 import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
+import V2SmallProfile from "../../../components/V2/UI/V2SmallProfile";
 import { getMyTeamsLeader } from "../../../lib/api/getMyTeamsLeader";
 import { MyTeamsLeader } from "../../../lib/api/types";
 
@@ -49,6 +50,7 @@ export default function V2LeaderPage() {
         </BodyItem>
         <BodyItem>
           <BodyItemHeading>회원 정보</BodyItemHeading>
+          <V2SmallProfile />
         </BodyItem>
       </Body>
     </Container>
