@@ -6,10 +6,18 @@ import { DayNumToKor } from "../../../lib/v2/utils";
 interface IProps {
   image?: string;
   name?: string;
-  id: string;
+  id: number;
+  total: number;
+  count: number;
 }
 
-export default function LeaderTeamRow({ image, name, id }: IProps) {
+export default function LeaderTeamRow({
+  image,
+  name,
+  id,
+  total,
+  count,
+}: IProps) {
   const history = useHistory();
 
   const onClickHandler = () => {};
@@ -18,17 +26,17 @@ export default function LeaderTeamRow({ image, name, id }: IProps) {
     <Conatiner onClick={onClickHandler}>
       <Wrapper>
         <LeftContainer>
-          <LeftBodyContainer>
-            <Title>{name}</Title>
-          </LeftBodyContainer>
-        </LeftContainer>
-        <RightContainer>
           <FeedImg
             src={optimizeImage(image, {
               width: 100,
               height: 100,
             })}
           />
+        </LeftContainer>
+        <RightContainer>
+          <LeftBodyContainer>
+            <Title>{name}</Title>
+          </LeftBodyContainer>
         </RightContainer>
       </Wrapper>
     </Conatiner>
@@ -63,7 +71,7 @@ const LeftBodyContainer = styled.div`
   padding: 5px;
 `;
 
-const LeftContainer = styled.div`
+const RightContainer = styled.div`
   flex: 1;
   max-width: 210px;
 `;
@@ -73,7 +81,7 @@ const Title = styled.div`
   font-weight: 700;
 `;
 
-const RightContainer = styled.div`
+const LeftContainer = styled.div`
   width: 100px;
   height: 100px;
 `;
