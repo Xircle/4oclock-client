@@ -59,6 +59,10 @@ const V2MyPage = React.lazy(() => import("./pages/v2/MyPage/V2MyPage"));
 
 const V2LeaderPage = React.lazy(() => import("./pages/v2/MyPage/V2LeaderPage"));
 
+const V2LeaderApprovePage = React.lazy(
+  () => import("./pages/v2/MyPage/V2LeaderApprovePage"),
+);
+
 const PaymentPage = React.lazy(() => import("./pages/v1/payment/PaymentPage"));
 
 function App() {
@@ -96,6 +100,10 @@ function App() {
               <Route path={routes.v2Root} component={V2LandingPage} exact />
               <Route path={routes.v2Login} component={V2LoginPage} />
               <Route path={routes.v2MyPage} component={V2MyPage} />
+              <Route
+                path={routes.v2LeaderApprovePage}
+                component={V2LeaderApprovePage}
+              />
               <Route path={routes.v2LeaderPage} component={V2LeaderPage} />
               <Route path={routes.v2TeamPage} component={V2TeamPage} />
               <Route path={routes.v2ApplyPage} component={V2ApplyingPage} />
