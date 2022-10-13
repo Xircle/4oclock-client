@@ -41,7 +41,7 @@ export default function V2LeaderPage() {
                   name={item.name}
                   id={item.teamId}
                   total={item.total}
-                  count={item.total}
+                  count={item.count}
                 />
               );
             })}
