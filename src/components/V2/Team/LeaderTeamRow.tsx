@@ -2,6 +2,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import optimizeImage from "../../../lib/optimizeImage";
 import { DayNumToKor } from "../../../lib/v2/utils";
+import routes from "../../../routes";
 
 interface IProps {
   image?: string;
@@ -20,7 +21,9 @@ export default function LeaderTeamRow({
 }: IProps) {
   const history = useHistory();
 
-  const onClickHandler = () => {};
+  const onClickHandler = () => {
+    history.push(routes.v2LeaderApprovePage, { teamId: id });
+  };
 
   return (
     <Conatiner>
@@ -70,11 +73,6 @@ const Conatiner = styled.div`
   padding-top: 10px;
 
   color: #505050;
-
-  &:hover {
-    opacity: 0.8;
-  }
-  cursor: pointer;
 `;
 const RightBodyContainer = styled.div`
   padding: 5px;
@@ -115,6 +113,8 @@ const CTAButton = styled.span`
   background-color: #21e19c;
   border-radius: 3px;
   color: #6f7789;
+
+  cursor: pointer;
 `;
 
 const WarningText = styled.div`
