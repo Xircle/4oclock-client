@@ -101,4 +101,6 @@ const CTAButton = styled.div`
   font-size: 11px;
   padding: 5px 3px;
   color: #ffffff;
+
+  cursor: pointer;
 `;
