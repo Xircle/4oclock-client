@@ -67,3 +67,10 @@ export const IAgeData: AgeData[] = [
     selected: true,
   },
 ];
+
+export const RoleHashTable = {
+  Client: "크루",
+  Owner: "리더",
+  Banned: "Banned",
+  Admin: "운영진",
+};
