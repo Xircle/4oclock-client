@@ -30,38 +30,30 @@ export default function V2LeaderPage() {
   return (
     <Container>
       <V2HeaderC title="리더 page" />
+      <BodyItem>
+        <BodyItemHeading>회원 정보</BodyItemHeading>
+        <V2SmallProfile />
+      </BodyItem>
       <Body>
         <BodyItem>
           <BodyItemHeading>my 클럽</BodyItemHeading>
-          <BodyScroll>
-            {teamData?.map((item) => {
-              return (
-                <LeaderTeamRow
-                  key={item.teamId}
-                  image={item.teamImage}
-                  name={item.name}
-                  id={item.teamId}
-                  total={item.total}
-                  count={item.count}
-                />
-              );
-            })}
-          </BodyScroll>
-        </BodyItem>
-        <BodyItem>
-          <BodyItemHeading>회원 정보</BodyItemHeading>
-          <V2SmallProfile />
+          {teamData?.map((item) => {
+            return (
+              <LeaderTeamRow
+                key={item.teamId}
+                image={item.teamImage}
+                name={item.name}
+                id={item.teamId}
+                total={item.total}
+                count={item.count}
+              />
+            );
+          })}
         </BodyItem>
       </Body>
     </Container>
   );
 }
-
-const BodyScroll = styled.div`
-  width: 100%;
-  height: 150px;
-  overflow-y: scroll;
-`;
 
 const Container = styled.div``;
 
