@@ -1,7 +1,30 @@
+import { useEffect } from "react";
+import { useQuery } from "react-query";
 import styled from "styled-components";
 import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
+import { getMyTeamsLeader } from "../../../lib/api/getMyTeamsLeader";
+import { MyTeamsLeader } from "../../../lib/api/types";
 
 export default function V2LeaderPage() {
+  const { data: teamData } = useQuery<MyTeamsLeader[] | undefined>(
+    ["leaderTeam"],
+    () => getMyTeamsLeader(),
+    {
+      onError: (err: any) => {
+        alert(err);
+        return;
+      },
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  );
+
+  useEffect(() => {
+    if (teamData) {
+      console.log(teamData);
+    }
+  }, [teamData]);
+
   return (
     <Container>
       <V2HeaderC title="리더 page" />
