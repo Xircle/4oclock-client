@@ -371,6 +371,8 @@ export interface MyTeamsLeader {
   teamId: number;
   teamImage?: string;
   name: string;
+  total: number;
+  count: number;
 }
 
 export interface GetMyTeamsLeaderOutput extends CoreOutput {
