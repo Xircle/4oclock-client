@@ -23,7 +23,7 @@ export default function LeaderTeamRow({
   const onClickHandler = () => {};
 
   return (
-    <Conatiner onClick={onClickHandler}>
+    <Conatiner>
       <Wrapper>
         <LeftContainer>
           <FeedImg
@@ -36,6 +36,15 @@ export default function LeaderTeamRow({
         <RightContainer>
           <RightBodyContainer>
             <Title>{name}</Title>
+            {total - count > 0 && (
+              <WarningText>잔여 {total - count}석 승인 필요</WarningText>
+            )}
+
+            <ButtonContainer>
+              <CTAButton onClick={onClickHandler}>
+                my 클럽 승인하기{">>"}
+              </CTAButton>
+            </ButtonContainer>
           </RightBodyContainer>
         </RightContainer>
       </Wrapper>
@@ -69,6 +78,10 @@ const Conatiner = styled.div`
 `;
 const RightBodyContainer = styled.div`
   padding: 5px;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `;
 
 const RightContainer = styled.div`
@@ -91,4 +104,21 @@ const FeedImg = styled.img`
   height: 100%;
   border-radius: 10%;
   object-fit: cover;
+`;
+
+const ButtonContainer = styled.div``;
+
+const CTAButton = styled.span`
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  background-color: #21e19c;
+  border-radius: 3px;
+  color: #6f7789;
+`;
+
+const WarningText = styled.div`
+  color: #ff0000;
+  font-weight: 700;
+  font-size: 14px;
 `;
