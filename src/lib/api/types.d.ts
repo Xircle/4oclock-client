@@ -366,3 +366,13 @@ export interface EditApplicationInput {
   isCanceled?: string;
   paid?: string;
 }
+
+export interface MyTeamsLeader {
+  teamId: number;
+  teamImage?: string;
+  name: string;
+}
+
+export interface GetMyTeamsLeaderOutput extends CoreOutput {
+  teams?: MyTeamsLeader[];
+}
