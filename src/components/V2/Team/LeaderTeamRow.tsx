@@ -34,9 +34,9 @@ export default function LeaderTeamRow({
           />
         </LeftContainer>
         <RightContainer>
-          <LeftBodyContainer>
+          <RightBodyContainer>
             <Title>{name}</Title>
-          </LeftBodyContainer>
+          </RightBodyContainer>
         </RightContainer>
       </Wrapper>
     </Conatiner>
@@ -67,7 +67,7 @@ const Conatiner = styled.div`
   }
   cursor: pointer;
 `;
-const LeftBodyContainer = styled.div`
+const RightBodyContainer = styled.div`
   padding: 5px;
 `;
 
