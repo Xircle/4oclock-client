@@ -355,6 +355,7 @@ export const V2Header = styled.div`
   padding: 0px 10px;
   top: 0px;
   background-color: white;
+  z-index: 50;
 `;
 
 export const HeaderItem = styled.div`
