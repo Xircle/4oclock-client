@@ -12,7 +12,7 @@ interface Props
 export default function V2LeaderApproveDetailPage({ match }: Props) {
   const { applicationId } = match.params;
   const { data, refetch } = useQuery<GetApplicationByLeaderData | undefined>(
-    ["TeamApplications", applicationId],
+    ["ApplicationByLeader", applicationId],
     () => getApplicationByLeader(applicationId),
     {
       onError: (err: any) => {
@@ -31,8 +31,36 @@ export default function V2LeaderApproveDetailPage({ match }: Props) {
   return (
     <Container>
       <V2SubHeaderC title="신청서 및 정보" />
+      <BodyContainer></BodyContainer>
     </Container>
   );
 }
 
 const Container = styled.div``;
+const BodyContainer = styled.div`
+  margin-top: 10px;
+`;
+
+const ProfileContainer = styled.div``;
+
+const PhoneNumberContainer = styled.div``;
+
+const PhoneNumberRow = styled.div``;
+
+const PhoneNumberText = styled.div``;
+
+const PhoneNumberButton = styled.div``;
+
+const PhoneNumberWarning = styled.div``;
+
+const ShortBioContainer = styled.div``;
+
+const ShortBioHeading = styled.div``;
+
+const ShortBioText = styled.div``;
+
+const InstructionContainer = styled.div``;
+
+const InstructionHeading = styled.div``;
+
+const InstructionText = styled.div``;
