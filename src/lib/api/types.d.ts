@@ -413,6 +413,10 @@ export interface GetApplicationByLeaderData {
   phoneNumber?: string;
   content?: string;
   status: ApplicationStatus;
+  profileImage: string;
+  age: number;
+  gender: Gender;
+  university: string;
 }
 
 export interface GetApplicationByLeaderOutput extends CoreOutput {
