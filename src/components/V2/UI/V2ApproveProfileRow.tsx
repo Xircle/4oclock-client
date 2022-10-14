@@ -84,7 +84,9 @@ const Container = styled.div`
   display: flex;
 `;
 
-const LeftContainer = styled.div``;
+const LeftContainer = styled.div`
+  margin-right: 10px;
+`;
 
 const RightRow = styled.div`
   display: flex;
