@@ -35,11 +35,50 @@ export default function V2LeaderApprovePage({ match }: Props) {
         <InstructionContainer>
           *my 클럽에 신청한 친구들이에요! 꼭 <b>3일안에 승인</b>을 해주세요!
         </InstructionContainer>
-        <FontAwesomeIcon icon={faUsers} color={colors.Lime} />
+        <CountContainer>
+          <TotalCountContainer>
+            <FontAwesomeIcon icon={faUsers} color={colors.Lime} />
+            <TotalCountNumber>
+              {teamApplicationsData?.curCount} /{" "}
+              {teamApplicationsData?.maxParticipant}명
+            </TotalCountNumber>
+          </TotalCountContainer>
+          <PartialCountContainer>
+            신청 인원: 남{teamApplicationsData?.maleApplyCount} 여
+            {teamApplicationsData?.femaleApplyCount}
+          </PartialCountContainer>
+          <PartialCountContainer>
+            참여 인원: 남{teamApplicationsData?.maleApproveCount} 여
+            {teamApplicationsData?.femaleApproveCount}
+          </PartialCountContainer>
+        </CountContainer>
       </InfoContainer>
     </Container>
   );
 }
+
+const TotalCountNumber = styled.span`
+  font-weight: 500;
+  font-size: 10px;
+  color: #6f7789;
+  margin-left: 5px;
+`;
+
+const PartialCountContainer = styled.div`
+  color: #fd8a66;
+  font-weight: 700;
+  font-size: 11px;
+  margin-top: 8px;
+`;
+
+const TotalCountContainer = styled.div`
+  align-items: center;
+  display: flex;
+`;
+
+const CountContainer = styled.div`
+  margin-top: 10px;
+`;
 
 const Container = styled.div`
   width: 100%;
