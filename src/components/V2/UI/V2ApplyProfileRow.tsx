@@ -58,7 +58,7 @@ const IButton = styled.span`
 `;
 
 const LimeButton = styled(IButton)`
-  background-color: ${colors.Lime};
+  background-color: rgba(33, 225, 156, 0.62);
   color: #6f7789;
   margin-right: 8px;
 `;
