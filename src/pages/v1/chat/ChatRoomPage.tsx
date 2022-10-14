@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import PageTitle from "../../../components/PageTitle";
-import { Container, colors, Avartar, MainBtn } from "../../../styles/styles";
+import { Container, colors, Avartar } from "../../../styles/styles";
 import ClipLoader from "react-spinners/ClipLoader";
 import { RouteComponentProps } from "react-router-dom";
 import {
@@ -13,16 +13,11 @@ import ChatMessage from "../../../components/chat/ChatMessage";
 import React, { useEffect, useRef, useState } from "react";
 import { positionValues, Scrollbars } from "react-custom-scrollbars-2";
 import { Collapse } from "reactstrap";
-import Modal from "../../../components/UI/Modal";
-import { ReservationModalWrapper } from "../reservation/ReservationPage";
 import { useSocket } from "../../../hooks/useSocket";
 import { GetRoomMessagesOutput, IMessage } from "../../../lib/api/types";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getRoomMessages } from "../../../lib/api/getRoomMessages";
-import {
-  LoaderBackdrop,
-  LoaderWrapper,
-} from "../../../components/shared/Loader";
+import { LoaderWrapper } from "../../../components/shared/Loader";
 import storage from "../../../lib/storage";
 import { CURRENT_USER } from "../../../components/shared/constants";
 import { useCallback } from "react";
