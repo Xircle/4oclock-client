@@ -1,3 +1,4 @@
+import { ApplicationStatus } from "./../v2/enums";
 import { AuthState } from "./../../pages/auth/types.d";
 import { CoreOutput, MetaTag } from "./../../components/shared/types.d";
 
@@ -335,13 +336,13 @@ export interface GetTeamByIdOutput extends CoreOutput {
 
 export interface CreateApplicationInput {
   teamId: number;
-  status?: string;
+  status?: ApplicationStatus;
   content?: string;
 }
 
 export interface MyApplication {
   id: string;
-  status: string;
+  status: ApplicationStatus;
   appliedAt: Date;
   teamId: number;
   teamName: string;
@@ -401,4 +402,19 @@ export interface GetTeamApplications {
 
 export interface GetTeamApplicationsOutput extends CoreOutput {
   data?: GetTeamApplications;
+}
+
+export interface GetApplicationByLeaderData {
+  applicationId: string;
+  username: string;
+  mbti?: string;
+  shortBio?: string;
+  personality?: string;
+  phoneNumber?: string;
+  content?: string;
+  status: ApplicationStatus;
+}
+
+export interface GetApplicationByLeaderOutput extends CoreOutput {
+  data?: GetApplicationByLeaderData;
 }
