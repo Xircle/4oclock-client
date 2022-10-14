@@ -385,6 +385,7 @@ export interface ApplicantProfiles {
   age: number;
   applicationId?: string;
   phoneNumber?: string;
+  profileImg: string;
 }
 
 export interface GetTeamApplications {
