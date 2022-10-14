@@ -30,7 +30,13 @@ export default function V2ApplyProfileRow({
       </LeftContainer>
       <RightContainer>
         <RLContainer>
-          <RLRow>{username}</RLRow>
+          <RLRow>
+            {username}{" "}
+            <b>
+              {gender == "Male" ? "남자 " : gender == "Female" ? "여자 " : ""}
+              {age ? `${age}살` : ""}
+            </b>
+          </RLRow>
           <RLRow>
             <b>신청서 보러가기</b>
           </RLRow>
@@ -68,6 +74,7 @@ const RLRow = styled.div`
   font-size: 12px;
 
   b {
+    margin-right: 2px;
     font-weight: 400;
     cursor: pointer;
     text-decoration: underline #a7b0c0;
