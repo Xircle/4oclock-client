@@ -22,7 +22,13 @@ export default function V2ApproveProfileRow({
 }: Props) {
   const InfoCTA = () => {};
 
-  const CopyCTA = () => {};
+  const CopyCTA = () => {
+    if (phoneNumber) {
+      navigator.clipboard.writeText(phoneNumber).then((value) => {
+        alert("복사되었습니다");
+      });
+    }
+  };
 
   return (
     <Container>
@@ -39,7 +45,7 @@ export default function V2ApproveProfileRow({
           <NameTag style={{ marginRight: 10 }}>{username}</NameTag>
           <CTAButton>정보 보러가기</CTAButton>
         </RightRow>
-        <RightRow style={{ cursor: "pointer" }}>
+        <RightRow style={{ cursor: "pointer" }} onClick={CopyCTA}>
           <PhoneNumberTag>전화번호 {phoneNumber}</PhoneNumberTag>
           <FontAwesomeIcon icon={faCopy} color="#6f7789" />
         </RightRow>
