@@ -1,7 +1,13 @@
+import {
+  QueryObserverResult,
+  RefetchOptions,
+  RefetchQueryFilters,
+  useMutation,
+} from "react-query";
 import styled from "styled-components";
-import { Gender } from "../../../lib/api/types";
+import { editApplication } from "../../../lib/api/editApplication";
+import { Gender, GetTeamApplications } from "../../../lib/api/types";
 import optimizeImage from "../../../lib/optimizeImage";
-import { colors } from "../../../styles/styles";
 
 interface Props {
   profileImg: string;
@@ -9,6 +15,11 @@ interface Props {
   age: number;
   gender: Gender;
   applicationId?: string;
+  refetch: (
+    options?:
+      | (RefetchOptions & RefetchQueryFilters<GetTeamApplications | undefined>)
+      | undefined,
+  ) => Promise<QueryObserverResult<GetTeamApplications | undefined, unknown>>;
 }
 
 export default function V2ApplyProfileRow({
@@ -17,7 +28,47 @@ export default function V2ApplyProfileRow({
   age,
   gender,
   applicationId,
+  refetch,
 }: Props) {
+  const { mutateAsync: mutateEditApplication, isLoading: isFetching } =
+    useMutation(editApplication);
+
+  const cancelCTA = async () => {
+    if (!applicationId) {
+      alert("거절하기에 실패했습니다.");
+      return;
+    }
+    const { data } = await mutateEditApplication({
+      applicationId: applicationId,
+      status: "Disapproved",
+    });
+    if (data.ok) {
+      await refetch();
+      alert("거절하기에 성공하였습니다");
+    } else {
+      console.log(data.error);
+      alert("거절하기에 실패하였습니다");
+    }
+  };
+
+  const approveCTA = async () => {
+    if (!applicationId) {
+      alert("승인 실패했습니다.");
+      return;
+    }
+    const { data } = await mutateEditApplication({
+      applicationId: applicationId,
+      status: "Approved",
+    });
+    if (data.ok) {
+      await refetch();
+      alert("승인 성공하였습니다");
+    } else {
+      console.log(data.error);
+      alert("승인 실패하였습니다");
+    }
+  };
+
   return (
     <Container>
       <LeftContainer>
@@ -42,8 +93,8 @@ export default function V2ApplyProfileRow({
           </RLRow>
         </RLContainer>
         <RRContainer>
-          <LimeButton>승인하기</LimeButton>
-          <GreyButton>거절하기</GreyButton>
+          <LimeButton onClick={approveCTA}>승인하기</LimeButton>
+          <GreyButton onClick={cancelCTA}>거절하기</GreyButton>
         </RRContainer>
       </RightContainer>
     </Container>
