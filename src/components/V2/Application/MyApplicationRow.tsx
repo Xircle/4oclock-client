@@ -7,13 +7,14 @@ import {
 import styled from "styled-components";
 import { editApplication } from "../../../lib/api/editApplication";
 import { GetMyApplicationsOutput } from "../../../lib/api/types";
+import { ApplicationStatus } from "../../../lib/v2/enums";
 
 interface IProps {
   id: string;
   teamId: number;
   paid?: boolean;
   teamImage: string;
-  status: string;
+  status: ApplicationStatus;
   teamName: string;
   refetch: (
     options?:
@@ -53,7 +54,7 @@ export default function MyApplicationRow({
       </LeftContainer>
       <RightContainer>
         <TeamNameTag>{teamName}</TeamNameTag>
-        {status === "Pending" && (
+        {status === ApplicationStatus.Pending && (
           <CTAButton style={{ backgroundColor: "#C4CBD8" }} onClick={cancelCTA}>
             신청 취소하기
           </CTAButton>
