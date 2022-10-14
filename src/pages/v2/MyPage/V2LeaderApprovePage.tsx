@@ -1,14 +1,33 @@
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect } from "react";
+import { useQuery } from "react-query";
+import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
+import { getTeamApplications } from "../../../lib/api/getTeamApplications";
+import { GetTeamApplications } from "../../../lib/api/types";
 import { colors } from "../../../styles/styles";
 
-interface Props {
-  teamId: number;
-}
+interface Props extends RouteComponentProps<{ teamId: string }, {}, {}> {}
 
-export default function V2LeaderApprovePage(props: Props) {
+export default function V2LeaderApprovePage({ match }: Props) {
+  const { teamId } = match.params;
+  const { data: teamApplicationsData } = useQuery<
+    GetTeamApplications | undefined
+  >(["TeamApplications", teamId], () => getTeamApplications(teamId), {
+    onError: (err: any) => {
+      alert(err);
+      return;
+    },
+    retry: 1,
+    refetchOnWindowFocus: false,
+  });
+
+  useEffect(() => {
+    if (teamApplicationsData) console.log(teamApplicationsData);
+  }, [teamApplicationsData]);
+
   return (
     <Container>
       <V2SubHeaderC title="리더 승인 page" />
