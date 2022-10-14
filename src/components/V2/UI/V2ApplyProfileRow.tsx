@@ -9,6 +9,7 @@ import styled from "styled-components";
 import { editApplication } from "../../../lib/api/editApplication";
 import { Gender, GetTeamApplications } from "../../../lib/api/types";
 import optimizeImage from "../../../lib/optimizeImage";
+import { ApplicationStatus } from "../../../lib/v2/enums";
 
 interface Props {
   profileImg: string;
@@ -43,7 +44,7 @@ export default function V2ApplyProfileRow({
     }
     const { data } = await mutateEditApplication({
       applicationId: applicationId,
-      status: "Disapproved",
+      status: ApplicationStatus.Disapproved,
     });
     if (data.ok) {
       await refetch();
@@ -61,7 +62,7 @@ export default function V2ApplyProfileRow({
     }
     const { data } = await mutateEditApplication({
       applicationId: applicationId,
-      status: "Approved",
+      status: ApplicationStatus.Approved,
     });
     if (data.ok) {
       await refetch();
