@@ -74,7 +74,9 @@ export default function V2ApplyProfileRow({
   };
 
   const detailCTA = () => {
-    history.push(`/v2/leaderpage/approve_detail/${applicationId}`);
+    history.push(
+      `/v2/leaderpage/approve_detail/applicationId/${applicationId}`,
+    );
   };
 
   return (
@@ -143,7 +145,7 @@ const RLRow = styled.div`
 const RLContainer = styled.div`
   display: flex;
   justify-content: space-around;
-  margin-left: 8px;
+  margin-left: 10px;
   flex-direction: column;
   height: 100%;
 `;
