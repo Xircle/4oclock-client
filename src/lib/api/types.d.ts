@@ -378,3 +378,26 @@ export interface MyTeamsLeader {
 export interface GetMyTeamsLeaderOutput extends CoreOutput {
   teams?: MyTeamsLeader[];
 }
+
+export interface ApplicantProfiles {
+  username: string;
+  gender: Gender;
+  age: number;
+  applicationId?: string;
+  phoneNumber?: string;
+}
+
+export interface GetTeamApplications {
+  maxParticipant: number; //
+  curCount: number; //
+  maleApproveCount: number; //
+  femaleApproveCount: number; //
+  maleApplyCount: number;
+  femaleApplyCount: number;
+  pendingApplicantProfiles: ApplicantProfiles[];
+  approvedApplicantProfiles: ApplicantProfiles[];
+}
+
+export interface GetTeamApplicationsOutput extends CoreOutput {
+  data?: GetTeamApplications;
+}
