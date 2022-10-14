@@ -4,7 +4,7 @@ import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
 import { getApplicationByLeader } from "../../../lib/api/getApplicationByLeader";
-import { GetApplicationByLeaderData } from "../../../lib/api/types";
+import { Gender, GetApplicationByLeaderData } from "../../../lib/api/types";
 import optimizeImage from "../../../lib/optimizeImage";
 
 interface Props
@@ -42,12 +42,59 @@ export default function V2LeaderApproveDetailPage({ match }: Props) {
               })}
             />
           </ProfileLeftContainer>
-          <ProfileRightContainer></ProfileRightContainer>
+          <ProfileRightContainer>
+            <Row>
+              <NameTag>{data?.username}</NameTag>
+              <MBTITag>{data?.mbti}</MBTITag>
+            </Row>
+            <JobTag>{data?.job}</JobTag>
+            <UnivTag>
+              {data?.university} / {data?.age}살 /{" "}
+              {data?.gender == "Male" ? "남" : "여"}
+            </UnivTag>
+          </ProfileRightContainer>
         </ProfileContainer>
+        {data?.phoneNumber && (
+          <PhoneNumberContainer>
+            <PhoneNumberRow>
+              <PhoneNumberText>전화번호 {data.phoneNumber}</PhoneNumberText>
+              <PhoneNumberButton onClick={() => {}}>복사</PhoneNumberButton>
+            </PhoneNumberRow>
+          </PhoneNumberContainer>
+        )}
       </BodyContainer>
     </Container>
   );
 }
+
+const UnivTag = styled.div`
+  color: #6f7789;
+  font-weight: 400;
+  font-size: 13px;
+`;
+
+const JobTag = styled.div`
+  font-weight: 500;
+  font-size: 14px;
+  color: #8c94a4;
+`;
+
+const Row = styled.div`
+  display: flex;
+`;
+
+const NameTag = styled.div`
+  color: #222222;
+  font-weight: 700;
+  font-size: 16px;
+  margin-right: 7px;
+`;
+
+const MBTITag = styled.div`
+  color: #e67255;
+  font-weight: 700;
+  font-size: 16px;
+`;
 
 const ProfileImg = styled.img`
   width: 70px;
@@ -67,12 +114,18 @@ const ProfileContainer = styled.div`
 const ProfileLeftContainer = styled.div``;
 
 const ProfileRightContainer = styled.div`
-  margin-left: 10px;
+  margin-left: 15px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
 `;
 
 const PhoneNumberContainer = styled.div``;
 
-const PhoneNumberRow = styled.div``;
+const PhoneNumberRow = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 const PhoneNumberText = styled.div``;
 
