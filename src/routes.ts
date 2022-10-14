@@ -32,7 +32,7 @@ const routes = {
   v2LeaderPage: "/v2/leaderpage",
   v2TeamPage: "/v2/team/:teamId",
   v2ApplyPage: "/v2/apply/:teamId",
-  v2LeaderApprovePage: "/v2/leaderpage/approve",
+  v2LeaderApprovePage: "/v2/leaderpage/approve/:teamId",
 };
 
 export default routes;
