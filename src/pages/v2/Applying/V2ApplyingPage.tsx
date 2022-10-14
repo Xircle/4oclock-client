@@ -7,6 +7,7 @@ import { CURRENT_USER } from "../../../components/shared/constants";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
 import { createApplication } from "../../../lib/api/createApplication";
 import storage from "../../../lib/storage";
+import { ApplicationStatus } from "../../../lib/v2/enums";
 import { dayArr } from "../../../lib/v2/utils";
 import routes from "../../../routes";
 import { BigTextArea, colors } from "../../../styles/styles";
@@ -49,7 +50,7 @@ export default function V2ApplyingPage({ match, location }: Props) {
     const data = await mutateCreateApplication({
       teamId: parseInt(teamId),
       content,
-      status: "Pending",
+      status: ApplicationStatus.Pending,
     });
     if (data.data.ok) {
       history.push(routes.v2MyPage);
