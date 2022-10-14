@@ -56,7 +56,15 @@ export default function V2LeaderApprovePage({ match }: Props) {
 
         <ApplyContainer>
           {teamApplicationsData?.pendingApplicantProfiles.map((applicant) => {
-            return <V2ApplyProfileRow profileImg={applicant.profileImg} />;
+            return (
+              <V2ApplyProfileRow
+                profileImg={applicant.profileImg}
+                username={applicant.username}
+                age={applicant.age}
+                gender={applicant.gender}
+                applicationId={applicant?.applicationId}
+              />
+            );
           })}
         </ApplyContainer>
       </InfoContainer>
