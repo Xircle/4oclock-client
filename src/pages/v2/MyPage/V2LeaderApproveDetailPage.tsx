@@ -5,6 +5,7 @@ import styled from "styled-components";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
 import { getApplicationByLeader } from "../../../lib/api/getApplicationByLeader";
 import { GetApplicationByLeaderData } from "../../../lib/api/types";
+import optimizeImage from "../../../lib/optimizeImage";
 
 interface Props
   extends RouteComponentProps<{ applicationId: string }, {}, {}> {}
@@ -31,17 +32,43 @@ export default function V2LeaderApproveDetailPage({ match }: Props) {
   return (
     <Container>
       <V2SubHeaderC title="신청서 및 정보" />
-      <BodyContainer></BodyContainer>
+      <BodyContainer>
+        <ProfileContainer>
+          <ProfileLeftContainer>
+            <ProfileImg
+              src={optimizeImage(data?.profileImage, {
+                width: 60,
+                height: 60,
+              })}
+            />
+          </ProfileLeftContainer>
+          <ProfileRightContainer></ProfileRightContainer>
+        </ProfileContainer>
+      </BodyContainer>
     </Container>
   );
 }
 
-const Container = styled.div``;
-const BodyContainer = styled.div`
-  margin-top: 10px;
+const ProfileImg = styled.img`
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
 `;
 
-const ProfileContainer = styled.div``;
+const Container = styled.div``;
+const BodyContainer = styled.div`
+  margin-top: 20px;
+`;
+
+const ProfileContainer = styled.div`
+  display: flex;
+`;
+
+const ProfileLeftContainer = styled.div``;
+
+const ProfileRightContainer = styled.div`
+  margin-left: 10px;
+`;
 
 const PhoneNumberContainer = styled.div``;
 
