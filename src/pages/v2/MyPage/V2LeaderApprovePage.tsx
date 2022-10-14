@@ -58,14 +58,16 @@ export default function V2LeaderApprovePage({ match }: Props) {
         <ApplyContainer>
           {teamApplicationsData?.pendingApplicantProfiles.map((applicant) => {
             return (
-              <V2ApplyProfileRow
-                profileImg={applicant.profileImg}
-                username={applicant.username}
-                age={applicant.age}
-                gender={applicant.gender}
-                applicationId={applicant?.applicationId}
-                refetch={refetch}
-              />
+              <Wrapper key={applicant.profileImg}>
+                <V2ApplyProfileRow
+                  profileImg={applicant.profileImg}
+                  username={applicant.username}
+                  age={applicant.age}
+                  gender={applicant.gender}
+                  applicationId={applicant?.applicationId}
+                  refetch={refetch}
+                />
+              </Wrapper>
             );
           })}
         </ApplyContainer>
@@ -76,13 +78,15 @@ export default function V2LeaderApprovePage({ match }: Props) {
           </ApproveSubHeadering>
           {teamApplicationsData?.approvedApplicantProfiles.map((applicant) => {
             return (
-              <V2ApproveProfileRow
-                profileImg={applicant.profileImg}
-                username={applicant.username}
-                age={applicant.age}
-                gender={applicant.gender}
-                phoneNumber={applicant?.phoneNumber}
-              />
+              <Wrapper key={applicant.profileImg}>
+                <V2ApproveProfileRow
+                  profileImg={applicant.profileImg}
+                  username={applicant.username}
+                  age={applicant.age}
+                  gender={applicant.gender}
+                  phoneNumber={applicant?.phoneNumber}
+                />
+              </Wrapper>
             );
           })}
         </ApproveContainer>
@@ -90,6 +94,15 @@ export default function V2LeaderApprovePage({ match }: Props) {
     </Container>
   );
 }
+
+const Wrapper = styled.div`
+  margin-bottom: 10px;
+  width: 100%;
+`;
+
+const SpaceDiv = styled.div`
+  height: 20px;
+`;
 
 const ApproveHeading = styled.div`
   color: #505050;
