@@ -22,7 +22,7 @@ export default function LeaderTeamRow({
   const history = useHistory();
 
   const onClickHandler = () => {
-    history.push(routes.v2LeaderApprovePage, { teamId: id });
+    history.push(`/v2/leaderpage/approve/${id}`);
   };
 
   return (
