@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
+import V2ApplyProfileRow from "../../../components/V2/UI/V2ApplyProfileRow";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
 import { getTeamApplications } from "../../../lib/api/getTeamApplications";
 import { GetTeamApplications } from "../../../lib/api/types";
@@ -52,10 +53,20 @@ export default function V2LeaderApprovePage({ match }: Props) {
             {teamApplicationsData?.femaleApproveCount}
           </PartialCountContainer>
         </CountContainer>
+
+        <ApplyContainer>
+          {teamApplicationsData?.pendingApplicantProfiles.map((applicant) => {
+            return <V2ApplyProfileRow profileImg={applicant.profileImg} />;
+          })}
+        </ApplyContainer>
       </InfoContainer>
     </Container>
   );
 }
+
+const ApplyContainer = styled.div`
+  margin-top: 30px;
+`;
 
 const TotalCountNumber = styled.span`
   font-weight: 500;
