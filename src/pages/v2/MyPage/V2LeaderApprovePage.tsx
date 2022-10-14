@@ -15,7 +15,7 @@ interface Props extends RouteComponentProps<{ teamId: string }, {}, {}> {}
 
 export default function V2LeaderApprovePage({ match }: Props) {
   const { teamId } = match.params;
-  const { data: teamApplicationsData } = useQuery<
+  const { data: teamApplicationsData, refetch } = useQuery<
     GetTeamApplications | undefined
   >(["TeamApplications", teamId], () => getTeamApplications(teamId), {
     onError: (err: any) => {
@@ -64,6 +64,7 @@ export default function V2LeaderApprovePage({ match }: Props) {
                 age={applicant.age}
                 gender={applicant.gender}
                 applicationId={applicant?.applicationId}
+                refetch={refetch}
               />
             );
           })}
