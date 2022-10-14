@@ -4,6 +4,7 @@ import {
   RefetchQueryFilters,
   useMutation,
 } from "react-query";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { editApplication } from "../../../lib/api/editApplication";
 import { Gender, GetTeamApplications } from "../../../lib/api/types";
@@ -30,6 +31,8 @@ export default function V2ApplyProfileRow({
   applicationId,
   refetch,
 }: Props) {
+  const history = useHistory();
+
   const { mutateAsync: mutateEditApplication, isLoading: isFetching } =
     useMutation(editApplication);
 
@@ -69,6 +72,10 @@ export default function V2ApplyProfileRow({
     }
   };
 
+  const detailCTA = () => {
+    history.push(`/v2/leaderpage/approve_detail/${applicationId}`);
+  };
+
   return (
     <Container>
       <LeftContainer>
@@ -88,7 +95,7 @@ export default function V2ApplyProfileRow({
               {age ? `${age}살` : ""}
             </b>
           </RLRow>
-          <RLRow>
+          <RLRow onClick={detailCTA}>
             <b>신청서 보러가기</b>
           </RLRow>
         </RLContainer>
