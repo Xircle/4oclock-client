@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import V2ApplyProfileRow from "../../../components/V2/UI/V2ApplyProfileRow";
+import V2ApproveProfileRow from "../../../components/V2/UI/V2ApproveProfileRow";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
 import { getTeamApplications } from "../../../lib/api/getTeamApplications";
 import { GetTeamApplications } from "../../../lib/api/types";
@@ -67,10 +68,45 @@ export default function V2LeaderApprovePage({ match }: Props) {
             );
           })}
         </ApplyContainer>
+        <ApproveContainer>
+          <ApproveHeading>my 클럽 프렌즈들</ApproveHeading>
+          <ApproveSubHeadering>
+            *my클럽이 된 프렌즈들이야! 단톡을 파서 프렌즈들을 초대해보자!
+          </ApproveSubHeadering>
+          {teamApplicationsData?.approvedApplicantProfiles.map((applicant) => {
+            return (
+              <V2ApproveProfileRow
+                profileImg={applicant.profileImg}
+                username={applicant.username}
+                age={applicant.age}
+                gender={applicant.gender}
+                phoneNumber={applicant?.phoneNumber}
+              />
+            );
+          })}
+        </ApproveContainer>
       </InfoContainer>
     </Container>
   );
 }
+
+const ApproveHeading = styled.div`
+  color: #505050;
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 18px;
+`;
+
+const ApproveSubHeadering = styled.div`
+  color: #505050;
+  font-weight: 400;
+  font-size: 14px;
+  margin-bottom: 30px;
+`;
+
+const ApproveContainer = styled.div`
+  margin-top: 30px;
+`;
 
 const ApplyContainer = styled.div`
   margin-top: 30px;
