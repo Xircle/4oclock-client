@@ -1,3 +1,5 @@
+import { faClock, faUser } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { RouteComponentProps } from "react-router-dom";
@@ -6,6 +8,7 @@ import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
 import { getTeamById } from "../../../lib/api/getTeamById";
 import { TeamData } from "../../../lib/api/types";
 import optimizeImage from "../../../lib/optimizeImage";
+import { DayNumToKor } from "../../../lib/v2/utils";
 import { colors, V2OrangeButton } from "../../../styles/styles";
 interface MatchParms {
   teamId: string;
@@ -82,18 +85,63 @@ export default function V2TeamPage({ match, location, history }: Props) {
       <DetailInfoContainer>
         <DetailInfoSection>
           <DetailInfoTitle>🔹클럽 정보</DetailInfoTitle>
+          {teamData?.meetingDay && (
+            <>
+              <Row>
+                <FontAwesomeIcon icon={faClock} size="lg" />
+                <ClubInfoHeading>
+                  매주 {DayNumToKor(teamData?.meetingDay.toString())}요일 6시
+                </ClubInfoHeading>
+              </Row>
+              <ClubInfoSubText>약속시간을 잘 지켜줘!</ClubInfoSubText>
+            </>
+          )}
+          {teamData?.maxParticipant && (
+            <>
+              <Row style={{ marginTop: 22 }}>
+                <FontAwesomeIcon icon={faUser} size="lg" />
+                <ClubInfoHeading>
+                  프렌즈 최대 {teamData?.maxParticipant}명 (리더 포함)
+                </ClubInfoHeading>
+              </Row>
+              <ClubInfoSubText>
+                *첫모임 7일전까지 최소인원이 충족되지 않으면 모집기간 연장을
+                위해 전체 모임일정을 연기할 수 있습니다
+              </ClubInfoSubText>
+            </>
+          )}
         </DetailInfoSection>
         <DetailInfoSection>
           <DetailInfoTitle>🔹클럽 소개</DetailInfoTitle>
+          <TeamDescription>{teamData?.description}</TeamDescription>
         </DetailInfoSection>
         <DetailInfoSection>
           <DetailInfoTitle>🔹모임 일정 및 활동</DetailInfoTitle>
+          <TeamSchedule>
+            1회차:우정팅 진행
+            <br />
+            2회차:6인 팀매칭 활동
+            <br />
+            3회차:6인 팀매칭 활동
+            <br />
+            4화차: 스터디 번개
+          </TeamSchedule>
         </DetailInfoSection>
         <DetailInfoSection>
           <DetailInfoTitle>🔹주 활동 지역</DetailInfoTitle>
+          <TeamDescription>{teamData?.areaInfo}</TeamDescription>
         </DetailInfoSection>
         <DetailInfoSection>
           <DetailInfoTitle>🔹신청 전, 꼭 알아주세요!</DetailInfoTitle>
+          <DetailInfoTag>
+            1.승인이 된 후에 꼭 오카방에 입장해주세요💙
+            <br />
+            2.꼭 모임을 신청할때 날짜 , 테마를 잘 확인해주세요
+            <br />
+            3.신청서를 꼼꼼히 작성해줘야 리더가 승인을 해줘요!
+            <br />
+            4.모임 3회 미만 참석 시 클럽 영구제명입니다
+          </DetailInfoTag>
         </DetailInfoSection>
       </DetailInfoContainer>
     </Container>
@@ -201,4 +249,55 @@ const DetailInfoTitle = styled.div`
   color: #505050;
   font-weight: 700;
   font-size: 15px;
+  margin-bottom: 12px;
+`;
+
+const DetailInfoTag = styled.div`
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 200%;
+  /* or 200% */
+
+  color: #505050;
+`;
+
+const TeamDescription = styled.div`
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  /* or 143% */
+
+  color: #8c94a4;
+`;
+
+const TeamSchedule = styled.div`
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 26px;
+  /* or 200% */
+
+  color: #505050;
+`;
+
+const Row = styled.div`
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: #505050;
+`;
+
+const ClubInfoHeading = styled.div`
+  color: #fd8a66;
+  margin-left: 10px;
+`;
+
+const ClubInfoSubText = styled.div`
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 19px;
+  /* or 173% */
+
+  color: #8c94a4;
+  margin-top: 12px;
 `;
