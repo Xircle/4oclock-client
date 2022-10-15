@@ -8,13 +8,17 @@ import { Gender, GetApplicationByLeaderData } from "../../../lib/api/types";
 import optimizeImage from "../../../lib/optimizeImage";
 
 interface Props
-  extends RouteComponentProps<{ applicationId: string }, {}, {}> {}
+  extends RouteComponentProps<{ param1?: string; param2?: string }, {}, {}> {}
 
 export default function V2LeaderApproveDetailPage({ match }: Props) {
-  const { applicationId } = match.params;
+  const { param1, param2 } = match.params;
   const { data, refetch } = useQuery<GetApplicationByLeaderData | undefined>(
-    ["ApplicationByLeader", applicationId],
-    () => getApplicationByLeader(applicationId),
+    ["ApplicationByLeader", param1, param2],
+    () =>
+      getApplicationByLeader({
+        param1: param1,
+        param2: param2 ? parseInt(param2) : undefined,
+      }),
     {
       onError: (err: any) => {
         alert(err);
