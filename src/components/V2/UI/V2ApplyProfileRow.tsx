@@ -37,24 +37,6 @@ export default function V2ApplyProfileRow({
   const { mutateAsync: mutateEditApplication, isLoading: isFetching } =
     useMutation(editApplication);
 
-  const cancelCTA = async () => {
-    if (!applicationId) {
-      alert("거절하기에 실패했습니다.");
-      return;
-    }
-    const { data } = await mutateEditApplication({
-      applicationId: applicationId,
-      status: ApplicationStatus.Disapproved,
-    });
-    if (data.ok) {
-      await refetch();
-      alert("거절하기에 성공하였습니다");
-    } else {
-      console.log(data.error);
-      alert("거절하기에 실패하였습니다");
-    }
-  };
-
   const approveCTA = async () => {
     if (!applicationId) {
       alert("승인 실패했습니다.");
@@ -70,6 +52,24 @@ export default function V2ApplyProfileRow({
     } else {
       console.log(data.error);
       alert("승인 실패하였습니다");
+    }
+  };
+
+  const cancelCTA = async () => {
+    if (!applicationId) {
+      alert("거절하기에 실패했습니다.");
+      return;
+    }
+    const { data } = await mutateEditApplication({
+      applicationId: applicationId,
+      status: ApplicationStatus.Disapproved,
+    });
+    if (data.ok) {
+      await refetch();
+      alert("거절하기에 성공하였습니다");
+    } else {
+      console.log(data.error);
+      alert("거절하기에 실패하였습니다");
     }
   };
 
