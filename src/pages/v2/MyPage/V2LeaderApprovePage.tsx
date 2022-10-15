@@ -82,8 +82,8 @@ export default function V2LeaderApprovePage({ match }: Props) {
                 <V2ApproveProfileRow
                   profileImg={applicant.profileImg}
                   username={applicant.username}
-                  age={applicant.age}
-                  gender={applicant.gender}
+                  teamId={teamId}
+                  userId={applicant.userId}
                   phoneNumber={applicant?.phoneNumber}
                 />
               </Wrapper>
