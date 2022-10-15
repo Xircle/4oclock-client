@@ -46,6 +46,11 @@ export default function V2TeamPage({ match, location, history }: Props) {
     });
   };
 
+  const goToLeaderInfoPage = () => {
+    if (teamData?.leader?.id)
+      history.push(`/v/leader_info_page/${teamData?.leader?.id}`);
+  };
+
   return (
     <Container>
       <V2SubHeaderC title="정모 활동 정보" />
@@ -61,14 +66,16 @@ export default function V2TeamPage({ match, location, history }: Props) {
       <SectionWithPadding>
         <TeamName>{teamData?.name}</TeamName>
         <LeaderSection>
-          <LeaderAvatar>
+          <LeaderAvatar onClick={goToLeaderInfoPage}>
             <LeaderImg
               src={optimizeImage(teamData?.leader?.profileImageUrl, {
                 width: 50,
                 height: 50,
               })}
             />
-            <LeaderNameText>{teamData?.leader?.username} leader</LeaderNameText>
+            <LeaderNameText>
+              {teamData?.leader?.username} leader {">"}
+            </LeaderNameText>
           </LeaderAvatar>
           <SubTextDiv>🙋‍♀️리더 자기 소개</SubTextDiv>
           <LeaderIntro>
@@ -90,7 +97,8 @@ export default function V2TeamPage({ match, location, history }: Props) {
               <Row>
                 <FontAwesomeIcon icon={faClock} size="lg" />
                 <ClubInfoHeading>
-                  매주 {DayNumToKor(teamData?.meetingDay.toString())}요일 6시
+                  매주 {DayNumToKor(teamData?.meetingDay.toString())}요일{" "}
+                  {teamData?.meetingHour}시
                 </ClubInfoHeading>
               </Row>
               <ClubInfoSubText>약속시간을 잘 지켜줘!</ClubInfoSubText>
@@ -193,6 +201,7 @@ const LeaderIntro = styled.div`
 const LeaderAvatar = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 const LeaderNameText = styled.div`
