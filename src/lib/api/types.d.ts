@@ -387,6 +387,7 @@ export interface ApplicantProfiles {
   applicationId?: string;
   phoneNumber?: string;
   profileImg: string;
+  userId?: string;
 }
 
 export interface GetTeamApplications {
@@ -402,6 +403,11 @@ export interface GetTeamApplications {
 
 export interface GetTeamApplicationsOutput extends CoreOutput {
   data?: GetTeamApplications;
+}
+
+export interface GetTeamApplicationInput {
+  param1?: string;
+  param2?: number;
 }
 
 export interface GetApplicationByLeaderData {
