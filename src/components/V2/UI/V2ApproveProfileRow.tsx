@@ -1,5 +1,6 @@
 import { faClone, faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { Gender } from "../../../lib/api/types";
 import optimizeImage from "../../../lib/optimizeImage";
@@ -8,19 +9,24 @@ import { colors } from "../../../styles/styles";
 interface Props {
   profileImg: string;
   username: string;
-  age: number;
-  gender: Gender;
+  teamId: string;
+  userId?: string;
   phoneNumber?: string;
 }
 
 export default function V2ApproveProfileRow({
   profileImg,
   username,
-  age,
-  gender,
+  teamId,
+  userId,
   phoneNumber,
 }: Props) {
-  const InfoCTA = () => {};
+  const history = useHistory();
+  const InfoCTA = () => {
+    if (teamId && userId) {
+      history.push(`/v2/leaderpage/approve_detail/${userId}/${teamId}`);
+    }
+  };
 
   const CopyCTA = () => {
     if (phoneNumber) {
@@ -43,11 +49,11 @@ export default function V2ApproveProfileRow({
       <RightContainer>
         <RightRow>
           <NameTag style={{ marginRight: 10 }}>{username}</NameTag>
-          <CTAButton>정보 보러가기</CTAButton>
+          <CTAButton onClick={InfoCTA}>정보 보러가기</CTAButton>
         </RightRow>
-        <RightRow style={{ cursor: "pointer" }} onClick={CopyCTA}>
+        <RightRow style={{ cursor: "pointer" }}>
           <PhoneNumberTag>전화번호 {phoneNumber}</PhoneNumberTag>
-          <FontAwesomeIcon icon={faCopy} color="#6f7789" />
+          <FontAwesomeIcon icon={faCopy} color="#6f7789" onClick={CopyCTA} />
         </RightRow>
       </RightContainer>
     </Container>
