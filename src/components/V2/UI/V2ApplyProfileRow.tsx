@@ -74,9 +74,8 @@ export default function V2ApplyProfileRow({
   };
 
   const detailCTA = () => {
-    history.push(
-      `/v2/leaderpage/approve_detail/applicationId/${applicationId}`,
-    );
+    if (applicationId)
+      history.push(`/v2/leaderpage/approve_detail/${applicationId}`);
   };
 
   return (
