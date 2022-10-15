@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
@@ -27,6 +28,10 @@ export default function V2TeamPage({ match, location, history }: Props) {
       refetchOnWindowFocus: false,
     },
   );
+
+  useEffect(() => {
+    if (teamData) console.log(teamData);
+  }, [teamData]);
 
   const applyHandler = () => {
     history.push(`/v2/apply/${teamId}`, {
@@ -72,8 +77,25 @@ export default function V2TeamPage({ match, location, history }: Props) {
         <SOrangeButton onClick={applyHandler}>
           신청서 작성하러 가기
         </SOrangeButton>
-        <Dividor>✨클럽 지원 정보✨</Dividor>
       </SectionWithPadding>
+      <Dividor>✨클럽 지원 정보✨</Dividor>
+      <DetailInfoContainer>
+        <DetailInfoSection>
+          <DetailInfoTitle>🔹클럽 정보</DetailInfoTitle>
+        </DetailInfoSection>
+        <DetailInfoSection>
+          <DetailInfoTitle>🔹클럽 소개</DetailInfoTitle>
+        </DetailInfoSection>
+        <DetailInfoSection>
+          <DetailInfoTitle>🔹모임 일정 및 활동</DetailInfoTitle>
+        </DetailInfoSection>
+        <DetailInfoSection>
+          <DetailInfoTitle>🔹주 활동 지역</DetailInfoTitle>
+        </DetailInfoSection>
+        <DetailInfoSection>
+          <DetailInfoTitle>🔹신청 전, 꼭 알아주세요!</DetailInfoTitle>
+        </DetailInfoSection>
+      </DetailInfoContainer>
     </Container>
   );
 }
@@ -164,4 +186,19 @@ const MainPic = styled.img`
   width: 100%;
   height: 160px;
   object-fit: cover;
+`;
+
+const DetailInfoContainer = styled.div`
+  padding-left: 30px;
+  padding-right: 30px;
+`;
+
+const DetailInfoSection = styled.div`
+  margin-top: 30px;
+`;
+
+const DetailInfoTitle = styled.div`
+  color: #505050;
+  font-weight: 700;
+  font-size: 15px;
 `;
