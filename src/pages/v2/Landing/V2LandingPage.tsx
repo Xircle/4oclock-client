@@ -34,14 +34,12 @@ function V2LandingPage() {
   const fetchNewUserData = async () => {
     if (storage.getItem(CURRENT_USER)?.token) {
       const userData = await mutateUserData();
-      console.log("hi");
-      console.log(userData);
+
       const temp = storage.getItem(CURRENT_USER);
       temp.profile.role = userData?.accountType;
       temp.username = userData?.username;
       temp.profile.thumbnail = userData?.profileImageUrl;
       storage.setItem(CURRENT_USER, temp!);
-      console.log("done");
     }
   };
 
@@ -82,8 +80,6 @@ function V2LandingPage() {
     {
       getNextPageParam: (currentPage) => {
         const nextPage = currentPage.meta.page + 1;
-        console.log("next: " + nextPage);
-        console.log("total : " + currentPage.meta.totalPages);
         return nextPage <= currentPage.meta.totalPages ? nextPage : null;
       },
       refetchOnWindowFocus: false,
