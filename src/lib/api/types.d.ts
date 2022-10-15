@@ -328,6 +328,7 @@ export interface TeamData {
   meetingDay?: number;
   meetingHour?: number;
   maxParticipant?: number;
+  areaInfo?: string;
 }
 
 export interface GetTeamByIdOutput extends CoreOutput {
