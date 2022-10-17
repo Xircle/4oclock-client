@@ -30,7 +30,6 @@ function LandingPage() {
       window.location.href = routes.placeFeed;
       return;
     }
-    console.log(isSamsungBrowser);
     if (isSamsungBrowser) setIsSamsungBrowserBool(true);
   }, []);
 
