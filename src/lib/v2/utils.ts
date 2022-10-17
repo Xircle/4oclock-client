@@ -74,3 +74,7 @@ export const RoleHashTable = {
   Banned: "Banned",
   Admin: "운영진",
 };
+
+export const InquiryCTA = () => {
+  console.log("inquiry attempt");
+};
