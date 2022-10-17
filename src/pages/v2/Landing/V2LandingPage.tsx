@@ -8,9 +8,15 @@ import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
 import { seeTeamsWithFilter } from "../../../lib/api/getTeamsWithFilter";
 import { getUser } from "../../../lib/api/getUser";
 import { seeAllCategory } from "../../../lib/api/seeAllCategory";
-import { CategoryData, UserData } from "../../../lib/api/types";
+import { CategoryData } from "../../../lib/api/types";
 import storage from "../../../lib/storage";
-import { AgeData, IAgeData, ITimeData, TimeData } from "../../../lib/v2/utils";
+import {
+  AgeData,
+  IAgeData,
+  InquiryCTA,
+  ITimeData,
+  TimeData,
+} from "../../../lib/v2/utils";
 import { Container } from "../../../styles/styles";
 
 enum DrawerType {
@@ -234,6 +240,7 @@ function V2LandingPage() {
               );
             })}
       </Drawer>
+      <InquiryButton onClick={InquiryCTA}>케빈에게 문의하기</InquiryButton>
       <Body>
         <FilterContainer>
           <FilterOption onClick={openTimeDrawer}>시간</FilterOption>
@@ -269,6 +276,25 @@ function V2LandingPage() {
     </SContainer>
   );
 }
+
+const InquiryButton = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  background: rgba(33, 225, 156, 0.33);
+  border-radius: 10px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  width: 157px;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-weight: 700;
+  font-size: 18px;
+  color: #505050;
+  cursor: pointer;
+`;
 
 const DrawerTitle = styled.div``;
 
