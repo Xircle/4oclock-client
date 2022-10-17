@@ -40,29 +40,49 @@ export default function V2MyPage() {
     }
   }, [applicationOutput]);
 
+  const InquiryCTA = () => {};
+
   return (
     <Container>
       <V2HeaderC title="my page" />
       <Body>
+        <InquiryButton onClick={InquiryCTA}>케빈에게 문의하기</InquiryButton>
+        {pendings && pendings?.length > 0 && (
+          <BodyItem>
+            <BodyItemHeading>승인 대기중</BodyItemHeading>
+            {pendings?.map((pending) => {
+              return (
+                <MyApplicationRow
+                  key={pending.id}
+                  id={pending.id}
+                  teamImage={pending.teamImage}
+                  status={pending.status}
+                  teamId={pending.teamId}
+                  paid={pending.paid}
+                  teamName={pending.teamName}
+                  refetch={refetch}
+                />
+              );
+            })}
+          </BodyItem>
+        )}
+
         <BodyItem>
-          <BodyItemHeading>승인 대기중</BodyItemHeading>
-          {pendings?.map((pending) => {
+          <BodyItemHeading>승인된 모임</BodyItemHeading>
+          {approveds?.map((approved) => {
             return (
               <MyApplicationRow
-                key={pending.id}
-                id={pending.id}
-                teamImage={pending.teamImage}
-                status={pending.status}
-                teamId={pending.teamId}
-                paid={pending.paid}
-                teamName={pending.teamName}
+                key={approved.id}
+                id={approved.id}
+                teamImage={approved.teamImage}
+                status={approved.status}
+                teamId={approved.teamId}
+                paid={approved.paid}
+                teamName={approved.teamName}
                 refetch={refetch}
               />
             );
           })}
-        </BodyItem>
-        <BodyItem>
-          <BodyItemHeading>승인된 모임</BodyItemHeading>
         </BodyItem>
         <BodyItem>
           <BodyItemHeading>회원 정보</BodyItemHeading>
@@ -72,6 +92,25 @@ export default function V2MyPage() {
     </Container>
   );
 }
+
+const InquiryButton = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  background: rgba(33, 225, 156, 0.33);
+  border-radius: 10px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  width: 157px;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-weight: 700;
+  font-size: 18px;
+  color: #505050;
+  cursor: pointer;
+`;
 
 const Body = styled.div`
   margin-top: 10px;
