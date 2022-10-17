@@ -80,10 +80,8 @@ const openInNewTab = (url) => {
 };
 export const InquiryCTA = () => {
   openInNewTab("https://naver.com");
-  console.log("inquiry attempt");
 };
 
 export const InstagramCTA = () => {
   openInNewTab("https://instagram.com");
-  console.log("instagram attempt");
 };
