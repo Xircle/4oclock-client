@@ -68,7 +68,7 @@ export default function V2MyPage() {
         )}
 
         <BodyItem>
-          <BodyItemHeading>승인된 모임</BodyItemHeading>
+          <BodyItemHeading>승인된 모임🎉</BodyItemHeading>
           {approveds?.map((approved) => {
             return (
               <MyApplicationRow
@@ -80,6 +80,7 @@ export default function V2MyPage() {
                 paid={approved.paid}
                 teamName={approved.teamName}
                 refetch={refetch}
+                leaderData={applicationOutput?.leaderData}
               />
             );
           })}
