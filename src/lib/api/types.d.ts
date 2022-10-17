@@ -358,8 +358,16 @@ export interface MyApplicationsByStatus {
   disapproveds?: MyApplication[];
   enrolleds?: MyApplication[];
 }
-export interface GetMyApplicationsOutput extends CoreOutput {
+export class LeaderData {
+  leaderId: string;
+  leaderName: string;
+  leaderPhoneNumber: string;
+  leaderProfileUrl: string;
+}
+
+export class GetMyApplicationsOutput extends CoreOutput {
   applications?: MyApplicationsByStatus;
+  leaderData?: LeaderData;
 }
 
 export interface EditApplicationInput {
