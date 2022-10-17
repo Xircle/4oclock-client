@@ -241,6 +241,14 @@ function V2LandingPage() {
             })}
       </Drawer>
       <InquiryButton onClick={InquiryCTA}>케빈에게 문의하기</InquiryButton>
+      <InstructionContainer>
+        <InstructionHeading>✅신청 step</InstructionHeading>
+        <InstructionText>
+          0. 들어가고 싶은 정모클럽 나이대,날짜,테마 선택하기{"\n"}1.정모클럽
+          2-3개 신청하기{"\n"}2.리더의 승인 대기 하기{`\n`}3.(중요)my page 에서
+          승인된 모임 오카방 들어가기
+        </InstructionText>
+      </InstructionContainer>
       <Body>
         <FilterContainer>
           <FilterOption onClick={openTimeDrawer}>시간</FilterOption>
@@ -277,15 +285,40 @@ function V2LandingPage() {
   );
 }
 
+const InstructionContainer = styled.div`
+  background: #dbedff;
+  padding: 6px;
+`;
+
+const InstructionHeading = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  color: #505050;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 18px;
+`;
+
+const InstructionText = styled.div`
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  /* or 143% */
+
+  color: #505050;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
 const InquiryButton = styled.div`
   margin-left: auto;
   margin-right: auto;
   background: rgba(33, 225, 156, 0.33);
   border-radius: 10px;
   margin-top: 15px;
-  margin-bottom: 20px;
-  width: 157px;
-  height: 42px;
+  margin-bottom: 10px;
+  width: 175px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
