@@ -358,14 +358,14 @@ export interface MyApplicationsByStatus {
   disapproveds?: MyApplication[];
   enrolleds?: MyApplication[];
 }
-export class GMALeaderData {
+export interface GMALeaderData {
   leaderId: string;
   leaderName: string;
   leaderPhoneNumber: string;
   leaderProfileUrl: string;
 }
 
-export class GetMyApplicationsOutput extends CoreOutput {
+export interface GetMyApplicationsOutput extends CoreOutput {
   applications?: MyApplicationsByStatus;
   leaderData?: GMALeaderData;
 }
