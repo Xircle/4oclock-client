@@ -309,7 +309,7 @@ export interface ApplicationData {
   image: string;
 }
 
-export interface LeaderData {
+export interface GMALeaderData {
   id: string;
   username: string;
   profileImageUrl: string;
@@ -323,7 +323,7 @@ export interface TeamData {
   description?: string;
   images?: string[];
   applications?: ApplicationData[];
-  leader?: LeaderData;
+  leader?: GMALeaderData;
   price?: number;
   meetingDay?: number;
   meetingHour?: number;
@@ -358,7 +358,7 @@ export interface MyApplicationsByStatus {
   disapproveds?: MyApplication[];
   enrolleds?: MyApplication[];
 }
-export class LeaderData {
+export class GMALeaderData {
   leaderId: string;
   leaderName: string;
   leaderPhoneNumber: string;
@@ -367,7 +367,7 @@ export class LeaderData {
 
 export class GetMyApplicationsOutput extends CoreOutput {
   applications?: MyApplicationsByStatus;
-  leaderData?: LeaderData;
+  leaderData?: GMALeaderData;
 }
 
 export interface EditApplicationInput {
