@@ -20,9 +20,9 @@ import {
 import { Container } from "../../../styles/styles";
 
 enum DrawerType {
-  Category = "Category",
-  Time = "Time",
-  Age = "Age",
+  Category = "선호하는 정모 테마을 선택해주세요",
+  Time = "참여 가능한 정모 날짜를 선택해주세요",
+  Age = "당신의 나이대를 선택해주세요",
 }
 
 function V2LandingPage() {
@@ -136,6 +136,10 @@ function V2LandingPage() {
     setDrawerOpened(true);
   };
 
+  const closeDrawer = () => {
+    setDrawerOpened(false);
+  };
+
   const openCategoryDrawer = () => {
     setDrawerText(DrawerType.Category);
     setDrawerOpened(true);
@@ -158,9 +162,10 @@ function V2LandingPage() {
         PaperProps={{
           style: {
             width: 375,
-            height: 500,
+            minHeight: 500,
             justifyContent: "flex-start",
-            padding: 20,
+            paddingTop: 20,
+            paddingBottom: 20,
             color: "#505050",
             fontWeight: "bold",
             fontSize: 19,
@@ -179,10 +184,18 @@ function V2LandingPage() {
           },
         }}
         open={drawerOpened}
-        onClose={() => setDrawerOpened(false)}
+        onClose={closeDrawer}
         anchor="bottom"
       >
         <DrawerTitle>{drawerText}</DrawerTitle>
+        <Info1>중복선택 가능*</Info1>
+        <Info2>
+          ✅ 선택한 내용을 토대로
+          <br />
+          참여 가능한 정모가 보여!
+          <br />
+          마음에 드는 하나의 모임에 신청하기!
+        </Info2>
         {drawerText === DrawerType.Category
           ? categories.map((item, index) => {
               return (
@@ -239,6 +252,8 @@ function V2LandingPage() {
                 />
               );
             })}
+        <DrawerWhiteSpace />
+        <DrawerButton onClick={closeDrawer}>적용하기</DrawerButton>
       </Drawer>
       <InquiryButton onClick={InquiryCTA}>케빈에게 문의하기</InquiryButton>
       <InstructionContainer>
@@ -293,6 +308,45 @@ function V2LandingPage() {
   );
 }
 
+const DrawerWhiteSpace = styled.div`
+  width: 100%;
+  height: 80px;
+`;
+
+const DrawerButton = styled.div`
+  position: absolute;
+  bottom: 30px;
+  cursor: pointer;
+  width: 333px;
+  height: 48px;
+  background-color: rgba(33, 225, 156, 0.62);
+  border-radius: 5px;
+  color: #505050;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Info1 = styled.div`
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+  color: #505050;
+`;
+
+const Info2 = styled.div`
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+  color: #505050;
+  padding: 21px;
+  background: #e7ecf3;
+  width: 100%;
+`;
+
 const InstructionContainer = styled.div`
   background: #dbedff;
   padding: 6px;
@@ -342,7 +396,12 @@ const InquiryButton = styled.div`
   cursor: pointer;
 `;
 
-const DrawerTitle = styled.div``;
+const DrawerTitle = styled.div`
+  color: #505050;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 24px;
+`;
 
 const FeedContainer = styled.div`
   width: 100%;
