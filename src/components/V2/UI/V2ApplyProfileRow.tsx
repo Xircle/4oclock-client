@@ -50,7 +50,6 @@ export default function V2ApplyProfileRow({
       await refetch();
       alert("승인 성공하였습니다");
     } else {
-      console.log(data.error);
       alert("승인 실패하였습니다");
     }
   };
@@ -68,7 +67,6 @@ export default function V2ApplyProfileRow({
       await refetch();
       alert("거절하기에 성공하였습니다");
     } else {
-      console.log(data.error);
       alert("거절하기에 실패하였습니다");
     }
   };
