@@ -16,6 +16,9 @@ interface IProps {
   description?: string;
   category_name?: string;
   id: string;
+  applyCount?: number;
+  approveCount?: number;
+  maxParticipant?: number;
 }
 
 export default function TeamFeedRenderItem({
@@ -30,6 +33,9 @@ export default function TeamFeedRenderItem({
   leader_image,
   leader_username,
   id,
+  approveCount,
+  applyCount,
+  maxParticipant,
 }: IProps) {
   const history = useHistory();
 
@@ -66,8 +72,18 @@ export default function TeamFeedRenderItem({
             ) : (
               <></>
             )}
-
-            <Description>{description}</Description>
+            <BottomContainer>
+              <Description>{description}</Description>
+            </BottomContainer>
+            <Count>
+              정원: {maxParticipant ?? "na"} /
+              {approveCount &&
+              maxParticipant &&
+              maxParticipant - approveCount > 0
+                ? "잔여: " + (maxParticipant - approveCount)
+                : ""}{" "}
+              / 신청 {applyCount ?? "na"}
+            </Count>
           </LeftBodyContainer>
         </LeftContainer>
         <RightContainer>
@@ -82,6 +98,13 @@ export default function TeamFeedRenderItem({
     </Conatiner>
   );
 }
+
+const Count = styled.div`
+  margin-top: 10px;
+  font-size: 11px;
+`;
+
+const BottomContainer = styled.div``;
 
 const LeaderContainer = styled.div`
   margin-top: 14px;
@@ -106,7 +129,8 @@ const Description = styled.div`
   text-overflow: clip;
   color: #8c94a4;
   margin-top: 10px;
-  font-size: 11px; ;
+  font-size: 11px;
+  overflow: hidden;
 `;
 
 const Tag = styled.span`
