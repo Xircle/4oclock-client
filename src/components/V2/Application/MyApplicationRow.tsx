@@ -45,7 +45,6 @@ export default function MyApplicationRow({
       await refetch();
       alert("취소에 성공하였습니다");
     } else {
-      console.log(data.error);
       alert("취소에 실패하였습니다");
     }
   };
