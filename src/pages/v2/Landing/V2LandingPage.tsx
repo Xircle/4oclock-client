@@ -244,9 +244,14 @@ function V2LandingPage() {
       <InstructionContainer>
         <InstructionHeading>✅신청 step</InstructionHeading>
         <InstructionText>
-          0. 들어가고 싶은 정모클럽 나이대,날짜,테마 선택하기{"\n"}1.정모클럽
-          2-3개 신청하기{"\n"}2.리더의 승인 대기 하기{`\n`}3.(중요)my page 에서
-          승인된 모임 오카방 들어가기
+          0. 들어가고 싶은 정모클럽 <b>나이대,날짜,테마</b> 선택하기
+          <br />
+          1.정모클럽 <b>2-3개</b> 신청하기
+          <br />
+          2.리더의 승인 대기 하기
+          <br />
+          3.<b style={{ color: "#FF0000" }}>(중요)</b>my page 에서 승인된 모임
+          오카방 들어가기
         </InstructionText>
       </InstructionContainer>
       <Body>
@@ -288,11 +293,13 @@ function V2LandingPage() {
 const InstructionContainer = styled.div`
   background: #dbedff;
   padding: 6px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const InstructionHeading = styled.div`
-  margin-left: auto;
-  margin-right: auto;
   color: #505050;
   font-weight: 700;
   font-size: 13px;
@@ -304,10 +311,13 @@ const InstructionText = styled.div`
   font-size: 14px;
   line-height: 20px;
   /* or 143% */
+  margin-top: 8px;
+  margin-bottom: 15px;
 
   color: #505050;
-  margin-left: auto;
-  margin-right: auto;
+  b {
+    font-weight: 600;
+  }
 `;
 
 const InquiryButton = styled.div`
