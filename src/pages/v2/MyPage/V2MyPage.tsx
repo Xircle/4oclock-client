@@ -6,6 +6,7 @@ import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
 import V2SmallProfile from "../../../components/V2/UI/V2SmallProfile";
 import { getMyApplications } from "../../../lib/api/getMyApplications";
 import { GetMyApplicationsOutput, MyApplication } from "../../../lib/api/types";
+import { InquiryCTA } from "../../../lib/v2/utils";
 import { Container } from "../../../styles/styles";
 
 export default function V2MyPage() {
@@ -39,8 +40,6 @@ export default function V2MyPage() {
       setEnrolleds(applicationOutput.applications.enrolleds);
     }
   }, [applicationOutput]);
-
-  const InquiryCTA = () => {};
 
   return (
     <Container>
