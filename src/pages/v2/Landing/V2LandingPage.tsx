@@ -299,6 +299,7 @@ function V2LandingPage() {
                     applyCount={team.applyCount}
                     approveCount={team.approveCount}
                     maxParticipant={team.maxParticipant}
+                    is_closed={team.is_closed}
                   />
                 );
               })}
