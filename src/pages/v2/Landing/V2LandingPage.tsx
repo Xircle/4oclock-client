@@ -281,6 +281,9 @@ function V2LandingPage() {
                     meeting_hour={team.meeting_hour}
                     description={team.description}
                     category_name={team.category_name}
+                    applyCount={team.applyCount}
+                    approveCount={team.approveCount}
+                    maxParticipant={team.maxParticipant}
                   />
                 );
               })}
