@@ -20,6 +20,8 @@ import {
 import { Container, MainBtn } from "../../../styles/styles";
 import { isSamsungBrowser } from "react-device-detect";
 import Modal from "../../../components/UI/Modal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 enum DrawerType {
   Category = "선호하는 정모 테마을 선택해주세요",
@@ -299,10 +301,19 @@ function V2LandingPage() {
       </InstructionContainer>
       <Body>
         <FilterContainer>
-          <FilterOption onClick={openTimeDrawer}>시간</FilterOption>
-          <FilterOption onClick={openCategoryDrawer}>테마</FilterOption>
-          <FilterOption onClick={openAgeDrawer}>나이</FilterOption>
-          <FilterOption onClick={filterReset}>필터링 제거</FilterOption>
+          <FilterOption onClick={openTimeDrawer}>
+            시간
+            <FontAwesomeIcon icon={faChevronDown} style={{ marginLeft: 8 }} />
+          </FilterOption>
+          <FilterOption onClick={openCategoryDrawer}>
+            테마
+            <FontAwesomeIcon icon={faChevronDown} style={{ marginLeft: 8 }} />
+          </FilterOption>
+          <FilterOption onClick={openAgeDrawer}>
+            나이
+            <FontAwesomeIcon icon={faChevronDown} style={{ marginLeft: 8 }} />
+          </FilterOption>
+          <ResetButton onClick={filterReset}>필터링 제거</ResetButton>
         </FilterContainer>
         <FeedContainer>
           {!teamDataLoading &&
@@ -337,6 +348,14 @@ function V2LandingPage() {
     </SContainer>
   );
 }
+
+const ResetButton = styled.div`
+  cursor: pointer;
+  display: inline-block;
+  color: #505050;
+  font-weight: 500;
+  font-size: 13px;
+`;
 
 const DrawerWhiteSpace = styled.div`
   width: 100%;
@@ -445,14 +464,19 @@ const FilterContainer = styled.div`
 
 const FilterOption = styled.span`
   margin: 10px;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
   background-color: #fff8d1;
-  padding-left: 7px;
-  padding-right: 7px;
+  padding-left: 15px;
+  padding-right: 9px;
   padding-top: 4px;
   padding-bottom: 4px;
   border-radius: 6px;
   cursor: pointer;
   display: inline-block;
+  color: #505050;
+  position: relative;
 `;
 
 const SContainer = styled(Container)`
