@@ -118,15 +118,17 @@ function V2LandingPage() {
 
   useEffect(() => {
     if (categoryData !== undefined && categoryData.length > 0) {
-      setCategories([]);
+      const temp: CategoryData[] = [];
       categoryData.map((category) => {
-        setCategories((prev) => [
-          ...prev,
-          { id: category.id, name: category.name, selected: true },
-        ]);
+        temp.push({ id: category.id, name: category.name, selected: true });
       });
+      setCategories(temp);
     }
   }, [categoryData]);
+
+  const filterReset = () => {
+    window.location.reload();
+  };
 
   useEffect(() => {
     if (categories && dayData && ageData) {
@@ -300,6 +302,7 @@ function V2LandingPage() {
           <FilterOption onClick={openTimeDrawer}>시간</FilterOption>
           <FilterOption onClick={openCategoryDrawer}>테마</FilterOption>
           <FilterOption onClick={openAgeDrawer}>나이</FilterOption>
+          <FilterOption onClick={filterReset}>필터링 제거</FilterOption>
         </FilterContainer>
         <FeedContainer>
           {!teamDataLoading &&
