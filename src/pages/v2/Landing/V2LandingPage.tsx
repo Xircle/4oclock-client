@@ -17,7 +17,9 @@ import {
   ITimeData,
   TimeData,
 } from "../../../lib/v2/utils";
-import { Container } from "../../../styles/styles";
+import { Container, MainBtn } from "../../../styles/styles";
+import { isSamsungBrowser } from "react-device-detect";
+import Modal from "../../../components/UI/Modal";
 
 enum DrawerType {
   Category = "선호하는 정모 테마을 선택해주세요",
@@ -34,6 +36,7 @@ function V2LandingPage() {
   const [refilterCount, setRefeilterCount] = useState(0);
   const [dayData, setDayData] = useState<TimeData[]>(ITimeData);
   const [ageData, setAgeData] = useState<AgeData[]>(IAgeData);
+  const [isSamsungBrowserBool, setIsSamsungBrowserBool] = useState(false);
   const { mutateAsync: mutateUserData, isLoading: isFetching } =
     useMutation(getUser);
 
@@ -50,6 +53,7 @@ function V2LandingPage() {
   };
 
   useEffect(() => {
+    if (isSamsungBrowser) setIsSamsungBrowserBool(true);
     let mounted = true;
     if (mounted) {
       fetchNewUserData();
@@ -157,6 +161,28 @@ function V2LandingPage() {
 
   return (
     <SContainer ref={container}>
+      {isSamsungBrowserBool && (
+        <Modal
+          isClose={!isSamsungBrowserBool}
+          onClose={() => setIsSamsungBrowserBool((prev) => !prev)}
+        >
+          <ModalWrapper>
+            <h1>크롬 or 사파리로 접속해주세요!</h1>
+            <p>
+              삼성 브라우저에서 회원가입이 잘되지 않는 이슈를 발견했어요!
+              <br />
+              <br />
+              원활한 접속을 위해 크롬 or 사파리로 접속해주세요
+            </p>
+            <MainBtn
+              onClick={() => setIsSamsungBrowserBool(false)}
+              style={{ width: "90%" }}
+            >
+              알겠습니다
+            </MainBtn>
+          </ModalWrapper>
+        </Modal>
+      )}
       <V2HeaderC />
       <Drawer
         PaperProps={{
@@ -432,6 +458,27 @@ const SContainer = styled(Container)`
 
 const Body = styled.div`
   padding-top: 30px;
+`;
+
+const ModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  padding: 10px 40px;
+  h1 {
+    color: #12121d;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+  }
+  p {
+    color: #18a0fb;
+    font-size: 15px;
+    line-height: 18px;
+    font-weight: 500;
+  }
 `;
 
 export default V2LandingPage;
