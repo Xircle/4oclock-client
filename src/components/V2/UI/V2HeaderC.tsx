@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { CURRENT_USER } from "../../../components/shared/constants";
 import storage from "../../../lib/storage";
+import { InquiryCTA, InstagramCTA } from "../../../lib/v2/utils";
 import routes from "../../../routes";
 import { colors, HeaderItem, V2Header } from "../../../styles/styles";
 
@@ -58,9 +59,9 @@ export default function V2HeaderC({ title }: Props) {
         </HeaderItem>
       </V2Header>
       <Drawer open={drawerOpened} onClose={() => setDrawerOpened(false)}>
-        <DrawerItem>드로어 1</DrawerItem>
-        <DrawerItem>드로어 2</DrawerItem>
-        <DrawerItem>드로어 2</DrawerItem>
+        <DrawerItem onClick={loginOnClick}>마이페이지</DrawerItem>
+        <DrawerItem onClick={InquiryCTA}>문의하기</DrawerItem>
+        <DrawerItem onClick={InstagramCTA}>케빈 인스타{"(후기)"}</DrawerItem>
         <DrawerItem onClick={goToHome}>홈으로 가기</DrawerItem>
       </Drawer>
     </>
