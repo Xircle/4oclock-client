@@ -19,6 +19,7 @@ interface IProps {
   applyCount?: number;
   approveCount?: number;
   maxParticipant?: number;
+  is_closed?: boolean;
 }
 
 export default function TeamFeedRenderItem({
@@ -36,68 +37,76 @@ export default function TeamFeedRenderItem({
   approveCount,
   applyCount,
   maxParticipant,
+  is_closed,
 }: IProps) {
   const history = useHistory();
 
   const onClickHandler = () => {
-    history.push(`/v2/team/${id}`);
+    if (!is_closed) history.push(`/v2/team/${id}`);
   };
 
   return (
     <Conatiner onClick={onClickHandler}>
-      <TagContainer>
-        <Tag>
-          {min_age} ~ {max_age}
-        </Tag>
-        <Tag>
-          {DayNumToKor(meeting_day?.toString())} {meeting_hour}시
-        </Tag>
+      <RelativeWrapper>
+        {is_closed && <ClosedOverlay>마 감</ClosedOverlay>}
+        <TagContainer>
+          <Tag>
+            {min_age} ~ {max_age}
+          </Tag>
+          <Tag>
+            {DayNumToKor(meeting_day?.toString())} {meeting_hour}시
+          </Tag>
 
-        <Tag>{category_name}</Tag>
-      </TagContainer>
-      <Wrapper>
-        <LeftContainer>
-          <LeftBodyContainer>
-            <Title>{name}</Title>
-            {leader_image && leader_username ? (
-              <LeaderContainer>
-                <LeaderImg
-                  src={optimizeImage(leader_image, {
-                    width: 30,
-                    height: 30,
-                  })}
-                />{" "}
-                <LeaderText>{leader_username} leader</LeaderText>
-              </LeaderContainer>
-            ) : (
-              <></>
-            )}
-            <BottomContainer>
-              <Description>{description}</Description>
-            </BottomContainer>
-            <Count>
-              정원: {maxParticipant ?? "na"} /
-              {approveCount &&
-              maxParticipant &&
-              maxParticipant - approveCount > 0
-                ? "잔여: " + (maxParticipant - approveCount)
-                : ""}{" "}
-              / 신청 {applyCount ?? "na"}
-            </Count>
-          </LeftBodyContainer>
-        </LeftContainer>
-        <RightContainer>
-          <FeedImg
-            src={optimizeImage(image, {
-              width: 100,
-              height: 100,
-            })}
-          />
-        </RightContainer>
-      </Wrapper>
+          <Tag>{category_name}</Tag>
+        </TagContainer>
+        <Wrapper>
+          <LeftContainer>
+            <LeftBodyContainer>
+              <Title>{name}</Title>
+              {leader_image && leader_username ? (
+                <LeaderContainer>
+                  <LeaderImg
+                    src={optimizeImage(leader_image, {
+                      width: 30,
+                      height: 30,
+                    })}
+                  />{" "}
+                  <LeaderText>{leader_username} leader</LeaderText>
+                </LeaderContainer>
+              ) : (
+                <></>
+              )}
+              <BottomContainer>
+                <Description>{description}</Description>
+              </BottomContainer>
+              <Count>
+                정원: {maxParticipant ?? "na"} /
+                {approveCount &&
+                maxParticipant &&
+                maxParticipant - approveCount > 0
+                  ? "잔여: " + (maxParticipant - approveCount)
+                  : ""}{" "}
+                / 신청 {applyCount ?? "na"}
+              </Count>
+            </LeftBodyContainer>
+          </LeftContainer>
+          <RightContainer>
+            <FeedImg
+              src={optimizeImage(image, {
+                width: 100,
+                height: 100,
+              })}
+            />
+          </RightContainer>
+        </Wrapper>
+      </RelativeWrapper>
     </Conatiner>
   );
 }
+
+const RelativeWrapper = styled.div`
+  position: relative;
+`;
 
 const Count = styled.div`
   margin-top: 10px;
@@ -162,12 +171,31 @@ const Wrapper = styled.div`
   padding-bottom: 15px;
   border-bottom: 1px solid #dadada;
 `;
+const ClosedOverlay = styled.div`
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  position: absolute;
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 40px;
+  font-weight: 600;
+`;
 
 const Conatiner = styled.div`
   width: 100%;
   padding-left: 30px;
   padding-right: 20px;
   padding-top: 10px;
+  position: relative;
 
   color: #505050;
 
