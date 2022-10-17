@@ -75,6 +75,15 @@ export const RoleHashTable = {
   Admin: "운영진",
 };
 
+const openInNewTab = (url) => {
+  window.open(url, "_blank");
+};
 export const InquiryCTA = () => {
+  openInNewTab("https://naver.com");
   console.log("inquiry attempt");
+};
+
+export const InstagramCTA = () => {
+  openInNewTab("https://instagram.com");
+  console.log("instagram attempt");
 };
