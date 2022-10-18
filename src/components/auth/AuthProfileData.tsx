@@ -28,7 +28,12 @@ interface Props {
 }
 
 export default function AuthProfileData({ onNext, state, dispatch }: Props) {
-  const univs: string[] = ["고려대학교", "연세대학교", "이화여자대학교"];
+  const univs: string[] = [
+    "고려대학교",
+    "연세대학교",
+    "이화여자대학교",
+    "성신여자대학교",
+  ];
   const [nameError, SetNameError] = useState<boolean>(false);
   const [univError, SetUnivError] = useState<boolean>(false);
   const [ageError, SetAgeError] = useState<boolean>(false);
@@ -99,7 +104,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
   };
   const errorMessages: string[] = [
     "20자 이하의 이름을 입력해주세요",
-    "현재는 고려대/연세대/이화여대 학교만 운영되고 있어요",
+    "대학교를 입력해주세요",
     "19-40사이의 나이를 입력해주세요. 20초 20중 20후 30초로 보여져요!",
     "성별을 선택해주세요",
     "15자 이내로 적어주세요.",
@@ -165,52 +170,39 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
         <select
           id=""
           name="University"
-          value={
-            state.isGraduate
-              ? state.university + " 졸업"
-              : state.university + " 재학"
-          }
+          value={state.university}
           style={
             univError
               ? {
                   marginTop: "12px",
                   borderColor: colors.MidBlue,
                   color: colors.Black,
+                  width: 301,
                 }
-              : { marginTop: "12px", color: colors.Black }
+              : { marginTop: "12px", color: colors.Black, width: 301 }
           }
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
             dispatch({
               type: "setUniversity",
-              payload: e.target.value.toString().split(" ")[0],
+              payload: e.target.value.toString(),
             });
-            dispatch({
-              type: "setIsGraduate",
-              payload: e.target.value.toString().split(" ")[1] === "졸업",
-            });
-            Validate(e.target.value.toString().split(" ")[0]);
+            Validate(e.target.value.toString());
           }}
         >
           <option value="" style={{ color: colors.BareGray }}>
             학교
           </option>
-          <option value="고려대학교 재학" style={{ color: colors.Black }}>
-            고려대학교 재학
+          <option value="고려대학교" style={{ color: colors.Black }}>
+            고려대학교
           </option>
-          <option value="고려대학교 졸업" style={{ color: colors.Black }}>
-            고려대학교 졸업
+          <option value="연세대학교" style={{ color: colors.Black }}>
+            연세대학교
           </option>
-          <option value="연세대학교 재학" style={{ color: colors.Black }}>
-            연세대학교 재학
+          <option value="이화여자대학교" style={{ color: colors.Black }}>
+            이화여자대학교
           </option>
-          <option value="연세대학교 졸업" style={{ color: colors.Black }}>
-            연세대학교 졸업
-          </option>
-          <option value="이화여자대학교 재학" style={{ color: colors.Black }}>
-            이화여자대학교 재학
-          </option>
-          <option value="이화여자대학교 졸업" style={{ color: colors.Black }}>
-            이화여자대학교 졸업
+          <option value="성신여자대학교" style={{ color: colors.Black }}>
+            성신여자대학교
           </option>
         </select>
         {univError && <ErrorMessage>{errorMessages[1]}</ErrorMessage>}
@@ -340,35 +332,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
           onKeyUp={() => Validate()}
         />
         {bioError && <ErrorMessage>{errorMessages[5]}</ErrorMessage>}
-        <p
-          style={{
-            justifyContent: "space-between",
-            display: "flex",
-            alignItems: "center",
-            fontSize: "12px",
-            color: colors.MidGray,
-            marginTop: "5px",
-          }}
-        >
-          <div></div>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <FontAwesomeIcon
-              icon={faMapMarkerAlt}
-              color={colors.LightGray}
-              size="lg"
-              style={{ marginRight: "8px" }}
-            />
-            {locationLoading ? (
-              <ClipLoader
-                color={colors.MidBlue}
-                size={15}
-                loading={locationLoading}
-              />
-            ) : (
-              detailAddress || "대한민국 어딘가"
-            )}
-          </div>
-        </p>
+
         <SpaceForNavBar> </SpaceForNavBar>
         <NextButton
           type="submit"
