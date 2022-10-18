@@ -58,7 +58,7 @@ export default function AuthProfileDetailData({
             id=""
             name="MBTI"
             value={state.MBTI}
-            style={{ marginTop: "12px", color: colors.Black }}
+            style={{ marginTop: "12px", color: colors.Black, width: 301 }}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
               dispatch({
                 type: "setMBTI",
