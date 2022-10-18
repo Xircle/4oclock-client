@@ -1,11 +1,9 @@
 import styled from "styled-components";
-import { ProcedureHeading, MainBtn, colors } from "../../../styles/styles";
+import { ProcedureHeading, colors } from "../../../styles/styles";
 import KakaoLogin from "react-kakao-login";
 import { LoginResponse } from "../../../lib/kakao";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { isSamsungBrowser } from "react-device-detect";
-import Modal from "../../../components/UI/Modal";
 import storage from "../../../lib/storage";
 import { CURRENT_USER } from "../../../components/shared/constants";
 import routes from "../../../routes";
