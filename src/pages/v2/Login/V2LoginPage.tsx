@@ -12,14 +12,12 @@ import routes from "../../../routes";
 
 function V2LoginPage() {
   const history = useHistory();
-  const [isSamsungBrowserBool, setIsSamsungBrowserBool] = useState(false);
 
   useEffect(() => {
     if (storage.getItem(CURRENT_USER) && storage.getItem(CURRENT_USER).token) {
       window.location.href = routes.v2Root;
       return;
     }
-    if (isSamsungBrowser) setIsSamsungBrowserBool(true);
   }, []);
 
   const kakaoSuccessCallback = (response: {
@@ -38,29 +36,6 @@ function V2LoginPage() {
 
   return (
     <Container>
-      {isSamsungBrowserBool && (
-        <Modal
-          isClose={!isSamsungBrowserBool}
-          onClose={() => setIsSamsungBrowserBool((prev) => !prev)}
-        >
-          <ModalWrapper>
-            <h1>크롬 or 사파리로 접속해주세요!</h1>
-            <p>
-              삼성 브라우저에서 회원가입이 잘되지 않는 이슈를 발견했어요!
-              <br />
-              <br />
-              원활한 접속을 위해 크롬 or 사파리로 접속해주세요
-            </p>
-            <MainBtn
-              onClick={() => setIsSamsungBrowserBool(false)}
-              style={{ width: "90%" }}
-            >
-              알겠습니다
-            </MainBtn>
-          </ModalWrapper>
-        </Modal>
-      )}
-
       <img src="/club_logo.png" width="285px" height="160px" />
 
       <KakaoLogin
