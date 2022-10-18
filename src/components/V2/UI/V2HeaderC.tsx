@@ -43,14 +43,18 @@ export default function V2HeaderC({ title }: Props) {
     setDrawerOpened(false);
   };
 
+  const openDrawer = () => {
+    setDrawerOpened(true);
+  };
+
+  const closeDrawer = () => {
+    setDrawerOpened(false);
+  };
+
   return (
     <>
       <V2Header>
-        <HeaderItem
-          onClick={() => {
-            setDrawerOpened(true);
-          }}
-        >
+        <HeaderItem onClick={openDrawer}>
           <FontAwesomeIcon icon={faBars} color={colors.Black} size="2x" />
         </HeaderItem>
         {title && <TitleDiv>{title}</TitleDiv>}
@@ -58,15 +62,30 @@ export default function V2HeaderC({ title }: Props) {
           {isLoggedin ? storage.getItem(CURRENT_USER).username : "로그인"}
         </HeaderItem>
       </V2Header>
-      <Drawer open={drawerOpened} onClose={() => setDrawerOpened(false)}>
-        <DrawerItem onClick={loginOnClick}>마이페이지</DrawerItem>
-        <DrawerItem onClick={InquiryCTA}>문의하기</DrawerItem>
-        <DrawerItem onClick={InstagramCTA}>케빈 인스타{"(후기)"}</DrawerItem>
-        <DrawerItem onClick={goToHome}>홈으로 가기</DrawerItem>
+      <Drawer
+        open={drawerOpened}
+        onClose={() => setDrawerOpened(false)}
+        SlideProps={{
+          style: {
+            backgroundColor: "#FFF8F6",
+          },
+        }}
+      >
+        <DrawerItemWrapper>
+          <DrawerItem onClick={loginOnClick}>마이페이지</DrawerItem>
+          <DrawerItem onClick={InquiryCTA}>문의하기</DrawerItem>
+          <DrawerItem onClick={InstagramCTA}>케빈 인스타{"(후기)"}</DrawerItem>
+          <DrawerItem onClick={goToHome}>홈으로 가기</DrawerItem>
+          <DrawerItem onClick={closeDrawer}>닫기</DrawerItem>
+        </DrawerItemWrapper>
       </Drawer>
     </>
   );
 }
+
+const DrawerItemWrapper = styled.div`
+  margin: 10px;
+`;
 
 const TitleDiv = styled.div`
   font-weight: bold;
@@ -75,8 +94,12 @@ const TitleDiv = styled.div`
 `;
 
 const DrawerItem = styled.div`
+  font-weight: 500;
   font-size: 20px;
-  font-weight: 600;
-  padding: 20px;
+  line-height: 31px;
+  color: #12121d;
   cursor: pointer;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
 `;
