@@ -1,9 +1,8 @@
 import styled from "styled-components";
-import { ProcedureHeading, colors } from "../../../styles/styles";
 import KakaoLogin from "react-kakao-login";
 import { LoginResponse } from "../../../lib/kakao";
 import { useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import storage from "../../../lib/storage";
 import { CURRENT_USER } from "../../../components/shared/constants";
 import routes from "../../../routes";
@@ -72,28 +71,11 @@ function V2LoginPage() {
             );
           }}
         />
-        <SignInLogin>회원 가입</SignInLogin>
         <InquiryText>혹시 로그인이 안되시나요?</InquiryText>
       </Body>
     </Container>
   );
 }
-
-const SignInLogin = styled.div`
-  border: none;
-  font-size: 14px;
-  font-weight: bolder;
-  border-radius: 5px;
-  margin-top: 15px;
-  cursor: pointer;
-  color: white;
-  width: 333px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: black;
-`;
 
 const Body = styled.div`
   display: flex;
