@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import storage from "../../../lib/storage";
 import { CURRENT_USER } from "../../../components/shared/constants";
 import routes from "../../../routes";
+import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
 
 function V2LoginPage() {
   const history = useHistory();
@@ -34,119 +35,67 @@ function V2LoginPage() {
 
   return (
     <Container>
-      <img src="/club_logo.png" width="285px" height="160px" />
+      <V2SubHeaderC />
+      <Body>
+        <img src="/club_logo.png" width="285px" height="160px" />
 
-      <KakaoLogin
-        token={process.env.REACT_APP_KAKAO_KEY!}
-        onSuccess={kakaoSuccessCallback}
-        onFail={() => console.log("kakao login fail")}
-        onLogout={() => console.log("hi")}
-        render={({ onClick }) => {
-          return (
-            <a
-              onClick={(e: any) => {
-                e.preventDefault();
-                onClick();
-              }}
-              style={{
-                width: "333px",
-                height: "50px",
-                background: "#FFE812",
-                border: "none",
-                borderRadius: "5px",
-                fontSize: "14px",
-                fontWeight: "bolder",
-                cursor: "pointer",
-                color: "#1A1C2D",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                boxShadow: "rgba(75, 88, 208, 0.5) 0px 25px 20px -20px",
-              }}
-            >
-              카카오톡으로 1초만에 시작하기
-            </a>
-          );
-        }}
-      />
+        <KakaoLogin
+          token={process.env.REACT_APP_KAKAO_KEY!}
+          onSuccess={kakaoSuccessCallback}
+          onFail={() => console.log("kakao login fail")}
+          onLogout={() => console.log("hi")}
+          render={({ onClick }) => {
+            return (
+              <a
+                onClick={(e: any) => {
+                  e.preventDefault();
+                  onClick();
+                }}
+                style={{
+                  width: "333px",
+                  height: "50px",
+                  background: "#FFE812",
+                  border: "none",
+                  borderRadius: "5px",
+                  fontSize: "14px",
+                  fontWeight: "bolder",
+                  cursor: "pointer",
+                  color: "#1A1C2D",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  boxShadow: "rgba(75, 88, 208, 0.5) 0px 25px 20px -20px",
+                  marginTop: 50,
+                }}
+              >
+                카카오톡으로 1초만에 시작하기
+              </a>
+            );
+          }}
+        />
+        <InquiryText>혹시 로그인이 안되시나요?</InquiryText>
+      </Body>
     </Container>
   );
 }
 
-const Footer = styled.div`
-  background-color: #e7ecf3;
-  width: 100%;
-  min-height: 250px;
-`;
-
-const FooterInnerContainer = styled.div`
-  padding-left: 21px;
-  padding-top: 28px;
-  padding-bottom: 50px;
-  font-size: 12px;
-  line-height: 23px;
-  color: #a7b0c0;
-  a {
-    font-weight: bold;
-    text-decoration: none;
-    color: #a7b0c0;
-  }
-  b {
-    font-weight: bold;
-  }
+const Body = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Container = styled.div`
   width: 100%;
 `;
 
-const MainBox = styled.div`
-  height: 100vh;
-  position: relative;
-`;
-
-const MainInfo = styled.p`
-  padding-top: 0.5vh;
-  font-weight: normal;
-  color: #5e5e5e;
-  font-size: 15px;
-  line-height: 20px;
-  margin-left: 28px;
-  b {
-    color: ${colors.MidBlue};
-  }
-`;
-
-const Heading = styled(ProcedureHeading)`
-  padding-top: 8vh;
-  margin-left: 28px;
-  line-height: 37px;
-  & + & {
-    padding: 13px 0;
-  }
-`;
-
-const Row = styled.div``;
-
-const ModalWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  height: 100%;
-  padding: 10px 40px;
-  h1 {
-    color: #12121d;
-    font-weight: bold;
-    font-size: 24px;
-    line-height: 28px;
-  }
-  p {
-    color: #18a0fb;
-    font-size: 15px;
-    line-height: 18px;
-    font-weight: 500;
-  }
+const InquiryText = styled.div`
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  text-decoration-line: underline;
+  margin-top: 52px;
+  color: #6f7789;
 `;
 
 export default V2LoginPage;
