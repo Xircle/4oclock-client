@@ -3,25 +3,39 @@ import { PortalConsumer } from "../../providers/PortalProvider";
 import { BACKDROP_Z_INDEX } from "../shared/constants";
 
 interface Props {
-  children: React.ReactNode;
+  title?: string;
+  children?: React.ReactNode;
   isClose: boolean;
   onClose: () => void;
 }
 
-export default function Modal({ children, isClose, onClose }: Props) {
+export default function Modal({ title, children, isClose, onClose }: Props) {
   const clickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   };
+  if (children) {
+    return (
+      <PortalConsumer>
+        <ModalContainer close={isClose} onClick={onClose}>
+          <ModalWrapper onClick={clickHandler} close={isClose}>
+            {children}
+          </ModalWrapper>
+        </ModalContainer>
+      </PortalConsumer>
+    );
+  }
   return (
     <PortalConsumer>
       <ModalContainer close={isClose} onClick={onClose}>
         <ModalWrapper onClick={clickHandler} close={isClose}>
-          {children}
+          <Title>{title}</Title>
         </ModalWrapper>
       </ModalContainer>
     </PortalConsumer>
   );
 }
+
+const Title = styled.div``;
 
 const blur = keyframes`
     0% {
