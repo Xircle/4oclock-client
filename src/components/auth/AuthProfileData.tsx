@@ -156,7 +156,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
           placeholder="Username"
           style={
             nameError
-              ? { marginTop: "24px", borderColor: colors.MidBlue }
+              ? { marginTop: "24px", borderColor: colors.StrongLime }
               : { marginTop: "24px", borderColor: colors.BareGray }
           }
           type="text"
@@ -175,7 +175,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
             univError
               ? {
                   marginTop: "12px",
-                  borderColor: colors.MidBlue,
+                  borderColor: colors.StrongLime,
                   color: colors.Black,
                   width: 301,
                 }
@@ -212,7 +212,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
           name="Age"
           style={
             ageError
-              ? { marginTop: "12px", borderColor: colors.MidBlue }
+              ? { marginTop: "12px", borderColor: colors.StrongLime }
               : { marginTop: "12px" }
           }
           value={state.age}
@@ -275,20 +275,20 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
             {state.gender === "female" ? (
               <FontAwesomeIcon
                 icon={faCheckCircle}
-                color={colors.MidBlue}
+                color={colors.StrongLime}
                 size="lg"
               />
             ) : (
               <FontAwesomeIcon
                 icon={faCircle}
-                color={genderError ? colors.MidBlue : colors.LightGray}
+                color={genderError ? colors.StrongLime : colors.LightGray}
                 size="lg"
               />
             )}
             <GenderText
               style={
                 genderError
-                  ? { marginLeft: "5px", color: colors.MidBlue }
+                  ? { marginLeft: "5px", color: colors.StrongLime }
                   : { marginLeft: "5px" }
               }
             >
