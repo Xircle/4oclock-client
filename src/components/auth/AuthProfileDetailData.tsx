@@ -144,7 +144,7 @@ export default function AuthProfileDetailData({
               }}
               style={
                 drinkingStyle === 0
-                  ? { borderColor: "#18A0FB", color: "#18A0FB" }
+                  ? { borderColor: colors.StrongLime, color: colors.StrongLime }
                   : { borderColor: "#A7B0C0", color: "#A7B0C0" }
               }
             >
@@ -158,7 +158,7 @@ export default function AuthProfileDetailData({
               }}
               style={
                 drinkingStyle === 1
-                  ? { borderColor: "#18A0FB", color: "#18A0FB" }
+                  ? { borderColor: colors.StrongLime, color: colors.StrongLime }
                   : { borderColor: "#A7B0C0", color: "#A7B0C0" }
               }
             >
@@ -172,7 +172,7 @@ export default function AuthProfileDetailData({
               }}
               style={
                 drinkingStyle === 2
-                  ? { borderColor: "#18A0FB", color: "#18A0FB" }
+                  ? { borderColor: colors.StrongLime, color: colors.StrongLime }
                   : { borderColor: "#A7B0C0", color: "#A7B0C0" }
               }
             >
@@ -187,7 +187,7 @@ export default function AuthProfileDetailData({
               }}
               style={
                 drinkingStyle === 3
-                  ? { borderColor: "#18A0FB", color: "#18A0FB" }
+                  ? { borderColor: colors.StrongLime, color: colors.StrongLime }
                   : { borderColor: "#A7B0C0", color: "#A7B0C0" }
               }
             >
@@ -201,7 +201,7 @@ export default function AuthProfileDetailData({
               }}
               style={
                 drinkingStyle === 4
-                  ? { borderColor: "#18A0FB", color: "#18A0FB" }
+                  ? { borderColor: colors.StrongLime, color: colors.StrongLime }
                   : { borderColor: "#A7B0C0", color: "#A7B0C0" }
               }
             >
