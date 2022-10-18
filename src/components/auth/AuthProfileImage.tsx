@@ -74,7 +74,7 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
               marginTop: "11px",
               fontSize: "14px",
               fontWeight: 700,
-              color: colors.MidBlue,
+              color: colors.StrongLime,
             }}
           >
             <p style={{ color: colors.StrongLime }}>프로필사진 업로드하기</p>
