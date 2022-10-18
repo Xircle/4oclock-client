@@ -119,7 +119,7 @@ export const MainBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: rgba(33, 225, 156) 0px 25px 20px -20px;
+  box-shadow: rgba(0, 0, 0) 0px 25px 20px -20px;
   font-weight: bold;
   color: #505050;
   cursor: pointer;
