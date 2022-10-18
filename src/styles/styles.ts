@@ -15,6 +15,7 @@ interface Colors {
   Red: string;
   Orange: string;
   Lime: string;
+  StrongLime: string;
 }
 
 export const GlobalStyles = createGlobalStyle`
@@ -79,6 +80,7 @@ export const colors: Colors = {
   Red: "#FF2343",
   Orange: "#F86023",
   Lime: "rgba(33, 225, 156, 0.31)",
+  StrongLime: "rgba(33, 225, 156)",
 };
 
 export const AppContainer = styled.div`
@@ -111,16 +113,15 @@ export const MainBtn = styled.button`
   margin-left: auto;
   margin-right: auto;
   height: 50px;
-  background-color: #18a0fb;
+  background: rgba(33, 225, 156);
   border: none;
   border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* filter: drop-shadow(16px 16px 20px rgba(75, 88, 208, 0.5)); */
-  box-shadow: rgba(75, 88, 208, 0.5) 0px 25px 20px -20px;
+  box-shadow: rgba(33, 225, 156) 0px 25px 20px -20px;
   font-weight: bold;
-  color: white;
+  color: #505050;
   cursor: pointer;
   font-size: 16px;
   p {
