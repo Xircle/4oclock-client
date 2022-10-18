@@ -53,11 +53,10 @@ function Auth() {
           toast.error(data.error, {
             position: toast.POSITION.TOP_CENTER,
           });
-          history.push(routes.root);
         } else {
           storage.setItem(CURRENT_USER, data.data!);
-          window.location.href = `${routes.placeFeed}?isSignup=true`;
         }
+        history.push(routes.v2Root);
       } catch (err) {
         console.log(err);
         throw new Error();
