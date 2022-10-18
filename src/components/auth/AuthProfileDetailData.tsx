@@ -226,7 +226,7 @@ const ErrorMessage = styled.p`
   margin-top: 7px;
   font-size: 8px;
   margin-left: 5px;
-  color: ${colors.MidBlue};
+  color: ${colors.StrongLime};
 `;
 
 const SubContainer = styled.div``;
