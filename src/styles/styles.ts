@@ -340,6 +340,7 @@ export const NextButton = styled(MainBtn)`
 
 export const FileLabel = styled.label`
   cursor: pointer;
+  width: 100%;
 `;
 
 export const SLink = styled(Link)`
