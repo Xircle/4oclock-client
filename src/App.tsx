@@ -37,7 +37,7 @@ const ReservationPage = React.lazy(
   () => import("./pages/v1/reservation/ReservationPage"),
 );
 const RequestPage = React.lazy(() => import("./pages/v1/RequestPage"));
-const AuthPage = React.lazy(() => import("./pages/v1/auth/Auth"));
+const AuthPage = React.lazy(() => import("./pages/v2/auth/Auth"));
 const NotFoundPage = React.lazy(() => import("./pages/v1/NotFoundPage"));
 const CancelReservationPage = React.lazy(
   () => import("./pages/v1/CancelReservationPage"),
@@ -149,7 +149,7 @@ function App() {
                 path={routes.editProfilePage}
                 component={EditProfilePage}
               />
-              <Route path={routes.auth} component={AuthPage} />
+              <Route path={routes.v2Auth} component={AuthPage} />
               <Route
                 path={routes.participantsList}
                 component={ParticipantsListPage}
