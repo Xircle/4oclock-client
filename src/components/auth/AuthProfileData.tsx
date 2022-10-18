@@ -239,20 +239,20 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
             {state.gender === "male" ? (
               <FontAwesomeIcon
                 icon={faCheckCircle}
-                color={colors.MidBlue}
+                color={colors.StrongLime}
                 size="lg"
               />
             ) : (
               <FontAwesomeIcon
                 icon={faCircle}
-                color={genderError ? colors.MidBlue : colors.LightGray}
+                color={genderError ? colors.StrongLime : colors.LightGray}
                 size="lg"
               />
             )}
             <GenderText
               style={
                 genderError
-                  ? { marginLeft: "5px", color: colors.MidBlue }
+                  ? { marginLeft: "5px", color: colors.StrongLime }
                   : { marginLeft: "5px" }
               }
             >
@@ -350,5 +350,5 @@ const ErrorMessage = styled.p`
   margin-top: 7px;
   font-size: 8px;
   margin-left: 5px;
-  color: ${colors.MidBlue};
+  color: ${colors.StrongLime};
 `;
