@@ -77,7 +77,7 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
               color: colors.MidBlue,
             }}
           >
-            <p style={{ color: "#18A0FB" }}>프로필사진 업로드하기</p>
+            <p style={{ color: colors.StrongLime }}>프로필사진 업로드하기</p>
           </FlexDiv>
         </FileLabel>
       </div>
@@ -129,10 +129,10 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
           transform: "translateY(-10px)",
         }}
       >
-        <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
-        <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
-        <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
-        <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
+        <FontAwesomeIcon icon={faCheckCircle} color={colors.StrongLime} />
+        <FontAwesomeIcon icon={faCheckCircle} color={colors.StrongLime} />
+        <FontAwesomeIcon icon={faCheckCircle} color={colors.StrongLime} />
+        <FontAwesomeIcon icon={faCheckCircle} color={colors.StrongLime} />
       </FlexDiv>
       <NextButton
         disabled={!localImageSrc && !state.profileImgFile}
