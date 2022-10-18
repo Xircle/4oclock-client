@@ -66,7 +66,7 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
             <FontAwesomeIcon icon={faCircle} color={colors.LightGray} />
           )}
           <BlackTextSpan style={{ marginLeft: "10px" }}>
-            연고이팅 이용약관
+            케빈의 클럽 이용약관
           </BlackTextSpan>
           <BlueTextSpan>
             {"("}필수{")"}
@@ -90,7 +90,7 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
             <FontAwesomeIcon icon={faCircle} color={colors.LightGray} />
           )}
           <BlackTextSpan style={{ marginLeft: "10px" }}>
-            연고이팅 개인정보 수집 및 이용동의
+            케빈의 클럽 개인정보 수집 및 이용동의
           </BlackTextSpan>
           <BlueTextSpan>
             {"("}필수{")"}
@@ -138,7 +138,7 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
             <FontAwesomeIcon icon={faCircle} color={colors.LightGray} />
           )}
           <BlackTextSpan style={{ marginLeft: "10px" }}>
-            연고이팅 마케팅 수신동의
+            케빈의 클럽 마케팅 수신동의
           </BlackTextSpan>
           <GrayTextSpan>
             {"("}선택{")"}
