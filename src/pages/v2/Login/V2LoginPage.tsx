@@ -64,7 +64,6 @@ function V2LoginPage() {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  boxShadow: "rgba(75, 88, 208, 0.5) 0px 25px 20px -20px",
                   marginTop: 50,
                 }}
               >
@@ -73,11 +72,28 @@ function V2LoginPage() {
             );
           }}
         />
+        <SignInLogin>회원 가입</SignInLogin>
         <InquiryText>혹시 로그인이 안되시나요?</InquiryText>
       </Body>
     </Container>
   );
 }
+
+const SignInLogin = styled.div`
+  border: none;
+  font-size: 14px;
+  font-weight: bolder;
+  border-radius: 5px;
+  margin-top: 15px;
+  cursor: pointer;
+  color: white;
+  width: 333px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+`;
 
 const Body = styled.div`
   display: flex;
