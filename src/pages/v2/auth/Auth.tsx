@@ -71,7 +71,7 @@ function Auth() {
 
   const prevStep = () => {
     if (step > 0) setStep((step) => step - 1);
-    else history.push(routes.root);
+    else history.goBack();
   };
 
   const components = [
