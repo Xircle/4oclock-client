@@ -32,7 +32,8 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
         맛있는 모임이 시작돼요!
       </Heading>
       <SubText style={{ lineHeight: "20px", marginTop: "13px" }}>
-        친구들과 연고이팅 모임 시작 전 필수 약관 내용에 먼저 <br />
+        친구들과 케빈의 클럽 모임 시작 전 필수 약관 내용에
+        <br />
         동의해주세요
       </SubText>
       <TextSpanDiv
