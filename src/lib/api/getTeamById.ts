@@ -1,9 +1,9 @@
 import { CURRENT_USER } from "./../../components/shared/constants";
 import AxiosClient from "../apiClient";
-import { GetTeamByIdOutput, TeamData } from "./types.d";
+import { GetTeamByIdData, GetTeamByIdOutput } from "./types.d";
 import storage from "../storage";
 
-export const getTeamById = async (teamId: string): Promise<TeamData> => {
+export const getTeamById = async (teamId: string): Promise<GetTeamByIdData> => {
   const { data } = await AxiosClient.get<GetTeamByIdOutput>(
     `/team/id?teamId=${teamId}`,
     {
