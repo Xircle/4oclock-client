@@ -83,6 +83,23 @@ export default function V2MyPage() {
               />
             );
           })}
+
+          {approveds && approveds.length > 0 ? (
+            <>
+              <InstructionHeading>
+                📌만약 단톡에 초대가 안된다면?
+              </InstructionHeading>
+              <InstructionSubHeading>
+                리더 전화번호 복사 {">"} 리더에게 문의해봐!
+              </InstructionSubHeading>
+            </>
+          ) : (
+            <NoTeamText>
+              아직 승인된 모임이
+              <br />
+              없습니다
+            </NoTeamText>
+          )}
         </BodyItem>
         <BodyItem>
           <BodyItemHeading>회원 정보</BodyItemHeading>
@@ -92,6 +109,24 @@ export default function V2MyPage() {
     </Container>
   );
 }
+
+const InstructionSubHeading = styled.div`
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  margin-top: 17px;
+  /* identical to box height, or 136% */
+
+  color: #505050;
+`;
+
+const InstructionHeading = styled.div`
+  margin-top: 26px;
+  color: #505050;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+`;
 
 const InquiryButton = styled.div`
   margin-left: auto;
@@ -134,4 +169,20 @@ const BodyItemHeading = styled.div`
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 20px;
+`;
+
+const NoTeamText = styled.div`
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 19px;
+  /* or 146% */
+
+  text-align: center;
+
+  color: #8c94a4;
 `;
