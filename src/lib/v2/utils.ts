@@ -79,9 +79,9 @@ const openInNewTab = (url) => {
   window.open(url, "_blank");
 };
 export const InquiryCTA = () => {
-  openInNewTab("https://naver.com");
+  openInNewTab("https://open.kakao.com/o/shdu1PFe");
 };
 
 export const InstagramCTA = () => {
-  openInNewTab("https://instagram.com");
+  openInNewTab("https://instagram.com/kevin.club_official?igshid=MDE2OWE1N2Q=");
 };
