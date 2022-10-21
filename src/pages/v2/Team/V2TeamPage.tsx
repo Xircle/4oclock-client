@@ -142,12 +142,13 @@ export default function V2TeamPage({ match, location, history }: Props) {
         <DetailInfoSection>
           <DetailInfoTitle>🔹신청 전, 꼭 알아주세요!</DetailInfoTitle>
           <DetailInfoTag>
-            1.승인이 된 후에 꼭 오카방에 입장해주세요💙
+            1.신청 후에 리더의 승인을 기다려주세요!💙
             <br />
             2.꼭 모임을 신청할때 날짜 , 테마를 잘 확인해주세요
             <br />
             3.신청서를 꼼꼼히 작성해줘야 리더가 승인을 해줘요!
             <br />
+            마음에 드는 모임에 신청하기 !<br />
             4.모임 3회 미만 참석 시 클럽 영구제명입니다
           </DetailInfoTag>
         </DetailInfoSection>
