@@ -154,9 +154,45 @@ export default function V2TeamPage({ match, location, history }: Props) {
           </DetailInfoTag>
         </DetailInfoSection>
       </DetailInfoContainer>
+      <ParticipateWrapper>
+        {teamData?.maleCount &&
+          teamData?.maxParticipant &&
+          teamData?.femaleCount && (
+            <ParticipateCount>
+              잔여석 남
+              {teamData.maxParticipant / 2 - teamData.maleCount > 0
+                ? teamData.maxParticipant / 2 - teamData.maleCount
+                : 0}{" "}
+              여
+              {teamData.maxParticipant / 2 - teamData.femaleCount > 0
+                ? teamData.maxParticipant / 2 - teamData.femaleCount
+                : 0}{" "}
+              남음
+            </ParticipateCount>
+          )}
+        <ParticipateButton onClick={applyHandler}>
+          정기클럽 신청하기 {">>"}
+        </ParticipateButton>
+      </ParticipateWrapper>
     </Container>
   );
 }
+
+const ParticipateCount = styled.span`
+  position: absolute;
+  right: 25px;
+  top: -20px;
+  background: #ff3333;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
+  padding: 9px 14px;
+  margin-left: 10px;
+  /* identical to box height */
+
+  color: #ffffff;
+`;
 
 const Dividor = styled.div`
   font-weight: 700;
@@ -232,7 +268,9 @@ const SectionWithPadding = styled.div`
   padding: 21px;
 `;
 
-const Container = styled.div``;
+const Container = styled.div`
+  position: relative;
+`;
 
 const MainPicContainer = styled.div`
   height: 160px;
@@ -248,6 +286,7 @@ const MainPic = styled.img`
 const DetailInfoContainer = styled.div`
   padding-left: 30px;
   padding-right: 30px;
+  margin-bottom: 200px;
 `;
 
 const DetailInfoSection = styled.div`
@@ -309,4 +348,24 @@ const ClubInfoSubText = styled.div`
 
   color: #8c94a4;
   margin-top: 12px;
+`;
+
+const ParticipateButton = styled.div`
+  width: 100%;
+  height: 80px;
+  background: rgba(33, 225, 156);
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #050505;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 28px;
+`;
+
+const ParticipateWrapper = styled.div`
+  position: fixed;
+  bottom: 0;
+  width: 375px;
 `;
