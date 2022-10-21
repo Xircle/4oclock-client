@@ -47,9 +47,10 @@ export default function V2ApplyingPage({ match, location }: Props) {
       alert("로그인 후 이용해주세요");
       return;
     }
+
     const data = await mutateCreateApplication({
       teamId: parseInt(teamId),
-      content,
+      content: content,
       status: ApplicationStatus.Pending,
     });
     if (data.data.ok) {
