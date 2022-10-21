@@ -136,7 +136,6 @@ function V2LandingPage() {
     if (categories && dayData && ageData) {
       setRefeilterCount(refilterCount + 1);
       window.addEventListener("scroll", OnScroll);
-      // v
     }
   }, [categories, dayData, ageData]);
 
@@ -224,7 +223,7 @@ function V2LandingPage() {
           <br />
           참여 가능한 정모가 보여!
           <br />
-          마음에 드는 하나의 모임에 신청하기!
+          마음에 드는 모임에 신청하기!
         </Info2>
         {drawerText === DrawerType.Category
           ? categories.map((item, index) => {
@@ -291,7 +290,7 @@ function V2LandingPage() {
         <InstructionText>
           0. 들어가고 싶은 정모클럽 <b>나이대,날짜,테마</b> 선택하기
           <br />
-          1.정모클럽 <b>2-3개</b> 신청하기
+          1.정모클럽 <b>4-5개</b> 신청하기
           <br />
           2.리더의 승인 대기 하기
           <br />
