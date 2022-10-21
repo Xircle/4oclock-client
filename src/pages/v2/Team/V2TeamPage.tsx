@@ -362,6 +362,7 @@ const ParticipateButton = styled.div`
   font-weight: 700;
   font-size: 22px;
   line-height: 28px;
+  cursor: pointer;
 `;
 
 const ParticipateWrapper = styled.div`
