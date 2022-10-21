@@ -6,7 +6,7 @@ import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
 import { getTeamById } from "../../../lib/api/getTeamById";
-import { TeamData } from "../../../lib/api/types";
+import { GetTeamByIdData } from "../../../lib/api/types";
 import optimizeImage from "../../../lib/optimizeImage";
 import { DayNumToKor } from "../../../lib/v2/utils";
 import { colors, V2OrangeButton } from "../../../styles/styles";
@@ -19,7 +19,7 @@ interface Props extends RouteComponentProps<MatchParms, {}, LocationState> {}
 
 export default function V2TeamPage({ match, location, history }: Props) {
   const { teamId } = match.params;
-  const { data: teamData } = useQuery<TeamData | undefined>(
+  const { data: teamData } = useQuery<GetTeamByIdData | undefined>(
     ["team", teamId],
     () => getTeamById(teamId),
     {
@@ -157,8 +157,6 @@ export default function V2TeamPage({ match, location, history }: Props) {
     </Container>
   );
 }
-
-const InfoSection = styled.div``;
 
 const Dividor = styled.div`
   font-weight: 700;
