@@ -331,8 +331,16 @@ export interface TeamData {
   areaInfo?: string;
 }
 
+export interface DetailTeamData extends TeamData {
+  maleCount?: number;
+  femaleCount?: number;
+}
+export interface GetTeamByIdData extends DetailTeamData {
+  applications?: ApplicationData[];
+}
+
 export interface GetTeamByIdOutput extends CoreOutput {
-  data: TeamData;
+  data: GetTeamByIdData;
 }
 
 export interface CreateApplicationInput {
