@@ -128,7 +128,7 @@ const ApplyContainer = styled.div`
 
 const TotalCountNumber = styled.span`
   font-weight: 500;
-  font-size: 10px;
+  font-size: 12px;
   color: #6f7789;
   margin-left: 5px;
 `;
@@ -136,7 +136,7 @@ const TotalCountNumber = styled.span`
 const PartialCountContainer = styled.div`
   color: #fd8a66;
   font-weight: 700;
-  font-size: 11px;
+  font-size: 13px;
   margin-top: 8px;
 `;
 
