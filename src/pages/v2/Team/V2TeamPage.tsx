@@ -160,15 +160,15 @@ export default function V2TeamPage({ match, location, history }: Props) {
             잔여석 남
             {teamData?.maleCount
               ? teamData.maxParticipant / 2 - teamData?.maleCount > 0
-                ? teamData.maxParticipant / 2 - teamData?.maleCount
+                ? Math.ceil(teamData.maxParticipant / 2 - teamData?.maleCount)
                 : 0
-              : teamData.maxParticipant / 2}{" "}
+              : Math.ceil(teamData.maxParticipant / 2)}{" "}
             여
             {teamData?.femaleCount
               ? teamData.maxParticipant / 2 - teamData?.femaleCount > 0
-                ? teamData.maxParticipant / 2 - teamData?.femaleCount
+                ? Math.ceil(teamData.maxParticipant / 2 - teamData?.femaleCount)
                 : 0
-              : teamData.maxParticipant / 2}{" "}
+              : Math.ceil(teamData.maxParticipant / 2)}{" "}
             남음
           </ParticipateCount>
         ) : (
