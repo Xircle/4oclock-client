@@ -49,6 +49,9 @@ export default function V2MyPage() {
         {pendings && pendings?.length > 0 && (
           <BodyItem>
             <BodyItemHeading>승인 대기중</BodyItemHeading>
+            <PendingAlertText>
+              *신청취소는 1번밖에 안되니 유의해줘!
+            </PendingAlertText>
             {pendings?.map((pending) => {
               return (
                 <MyApplicationRow
@@ -109,6 +112,14 @@ export default function V2MyPage() {
     </Container>
   );
 }
+
+const PendingAlertText = styled.div`
+  color: #505050;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  margin-bottom: 15px;
+`;
 
 const InstructionSubHeading = styled.div`
   font-weight: 400;
