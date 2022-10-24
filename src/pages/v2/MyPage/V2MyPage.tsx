@@ -46,6 +46,11 @@ export default function V2MyPage() {
       <V2HeaderC title="my page" />
       <Body>
         <InquiryButton onClick={InquiryCTA}>케빈에게 문의하기</InquiryButton>
+
+        <BlueInfoText>
+          신청한 클럽 중 가장 먼저 리더의 승인이 확인 된 클럽이 자신의
+          정기club이야 !
+        </BlueInfoText>
         {pendings && pendings?.length > 0 && (
           <BodyItem>
             <BodyItemHeading>승인 대기중</BodyItemHeading>
@@ -112,6 +117,20 @@ export default function V2MyPage() {
     </Container>
   );
 }
+
+const BlueInfoText = styled.div`
+  padding: 16px 26px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  color: #505050;
+  background: #dbedff;
+  width: 90%;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+`;
 
 const PendingAlertText = styled.div`
   color: #505050;
