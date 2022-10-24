@@ -156,20 +156,22 @@ export default function V2TeamPage({ match, location, history }: Props) {
       </DetailInfoContainer>
       <ParticipateWrapper>
         {teamData?.maleCount &&
-          teamData?.maxParticipant &&
-          teamData?.femaleCount && (
-            <ParticipateCount>
-              잔여석 남
-              {teamData.maxParticipant / 2 - teamData.maleCount > 0
-                ? teamData.maxParticipant / 2 - teamData.maleCount
-                : 0}{" "}
-              여
-              {teamData.maxParticipant / 2 - teamData.femaleCount > 0
-                ? teamData.maxParticipant / 2 - teamData.femaleCount
-                : 0}{" "}
-              남음
-            </ParticipateCount>
-          )}
+        teamData?.maxParticipant &&
+        teamData?.femaleCount ? (
+          <ParticipateCount>
+            잔여석 남
+            {teamData.maxParticipant / 2 - teamData.maleCount > 0
+              ? teamData.maxParticipant / 2 - teamData.maleCount
+              : 0}{" "}
+            여
+            {teamData.maxParticipant / 2 - teamData.femaleCount > 0
+              ? teamData.maxParticipant / 2 - teamData.femaleCount
+              : 0}{" "}
+            남음
+          </ParticipateCount>
+        ) : (
+          <></>
+        )}
         <ParticipateButton onClick={applyHandler}>
           정기클럽 신청하기 {">>"}
         </ParticipateButton>
