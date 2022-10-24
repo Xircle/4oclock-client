@@ -217,7 +217,13 @@ function V2LandingPage() {
         anchor="bottom"
       >
         <DrawerTitle>{drawerText}</DrawerTitle>
+
         <Info1>중복선택 가능*</Info1>
+        {drawerText === DrawerType.Time ? (
+          <DrawerAlert>※이번 기수는 목금토일 정모만 신청 가능해요</DrawerAlert>
+        ) : (
+          <></>
+        )}
         <Info2>
           ✅ 선택한 내용을 토대로
           <br />
@@ -383,6 +389,7 @@ const Info1 = styled.div`
   font-size: 13px;
   line-height: 20px;
   color: #505050;
+  margin-top: 8px;
 `;
 
 const Info2 = styled.div`
@@ -505,6 +512,13 @@ const ModalWrapper = styled.div`
     line-height: 18px;
     font-weight: 500;
   }
+`;
+
+const DrawerAlert = styled.div`
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+  color: #ff0000;
 `;
 
 export default V2LandingPage;
