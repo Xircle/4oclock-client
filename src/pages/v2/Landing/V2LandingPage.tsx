@@ -295,7 +295,7 @@ function V2LandingPage() {
           2.리더의 승인 대기 하기
           <br />
           3.<b style={{ color: "#FF0000" }}>(중요)</b>my page 에서 승인된 모임
-          오카방 들어가기
+          확인하기
         </InstructionText>
       </InstructionContainer>
       <Body>
