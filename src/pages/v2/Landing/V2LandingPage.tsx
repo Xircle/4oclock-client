@@ -331,8 +331,10 @@ function V2LandingPage() {
                     id={team.id}
                     key={team.id}
                     name={team.name}
-                    min_age={team.min_age}
-                    max_age={team.max_age}
+                    male_min_age={team.male_min_age}
+                    male_max_age={team.male_max_age}
+                    female_min_age={team.female_min_age}
+                    female_max_age={team.female_max_age}
                     image={team.images?.[0]}
                     leader_id={team.leader_id}
                     leader_image={team.leader_image}
