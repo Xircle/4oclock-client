@@ -6,8 +6,10 @@ import { DayNumToKor } from "../../../lib/v2/utils";
 interface IProps {
   image?: string;
   name?: string;
-  max_age?: number;
-  min_age?: number;
+  male_max_age?: number;
+  male_min_age?: number;
+  female_max_age?: number;
+  female_min_age?: number;
   leader_username?: string;
   leader_id?: string;
   leader_image?: string;
@@ -25,8 +27,10 @@ interface IProps {
 export default function TeamFeedRenderItem({
   image,
   name,
-  max_age,
-  min_age,
+  male_max_age,
+  male_min_age,
+  female_max_age,
+  female_min_age,
   description,
   meeting_day,
   meeting_hour,
@@ -51,7 +55,8 @@ export default function TeamFeedRenderItem({
         {is_closed && <ClosedOverlay>마 감</ClosedOverlay>}
         <TagContainer>
           <Tag>
-            {min_age} ~ {max_age}
+            남 {male_min_age}~{male_max_age} / 여 {female_min_age}~
+            {female_max_age}
           </Tag>
           <Tag>
             {DayNumToKor(meeting_day?.toString())} {meeting_hour}시
@@ -151,7 +156,7 @@ const Tag = styled.span`
   display: inline-block;
   padding-top: 2px;
   padding-bottom: 2px;
-  font-size: 14px;
+  font-size: 12px;
 `;
 
 const TagContainer = styled.div`
