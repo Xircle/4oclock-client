@@ -118,6 +118,13 @@ export default function V2TeamPage({ match, location, history }: Props) {
               </ClubInfoSubText>
             </>
           )}
+          <Row style={{ marginTop: 22 }}>
+            <FontAwesomeIcon icon={faUser} size="lg" />
+            <ClubInfoHeading>
+              나이대: 남자 {teamData?.maleMinAge}~{teamData?.maleMaxAge} / 여자{" "}
+              {teamData?.femaleMinAge}~{teamData?.femaleMaxAge}
+            </ClubInfoHeading>
+          </Row>
         </DetailInfoSection>
         <DetailInfoSection>
           <DetailInfoTitle>🔹클럽 소개</DetailInfoTitle>
