@@ -42,28 +42,34 @@ for (let i = 0; i < 7; i++) {
 
 export interface AgeData {
   title: string;
-  minAge: number;
-  maxAge: number;
+  maleMinAge?: number;
+  maleMaxAge?: number;
+  femaleMinAge?: number;
+  femaleMaxAge?: number;
   selected: boolean;
 }
 
 export const IAgeData: AgeData[] = [
   {
-    title: "20~21",
-    minAge: 20,
-    maxAge: 21,
+    title: "A.남자(20-23살) 여자(19-22살)",
+    maleMinAge: 20,
+    maleMaxAge: 23,
+    femaleMinAge: 19,
+    femaleMaxAge: 22,
     selected: true,
   },
   {
-    title: "22~24",
-    minAge: 22,
-    maxAge: 24,
+    title: "B.남자(23-26살) 여자(22-25살)",
+    maleMinAge: 23,
+    maleMaxAge: 26,
+    femaleMinAge: 22,
+    femaleMaxAge: 25,
     selected: true,
   },
   {
-    title: "25이상",
-    minAge: 25,
-    maxAge: 30,
+    title: "C.남자(27이상) 여자(25이상)",
+    maleMinAge: 27,
+    femaleMinAge: 25,
     selected: true,
   },
 ];
