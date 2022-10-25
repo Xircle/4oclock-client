@@ -329,6 +329,10 @@ export interface TeamData {
   meetingHour?: number;
   maxParticipant?: number;
   areaInfo?: string;
+  maleMinAge?: number;
+  maleMaxAge?: number;
+  femaleMinAge?: number;
+  femaleMaxAge?: number;
 }
 
 export interface DetailTeamData extends TeamData {
