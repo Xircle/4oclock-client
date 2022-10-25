@@ -3,8 +3,10 @@ import { CategoryData } from "./types.d";
 import AxiosClient from "../apiClient";
 
 interface AgeQuery {
-  minAge: number;
-  maxAge: number;
+  maleMinAge?: number;
+  maleMaxAge?: number;
+  femaleMinAge?: number;
+  femaleMaxAge?: number;
 }
 
 export const seeTeamsWithFilter = async (
@@ -28,7 +30,12 @@ export const seeTeamsWithFilter = async (
   let ageQuery: AgeQuery[] = [];
   ageData.map((age) => {
     if (age.selected) {
-      ageQuery.push({ minAge: age.minAge, maxAge: age.maxAge });
+      ageQuery.push({
+        maleMinAge: age.maleMinAge,
+        maleMaxAge: age.maleMaxAge,
+        femaleMinAge: age.femaleMinAge,
+        femaleMaxAge: age.femaleMaxAge,
+      });
     }
   });
 
