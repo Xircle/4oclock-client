@@ -106,6 +106,9 @@ export default function V2ApplyingPage({ match, location }: Props) {
         </InfoRow>
         <CrewInputContainer>
           <CrewInputLabel>🙋‍♀️클럽에 신청한 이유 + 자기소개</CrewInputLabel>
+          <CrewInputSmallText>
+            함께 신청한 친구가 있다면 신청한 친구의 이름 전화번호를 적어주세요!
+          </CrewInputSmallText>
           <CrewInputField
             name="crew"
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -118,6 +121,14 @@ export default function V2ApplyingPage({ match, location }: Props) {
     </Container>
   );
 }
+
+const CrewInputSmallText = styled.div`
+  margin-top: 12px;
+
+  color: #6f7789;
+  line-height: 18px;
+  font-size: 12px;
+`;
 
 export const LoaderWrapper = styled.div<{ top?: string }>`
   position: absolute;
@@ -152,6 +163,7 @@ const Title = styled.div`
   font-size: 20px;
   font-weight: 700;
   color: #505050;
+  margin-left: 20px;
 `;
 
 const InfoContainer = styled.div`
