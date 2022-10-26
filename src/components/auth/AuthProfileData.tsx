@@ -33,6 +33,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
     "연세대학교",
     "이화여자대학교",
     "성신여자대학교",
+    "다흔 학교입니다",
   ];
   const [nameError, SetNameError] = useState<boolean>(false);
   const [univError, SetUnivError] = useState<boolean>(false);
