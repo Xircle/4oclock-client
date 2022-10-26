@@ -67,8 +67,8 @@ export const IAgeData: AgeData[] = [
     selected: true,
   },
   {
-    title: "C.남자(27이상) 여자(25이상)",
-    maleMinAge: 27,
+    title: "C.남자(26이상) 여자(25이상)",
+    maleMinAge: 26,
     femaleMinAge: 25,
     selected: true,
   },
