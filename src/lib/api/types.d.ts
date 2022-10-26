@@ -333,6 +333,7 @@ export interface TeamData {
   maleMaxAge?: number;
   femaleMinAge?: number;
   femaleMaxAge?: number;
+  leaderIntro?: string;
 }
 
 export interface DetailTeamData extends TeamData {
