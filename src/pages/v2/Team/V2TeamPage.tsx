@@ -135,13 +135,20 @@ export default function V2TeamPage({ match, location, history }: Props) {
         <DetailInfoSection>
           <DetailInfoTitle>🔹모임 일정 및 활동</DetailInfoTitle>
           <TeamSchedule>
-            1회차:우정팅 진행
+            1회차:다같이 만나는 우정시그널 진행🎉
             <br />
-            2회차:6인 팀매칭 활동
+            (클럽 프렌즈 다같이 알아가는 시간{"><)"}
             <br />
-            3회차:6인 팀매칭 활동
+            2회차:6인 팀매칭 활동💎 -뒤풀이는 선택!
             <br />
-            4화차: 스터디 번개
+            (리더가 배정해줘요!)
+            <br />
+            ※활동은 테마 별로 다를 예정 <br />
+            3회차:6인 팀매칭 활동💎-뒤풀이는 선택!
+            <br />
+            (리더가 배정해줘요!) <br />
+            ※활동은 테마 별로 다를 예정 <br />
+            4화차:my 클럽 자유 번개팟👾 (선택)
           </TeamSchedule>
         </DetailInfoSection>
         <DetailInfoSection>
