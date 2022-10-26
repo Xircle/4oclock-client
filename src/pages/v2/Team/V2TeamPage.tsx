@@ -79,7 +79,9 @@ export default function V2TeamPage({ match, location, history }: Props) {
           </LeaderAvatar>
           <SubTextDiv>🙋‍♀️리더 자기 소개</SubTextDiv>
           <LeaderIntro>
-            {teamData?.leader?.shortBio
+            {teamData?.leaderIntro
+              ? teamData?.leaderIntro
+              : teamData?.leader?.shortBio
               ? teamData?.leader?.shortBio
               : "반가워요"}
           </LeaderIntro>
