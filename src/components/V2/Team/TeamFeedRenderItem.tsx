@@ -139,12 +139,11 @@ const LeaderText = styled.span`
 const Description = styled.div`
   white-space: nowrap;
   overflow: hidden;
-  width: 100%;
   text-overflow: clip;
+  width: 100%;
   color: #8c94a4;
   margin-top: 10px;
   font-size: 11px;
-  overflow: hidden;
 `;
 
 const Tag = styled.span`
@@ -221,6 +220,9 @@ const LeftContainer = styled.div`
 const Title = styled.div`
   font-size: 17px;
   font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
 `;
 
 const RightContainer = styled.div`
