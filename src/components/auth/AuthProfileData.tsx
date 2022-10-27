@@ -33,7 +33,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
     "연세대학교",
     "이화여자대학교",
     "성신여자대학교",
-    "다른 학교입니다",
+    "다른학교입니다",
   ];
   const [nameError, SetNameError] = useState<boolean>(false);
   const [univError, SetUnivError] = useState<boolean>(false);
@@ -204,6 +204,9 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
           </option>
           <option value="성신여자대학교" style={{ color: colors.Black }}>
             성신여자대학교
+          </option>
+          <option value="다른학교입니다" style={{ color: colors.Black }}>
+            다른학교입니다
           </option>
         </select>
         {univError && <ErrorMessage>{errorMessages[1]}</ErrorMessage>}
