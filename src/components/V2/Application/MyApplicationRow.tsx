@@ -151,6 +151,11 @@ const RightContainer = styled.div`
 const TeamNameTag = styled.div`
   font-weight: 700;
   font-size: 18px;
+
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
 `;
 
 const CTAButton = styled.div`
