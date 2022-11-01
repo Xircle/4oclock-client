@@ -12,10 +12,6 @@ export default function V2LeaderPage() {
     ["leaderTeam"],
     () => getMyTeamsLeader(),
     {
-      onError: (err: any) => {
-        alert(err);
-        return;
-      },
       retry: 1,
       refetchOnWindowFocus: false,
     },

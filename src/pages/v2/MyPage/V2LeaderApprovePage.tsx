@@ -18,10 +18,6 @@ export default function V2LeaderApprovePage({ match }: Props) {
   const { data: teamApplicationsData, refetch } = useQuery<
     GetTeamApplications | undefined
   >(["TeamApplications", teamId], () => getTeamApplications(teamId), {
-    onError: (err: any) => {
-      alert(err);
-      return;
-    },
     retry: 1,
     refetchOnWindowFocus: false,
   });

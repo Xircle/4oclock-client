@@ -98,10 +98,6 @@ export default function ChatRoomPage({ match, history, location }: Props) {
     ["room-chat", roomId, page],
     () => getRoomMessages(roomId, receiverId, page, 40),
     {
-      onError: (err: any) => {
-        alert(err);
-        return;
-      },
       retry: 1,
       refetchOnWindowFocus: false,
       keepPreviousData: true,

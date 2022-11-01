@@ -70,10 +70,6 @@ function V2LandingPage() {
     ["categories"],
     () => seeAllCategory(),
     {
-      onError: (err: any) => {
-        alert(err);
-        return;
-      },
       retry: 1,
       refetchOnWindowFocus: false,
     },

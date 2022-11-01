@@ -41,10 +41,6 @@ export default function EditPlacePage({ match }: Props) {
     ["Admin-place-detail", placeId],
     () => getPlaceById(placeId),
     {
-      onError: (err: any) => {
-        alert(err);
-        return;
-      },
       retry: 1,
       refetchOnWindowFocus: false,
     },

@@ -52,10 +52,6 @@ export default function ParticipantsListPage({ history, location }: Props) {
     ["place-detail", placeId],
     () => getPlaceById(placeId),
     {
-      onError: (err: any) => {
-        alert(err);
-        return;
-      },
       retry: 1,
       refetchOnWindowFocus: false,
     },
@@ -69,10 +65,6 @@ export default function ParticipantsListPage({ history, location }: Props) {
     ["participants-list", placeId],
     () => getPlaceParticipantList(placeId),
     {
-      onError: (err: any) => {
-        alert(err);
-        return;
-      },
       retry: 1,
       refetchOnWindowFocus: false,
     },

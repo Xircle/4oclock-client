@@ -22,10 +22,6 @@ export default function V2LeaderApproveDetailPage({ match }: Props) {
         param2: param2 ? parseInt(param2) : undefined,
       }),
     {
-      onError: (err: any) => {
-        alert(err);
-        return;
-      },
       retry: 1,
       refetchOnWindowFocus: false,
     },

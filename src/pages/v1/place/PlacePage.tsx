@@ -92,10 +92,6 @@ export default function PlacePage({ match, location }: Props) {
     ["place-detail", placeId],
     () => getPlaceById(placeId),
     {
-      onError: (err: any) => {
-        alert(err);
-        return;
-      },
       retry: 1,
       refetchOnWindowFocus: false,
     },

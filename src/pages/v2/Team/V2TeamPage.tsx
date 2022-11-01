@@ -23,10 +23,6 @@ export default function V2TeamPage({ match, location, history }: Props) {
     ["team", teamId],
     () => getTeamById(teamId),
     {
-      onError: (err: any) => {
-        alert(err);
-        return;
-      },
       retry: 1,
       refetchOnWindowFocus: false,
     },
