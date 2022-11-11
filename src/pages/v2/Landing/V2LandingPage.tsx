@@ -38,6 +38,7 @@ function V2LandingPage() {
   const [refilterCount, setRefeilterCount] = useState(0);
   const [dayData, setDayData] = useState<TimeData[]>(ITimeData);
   const [ageData, setAgeData] = useState<AgeData[]>(IAgeData);
+  const [loading, setLoading] = useState(false);
   const [isSamsungBrowserBool, setIsSamsungBrowserBool] = useState(false);
   const { mutateAsync: mutateUserData, isLoading: isFetching } =
     useMutation(getUser);
@@ -97,7 +98,7 @@ function V2LandingPage() {
   const OnScroll = useCallback((event) => {
     if (container.current) {
       const { clientHeight } = container.current;
-      if (window.pageYOffset + window.innerHeight > clientHeight - 100) {
+      if (window.pageYOffset + window.innerHeight > clientHeight - 200) {
         fetchNextPageTeam();
       }
     }
