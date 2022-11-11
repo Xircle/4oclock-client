@@ -17,11 +17,13 @@ import {
   ITimeData,
   TimeData,
 } from "../../../lib/v2/utils";
-import { Container, MainBtn } from "../../../styles/styles";
+import { colors, Container, MainBtn } from "../../../styles/styles";
 import { isSamsungBrowser } from "react-device-detect";
 import Modal from "../../../components/UI/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { LoaderBackdrop } from "../../../components/shared/Loader";
+import { ClipLoader } from "react-spinners";
 
 enum DrawerType {
   Category = "선호하는 정모 테마을 선택해주세요",
@@ -38,7 +40,6 @@ function V2LandingPage() {
   const [refilterCount, setRefeilterCount] = useState(0);
   const [dayData, setDayData] = useState<TimeData[]>(ITimeData);
   const [ageData, setAgeData] = useState<AgeData[]>(IAgeData);
-  const [loading, setLoading] = useState(false);
   const [isSamsungBrowserBool, setIsSamsungBrowserBool] = useState(false);
   const { mutateAsync: mutateUserData, isLoading: isFetching } =
     useMutation(getUser);
@@ -79,6 +80,7 @@ function V2LandingPage() {
   const {
     data: teamData,
     isLoading: teamDataLoading,
+    isFetchingNextPage: teamDataFetching,
     hasNextPage: hasNextPageTeam,
     fetchNextPage: fetchNextPageTeam,
   } = useInfiniteQuery(
@@ -348,10 +350,33 @@ function V2LandingPage() {
                 );
               })}
         </FeedContainer>
+        {teamDataLoading || teamDataFetching ? (
+          <>
+            <LoaderBackdrop />
+            <LoaderWrapper>
+              <ClipLoader
+                loading={teamDataLoading || teamDataFetching}
+                color={colors.MidBlue}
+                css={{ name: "width", styles: "border-width: 4px;" }}
+                size={30}
+              />
+            </LoaderWrapper>
+          </>
+        ) : (
+          <></>
+        )}
       </Body>
     </SContainer>
   );
 }
+
+export const LoaderWrapper = styled.div`
+  position: absolute;
+  left: 50%;
+  bottom: 300px;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+`;
 
 const ResetButton = styled.div`
   cursor: pointer;
