@@ -1,10 +1,12 @@
+import { checkResponseStatus } from "./../checkResponseStatus";
 import AxiosClient from "../apiClient";
 import { GetUserOutput, UserData } from "./types.d";
 
-export const getUser = async (): Promise<UserData> => {
-  const { data } = await AxiosClient.get<GetUserOutput>(`/user/me`);
-  if (!data.ok) {
-    alert(data.error);
+export const getUser = async (): Promise<UserData | void> => {
+  const response = await AxiosClient.get<GetUserOutput>(`/user/me`);
+  if (!response.data.ok) {
+    checkResponseStatus(response.status);
+    alert(response.data.error);
   }
-  return data.data;
+  return response.data.data;
 };
