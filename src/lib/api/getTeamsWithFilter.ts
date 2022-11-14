@@ -1,3 +1,4 @@
+import { checkResponseStatus } from "./../checkResponseStatus";
 import { AgeData, TimeData } from "./../v2/utils";
 import { CategoryData } from "./types.d";
 import AxiosClient from "../apiClient";
@@ -48,7 +49,7 @@ export const seeTeamsWithFilter = async (
   if (ageQuery.length == ageData.length) {
     ageQuery = [];
   }
-  const { data } = await AxiosClient.get(`team/all/filter`, {
+  const response = await AxiosClient.get(`team/all/filter`, {
     params: {
       page: page,
       categoryIds: categoryQuery,
@@ -57,8 +58,10 @@ export const seeTeamsWithFilter = async (
     },
   });
 
-  if (!data.ok) {
-    throw new Error(data.error);
+  if (!response?.data?.ok) {
+    checkResponseStatus(response?.status);
+    throw new Error(response?.data.error);
+  } else {
+    return response?.data;
   }
-  return data;
 };
