@@ -5,14 +5,11 @@ import AxiosClient from "../apiClient";
 
 export const makeReservation = async (
   makeReservationInput: MakeReservationInput,
-): Promise<AxiosResponse<MakeReservationOutput> | void> => {
+): Promise<AxiosResponse<MakeReservationOutput>> => {
   const response = await AxiosClient.post<MakeReservationOutput>(
     "reservation",
     makeReservationInput,
   );
-  if (!response?.data?.ok) {
-    checkResponseStatus(response?.status);
-  } else {
-    return response;
-  }
+
+  return response;
 };

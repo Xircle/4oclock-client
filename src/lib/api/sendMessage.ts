@@ -10,7 +10,7 @@ interface SendMessageOutput extends CoreOutput {
 
 export const sendMessage = async (
   sendMessageInput: SendMessageInput,
-): Promise<AxiosResponse<SendMessageOutput> | void> => {
+): Promise<AxiosResponse<SendMessageOutput>> => {
   const { roomId, isRead, content, receiverId } = sendMessageInput;
   const response = await AxiosClient.post(`/room/${roomId}/messages`, {
     content,
@@ -18,9 +18,6 @@ export const sendMessage = async (
     isRead,
     sentAt: new Date(),
   });
-  if (!response?.data?.ok) {
-    checkResponseStatus(response?.status);
-  } else {
-    return response.data;
-  }
+
+  return response.data;
 };
