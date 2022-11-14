@@ -1,3 +1,4 @@
+import { checkResponseStatus } from "./../checkResponseStatus";
 import { CoreOutput } from "./../../components/shared/types.d";
 import { AxiosResponse } from "axios";
 import AxiosClient from "../apiClient";
@@ -8,13 +9,18 @@ interface SendMessageOutput extends CoreOutput {
 }
 
 export const sendMessage = async (
-  sendMessageInput: SendMessageInput
-): Promise<AxiosResponse<SendMessageOutput>> => {
+  sendMessageInput: SendMessageInput,
+): Promise<AxiosResponse<SendMessageOutput> | void> => {
   const { roomId, isRead, content, receiverId } = sendMessageInput;
-  return AxiosClient.post(`/room/${roomId}/messages`, {
+  const response = await AxiosClient.post(`/room/${roomId}/messages`, {
     content,
     receiverId,
     isRead,
     sentAt: new Date(),
   });
+  if (!response?.data?.ok) {
+    checkResponseStatus(response?.status);
+  } else {
+    return response.data;
+  }
 };
