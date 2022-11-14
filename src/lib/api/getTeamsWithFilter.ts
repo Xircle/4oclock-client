@@ -21,6 +21,7 @@ export const seeTeamsWithFilter = async (
       categoryQuery.push(category.id);
     }
   });
+
   let timeQuery: number[] = [];
   times.map((time) => {
     if (time.selected) {
@@ -38,7 +39,15 @@ export const seeTeamsWithFilter = async (
       });
     }
   });
-
+  if (categoryQuery.length == categories.length) {
+    categoryQuery = [];
+  }
+  if (timeQuery.length == times.length) {
+    timeQuery = [];
+  }
+  if (ageQuery.length == ageData.length) {
+    ageQuery = [];
+  }
   const { data } = await AxiosClient.get(`team/all/filter`, {
     params: {
       page: page,
