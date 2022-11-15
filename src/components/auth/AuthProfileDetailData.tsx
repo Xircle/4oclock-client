@@ -27,12 +27,12 @@ export default function AuthProfileDetailData({
   dispatch,
 }: Props) {
   const [drinkingStyle, SetDrinkingStyle] = useState<number>(
-    state.drinkingStyle
+    state.drinkingStyle,
   );
   function Validate(
     MBTI: string = state.MBTI,
     personality: string = state.personality,
-    drinkingStyle: number = state.drinkingStyle
+    drinkingStyle: number = state.drinkingStyle,
   ): void {
     if (
       MBTI !== "" &&
@@ -58,7 +58,7 @@ export default function AuthProfileDetailData({
             id=""
             name="MBTI"
             value={state.MBTI}
-            style={{ marginTop: "12px", color: colors.Black }}
+            style={{ marginTop: "12px", color: colors.Black, width: 301 }}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
               dispatch({
                 type: "setMBTI",
@@ -144,7 +144,7 @@ export default function AuthProfileDetailData({
               }}
               style={
                 drinkingStyle === 0
-                  ? { borderColor: "#18A0FB", color: "#18A0FB" }
+                  ? { borderColor: colors.StrongLime, color: colors.StrongLime }
                   : { borderColor: "#A7B0C0", color: "#A7B0C0" }
               }
             >
@@ -158,7 +158,7 @@ export default function AuthProfileDetailData({
               }}
               style={
                 drinkingStyle === 1
-                  ? { borderColor: "#18A0FB", color: "#18A0FB" }
+                  ? { borderColor: colors.StrongLime, color: colors.StrongLime }
                   : { borderColor: "#A7B0C0", color: "#A7B0C0" }
               }
             >
@@ -172,7 +172,7 @@ export default function AuthProfileDetailData({
               }}
               style={
                 drinkingStyle === 2
-                  ? { borderColor: "#18A0FB", color: "#18A0FB" }
+                  ? { borderColor: colors.StrongLime, color: colors.StrongLime }
                   : { borderColor: "#A7B0C0", color: "#A7B0C0" }
               }
             >
@@ -187,7 +187,7 @@ export default function AuthProfileDetailData({
               }}
               style={
                 drinkingStyle === 3
-                  ? { borderColor: "#18A0FB", color: "#18A0FB" }
+                  ? { borderColor: colors.StrongLime, color: colors.StrongLime }
                   : { borderColor: "#A7B0C0", color: "#A7B0C0" }
               }
             >
@@ -201,7 +201,7 @@ export default function AuthProfileDetailData({
               }}
               style={
                 drinkingStyle === 4
-                  ? { borderColor: "#18A0FB", color: "#18A0FB" }
+                  ? { borderColor: colors.StrongLime, color: colors.StrongLime }
                   : { borderColor: "#A7B0C0", color: "#A7B0C0" }
               }
             >
@@ -226,7 +226,7 @@ const ErrorMessage = styled.p`
   margin-top: 7px;
   font-size: 8px;
   margin-left: 5px;
-  color: ${colors.MidBlue};
+  color: ${colors.StrongLime};
 `;
 
 const SubContainer = styled.div``;

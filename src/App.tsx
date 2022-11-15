@@ -8,41 +8,69 @@ import { PortalProvider } from "./providers/PortalProvider";
 import storage from "./lib/storage";
 import { POP_UP } from "./components/shared/constants";
 import { HelmetProvider } from "react-helmet-async";
-import ImageGalleryPage from "./pages/ImageGalleryPage";
-import SocialRedirect from "./pages/RedirectPage";
-import PlaceFeedPage from "./pages/placeFeed/PlaceFeedPage";
-import FriendsPage from "./pages/friend/FriendPage";
-import MyPage from "./pages/my/MyPage";
-import ChatListPage from "./pages/chat/ChatListPage";
-import ChatRoomPage from "./pages/chat/ChatRoomPage";
-import EditProfilePage from "./pages/my/EditProfilePage";
-import PlacePage from "./pages/place/PlacePage";
-import LandingPage from "./pages/LandingPage";
-import UserProfilePage from "./pages/friend/UserProfilePage";
-import MyPlacePage from "./pages/my/MyPlacePage";
-import ParticipantsListPage from "./pages/participantsList/ParticipantsListPage";
-import ReviewsPage from "./pages/reviews/ReviewsPage";
+import ImageGalleryPage from "./pages/v1/ImageGalleryPage";
+import SocialRedirect from "./pages/v2/RedirectPage";
+import PlaceFeedPage from "./pages/v1/placeFeed/PlaceFeedPage";
+import FriendsPage from "./pages/v1/friend/FriendPage";
+import MyPage from "./pages/v1/my/MyPage";
+import ChatListPage from "./pages/v1/chat/ChatListPage";
+import ChatRoomPage from "./pages/v1/chat/ChatRoomPage";
+import EditProfilePage from "./pages/v1/my/EditProfilePage";
+import PlacePage from "./pages/v1/place/PlacePage";
+import LandingPage from "./pages/v1/LandingPage";
+import UserProfilePage from "./pages/v1/friend/UserProfilePage";
+import MyPlacePage from "./pages/v1/my/MyPlacePage";
+import ParticipantsListPage from "./pages/v1/participantsList/ParticipantsListPage";
+import ReviewsPage from "./pages/v1/reviews/ReviewsPage";
+import V2LandingPage from "./pages/v2/Landing/V2LandingPage";
+import V2LoginPage from "./pages/v2/Login/V2LoginPage";
+import V2TeamPage from "./pages/v2/Team/V2TeamPage";
 config();
 
 const ReservationConfirmPage = React.lazy(
-  () => import("./pages/reservation/ReservationConfirmPage")
+  () => import("./pages/v1/reservation/ReservationConfirmPage"),
+);
+const V2LeaderInfoPage = React.lazy(
+  () => import("./pages/v2/Team/V2LeaderInfoPage"),
 );
 const ReservationPage = React.lazy(
-  () => import("./pages/reservation/ReservationPage")
+  () => import("./pages/v1/reservation/ReservationPage"),
 );
-const RequestPage = React.lazy(() => import("./pages/RequestPage"));
-const AuthPage = React.lazy(() => import("./pages/auth/Auth"));
-const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage"));
+const RequestPage = React.lazy(() => import("./pages/v1/RequestPage"));
+const AuthPage = React.lazy(() => import("./pages/v2/auth/Auth"));
+const NotFoundPage = React.lazy(() => import("./pages/v1/NotFoundPage"));
 const CancelReservationPage = React.lazy(
-  () => import("./pages/CancelReservationPage")
+  () => import("./pages/v1/CancelReservationPage"),
 );
 
-const AdminPage = React.lazy(() => import("./pages/Admin/AdminPage"));
+const AdminPage = React.lazy(() => import("./pages/v1/Admin/AdminPage"));
 const CreatePlacePage = React.lazy(
-  () => import("./pages/Admin/CreatePlacePage")
+  () => import("./pages/v1/Admin/CreatePlacePage"),
 );
-const EditPlacesPage = React.lazy(() => import("./pages/Admin/EditPlacesPage"));
-const EditPlacePage = React.lazy(() => import("./pages/Admin/EditPlacePage"));
+const EditPlacesPage = React.lazy(
+  () => import("./pages/v1/Admin/EditPlacesPage"),
+);
+const EditPlacePage = React.lazy(
+  () => import("./pages/v1/Admin/EditPlacePage"),
+);
+
+const V2ApplyingPage = React.lazy(
+  () => import("./pages/v2/Applying/V2ApplyingPage"),
+);
+
+const V2MyPage = React.lazy(() => import("./pages/v2/MyPage/V2MyPage"));
+
+const V2LeaderPage = React.lazy(() => import("./pages/v2/MyPage/V2LeaderPage"));
+
+const V2LeaderApprovePage = React.lazy(
+  () => import("./pages/v2/MyPage/V2LeaderApprovePage"),
+);
+
+const V2LeaderApproveDetailPage = React.lazy(
+  () => import("./pages/v2/MyPage/V2LeaderApproveDetailPage"),
+);
+
+const PaymentPage = React.lazy(() => import("./pages/v1/payment/PaymentPage"));
 
 function App() {
   useEffect(() => {
@@ -56,7 +84,11 @@ function App() {
     <PortalProvider>
       <HelmetProvider>
         <GlobalStyles />
-        <AppContainer style={{ minHeight: isUse100Vh ? isUse100Vh : "100vh" }}>
+        <AppContainer
+          style={{
+            minHeight: isUse100Vh ? isUse100Vh : "100vh",
+          }}
+        >
           <Suspense
             fallback={
               <div
@@ -72,6 +104,24 @@ function App() {
             }
           >
             <Switch>
+              <Route path={routes.v2Root} component={V2LandingPage} exact />
+              <Route path={routes.v2Login} component={V2LoginPage} />
+              <Route path={routes.v2MyPage} component={V2MyPage} />
+              <Route
+                path={routes.v2LeaderInfoPage}
+                component={V2LeaderInfoPage}
+              />
+              <Route
+                path={routes.v2LeaderApprovePage}
+                component={V2LeaderApprovePage}
+              />
+              <Route
+                path={routes.v2LeaderApproveDetailPage}
+                component={V2LeaderApproveDetailPage}
+              />
+              <Route path={routes.v2LeaderPage} component={V2LeaderPage} />
+              <Route path={routes.v2TeamPage} component={V2TeamPage} />
+              <Route path={routes.v2ApplyPage} component={V2ApplyingPage} />
               <Route path={routes.root} component={LandingPage} exact />
               <Route
                 path={routes.socialRedirect}
@@ -99,11 +149,12 @@ function App() {
                 path={routes.editProfilePage}
                 component={EditProfilePage}
               />
-              <Route path={routes.auth} component={AuthPage} />
+              <Route path={routes.v2Auth} component={AuthPage} />
               <Route
                 path={routes.participantsList}
                 component={ParticipantsListPage}
               />
+              <Route path={routes.payments} component={PaymentPage} />
               {/* REMINDER Delete*/}
               <Route path={routes.chatList} component={ChatListPage} />
               <Route path={routes.chatRoom} component={ChatRoomPage} />

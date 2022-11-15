@@ -34,10 +34,7 @@ export default function AuthPhoneNumber({ onNext, state, dispatch }: Props) {
 
   return (
     <ContainerwithLeftRightMargin>
-      <Heading style={{ lineHeight: "35px" }}>
-        친구들과
-        <br /> 맛있는 밥 먹으러 갈까요?
-      </Heading>
+      <Heading style={{ lineHeight: "35px" }}>프로필 만들기</Heading>
       <SubText style={{ lineHeight: "20px", marginTop: "12px" }}>
         모임 단톡방을 만들어드리는 용도로 사용되기에 꼭! 사용하시는 전화번호를
         적어주셔야 해요.

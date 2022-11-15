@@ -44,6 +44,7 @@ export class SocialRedirectResponse {
   code: number;
   data: {
     token: string;
+    role: string;
     uid: string;
     username: string;
     email: string;

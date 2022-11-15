@@ -28,7 +28,13 @@ interface Props {
 }
 
 export default function AuthProfileData({ onNext, state, dispatch }: Props) {
-  const univs: string[] = ["고려대학교", "연세대학교", "이화여자대학교"];
+  const univs: string[] = [
+    "고려대학교",
+    "연세대학교",
+    "이화여자대학교",
+    "성신여자대학교",
+    "다른학교입니다",
+  ];
   const [nameError, SetNameError] = useState<boolean>(false);
   const [univError, SetUnivError] = useState<boolean>(false);
   const [ageError, SetAgeError] = useState<boolean>(false);
@@ -47,7 +53,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
       latitude: number;
       longitude: number;
     },
-    callback: (result: any, status: boolean) => void
+    callback: (result: any, status: boolean) => void,
   ) => {
     const geocoder = new window.kakao.maps.services.Geocoder();
 
@@ -72,7 +78,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
                 const fullAddr = result[0].address.address_name;
                 const newAddr = fullAddr.split(" ");
                 setDetailAddress(
-                  newAddr[0] + " " + newAddr[1] + " " + newAddr[2]
+                  newAddr[0] + " " + newAddr[1] + " " + newAddr[2],
                 );
                 setLocationLoading(false);
                 dispatch({
@@ -80,12 +86,12 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
                   payload: newAddr[0] + " " + newAddr[1] + " " + newAddr[2],
                 });
               }
-            }
+            },
           );
         },
         (err) => {
           if (err.code === err.PERMISSION_DENIED) setLocationLoading(false);
-        }
+        },
       );
     }
   };
@@ -99,7 +105,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
   };
   const errorMessages: string[] = [
     "20자 이하의 이름을 입력해주세요",
-    "현재는 고려대/연세대/이화여대 학교만 운영되고 있어요",
+    "대학교를 입력해주세요",
     "19-40사이의 나이를 입력해주세요. 20초 20중 20후 30초로 보여져요!",
     "성별을 선택해주세요",
     "15자 이내로 적어주세요.",
@@ -113,7 +119,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
 
   function Validate(
     univ: string = state.university,
-    gender: string = state.gender
+    gender: string = state.gender,
   ): void {
     if (state.name.length <= 0 || state.name.length > 20) {
       SetErrorAll(false);
@@ -151,7 +157,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
           placeholder="Username"
           style={
             nameError
-              ? { marginTop: "24px", borderColor: colors.MidBlue }
+              ? { marginTop: "24px", borderColor: colors.StrongLime }
               : { marginTop: "24px", borderColor: colors.BareGray }
           }
           type="text"
@@ -165,52 +171,42 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
         <select
           id=""
           name="University"
-          value={
-            state.isGraduate
-              ? state.university + " 졸업"
-              : state.university + " 재학"
-          }
+          value={state.university}
           style={
             univError
               ? {
                   marginTop: "12px",
-                  borderColor: colors.MidBlue,
+                  borderColor: colors.StrongLime,
                   color: colors.Black,
+                  width: 301,
                 }
-              : { marginTop: "12px", color: colors.Black }
+              : { marginTop: "12px", color: colors.Black, width: 301 }
           }
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
             dispatch({
               type: "setUniversity",
-              payload: e.target.value.toString().split(" ")[0],
+              payload: e.target.value.toString(),
             });
-            dispatch({
-              type: "setIsGraduate",
-              payload: e.target.value.toString().split(" ")[1] === "졸업",
-            });
-            Validate(e.target.value.toString().split(" ")[0]);
+            Validate(e.target.value.toString());
           }}
         >
           <option value="" style={{ color: colors.BareGray }}>
             학교
           </option>
-          <option value="고려대학교 재학" style={{ color: colors.Black }}>
-            고려대학교 재학
+          <option value="고려대학교" style={{ color: colors.Black }}>
+            고려대학교
           </option>
-          <option value="고려대학교 졸업" style={{ color: colors.Black }}>
-            고려대학교 졸업
+          <option value="연세대학교" style={{ color: colors.Black }}>
+            연세대학교
           </option>
-          <option value="연세대학교 재학" style={{ color: colors.Black }}>
-            연세대학교 재학
+          <option value="이화여자대학교" style={{ color: colors.Black }}>
+            이화여자대학교
           </option>
-          <option value="연세대학교 졸업" style={{ color: colors.Black }}>
-            연세대학교 졸업
+          <option value="성신여자대학교" style={{ color: colors.Black }}>
+            성신여자대학교
           </option>
-          <option value="이화여자대학교 재학" style={{ color: colors.Black }}>
-            이화여자대학교 재학
-          </option>
-          <option value="이화여자대학교 졸업" style={{ color: colors.Black }}>
-            이화여자대학교 졸업
+          <option value="다른학교입니다" style={{ color: colors.Black }}>
+            다른학교입니다
           </option>
         </select>
         {univError && <ErrorMessage>{errorMessages[1]}</ErrorMessage>}
@@ -220,7 +216,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
           name="Age"
           style={
             ageError
-              ? { marginTop: "12px", borderColor: colors.MidBlue }
+              ? { marginTop: "12px", borderColor: colors.StrongLime }
               : { marginTop: "12px" }
           }
           value={state.age}
@@ -247,20 +243,20 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
             {state.gender === "male" ? (
               <FontAwesomeIcon
                 icon={faCheckCircle}
-                color={colors.MidBlue}
+                color={colors.StrongLime}
                 size="lg"
               />
             ) : (
               <FontAwesomeIcon
                 icon={faCircle}
-                color={genderError ? colors.MidBlue : colors.LightGray}
+                color={genderError ? colors.StrongLime : colors.LightGray}
                 size="lg"
               />
             )}
             <GenderText
               style={
                 genderError
-                  ? { marginLeft: "5px", color: colors.MidBlue }
+                  ? { marginLeft: "5px", color: colors.StrongLime }
                   : { marginLeft: "5px" }
               }
             >
@@ -283,20 +279,20 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
             {state.gender === "female" ? (
               <FontAwesomeIcon
                 icon={faCheckCircle}
-                color={colors.MidBlue}
+                color={colors.StrongLime}
                 size="lg"
               />
             ) : (
               <FontAwesomeIcon
                 icon={faCircle}
-                color={genderError ? colors.MidBlue : colors.LightGray}
+                color={genderError ? colors.StrongLime : colors.LightGray}
                 size="lg"
               />
             )}
             <GenderText
               style={
                 genderError
-                  ? { marginLeft: "5px", color: colors.MidBlue }
+                  ? { marginLeft: "5px", color: colors.StrongLime }
                   : { marginLeft: "5px" }
               }
             >
@@ -340,35 +336,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
           onKeyUp={() => Validate()}
         />
         {bioError && <ErrorMessage>{errorMessages[5]}</ErrorMessage>}
-        <p
-          style={{
-            justifyContent: "space-between",
-            display: "flex",
-            alignItems: "center",
-            fontSize: "12px",
-            color: colors.MidGray,
-            marginTop: "5px",
-          }}
-        >
-          <div></div>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <FontAwesomeIcon
-              icon={faMapMarkerAlt}
-              color={colors.LightGray}
-              size="lg"
-              style={{ marginRight: "8px" }}
-            />
-            {locationLoading ? (
-              <ClipLoader
-                color={colors.MidBlue}
-                size={15}
-                loading={locationLoading}
-              />
-            ) : (
-              detailAddress || "대한민국 어딘가"
-            )}
-          </div>
-        </p>
+
         <SpaceForNavBar> </SpaceForNavBar>
         <NextButton
           type="submit"
@@ -386,5 +354,5 @@ const ErrorMessage = styled.p`
   margin-top: 7px;
   font-size: 8px;
   margin-left: 5px;
-  color: ${colors.MidBlue};
+  color: ${colors.StrongLime};
 `;

@@ -1,4 +1,4 @@
-export const LOpenKakaoChat = "http://pf.kakao.com/_Rczhb/chat";
+export const LOpenKakaoChat = "https://open.kakao.com/o/shdu1PFe";
 
 export const LMarketingAgree =
   "https://sixth-lace-751.notion.site/03e0c647bef34396a24b230927a55b4f";
@@ -9,7 +9,8 @@ export const LServiceAgree =
 export const LLocationAgree =
   "https://sixth-lace-751.notion.site/b9f30a5063944628b104f19ad479b4f6";
 
-export const LInstagram = "https://www.instagram.com/ykuniv_eating_official/";
+export const LInstagram =
+  "https://instagram.com/kevin.club_official?igshid=MDE2OWE1N2Q=";
 
 export const LServiceGuide =
   "https://www.notion.so/yketing/50e486c6831e4f538be205d11de29be7";
@@ -17,7 +18,7 @@ export const LServiceGuide =
 export const LYoutube =
   "https://www.youtube.com/channel/UCNIwL_pCvrAt_hTp0ysZo-Q";
 
-export const LKakao = "http://pf.kakao.com/_Rczhb/chat";
+export const LKakao = "https://open.kakao.com/o/shdu1PFe";
 
 export const LPrivacyAgree =
   "https://sixth-lace-751.notion.site/91c032eabd624b3a8744f8d699b40787";

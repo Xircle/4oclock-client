@@ -36,7 +36,7 @@ export default function ReviewSmallContainer({ title, reviews }: Props) {
           <Title>{title}</Title>
           <CTAText
             onClick={() => {
-              history.push(`/reviews`);
+              history.push(`/v1/reviews`);
             }}
           >
             구경하기

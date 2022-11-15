@@ -3,7 +3,7 @@ import AxiosClient from "../apiClient";
 import { AuthState } from "../../components/auth/types";
 
 export const createAccount = async (
-  state: AuthState
+  state: AuthState,
 ): Promise<CreateAccountOutput> => {
   const formData = new FormData();
   state.profileImgFile
@@ -26,7 +26,7 @@ export const createAccount = async (
   formData.append("drinkingStyle", state.drinkingStyle + "");
   const { data } = await AxiosClient.post<CreateAccountOutput>(
     "auth/social/register/kakao",
-    formData
+    formData,
   );
   return data;
 };

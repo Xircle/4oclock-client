@@ -1,3 +1,4 @@
+import { ApplicationStatus } from "./../v2/enums";
 import { AuthState } from "./../../pages/auth/types.d";
 import { CoreOutput, MetaTag } from "./../../components/shared/types.d";
 
@@ -10,6 +11,7 @@ export interface CreateAccountOutput extends CoreOutput {
     profile: {
       id: string;
       thumbnail: string;
+      role: string;
     };
   };
 }
@@ -283,4 +285,167 @@ export interface SendMessageInput {
 
 export interface GetReviewsOutput extends CoreOutput {
   reviews: Review[];
+}
+
+export interface CategoryData {
+  id: string;
+  name: string;
+  image?: string;
+  selected?: boolean;
+}
+
+export interface SeeAllCategoryOutput extends CoreOutput {
+  data?: CategoryData[];
+}
+
+export interface ApplicationData {
+  id: string;
+  status: string;
+  user_id: string;
+  team_id: number;
+  paid: boolean;
+  createdAt: Date;
+  isCanceled: boolean;
+  image: string;
+}
+
+export interface GMALeaderData {
+  id: string;
+  username: string;
+  profileImageUrl: string;
+  shortBio?: string;
+}
+export interface TeamData {
+  id: number;
+  name: string;
+  season?: number;
+  startDate?: Date;
+  description?: string;
+  images?: string[];
+  applications?: ApplicationData[];
+  leader?: GMALeaderData;
+  price?: number;
+  meetingDay?: number;
+  meetingHour?: number;
+  maxParticipant?: number;
+  areaInfo?: string;
+  maleMinAge?: number;
+  maleMaxAge?: number;
+  femaleMinAge?: number;
+  femaleMaxAge?: number;
+  leaderIntro?: string;
+}
+
+export interface DetailTeamData extends TeamData {
+  maleCount?: number;
+  femaleCount?: number;
+}
+export interface GetTeamByIdData extends DetailTeamData {
+  applications?: ApplicationData[];
+}
+
+export interface GetTeamByIdOutput extends CoreOutput {
+  data: GetTeamByIdData;
+}
+
+export interface CreateApplicationInput {
+  teamId: number;
+  status?: ApplicationStatus;
+  content?: string;
+}
+
+export interface MyApplication {
+  id: string;
+  status: ApplicationStatus;
+  appliedAt: Date;
+  teamId: number;
+  teamName: string;
+  isCanceled: boolean;
+  paid?: boolean;
+  teamImage: string;
+}
+
+export interface MyApplicationsByStatus {
+  approveds?: MyApplication[];
+  pendings?: MyApplication[];
+  disapproveds?: MyApplication[];
+  enrolleds?: MyApplication[];
+}
+export interface GMALeaderData {
+  leaderId: string;
+  leaderName: string;
+  leaderPhoneNumber: string;
+  leaderProfileUrl: string;
+}
+
+export interface GetMyApplicationsOutput extends CoreOutput {
+  applications?: MyApplicationsByStatus;
+  leaderData?: GMALeaderData;
+}
+
+export interface EditApplicationInput {
+  applicationId: string;
+  status?: ApplicationStatus;
+  isCanceled?: string;
+  paid?: string;
+}
+
+export interface MyTeamsLeader {
+  teamId: number;
+  teamImage?: string;
+  name: string;
+  total: number;
+  count: number;
+}
+
+export interface GetMyTeamsLeaderOutput extends CoreOutput {
+  teams?: MyTeamsLeader[];
+}
+
+export interface ApplicantProfiles {
+  username: string;
+  gender: Gender;
+  age: number;
+  applicationId?: string;
+  phoneNumber?: string;
+  profileImg: string;
+  userId?: string;
+}
+
+export interface GetTeamApplications {
+  maxParticipant: number; //
+  curCount: number; //
+  maleApproveCount: number; //
+  femaleApproveCount: number; //
+  maleApplyCount: number;
+  femaleApplyCount: number;
+  pendingApplicantProfiles: ApplicantProfiles[];
+  approvedApplicantProfiles: ApplicantProfiles[];
+}
+
+export interface GetTeamApplicationsOutput extends CoreOutput {
+  data?: GetTeamApplications;
+}
+
+export interface GetTeamApplicationInput {
+  param1?: string;
+  param2?: number;
+}
+
+export interface GetApplicationByLeaderData {
+  username: string;
+  mbti?: string;
+  shortBio?: string;
+  job?: string;
+  phoneNumber?: string;
+  content?: string;
+  status: ApplicationStatus;
+  profileImage: string;
+  age: number;
+  gender: Gender;
+  university: string;
+}
+
+export interface GetApplicationByLeaderOutput extends CoreOutput {
+  data?: GetApplicationByLeaderData;
 }

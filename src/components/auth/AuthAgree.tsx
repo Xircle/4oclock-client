@@ -32,7 +32,8 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
         맛있는 모임이 시작돼요!
       </Heading>
       <SubText style={{ lineHeight: "20px", marginTop: "13px" }}>
-        친구들과 연고이팅 모임 시작 전 필수 약관 내용에 먼저 <br />
+        친구들과 케빈의 클럽 모임 시작 전 필수 약관 내용에
+        <br />
         동의해주세요
       </SubText>
       <TextSpanDiv
@@ -42,7 +43,7 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
         }}
       >
         {state.agreeAll ? (
-          <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
+          <FontAwesomeIcon icon={faCheckCircle} color="rgba(33, 225, 156)" />
         ) : (
           <FontAwesomeIcon icon={faCircle} color={colors.LightGray} />
         )}
@@ -61,16 +62,16 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
           }}
         >
           {state.agree1 ? (
-            <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
+            <FontAwesomeIcon icon={faCheckCircle} color="rgba(33, 225, 156)" />
           ) : (
             <FontAwesomeIcon icon={faCircle} color={colors.LightGray} />
           )}
           <BlackTextSpan style={{ marginLeft: "10px" }}>
-            연고이팅 이용약관
+            케빈의 클럽 이용약관
           </BlackTextSpan>
-          <BlueTextSpan>
+          <LimeTextSpan>
             {"("}필수{")"}
-          </BlueTextSpan>
+          </LimeTextSpan>
         </span>
         <a href={links.LServiceAgree} target={"_blank"}>
           <span style={{ position: "absolute", right: "0%" }}>
@@ -85,16 +86,16 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
           }}
         >
           {state.agree2 ? (
-            <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
+            <FontAwesomeIcon icon={faCheckCircle} color="rgba(33, 225, 156)" />
           ) : (
             <FontAwesomeIcon icon={faCircle} color={colors.LightGray} />
           )}
           <BlackTextSpan style={{ marginLeft: "10px" }}>
-            연고이팅 개인정보 수집 및 이용동의
+            케빈의 클럽 개인정보 수집 및 이용동의
           </BlackTextSpan>
-          <BlueTextSpan>
+          <LimeTextSpan>
             {"("}필수{")"}
-          </BlueTextSpan>
+          </LimeTextSpan>
         </span>
         <a href={links.LPrivacyAgree} target={"_blank"}>
           <span style={{ position: "absolute", right: "0%" }}>
@@ -109,16 +110,16 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
           }}
         >
           {state.agree3 ? (
-            <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
+            <FontAwesomeIcon icon={faCheckCircle} color="rgba(33, 225, 156)" />
           ) : (
             <FontAwesomeIcon icon={faCircle} color={colors.LightGray} />
           )}
           <BlackTextSpan style={{ marginLeft: "10px" }}>
             위치기반 서비스 이용동의
           </BlackTextSpan>
-          <BlueTextSpan>
+          <LimeTextSpan>
             {"("}필수{")"}
-          </BlueTextSpan>
+          </LimeTextSpan>
         </span>
         <a href={links.LLocationAgree} target={"_blank"}>
           <span style={{ position: "absolute", right: "0%" }}>
@@ -133,12 +134,12 @@ export default function AuthPage4({ onNext, state, dispatch }: Props) {
           }}
         >
           {state.agree4 ? (
-            <FontAwesomeIcon icon={faCheckCircle} color={colors.MidBlue} />
+            <FontAwesomeIcon icon={faCheckCircle} color="rgba(33, 225, 156)" />
           ) : (
             <FontAwesomeIcon icon={faCircle} color={colors.LightGray} />
           )}
           <BlackTextSpan style={{ marginLeft: "10px" }}>
-            연고이팅 마케팅 수신동의
+            케빈의 클럽 마케팅 수신동의
           </BlackTextSpan>
           <GrayTextSpan>
             {"("}선택{")"}
@@ -179,8 +180,8 @@ const BlackTextSpan = styled(SubTextSpan)`
   font-size: 14px;
 `;
 
-const BlueTextSpan = styled(SubTextSpan)`
-  color: ${colors.MidBlue};
+const LimeTextSpan = styled(SubTextSpan)`
+  color: rgba(33, 225, 156);
   font-size: 14px;
 `;
 

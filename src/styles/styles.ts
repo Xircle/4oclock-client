@@ -13,6 +13,9 @@ interface Colors {
   LightGray: string;
   BareGray: string;
   Red: string;
+  Orange: string;
+  Lime: string;
+  StrongLime: string;
 }
 
 export const GlobalStyles = createGlobalStyle`
@@ -75,6 +78,9 @@ export const colors: Colors = {
   LightGray: "#A7B0C0",
   BareGray: "#C4CBD8",
   Red: "#FF2343",
+  Orange: "#F86023",
+  Lime: "rgba(33, 225, 156, 0.31)",
+  StrongLime: "rgba(33, 225, 156)",
 };
 
 export const AppContainer = styled.div`
@@ -107,16 +113,15 @@ export const MainBtn = styled.button`
   margin-left: auto;
   margin-right: auto;
   height: 50px;
-  background-color: #18a0fb;
+  background: rgba(33, 225, 156);
   border: none;
   border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* filter: drop-shadow(16px 16px 20px rgba(75, 88, 208, 0.5)); */
-  box-shadow: rgba(75, 88, 208, 0.5) 0px 25px 20px -20px;
+  box-shadow: rgba(0, 0, 0) 0px 25px 20px -20px;
   font-weight: bold;
-  color: white;
+  color: #505050;
   cursor: pointer;
   font-size: 16px;
   p {
@@ -336,8 +341,46 @@ export const NextButton = styled(MainBtn)`
 
 export const FileLabel = styled.label`
   cursor: pointer;
+  width: 100%;
 `;
 
 export const SLink = styled(Link)`
   text-decoration: none;
+`;
+
+export const V2Header = styled.div`
+  position: sticky;
+  width: 375px;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 10px;
+  top: 0px;
+  background-color: white;
+  z-index: 50;
+`;
+
+export const HeaderItem = styled.div`
+  align-self: center;
+  cursor: pointer;
+`;
+
+export const V2OrangeButton = styled.div`
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
+  width: 265px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${colors.Orange};
+  font-weight: 500;
+  font-size: 16px;
+  border: 2px solid ${colors.Orange};
+  border-radius: 8px;
+
+  &:hover {
+    opacity: 0.5;
+  }
 `;
