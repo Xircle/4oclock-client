@@ -1,4 +1,3 @@
-import { checkResponseStatus } from "./../checkResponseStatus";
 import { AgeData, TimeData } from "./../v2/utils";
 import { CategoryData } from "./types.d";
 import AxiosClient from "../apiClient";
@@ -40,16 +39,20 @@ export const seeTeamsWithFilter = async (
       });
     }
   });
-  if (categoryQuery.length == categories.length) {
+
+  if (categories.length === categoryQuery.length) {
     categoryQuery = [];
   }
-  if (timeQuery.length == times.length) {
+
+  if (times.length === timeQuery.length) {
     timeQuery = [];
   }
-  if (ageQuery.length == ageData.length) {
+
+  if (ageData.length === ageQuery.length) {
     ageQuery = [];
   }
-  const response = await AxiosClient.get(`team/all/filter`, {
+
+  const { data } = await AxiosClient.get(`team/all/filter`, {
     params: {
       page: page,
       categoryIds: categoryQuery,
@@ -58,10 +61,5 @@ export const seeTeamsWithFilter = async (
     },
   });
 
-  if (!response?.data?.ok) {
-    checkResponseStatus(response?.status);
-    throw new Error(response?.data.error);
-  } else {
-    return response?.data;
-  }
+  return data;
 };

@@ -31,7 +31,6 @@ apiClient.interceptors.request.use((config: AxiosRequestConfig) => {
     !rawToken[1] &&
     RELOAD_TARGET_URL.includes(config.url!)
   ) {
-    console.log("got you");
     source.cancel("Request cancelled, Because token was not reflected");
     window.location.reload();
   }
@@ -39,7 +38,11 @@ apiClient.interceptors.request.use((config: AxiosRequestConfig) => {
 });
 
 apiClient.interceptors.response.use(
+<<<<<<< HEAD
   (response) => response,
+=======
+  (request) => request,
+>>>>>>> dfedf3e7a7ad4ef4c7f59e6adc8cdda3e70060c4
   (error) => {
     if (error.response.status === 403 || error.response.status === 401) {
       storage.clearItems();

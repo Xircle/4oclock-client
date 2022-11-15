@@ -22,7 +22,6 @@ import { isSamsungBrowser } from "react-device-detect";
 import Modal from "../../../components/UI/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { LoaderBackdrop } from "../../../components/shared/Loader";
 import { ClipLoader } from "react-spinners";
 
 enum DrawerType {
@@ -83,6 +82,7 @@ function V2LandingPage() {
     isFetchingNextPage: teamDataFetching,
     hasNextPage: hasNextPageTeam,
     fetchNextPage: fetchNextPageTeam,
+    isFetching: isFetchingTeam,
   } = useInfiniteQuery(
     ["teams", categories, dayData, ageData, refilterCount],
     // @ts-ignore
@@ -350,32 +350,27 @@ function V2LandingPage() {
                 );
               })}
         </FeedContainer>
-        {teamDataLoading || teamDataFetching ? (
-          <>
-            <LoaderBackdrop />
-            <LoaderWrapper>
-              <ClipLoader
-                loading={teamDataLoading || teamDataFetching}
-                color={colors.MidBlue}
-                css={{ name: "width", styles: "border-width: 4px;" }}
-                size={30}
-              />
-            </LoaderWrapper>
-          </>
-        ) : (
-          <></>
-        )}
       </Body>
+      <ClipLoaderWrapper>
+        <ClipLoader
+          loading={isFetchingTeam}
+          color={colors.MidBlue}
+          css={{
+            name: "width",
+            styles: "border-width: 4px; z-index: 999;",
+          }}
+          size={30}
+        />
+      </ClipLoaderWrapper>
     </SContainer>
   );
 }
 
-export const LoaderWrapper = styled.div`
-  position: absolute;
-  left: 50%;
-  bottom: 300px;
-  transform: translate(-50%, -50%);
-  z-index: 999;
+const ClipLoaderWrapper = styled.div`
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ResetButton = styled.div`
