@@ -1,6 +1,7 @@
 import { CURRENT_USER } from "./../components/shared/constants";
 import axios, { AxiosRequestConfig } from "axios";
 import storage from "./storage";
+import routes from "../routes";
 
 // http://localhost:3080
 const host =
@@ -30,9 +31,18 @@ apiClient.interceptors.request.use((config: AxiosRequestConfig) => {
     !rawToken[1] &&
     RELOAD_TARGET_URL.includes(config.url!)
   ) {
-    console.log("got you");
     source.cancel("Request cancelled, Because token was not reflected");
     window.location.reload();
   }
   return config;
 });
+
+apiClient.interceptors.response.use(
+  (request) => request,
+  (error) => {
+    if (error.response.status === 403 || error.response.status === 401) {
+      storage.clearItems();
+      window.location.href = routes.v2Login;
+    }
+  },
+);

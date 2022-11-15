@@ -39,6 +39,18 @@ export const seeTeamsWithFilter = async (
     }
   });
 
+  if (categories.length === categoryQuery.length) {
+    categoryQuery = [];
+  }
+
+  if (times.length === timeQuery.length) {
+    timeQuery = [];
+  }
+
+  if (ageData.length === ageQuery.length) {
+    ageQuery = [];
+  }
+
   const { data } = await AxiosClient.get(`team/all/filter`, {
     params: {
       page: page,

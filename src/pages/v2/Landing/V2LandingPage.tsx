@@ -17,11 +17,12 @@ import {
   ITimeData,
   TimeData,
 } from "../../../lib/v2/utils";
-import { Container, MainBtn } from "../../../styles/styles";
+import { colors, Container, MainBtn } from "../../../styles/styles";
 import { isSamsungBrowser } from "react-device-detect";
 import Modal from "../../../components/UI/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { ClipLoader } from "react-spinners";
 
 enum DrawerType {
   Category = "선호하는 정모 테마을 선택해주세요",
@@ -80,6 +81,7 @@ function V2LandingPage() {
     isLoading: teamDataLoading,
     hasNextPage: hasNextPageTeam,
     fetchNextPage: fetchNextPageTeam,
+    isFetching: isFetchingTeam,
   } = useInfiniteQuery(
     ["teams", categories, dayData, ageData, refilterCount],
     // @ts-ignore
@@ -348,9 +350,27 @@ function V2LandingPage() {
               })}
         </FeedContainer>
       </Body>
+      <ClipLoaderWrapper>
+        <ClipLoader
+          loading={isFetchingTeam}
+          color={colors.MidBlue}
+          css={{
+            name: "width",
+            styles: "border-width: 4px; z-index: 999;",
+          }}
+          size={30}
+        />
+      </ClipLoaderWrapper>
     </SContainer>
   );
 }
+
+const ClipLoaderWrapper = styled.div`
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const ResetButton = styled.div`
   cursor: pointer;
