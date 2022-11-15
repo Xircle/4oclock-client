@@ -11,15 +11,11 @@ import {
   NextButton,
   SpaceForNavBar,
 } from "../../styles/styles";
-import {
-  faCheckCircle,
-  faMapMarkerAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
 import { useEffect, useState } from "react";
 import { AuthState, AuthAction } from "./types";
-import ClipLoader from "react-spinners/ClipLoader";
 
 interface Props {
   onNext: () => void;
