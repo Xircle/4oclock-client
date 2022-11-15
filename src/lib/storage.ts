@@ -21,9 +21,12 @@ class LocalStorage {
   removeItem(key: string) {
     localStorage.removeItem(key);
   }
+
+  clearItems() {
+    localStorage.clear();
+  }
 }
 
 const storage = new LocalStorage();
 
 export default storage;
-
