@@ -82,7 +82,13 @@ function Auth() {
 
   const components = [
     <AuthPhoneNumber onNext={handleNext} state={state} dispatch={dispatch} />,
-    <AuthProfileData onNext={handleNext} state={state} dispatch={dispatch} />,
+    <AuthProfileData
+      onNext={handleNext}
+      state={state}
+      dispatch={dispatch}
+      open={modalOpened}
+      onClose={closeModal}
+    />,
     <AuthProfileDetailData
       onNext={handleNext}
       state={state}
