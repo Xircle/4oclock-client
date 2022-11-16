@@ -33,7 +33,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
   const [bioError, SetBioError] = useState<boolean>(false);
   const [detailAddress, setDetailAddress] = useState(state.location);
   const [locationLoading, setLocationLoading] = useState(false);
-  const [localUniv, setLocalUniv] = useState("");
+  const [univSearchResult, setUnivSearchResult] = useState("");
   const [modalOpened, setModalOpened] = useState(false);
   const closeModal = () => {
     setModalOpened(false);
