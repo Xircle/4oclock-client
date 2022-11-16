@@ -23,6 +23,7 @@ import Modal from "../../../components/UI/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { ClipLoader } from "react-spinners";
+import Footer from "../../../components/footer/Footer";
 
 enum DrawerType {
   Category = "선호하는 정모 테마을 선택해주세요",
@@ -362,6 +363,7 @@ function V2LandingPage() {
           size={30}
         />
       </ClipLoaderWrapper>
+      <Footer />
     </SContainer>
   );
 }
