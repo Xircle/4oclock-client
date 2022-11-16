@@ -352,17 +352,20 @@ function V2LandingPage() {
               })}
         </FeedContainer>
       </Body>
-      <ClipLoaderWrapper>
-        <ClipLoader
-          loading={isFetchingTeam}
-          color={colors.MidBlue}
-          css={{
-            name: "width",
-            styles: "border-width: 4px; z-index: 999;",
-          }}
-          size={30}
-        />
-      </ClipLoaderWrapper>
+      {isFetchingTeam && (
+        <ClipLoaderWrapper>
+          <ClipLoader
+            loading={isFetchingTeam}
+            color={colors.MidBlue}
+            css={{
+              name: "width",
+              styles: "border-width: 4px; z-index: 999;",
+            }}
+            size={30}
+          />
+        </ClipLoaderWrapper>
+      )}
+
       <Footer />
     </SContainer>
   );
