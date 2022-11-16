@@ -25,6 +25,7 @@ export default class Footer extends PureComponent<Props> {
 }
 
 const Container = styled.div`
+  margin-top: 5px;
   padding: 20px;
   background-color: ${colors.BareGray};
 `;
