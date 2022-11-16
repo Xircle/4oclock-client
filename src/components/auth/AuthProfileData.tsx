@@ -32,13 +32,6 @@ export default function AuthProfileData({
   open,
   onClose,
 }: Props) {
-  const univs: string[] = [
-    "고려대학교",
-    "연세대학교",
-    "이화여자대학교",
-    "성신여자대학교",
-    "다른학교입니다",
-  ];
   const [nameError, SetNameError] = useState<boolean>(false);
   const [univError, SetUnivError] = useState<boolean>(false);
   const [ageError, SetAgeError] = useState<boolean>(false);
@@ -129,7 +122,7 @@ export default function AuthProfileData({
       SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: false });
       SetNameError(true);
-    } else if (!univs.includes(univ)) {
+    } else if (!univ) {
       SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: false });
       SetUnivError(true);
@@ -172,47 +165,7 @@ export default function AuthProfileData({
           onKeyUp={() => Validate()}
         />
         {nameError && <ErrorMessage>{errorMessages[0]}</ErrorMessage>}
-        <select
-          id=""
-          name="University"
-          value={state.university}
-          style={
-            univError
-              ? {
-                  marginTop: "12px",
-                  borderColor: colors.StrongLime,
-                  color: colors.Black,
-                  width: 301,
-                }
-              : { marginTop: "12px", color: colors.Black, width: 301 }
-          }
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-            dispatch({
-              type: "setUniversity",
-              payload: e.target.value.toString(),
-            });
-            Validate(e.target.value.toString());
-          }}
-        >
-          <option value="" style={{ color: colors.BareGray }}>
-            학교
-          </option>
-          <option value="고려대학교" style={{ color: colors.Black }}>
-            고려대학교
-          </option>
-          <option value="연세대학교" style={{ color: colors.Black }}>
-            연세대학교
-          </option>
-          <option value="이화여자대학교" style={{ color: colors.Black }}>
-            이화여자대학교
-          </option>
-          <option value="성신여자대학교" style={{ color: colors.Black }}>
-            성신여자대학교
-          </option>
-          <option value="다른학교입니다" style={{ color: colors.Black }}>
-            다른학교입니다
-          </option>
-        </select>
+        <SchoolModalButton></SchoolModalButton>
         {univError && <ErrorMessage>{errorMessages[1]}</ErrorMessage>}
         <MidInput
           placeholder="나이"
@@ -359,4 +312,13 @@ const ErrorMessage = styled.p`
   font-size: 8px;
   margin-left: 5px;
   color: ${colors.StrongLime};
+`;
+
+const SchoolModalButton = styled.div`
+  background-color: red;
+  width: 100%;
+  height: 20px;
+  &:hover {
+    opacity: 0.7;
+  }
 `;
