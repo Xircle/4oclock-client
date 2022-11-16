@@ -38,7 +38,6 @@ apiClient.interceptors.request.use((config: AxiosRequestConfig) => {
 });
 
 apiClient.interceptors.response.use(
-<<<<<<< HEAD
   (response) => response,
 =======
   (request) => request,
