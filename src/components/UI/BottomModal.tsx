@@ -8,12 +8,13 @@ interface Props {
 }
 
 export default function BottomModal({ children, open, onClose }: Props) {
+  const height = 500;
   return (
     <Drawer
       PaperProps={{
         style: {
           width: 375,
-          minHeight: 500,
+          minHeight: height,
           justifyContent: "flex-start",
           paddingTop: 20,
           paddingBottom: 20,
@@ -32,6 +33,8 @@ export default function BottomModal({ children, open, onClose }: Props) {
           marginRight: "auto",
           borderTopLeftRadius: 10,
           borderTopRightRadius: 10,
+          padding: 20,
+          height: height,
         },
       }}
       open={open}
