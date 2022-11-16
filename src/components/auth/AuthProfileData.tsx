@@ -21,9 +21,17 @@ interface Props {
   onNext: () => void;
   state: AuthState;
   dispatch: React.Dispatch<AuthAction>;
+  open?: boolean;
+  onClose?: () => void;
 }
 
-export default function AuthProfileData({ onNext, state, dispatch }: Props) {
+export default function AuthProfileData({
+  onNext,
+  state,
+  dispatch,
+  open,
+  onClose,
+}: Props) {
   const univs: string[] = [
     "고려대학교",
     "연세대학교",
