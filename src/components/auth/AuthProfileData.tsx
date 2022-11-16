@@ -312,14 +312,6 @@ export default function AuthProfileData({
   );
 }
 
-const ModalWrapper = styled.div``;
-
-const ModalRow = styled.div``;
-
-const UnivNameTag = styled.div``;
-
-const UnivAdresTag = styled.div``;
-
 const ErrorMessage = styled.p`
   margin-top: 7px;
   font-size: 8px;
