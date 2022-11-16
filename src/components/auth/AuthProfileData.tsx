@@ -23,6 +23,7 @@ interface Props {
   dispatch: React.Dispatch<AuthAction>;
   open?: boolean;
   onClose?: () => void;
+  openModal?: () => void;
 }
 
 export default function AuthProfileData({
@@ -31,6 +32,7 @@ export default function AuthProfileData({
   dispatch,
   open,
   onClose,
+  openModal,
 }: Props) {
   const [nameError, SetNameError] = useState<boolean>(false);
   const [univError, SetUnivError] = useState<boolean>(false);
@@ -165,7 +167,7 @@ export default function AuthProfileData({
           onKeyUp={() => Validate()}
         />
         {nameError && <ErrorMessage>{errorMessages[0]}</ErrorMessage>}
-        <SchoolModalButton></SchoolModalButton>
+        <SchoolModalButton onClick={openModal}></SchoolModalButton>
         {univError && <ErrorMessage>{errorMessages[1]}</ErrorMessage>}
         <MidInput
           placeholder="나이"
