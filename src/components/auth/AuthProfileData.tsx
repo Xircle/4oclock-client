@@ -205,7 +205,6 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
             onKeyUp={() => Validate()}
           ></MidInput>
           {ageError && <ErrorMessage>{errorMessages[2]}</ErrorMessage>}
-          {/* <SubText>나이는 20초 20중 20후 30초 방식으로 표기가되요!</SubText> */}
           <FlexDiv style={{ justifyContent: "normal", marginTop: "20px" }}>
             <span
               style={{
