@@ -15,9 +15,12 @@ import {
 import { faCheckCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { AuthState, AuthAction } from "./types";
 import BottomModal from "../UI/BottomModal";
+import { useMutation } from "react-query";
+import { SchoolInfo } from "../../lib/api/types";
+import { searchSchool } from "../../lib/api/3rdApi/searchSchool";
 
 interface Props {
   onNext: () => void;
@@ -33,14 +36,25 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
   const [bioError, SetBioError] = useState<boolean>(false);
   const [detailAddress, setDetailAddress] = useState(state.location);
   const [locationLoading, setLocationLoading] = useState(false);
-  const [univSearchResult, setUnivSearchResult] = useState("");
   const [modalOpened, setModalOpened] = useState(false);
+  const [univSearchResult, setUnivsearchResult] = useState<SchoolInfo[]>([]);
   const closeModal = () => {
     setModalOpened(false);
   };
 
   const openModal = () => {
     setModalOpened(true);
+  };
+
+  const { mutateAsync: mutataUnivAsync, isLoading: isFetching } =
+    useMutation(searchSchool);
+
+  const searchUniv = async (keyword: string) => {
+    const res = await mutataUnivAsync(keyword);
+    console.log("search");
+    console.log(res);
+
+    setUnivsearchResult(res.content);
   };
 
   useEffect(() => {
@@ -318,11 +332,19 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
               name="univ"
               placeholder="ex. 기안대학교"
               style={{ fontSize: "12px" }}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setUnivSearchResult(e.target.value)
-              }
+              onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
+                await searchUniv(e.target.value);
+              }}
             />
-            <SearchResultContainer></SearchResultContainer>
+            <SearchResultContainer>
+              {univSearchResult?.map((item, index) => {
+                return (
+                  <Fragment key={index}>
+                    <ModalRow>{item.schoolName}</ModalRow>
+                  </Fragment>
+                );
+              })}
+            </SearchResultContainer>
           </UpModalWrapper>
           <DownModalWrapper>
             <SearchButton disabled={!state.university}>선택</SearchButton>
