@@ -21,6 +21,7 @@ import {
 import ClipLoader from "react-spinners/ClipLoader";
 import { initialState, reducer } from "./AuthReducer";
 import { createAccount } from "../../../lib/api/createAccount";
+import BottomModal from "../../../components/UI/BottomModal";
 
 function Auth() {
   const history = useHistory();
@@ -28,6 +29,11 @@ function Auth() {
   const [step, setStep] = useState(0);
   const [state, dispatch] = useReducer(reducer, initialState);
   const [isLoading, setIsLoading] = useState(false);
+  const [modalOpened, setmodalOpened] = useState(false);
+
+  const closeModal = () => {
+    setmodalOpened(false);
+  };
 
   useEffect(() => {
     const uid = location.state?.uid;
@@ -107,6 +113,9 @@ function Auth() {
           </LoaderWrapper>
         </>
       )}
+      <BottomModal onClose={closeModal} open={modalOpened}>
+        <div></div>
+      </BottomModal>
     </ContainerFlexColumn>
   );
 }
