@@ -5,7 +5,7 @@ export const searchSchool = async (
 ): Promise<SchoolsInfo> => {
   const apiKey = process.env.CAREERNET_API_KEY;
   const thisPage = 1;
-  const perPage = 20;
+  const perPage = 6;
   const axios = require("axios");
 
   const res = await axios.get(
