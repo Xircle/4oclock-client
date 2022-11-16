@@ -11,7 +11,7 @@ import {
   NextButton,
   SpaceForNavBar,
 } from "../../styles/styles";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
 import { useEffect, useState } from "react";
@@ -167,7 +167,10 @@ export default function AuthProfileData({
           onKeyUp={() => Validate()}
         />
         {nameError && <ErrorMessage>{errorMessages[0]}</ErrorMessage>}
-        <SchoolModalButton onClick={openModal}></SchoolModalButton>
+        <SchoolModalButton onClick={openModal}>
+          <SchoolText>학교</SchoolText>
+          <FontAwesomeIcon icon={faSearch} />
+        </SchoolModalButton>
         {univError && <ErrorMessage>{errorMessages[1]}</ErrorMessage>}
         <MidInput
           placeholder="나이"
@@ -296,7 +299,7 @@ export default function AuthProfileData({
         />
         {bioError && <ErrorMessage>{errorMessages[5]}</ErrorMessage>}
 
-        <SpaceForNavBar> </SpaceForNavBar>
+        <SpaceForNavBar></SpaceForNavBar>
         <NextButton
           type="submit"
           disabled={!state.stage2Valid}
@@ -317,10 +320,24 @@ const ErrorMessage = styled.p`
 `;
 
 const SchoolModalButton = styled.div`
-  background-color: red;
   width: 100%;
-  height: 20px;
   &:hover {
     opacity: 0.7;
   }
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border: 1px solid #c4cbd8;
+  border-radius: 8px;
+  font-size: 14px;
+  padding: 8px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 301px;
+`;
+
+const SchoolText = styled.div`
+  font-size: 14px;
 `;
