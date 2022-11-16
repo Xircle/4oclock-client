@@ -29,10 +29,14 @@ function Auth() {
   const [step, setStep] = useState(0);
   const [state, dispatch] = useReducer(reducer, initialState);
   const [isLoading, setIsLoading] = useState(false);
-  const [modalOpened, setmodalOpened] = useState(false);
+  const [modalOpened, setModalOpened] = useState(false);
 
   const closeModal = () => {
-    setmodalOpened(false);
+    setModalOpened(false);
+  };
+
+  const openModal = () => {
+    setModalOpened(true);
   };
 
   useEffect(() => {
@@ -87,6 +91,7 @@ function Auth() {
       state={state}
       dispatch={dispatch}
       open={modalOpened}
+      openModal={openModal}
       onClose={closeModal}
     />,
     <AuthProfileDetailData
