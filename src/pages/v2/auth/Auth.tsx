@@ -30,15 +30,6 @@ function Auth() {
   const [step, setStep] = useState(0);
   const [state, dispatch] = useReducer(reducer, initialState);
   const [isLoading, setIsLoading] = useState(false);
-  const [modalOpened, setModalOpened] = useState(false);
-
-  const closeModal = () => {
-    setModalOpened(false);
-  };
-
-  const openModal = () => {
-    setModalOpened(true);
-  };
 
   useEffect(() => {
     const uid = location.state?.uid;
@@ -87,14 +78,7 @@ function Auth() {
 
   const components = [
     <AuthPhoneNumber onNext={handleNext} state={state} dispatch={dispatch} />,
-    <AuthProfileData
-      onNext={handleNext}
-      state={state}
-      dispatch={dispatch}
-      open={modalOpened}
-      openModal={openModal}
-      onClose={closeModal}
-    />,
+    <AuthProfileData onNext={handleNext} state={state} dispatch={dispatch} />,
     <AuthProfileDetailData
       onNext={handleNext}
       state={state}
@@ -125,22 +109,7 @@ function Auth() {
           </LoaderWrapper>
         </>
       )}
-      <BottomModal onClose={closeModal} open={modalOpened}>
-        <ModalWrapper>
-          <SearchBar />
-        </ModalWrapper>
-      </BottomModal>
     </ContainerFlexColumn>
   );
 }
 export default withRouter(Auth);
-
-const ModalWrapper = styled.div``;
-
-const SearchBar = styled(MidInput)``;
-
-const ModalRow = styled.div``;
-
-const UnivNameTag = styled.div``;
-
-const UnivAdresTag = styled.div``;
