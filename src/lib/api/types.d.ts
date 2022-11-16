@@ -1,3 +1,4 @@
+import { searchSchool } from "./3rdApi/searchSchool";
 import { ApplicationStatus } from "./../v2/enums";
 import { AuthState } from "./../../pages/auth/types.d";
 import { CoreOutput, MetaTag } from "./../../components/shared/types.d";
@@ -448,4 +449,17 @@ export interface GetApplicationByLeaderData {
 
 export interface GetApplicationByLeaderOutput extends CoreOutput {
   data?: GetApplicationByLeaderData;
+}
+
+export interface SchoolInfo {
+  schoolName: string;
+  adres: string;
+}
+
+export interface SchoolsInfo {
+  content: SchoolInfo[];
+}
+
+export interface SearchSchoolOutput {
+  dataSearch: SchoolsInfo;
 }

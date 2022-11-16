@@ -10,12 +10,17 @@ import {
   BigTextArea,
   NextButton,
   SpaceForNavBar,
+  MainBtn,
 } from "../../styles/styles";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { AuthState, AuthAction } from "./types";
+import BottomModal from "../UI/BottomModal";
+import { useMutation } from "react-query";
+import { SchoolInfo } from "../../lib/api/types";
+import { searchSchool } from "../../lib/api/3rdApi/searchSchool";
 
 interface Props {
   onNext: () => void;
@@ -24,13 +29,6 @@ interface Props {
 }
 
 export default function AuthProfileData({ onNext, state, dispatch }: Props) {
-  const univs: string[] = [
-    "고려대학교",
-    "연세대학교",
-    "이화여자대학교",
-    "성신여자대학교",
-    "다른학교입니다",
-  ];
   const [nameError, SetNameError] = useState<boolean>(false);
   const [univError, SetUnivError] = useState<boolean>(false);
   const [ageError, SetAgeError] = useState<boolean>(false);
@@ -38,6 +36,26 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
   const [bioError, SetBioError] = useState<boolean>(false);
   const [detailAddress, setDetailAddress] = useState(state.location);
   const [locationLoading, setLocationLoading] = useState(false);
+  const [modalOpened, setModalOpened] = useState(false);
+  const [univSearchResult, setUnivsearchResult] = useState<SchoolInfo[]>([]);
+  const closeModal = () => {
+    setModalOpened(false);
+  };
+
+  const openModal = () => {
+    setModalOpened(true);
+  };
+
+  const { mutateAsync: mutataUnivAsync, isLoading: isFetching } =
+    useMutation(searchSchool);
+
+  const searchUniv = async (keyword: string) => {
+    const res = await mutataUnivAsync(keyword);
+    console.log("search");
+    console.log(res);
+
+    setUnivsearchResult(res.content);
+  };
 
   useEffect(() => {
     if (!detailAddress) currentLocationScript();
@@ -121,7 +139,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
       SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: false });
       SetNameError(true);
-    } else if (!univs.includes(univ)) {
+    } else if (!univ) {
       SetErrorAll(false);
       dispatch({ type: "setStage2Valid", payload: false });
       SetUnivError(true);
@@ -144,211 +162,313 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
   }
 
   return (
-    <ContainerwithLeftRightMargin>
-      <Heading>프로필 만들기</Heading>
+    <>
+      <ContainerwithLeftRightMargin>
+        <Heading>프로필 만들기</Heading>
 
-      <form>
-        <MidInput
-          name="name"
-          placeholder="Username"
-          style={
-            nameError
-              ? { marginTop: "24px", borderColor: colors.StrongLime }
-              : { marginTop: "24px", borderColor: colors.BareGray }
-          }
-          type="text"
-          value={state.name}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            dispatch({ type: "setName", payload: e.target.value })
-          }
-          onKeyUp={() => Validate()}
-        />
-        {nameError && <ErrorMessage>{errorMessages[0]}</ErrorMessage>}
-        <select
-          id=""
-          name="University"
-          value={state.university}
-          style={
-            univError
-              ? {
-                  marginTop: "12px",
-                  borderColor: colors.StrongLime,
-                  color: colors.Black,
-                  width: 301,
+        <form>
+          <MidInput
+            name="name"
+            placeholder="Username"
+            style={
+              nameError
+                ? { marginTop: "24px", borderColor: colors.StrongLime }
+                : { marginTop: "24px", borderColor: colors.BareGray }
+            }
+            type="text"
+            value={state.name}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              dispatch({ type: "setName", payload: e.target.value })
+            }
+            onKeyUp={() => Validate()}
+          />
+          {nameError && <ErrorMessage>{errorMessages[0]}</ErrorMessage>}
+          <SchoolModalButton onClick={openModal}>
+            <SchoolText>학교</SchoolText>
+            <FontAwesomeIcon icon={faSearch} />
+          </SchoolModalButton>
+          {state.university && <UnivMessage>{state.university}</UnivMessage>}
+          {univError && <ErrorMessage>{errorMessages[1]}</ErrorMessage>}
+          <MidInput
+            placeholder="나이"
+            type="number"
+            name="Age"
+            style={
+              ageError
+                ? { marginTop: "12px", borderColor: colors.StrongLime }
+                : { marginTop: "12px" }
+            }
+            value={state.age}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              dispatch({ type: "setAge", payload: e.target.value })
+            }
+            onKeyUp={() => Validate()}
+          ></MidInput>
+          {ageError && <ErrorMessage>{errorMessages[2]}</ErrorMessage>}
+          {/* <SubText>나이는 20초 20중 20후 30초 방식으로 표기가되요!</SubText> */}
+          <FlexDiv style={{ justifyContent: "normal", marginTop: "20px" }}>
+            <span
+              style={{
+                justifyContent: "normal",
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                dispatch({ type: "setGender", payload: "male" });
+                Validate(state.university, "male");
+              }}
+            >
+              {state.gender === "male" ? (
+                <FontAwesomeIcon
+                  icon={faCheckCircle}
+                  color={colors.StrongLime}
+                  size="lg"
+                />
+              ) : (
+                <FontAwesomeIcon
+                  icon={faCircle}
+                  color={genderError ? colors.StrongLime : colors.LightGray}
+                  size="lg"
+                />
+              )}
+              <GenderText
+                style={
+                  genderError
+                    ? { marginLeft: "5px", color: colors.StrongLime }
+                    : { marginLeft: "5px" }
                 }
-              : { marginTop: "12px", color: colors.Black, width: 301 }
-          }
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-            dispatch({
-              type: "setUniversity",
-              payload: e.target.value.toString(),
-            });
-            Validate(e.target.value.toString());
-          }}
-        >
-          <option value="" style={{ color: colors.BareGray }}>
-            학교
-          </option>
-          <option value="고려대학교" style={{ color: colors.Black }}>
-            고려대학교
-          </option>
-          <option value="연세대학교" style={{ color: colors.Black }}>
-            연세대학교
-          </option>
-          <option value="이화여자대학교" style={{ color: colors.Black }}>
-            이화여자대학교
-          </option>
-          <option value="성신여자대학교" style={{ color: colors.Black }}>
-            성신여자대학교
-          </option>
-          <option value="다른학교입니다" style={{ color: colors.Black }}>
-            다른학교입니다
-          </option>
-        </select>
-        {univError && <ErrorMessage>{errorMessages[1]}</ErrorMessage>}
-        <MidInput
-          placeholder="나이"
-          type="number"
-          name="Age"
-          style={
-            ageError
-              ? { marginTop: "12px", borderColor: colors.StrongLime }
-              : { marginTop: "12px" }
-          }
-          value={state.age}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            dispatch({ type: "setAge", payload: e.target.value })
-          }
-          onKeyUp={() => Validate()}
-        ></MidInput>
-        {ageError && <ErrorMessage>{errorMessages[2]}</ErrorMessage>}
-        {/* <SubText>나이는 20초 20중 20후 30초 방식으로 표기가되요!</SubText> */}
-        <FlexDiv style={{ justifyContent: "normal", marginTop: "20px" }}>
-          <span
-            style={{
-              justifyContent: "normal",
-              display: "flex",
-              alignItems: "center",
-              cursor: "pointer",
-            }}
-            onClick={() => {
-              dispatch({ type: "setGender", payload: "male" });
-              Validate(state.university, "male");
-            }}
-          >
-            {state.gender === "male" ? (
-              <FontAwesomeIcon
-                icon={faCheckCircle}
-                color={colors.StrongLime}
-                size="lg"
-              />
-            ) : (
-              <FontAwesomeIcon
-                icon={faCircle}
-                color={genderError ? colors.StrongLime : colors.LightGray}
-                size="lg"
-              />
-            )}
-            <GenderText
-              style={
-                genderError
-                  ? { marginLeft: "5px", color: colors.StrongLime }
-                  : { marginLeft: "5px" }
-              }
+              >
+                남성
+              </GenderText>
+            </span>
+            <span
+              style={{
+                justifyContent: "normal",
+                display: "flex",
+                alignItems: "center",
+                marginLeft: "10px",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                dispatch({ type: "setGender", payload: "female" });
+                Validate(state.university, "female");
+              }}
             >
-              남성
-            </GenderText>
-          </span>
-          <span
-            style={{
-              justifyContent: "normal",
-              display: "flex",
-              alignItems: "center",
-              marginLeft: "10px",
-              cursor: "pointer",
-            }}
-            onClick={() => {
-              dispatch({ type: "setGender", payload: "female" });
-              Validate(state.university, "female");
-            }}
-          >
-            {state.gender === "female" ? (
-              <FontAwesomeIcon
-                icon={faCheckCircle}
-                color={colors.StrongLime}
-                size="lg"
-              />
-            ) : (
-              <FontAwesomeIcon
-                icon={faCircle}
-                color={genderError ? colors.StrongLime : colors.LightGray}
-                size="lg"
-              />
-            )}
-            <GenderText
-              style={
-                genderError
-                  ? { marginLeft: "5px", color: colors.StrongLime }
-                  : { marginLeft: "5px" }
-              }
-            >
-              여성
-            </GenderText>
-          </span>
-        </FlexDiv>
-        {genderError && <ErrorMessage>{errorMessages[3]}</ErrorMessage>}
-        <Label>계열 or 직업을 적어주세요</Label>
-        <MidInput
-          name="title"
-          placeholder="ex. 새내기 / 스타트업 마케터 / AI중독 문과생..."
-          style={{ fontSize: "12px" }}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            dispatch({ type: "setTitle", payload: e.target.value })
-          }
-          value={state.title}
-          onKeyUp={() => Validate()}
-        />
-        <ErrorMessage>
-          계열이나, 직업을 활용해서 적으시면 좋아요 :)
-        </ErrorMessage>
-        <Label>자기소개</Label>
-        <BigTextArea
-          name="bio"
-          value={state.bio}
-          placeholder="ex. 어떤거에 관심이 있는지 써주시면 좋아요!
+              {state.gender === "female" ? (
+                <FontAwesomeIcon
+                  icon={faCheckCircle}
+                  color={colors.StrongLime}
+                  size="lg"
+                />
+              ) : (
+                <FontAwesomeIcon
+                  icon={faCircle}
+                  color={genderError ? colors.StrongLime : colors.LightGray}
+                  size="lg"
+                />
+              )}
+              <GenderText
+                style={
+                  genderError
+                    ? { marginLeft: "5px", color: colors.StrongLime }
+                    : { marginLeft: "5px" }
+                }
+              >
+                여성
+              </GenderText>
+            </span>
+          </FlexDiv>
+          {genderError && <ErrorMessage>{errorMessages[3]}</ErrorMessage>}
+          <Label>계열 or 직업을 적어주세요</Label>
+          <MidInput
+            name="title"
+            placeholder="ex. 새내기 / 스타트업 마케터 / AI중독 문과생..."
+            style={{ fontSize: "12px" }}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              dispatch({ type: "setTitle", payload: e.target.value })
+            }
+            value={state.title}
+            onKeyUp={() => Validate()}
+          />
+          <ErrorMessage>
+            계열이나, 직업을 활용해서 적으시면 좋아요 :)
+          </ErrorMessage>
+          <Label>자기소개</Label>
+          <BigTextArea
+            name="bio"
+            value={state.bio}
+            placeholder="ex. 어떤거에 관심이 있는지 써주시면 좋아요!
           요즘 요리에 푹 빠져서 요리강의만 보고 집콕하고 있어요... 맛있는거 먹고싶어요 ><"
-          style={
-            bioError
-              ? {
-                  fontSize: "12px",
-                  lineHeight: "18px",
-                  borderColor: colors.MidBlue,
-                }
-              : { fontSize: "12px", lineHeight: "18px" }
-          }
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-            dispatch({ type: "setBio", payload: e.target.value })
-          }
-          onKeyUp={() => Validate()}
-        />
-        {bioError && <ErrorMessage>{errorMessages[5]}</ErrorMessage>}
+            style={
+              bioError
+                ? {
+                    fontSize: "12px",
+                    lineHeight: "18px",
+                    borderColor: colors.MidBlue,
+                  }
+                : { fontSize: "12px", lineHeight: "18px" }
+            }
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+              dispatch({ type: "setBio", payload: e.target.value })
+            }
+            onKeyUp={() => Validate()}
+          />
+          {bioError && <ErrorMessage>{errorMessages[5]}</ErrorMessage>}
 
-        <SpaceForNavBar> </SpaceForNavBar>
-        <NextButton
-          type="submit"
-          disabled={!state.stage2Valid}
-          onClick={onNext}
-        >
-          가입하기
-        </NextButton>
-      </form>
-    </ContainerwithLeftRightMargin>
+          <SpaceForNavBar></SpaceForNavBar>
+          <NextButton
+            type="submit"
+            disabled={!state.stage2Valid}
+            onClick={onNext}
+          >
+            가입하기
+          </NextButton>
+        </form>
+      </ContainerwithLeftRightMargin>
+      <BottomModal onClose={closeModal} open={modalOpened}>
+        <ModalWrapper>
+          <UpModalWrapper>
+            <SearchBar
+              name="univ"
+              placeholder="ex. 기안대학교"
+              style={{ fontSize: "12px" }}
+              onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
+                await searchUniv(e.target.value);
+              }}
+            />
+            <SearchResultContainer>
+              <UnivSelectedResult>
+                {state.university ? state.university : "선택된 대학교 없음"}
+              </UnivSelectedResult>
+              {univSearchResult?.map((item, index) => {
+                return (
+                  <Fragment key={index}>
+                    <ModalRow
+                      onClick={() => {
+                        dispatch({
+                          type: "setUniversity",
+                          payload: item.schoolName,
+                        });
+                      }}
+                    >
+                      <LeftContainer>
+                        <UnivNameTag>{item.schoolName}</UnivNameTag>
+                        <UnivAdresTag>{item.adres}</UnivAdresTag>
+                      </LeftContainer>
+                      <RightContainer>선택</RightContainer>
+                    </ModalRow>
+                  </Fragment>
+                );
+              })}
+            </SearchResultContainer>
+          </UpModalWrapper>
+          <DownModalWrapper>
+            <SearchButton disabled={!state.university} onClick={closeModal}>
+              선택
+            </SearchButton>
+          </DownModalWrapper>
+        </ModalWrapper>
+      </BottomModal>
+    </>
   );
 }
+
+const LeftContainer = styled.div`
+  max-width: 240px;
+`;
+const RightContainer = styled.div`
+  width: 40px;
+  font-size: 13px;
+  border-radius: 5px;
+  background-color: ${colors.Lime};
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+`;
+
+const UnivSelectedResult = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  font-size: 14px;
+`;
+
+const SearchButton = styled(MainBtn)``;
+
+const UpModalWrapper = styled.div``;
+
+const DownModalWrapper = styled.div``;
 
 const ErrorMessage = styled.p`
   margin-top: 7px;
   font-size: 8px;
   margin-left: 5px;
   color: ${colors.StrongLime};
+`;
+
+const UnivMessage = styled(ErrorMessage)`
+  font-size: 12px;
+`;
+
+const SchoolModalButton = styled.div`
+  width: 100%;
+  &:hover {
+    opacity: 0.7;
+  }
+
+  cursor: pointer;
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border: 1px solid #c4cbd8;
+  border-radius: 8px;
+  font-size: 14px;
+  padding: 8px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 301px;
+`;
+
+const SchoolText = styled.div`
+  font-size: 14px;
+`;
+
+const ModalWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const SearchBar = styled(MidInput)``;
+
+const SearchResultContainer = styled.div``;
+
+const ModalRow = styled.div`
+  cursor: pointer;
+  margin-bottom: 11px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const UnivNameTag = styled.div`
+  font-size: 14px;
+`;
+
+const UnivAdresTag = styled.div`
+  font-size: 11px;
+  color: ${colors.LightGray};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
 `;

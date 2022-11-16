@@ -5,7 +5,7 @@ import AuthProfileData from "../../../components/auth/AuthProfileData";
 import AuthProfileImage from "../../../components/auth/AuthProfileImage";
 import AuthProfileDetailData from "../../../components/auth/AuthProfileDetailData";
 import AuthAgree from "../../../components/auth/AuthAgree";
-import { colors, ContainerFlexColumn } from "../../../styles/styles";
+import { colors, ContainerFlexColumn, MidInput } from "../../../styles/styles";
 import BackButtonWithNoBackground from "../../../components/shared/BackButtonWithNoBackground";
 import { SocialAuthResponse } from "../../../lib/kakao";
 import { CreateAccountOutput } from "../../../lib/api/types";
@@ -21,6 +21,8 @@ import {
 import ClipLoader from "react-spinners/ClipLoader";
 import { initialState, reducer } from "./AuthReducer";
 import { createAccount } from "../../../lib/api/createAccount";
+import BottomModal from "../../../components/UI/BottomModal";
+import styled from "styled-components";
 
 function Auth() {
   const history = useHistory();
