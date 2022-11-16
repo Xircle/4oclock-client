@@ -386,6 +386,8 @@ const RightContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  cursor: pointer;
 `;
 
 const UnivSelectedResult = styled.div`
@@ -418,6 +420,8 @@ const SchoolModalButton = styled.div`
   &:hover {
     opacity: 0.7;
   }
+
+  cursor: pointer;
   margin-top: 12px;
   display: flex;
   justify-content: space-between;
@@ -450,6 +454,7 @@ const SearchBar = styled(MidInput)``;
 const SearchResultContainer = styled.div``;
 
 const ModalRow = styled.div`
+  cursor: pointer;
   margin-bottom: 11px;
   display: flex;
   justify-content: space-between;
