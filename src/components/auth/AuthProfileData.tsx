@@ -187,6 +187,7 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
             <SchoolText>학교</SchoolText>
             <FontAwesomeIcon icon={faSearch} />
           </SchoolModalButton>
+          {state.university && <UnivMessage>{state.university}</UnivMessage>}
           {univError && <ErrorMessage>{errorMessages[1]}</ErrorMessage>}
           <MidInput
             placeholder="나이"
@@ -337,23 +338,63 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
               }}
             />
             <SearchResultContainer>
+              <UnivSelectedResult>
+                {state.university ? state.university : "선택된 대학교 없음"}
+              </UnivSelectedResult>
               {univSearchResult?.map((item, index) => {
                 return (
                   <Fragment key={index}>
-                    <ModalRow>{item.schoolName}</ModalRow>
+                    <ModalRow
+                      onClick={() => {
+                        dispatch({
+                          type: "setUniversity",
+                          payload: item.schoolName,
+                        });
+                      }}
+                    >
+                      <LeftContainer>
+                        <UnivNameTag>{item.schoolName}</UnivNameTag>
+                        <UnivAdresTag>{item.adres}</UnivAdresTag>
+                      </LeftContainer>
+                      <RightContainer>선택</RightContainer>
+                    </ModalRow>
                   </Fragment>
                 );
               })}
             </SearchResultContainer>
           </UpModalWrapper>
           <DownModalWrapper>
-            <SearchButton disabled={!state.university}>선택</SearchButton>
+            <SearchButton disabled={!state.university} onClick={closeModal}>
+              선택
+            </SearchButton>
           </DownModalWrapper>
         </ModalWrapper>
       </BottomModal>
     </>
   );
 }
+
+const LeftContainer = styled.div`
+  max-width: 240px;
+`;
+const RightContainer = styled.div`
+  width: 40px;
+  font-size: 13px;
+  border-radius: 5px;
+  background-color: ${colors.Lime};
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const UnivSelectedResult = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  font-size: 14px;
+`;
 
 const SearchButton = styled(MainBtn)``;
 
@@ -366,6 +407,10 @@ const ErrorMessage = styled.p`
   font-size: 8px;
   margin-left: 5px;
   color: ${colors.StrongLime};
+`;
+
+const UnivMessage = styled(ErrorMessage)`
+  font-size: 12px;
 `;
 
 const SchoolModalButton = styled.div`
@@ -404,8 +449,21 @@ const SearchBar = styled(MidInput)``;
 
 const SearchResultContainer = styled.div``;
 
-const ModalRow = styled.div``;
+const ModalRow = styled.div`
+  margin-bottom: 11px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
-const UnivNameTag = styled.div``;
+const UnivNameTag = styled.div`
+  font-size: 14px;
+`;
 
-const UnivAdresTag = styled.div``;
+const UnivAdresTag = styled.div`
+  font-size: 11px;
+  color: ${colors.LightGray};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+`;
