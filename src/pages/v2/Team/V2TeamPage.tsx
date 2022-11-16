@@ -1,4 +1,5 @@
 import { faClock, faUser } from "@fortawesome/free-regular-svg-icons";
+import { faWonSign } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
@@ -90,7 +91,11 @@ export default function V2TeamPage({ match, location, history }: Props) {
       <DetailInfoContainer>
         <DetailInfoSection>
           <DetailInfoTitle>🔹클럽 정보</DetailInfoTitle>
-          {teamData?.meetingDay && (
+          <Row style={{ marginBottom: 22 }}>
+            <FontAwesomeIcon icon={faWonSign} size="1x" />
+            <ClubInfoHeading>활동비 {teamData?.price}원</ClubInfoHeading>
+          </Row>
+          {teamData?.meetingDay ? (
             <>
               <Row>
                 <FontAwesomeIcon icon={faClock} size="lg" />
@@ -101,8 +106,10 @@ export default function V2TeamPage({ match, location, history }: Props) {
               </Row>
               <ClubInfoSubText>약속시간을 잘 지켜줘!</ClubInfoSubText>
             </>
+          ) : (
+            <></>
           )}
-          {teamData?.maxParticipant && (
+          {teamData?.maxParticipant ? (
             <>
               <Row style={{ marginTop: 22 }}>
                 <FontAwesomeIcon icon={faUser} size="lg" />
@@ -115,6 +122,8 @@ export default function V2TeamPage({ match, location, history }: Props) {
                 위해 전체 모임일정을 연기할 수 있습니다
               </ClubInfoSubText>
             </>
+          ) : (
+            <></>
           )}
           <Row style={{ marginTop: 22 }}>
             <FontAwesomeIcon icon={faUser} size="lg" />
