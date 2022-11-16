@@ -318,6 +318,9 @@ export default function AuthProfileData({ onNext, state, dispatch }: Props) {
               name="univ"
               placeholder="ex. 기안대학교"
               style={{ fontSize: "12px" }}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setUnivSearchResult(e.target.value)
+              }
             />
             <SearchResultContainer></SearchResultContainer>
           </UpModalWrapper>
