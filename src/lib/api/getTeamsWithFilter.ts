@@ -21,6 +21,7 @@ export const seeTeamsWithFilter = async (
       categoryQuery.push(category.id);
     }
   });
+
   let timeQuery: number[] = [];
   times.map((time) => {
     if (time.selected) {
@@ -60,8 +61,5 @@ export const seeTeamsWithFilter = async (
     },
   });
 
-  if (!data.ok) {
-    throw new Error(data.error);
-  }
   return data;
 };

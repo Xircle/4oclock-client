@@ -80,6 +80,7 @@ function V2LandingPage() {
   const {
     data: teamData,
     isLoading: teamDataLoading,
+    isFetchingNextPage: teamDataFetching,
     hasNextPage: hasNextPageTeam,
     fetchNextPage: fetchNextPageTeam,
     isFetching: isFetchingTeam,
@@ -100,7 +101,7 @@ function V2LandingPage() {
   const OnScroll = useCallback((event) => {
     if (container.current) {
       const { clientHeight } = container.current;
-      if (window.pageYOffset + window.innerHeight > clientHeight - 100) {
+      if (window.pageYOffset + window.innerHeight > clientHeight - 200) {
         fetchNextPageTeam();
       }
     }
