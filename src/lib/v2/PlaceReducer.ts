@@ -2,29 +2,29 @@ import { CreatePlaceOutput } from "../api/types.d";
 
 export type PlaceAction =
   | { type: "setName"; payload: string }
-  | { type: "setMaxParticipantsNumber"; payload: number }
+  | { type: "setMaxParticipantsNumber"; payload?: number }
   | { type: "setParticipationFee"; payload: string }
   | { type: "setStartDateAt"; payload: string }
   | { type: "setDescription"; payload: string }
   | { type: "setDetailAddress"; payload: string }
   // @ts-ignore
-  | { type: "setCoverImageFile"; payload: File }
+  | { type: "setCoverImageFile"; payload?: File }
   // @ts-ignore
-  | { type: "setSubImagesFile"; payload: File[] }
+  | { type: "setSubImagesFile"; payload?: File[] }
   | { type: "setStage1Valid"; payload: boolean }
   | { type: "setIsFinished"; payload: Boolean }
-  | { type: "setPlaceId"; payload: string }
+  | { type: "setPlaceId"; payload?: string }
   | { type: "setActivityType"; payload: string }
-  | { type: "setKakaoLink"; payload: string }
-  | { type: "setRecommendation"; payload: string }
-  | { type: "setParticipating"; payload: boolean }
+  | { type: "setKakaoLink"; payload?: string }
+  | { type: "setRecommendation"; payload?: string }
+  | { type: "setParticipating"; payload?: boolean }
   | { type: "setModify"; payload: boolean }
   | { type: "setModifyPlaceId"; payload: string }
-  | { type: "setModifySubImageUrls"; payload: string[] }
-  | { type: "setModifyCoverImageUrl"; payload: string }
+  | { type: "setModifySubImageUrls"; payload?: string[] }
+  | { type: "setModifyCoverImageUrl"; payload?: string }
   | { type: "setIsCoverImageDeleted"; payload: boolean }
-  | { type: "setQAndA"; payload: string[] }
-  | { type: "setTeamOnly"; payload: boolean };
+  | { type: "setQAndA"; payload?: string[] }
+  | { type: "setTeamOnly"; payload?: boolean };
 
 export interface PlaceState extends CreatePlaceOutput {
   stage1Valid: Boolean;
