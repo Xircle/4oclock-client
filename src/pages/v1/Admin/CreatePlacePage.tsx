@@ -12,7 +12,7 @@ import {
   MainBtn,
 } from "../../../styles/styles";
 import DatePicker from "react-date-picker";
-import { placeInitialState, reducer } from "./AdminReducer";
+import { placeInitialState, adminPlaceReducer } from "./AdminReducer";
 import { ModifyStringToStringArray } from "../../../lib/utils";
 import { createPlace } from "../../../lib/api/createPlace";
 import { AdminPlaceOutput } from "../../../lib/api/types";
@@ -21,7 +21,7 @@ interface Props {}
 //   if (uid) dispatch({ type: "setUid", payload: uid });
 export default function CreatePlacePage(props: Props) {
   const history = useHistory();
-  const [state, dispatch] = useReducer(reducer, placeInitialState);
+  const [state, dispatch] = useReducer(adminPlaceReducer, placeInitialState);
   const [startDate, setStartDate] = useState(new Date());
   const [mainFile, setMainFile] = useState<File>();
   const [subFiles, setSubFiles] = useState<File[]>([]);
