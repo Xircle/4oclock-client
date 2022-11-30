@@ -15,7 +15,7 @@ import type { PlaceData } from "../../../lib/api/types";
 import { RouteComponentProps, useHistory } from "react-router-dom";
 import { useMutation, useQuery } from "react-query";
 import { ModifyStringToStringArray } from "../../../lib/utils";
-import { placeInitialState, reducer } from "./AdminReducer";
+import { placeInitialState, adminPlaceReducer } from "./AdminReducer";
 import DatePicker from "react-date-picker";
 import { editPlace } from "../../../lib/api/editPlace";
 
@@ -29,7 +29,7 @@ interface Props extends RouteComponentProps<MatchParams> {}
 
 export default function EditPlacePage({ match }: Props) {
   const history = useHistory();
-  const [state, dispatch] = useReducer(reducer, placeInitialState);
+  const [state, dispatch] = useReducer(adminPlaceReducer, placeInitialState);
   const [startDate, setStartDate] = useState(new Date());
   const [mainFile, setMainFile] = useState<File>();
   const [subFiles, setSubFiles] = useState<File[]>([]);
