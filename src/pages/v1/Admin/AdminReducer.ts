@@ -44,7 +44,7 @@ export const placeInitialState: AdminPlaceOutput = {
   reviewImagesFile: [],
 };
 
-export function reducer(
+export function adminPlaceReducer(
   state: AdminPlaceOutput,
   action: AdminPlaceAction,
 ): AdminPlaceOutput {
