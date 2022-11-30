@@ -463,3 +463,22 @@ export interface SchoolsInfo {
 export interface SearchSchoolOutput {
   dataSearch: SchoolsInfo;
 }
+
+export interface CreatePlaceData {
+  name: string;
+  maxParticipantsNumber?: number;
+  participationFee: string;
+  startDateAt: string;
+  description: string;
+  detailAddress: string;
+  coverImage?: File;
+  subImages?: File[];
+  placeId?: string;
+  kakaoLink?: string;
+  recommendation?: string;
+  participating?: boolean;
+  qAndA?: string[];
+}
+
+// need to change CreatePlaceOutput
+export interface CreatePlaceOutput extends CreatePlaceData {}
