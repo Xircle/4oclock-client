@@ -1,6 +1,7 @@
 // reducers/index.js
 
 /** root reducer */
+import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { placeReducer } from "../PlaceReducer";
 
@@ -9,7 +10,7 @@ import { placeReducer } from "../PlaceReducer";
 const rootReducer = combineReducers({
   placeReducer,
 });
-
+export const store = configureStore({ reducer: rootReducer });
 export default rootReducer;
 
 export type RootState = ReturnType<typeof rootReducer>;
