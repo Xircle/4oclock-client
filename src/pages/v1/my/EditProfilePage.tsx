@@ -161,11 +161,9 @@ export default function EditProfilePage({ history }: Props) {
       },
       {},
     );
-    const editedProfileData: ProfileData = diff(userData, trimedProfileData);
-    if (_.isEqual(editedProfileData, {}))
-      return toast.info("프로필을 수정해주세요");
+
     const { data } = await mutateUserProfile({
-      ...editedProfileData,
+      ...trimedProfileData,
     });
     if (!data.ok) return alert(data.error);
     toast.success("프로필 편집 성공했습니다");
@@ -259,21 +257,6 @@ export default function EditProfilePage({ history }: Props) {
     setLocalProfileData((prev) => ({
       ...prev,
       personality: e.target.value,
-    }));
-  };
-
-  const handleIsYkChnage = () => {
-    const newYk = !localProfileData.isYkClub;
-    setLocalProfileData((prev) => ({
-      ...prev,
-      isYkClub: newYk,
-    }));
-  };
-
-  const handleActivitiesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalProfileData((prev) => ({
-      ...prev,
-      activities: e.target.value,
     }));
   };
 
@@ -533,18 +516,6 @@ export default function EditProfilePage({ history }: Props) {
                 술은 동반자
               </option>
             </SSelect>
-            <YkContainer>
-              <Label>혹시 맛집 동아리 연고이팅 회원이신가요?</Label>
-              <YkInnerContainer onClick={handleIsYkChnage}>
-                {localProfileData?.isYkClub ? (
-                  <YkChecked></YkChecked>
-                ) : (
-                  <Ykunchecked></Ykunchecked>
-                )}
-
-                <LabelSpan>예</LabelSpan>
-              </YkInnerContainer>
-            </YkContainer>
           </form>
           <SpaceForNavBar></SpaceForNavBar>
         </ContainerwithLeftRightMargin>
