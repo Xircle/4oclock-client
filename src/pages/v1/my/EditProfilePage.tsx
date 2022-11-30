@@ -533,18 +533,6 @@ export default function EditProfilePage({ history }: Props) {
                 술은 동반자
               </option>
             </SSelect>
-            <YkContainer>
-              <Label>혹시 맛집 동아리 연고이팅 회원이신가요?</Label>
-              <YkInnerContainer onClick={handleIsYkChnage}>
-                {localProfileData?.isYkClub ? (
-                  <YkChecked></YkChecked>
-                ) : (
-                  <Ykunchecked></Ykunchecked>
-                )}
-
-                <LabelSpan>예</LabelSpan>
-              </YkInnerContainer>
-            </YkContainer>
           </form>
           <SpaceForNavBar></SpaceForNavBar>
         </ContainerwithLeftRightMargin>
