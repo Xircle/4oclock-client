@@ -1,6 +1,6 @@
 import { CreatePlaceOutput } from "../api/types.d";
 
-export type ActivityAction =
+export type PlaceAction =
   | { type: "setName"; payload: string }
   | { type: "setMaxParticipantsNumber"; payload: number }
   | { type: "setParticipationFee"; payload: string }
@@ -26,7 +26,7 @@ export type ActivityAction =
   | { type: "setQAndA"; payload: string[] }
   | { type: "setTeamOnly"; payload: boolean };
 
-export interface ActivityState extends CreatePlaceOutput {
+export interface PlaceState extends CreatePlaceOutput {
   stage1Valid: Boolean;
   isFinished: Boolean;
   activityType: string;
@@ -38,7 +38,7 @@ export interface ActivityState extends CreatePlaceOutput {
   teamOnly?: boolean;
 }
 
-export const activityInitialState: ActivityState = {
+export const placeInitialState: PlaceState = {
   name: "",
   maxParticipantsNumber: 6,
   description: "",
@@ -63,10 +63,10 @@ export const activityInitialState: ActivityState = {
   teamOnly: true,
 };
 
-export function activityReducer(
-  state: ActivityState = activityInitialState,
-  action: ActivityAction,
-): ActivityState {
+export function placeReducer(
+  state: PlaceState = placeInitialState,
+  action: PlaceAction,
+): PlaceState {
   switch (action.type) {
     case "setName":
       return {
