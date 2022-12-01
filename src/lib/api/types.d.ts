@@ -482,3 +482,22 @@ export interface CreatePlaceData {
 
 // need to change CreatePlaceOutput
 export interface CreatePlaceOutput extends CreatePlaceData {}
+
+export interface MyCreatedPlaceData {
+  isClosed: boolean;
+  id: string;
+  coverImage: string;
+  name: string;
+  startDateFromNow: string;
+  kakaoPlaceId?: string;
+  recommendation?: string;
+  subImages?: string[];
+  team_id?: string | null;
+  placeType: string;
+  placeDetail: MyCreatedPlaceDetail;
+  startDateAt: string;
+}
+
+export interface GetMyCreatedPlaceOutput extends CoreOutput {
+  places: MyCreatedPlaceData[];
+}
