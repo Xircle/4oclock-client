@@ -32,6 +32,11 @@ config();
 const ReservationConfirmPage = React.lazy(
   () => import("./pages/v1/reservation/ReservationConfirmPage"),
 );
+
+const V2CreatePlacePage = React.lazy(
+  () => import("./pages/v2/PlaceManage/V2CreatePlacePage"),
+);
+
 const V2LeaderInfoPage = React.lazy(
   () => import("./pages/v2/Team/V2LeaderInfoPage"),
 );
@@ -125,6 +130,11 @@ function App() {
                 <Route path={routes.v2LeaderPage} component={V2LeaderPage} />
                 <Route path={routes.v2TeamPage} component={V2TeamPage} />
                 <Route path={routes.v2ApplyPage} component={V2ApplyingPage} />
+                <Route
+                  path={routes.v2CreatePlacePage}
+                  component={V2CreatePlacePage}
+                />
+
                 <Route path={routes.root} component={LandingPage} exact />
                 <Route
                   path={routes.socialRedirect}
