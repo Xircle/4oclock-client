@@ -33,18 +33,22 @@ export default function V2LeaderPage() {
       <Body>
         <BodyItem>
           <BodyItemHeading>my 클럽</BodyItemHeading>
-          {teamData?.map((item) => {
-            return (
-              <LeaderTeamRow
-                key={item.teamId}
-                image={item.teamImage}
-                name={item.name}
-                id={item.teamId}
-                total={item.total}
-                count={item.count}
-              />
-            );
-          })}
+          {teamData && teamData?.length > 0 ? (
+            teamData?.map((item) => {
+              return (
+                <LeaderTeamRow
+                  key={item.teamId}
+                  image={item.teamImage}
+                  name={item.name}
+                  id={item.teamId}
+                  total={item.total}
+                  count={item.count}
+                />
+              );
+            })
+          ) : (
+            <div>새로운 팀 개설하기</div>
+          )}
         </BodyItem>
       </Body>
     </Container>
