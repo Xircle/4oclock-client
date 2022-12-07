@@ -148,6 +148,7 @@ const SubmitButton = styled.div`
   font-size: 22px;
   -webkit-box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
   &:hover {
     opacity: 0.5;
   }
