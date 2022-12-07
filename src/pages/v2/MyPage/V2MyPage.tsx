@@ -9,7 +9,7 @@ import { editApplication } from "../../../lib/api/editApplication";
 import { getMyApplications } from "../../../lib/api/getMyApplications";
 import { GetMyApplicationsOutput, MyApplication } from "../../../lib/api/types";
 import { InquiryCTA } from "../../../lib/v2/utils";
-import { Container } from "../../../styles/styles";
+import { BigTextArea, Container } from "../../../styles/styles";
 
 export default function V2MyPage() {
   const [approveds, setApproveds] = useState<MyApplication[] | undefined>([]);
@@ -114,7 +114,18 @@ export default function V2MyPage() {
             ※신청취소는 1번 밖에 안되니 신중히 클럽을 신청해주세요
           </strong>
         </CancelInfo>
+        <CancelSubheading>클럽 취소사유</CancelSubheading>
         {cancelApplicationId}
+        <BigTextArea
+          name="bio"
+          value={cancelReason}
+          placeholder="ex. 어떤거에 관심이 있는지 써주시면 좋아요!
+          요즘 요리에 푹 빠져서 요리강의만 보고 집콕하고 있어요... 맛있는거 먹고싶어요 ><"
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+            setCancelReason(e.target.value);
+          }}
+        />
+        <CancelWordCount>{cancelReason.length}/30</CancelWordCount>
       </Drawer>
       <V2HeaderC title="my page" />
       <Body>
@@ -192,6 +203,29 @@ export default function V2MyPage() {
     </Container>
   );
 }
+
+const CancelWordCount = styled.div`
+  color: #c4cbd8;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  align-self: flex-end;
+  margin-right: 20px;
+`;
+
+const CancelTextarea = styled(BigTextArea)``;
+
+const CancelSubheading = styled.div`
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 25px;
+  /* identical to box height */
+
+  color: #505050;
+  margin-top: 20px;
+`;
 
 const CancelInfo = styled.div`
   width: 100%;
