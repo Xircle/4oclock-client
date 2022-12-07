@@ -18,6 +18,8 @@ interface IProps {
   status: ApplicationStatus;
   teamName: string;
   leaderData?: GMALeaderData;
+  isCancelRequested?: boolean;
+  cancelCTA?: (applicationId: string) => void;
   refetch: (
     options?:
       | (RefetchOptions & RefetchQueryFilters<GetMyApplicationsOutput>)
@@ -31,12 +33,14 @@ export default function MyApplicationRow({
   status,
   id,
   leaderData,
+  isCancelRequested,
   refetch,
+  cancelCTA,
 }: IProps) {
   const { mutateAsync: mutateEditApplication, isLoading: isFetching } =
     useMutation(editApplication);
 
-  const cancelCTA = async () => {
+  const cancelApplyCTA = async () => {
     const { data } = await mutateEditApplication({
       applicationId: id,
       isCanceled: "true",
@@ -46,6 +50,19 @@ export default function MyApplicationRow({
       alert("취소에 성공하였습니다");
     } else {
       alert("취소에 실패하였습니다");
+    }
+  };
+
+  const requestCancelApprovedCTA = async () => {
+    const { data } = await mutateEditApplication({
+      applicationId: id,
+      isCancelRequested: "true",
+    });
+    if (data.ok) {
+      await refetch();
+      alert("승인 취소 신청되었습니다");
+    } else {
+      alert("승인 취소 신청에 실패하였습니다");
     }
   };
 
@@ -63,6 +80,12 @@ export default function MyApplicationRow({
     <>
       <Container>
         <LeftContainer>
+          {isCancelRequested && (
+            <DarkOverlay>
+              승인 취소
+              <br /> 요청 완료
+            </DarkOverlay>
+          )}
           <TeamImage
             src={optimizeImage(teamImage, { width: 50, height: 50 })}
           />
@@ -72,7 +95,7 @@ export default function MyApplicationRow({
           {status === ApplicationStatus.Pending ? (
             <CTAButton
               style={{ backgroundColor: "#C4CBD8" }}
-              onClick={cancelCTA}
+              onClick={cancelApplyCTA}
             >
               신청 취소하기
             </CTAButton>
@@ -99,12 +122,38 @@ export default function MyApplicationRow({
           )}
         </RightContainer>
       </Container>
-      <CTA2Button style={{ backgroundColor: "#C4CBD8" }} onClick={() => {}}>
-        승인 취소 요청하기
-      </CTA2Button>
+      {!isCancelRequested &&
+      status === ApplicationStatus.Approved &&
+      cancelCTA ? (
+        <CTA2Button
+          style={{ backgroundColor: "#C4CBD8" }}
+          onClick={() => cancelCTA(id)}
+        >
+          승인 취소 요청하기
+        </CTA2Button>
+      ) : null}
     </>
   );
 }
+
+const DarkOverlay = styled.div`
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  position: absolute;
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+`;
 
 const CTA2Button = styled.span`
   border-radius: 3px;
@@ -158,6 +207,7 @@ const LeftContainer = styled.div`
   width: 100px;
   padding-left: 10px;
   padding-right: 10px;
+  position: relative;
 `;
 const RightContainer = styled.div`
   height: 100%;
