@@ -364,6 +364,7 @@ export interface MyApplication {
   isCanceled: boolean;
   paid?: boolean;
   teamImage: string;
+  isCancelRequested?: boolean;
 }
 
 export interface MyApplicationsByStatus {
@@ -389,6 +390,8 @@ export interface EditApplicationInput {
   status?: ApplicationStatus;
   isCanceled?: string;
   paid?: string;
+  isCancelRequested?: string;
+  cancelReason?: string;
 }
 
 export interface MyTeamsLeader {
@@ -411,6 +414,7 @@ export interface ApplicantProfiles {
   phoneNumber?: string;
   profileImg: string;
   userId?: string;
+  isCancelRequested?: boolean;
 }
 
 export interface GetTeamApplications {
@@ -422,6 +426,7 @@ export interface GetTeamApplications {
   femaleApplyCount: number;
   pendingApplicantProfiles: ApplicantProfiles[];
   approvedApplicantProfiles: ApplicantProfiles[];
+  cancelRequestedApplicantProfiles: ApplicantProfiles[];
 }
 
 export interface GetTeamApplicationsOutput extends CoreOutput {
