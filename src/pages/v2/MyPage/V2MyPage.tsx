@@ -1,9 +1,11 @@
+import { Drawer } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import styled from "styled-components";
 import MyApplicationRow from "../../../components/V2/Application/MyApplicationRow";
 import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
 import V2SmallProfile from "../../../components/V2/UI/V2SmallProfile";
+import { editApplication } from "../../../lib/api/editApplication";
 import { getMyApplications } from "../../../lib/api/getMyApplications";
 import { GetMyApplicationsOutput, MyApplication } from "../../../lib/api/types";
 import { InquiryCTA } from "../../../lib/v2/utils";
@@ -16,6 +18,12 @@ export default function V2MyPage() {
   );
   const [pendings, setPendings] = useState<MyApplication[] | undefined>([]);
   const [enrolleds, setEnrolleds] = useState<MyApplication[] | undefined>([]);
+  const [drawerOpened, setDrawerOpened] = useState(false);
+  const [cancelReason, setCancelReason] = useState("");
+  const [cancelApplicationId, setCancelApplicationId] = useState("");
+
+  const { mutateAsync: mutateEditApplication, isLoading: isFetching } =
+    useMutation(editApplication);
 
   const { data: applicationOutput, refetch } =
     useQuery<GetMyApplicationsOutput>(
@@ -27,6 +35,19 @@ export default function V2MyPage() {
       },
     );
 
+  const requestCancelApprovedCTA = async () => {
+    const { data } = await mutateEditApplication({
+      applicationId: cancelApplicationId,
+      isCancelRequested: "true",
+    });
+    if (data.ok) {
+      await refetch();
+      alert("승인 취소 신청되었습니다");
+    } else {
+      alert("승인 취소 신청에 실패하였습니다");
+    }
+  };
+
   useEffect(() => {
     if (applicationOutput?.applications) {
       console.log(applicationOutput);
@@ -36,9 +57,52 @@ export default function V2MyPage() {
       setEnrolleds(applicationOutput.applications.enrolleds);
     }
   }, [applicationOutput]);
+  const closeDrawer = () => {
+    setDrawerOpened(false);
+  };
+
+  const openDrawer = () => {
+    setDrawerOpened(true);
+  };
+
+  const cancelCTA = (applicationId: string) => {
+    setCancelApplicationId(applicationId);
+    openDrawer();
+  };
 
   return (
     <Container>
+      <Drawer
+        PaperProps={{
+          style: {
+            width: 375,
+            minHeight: 500,
+            justifyContent: "flex-start",
+            paddingTop: 20,
+            paddingBottom: 20,
+            color: "#505050",
+            fontWeight: "bold",
+            fontSize: 19,
+          },
+        }}
+        ModalProps={{
+          style: {},
+        }}
+        SlideProps={{
+          style: {
+            alignItems: "center",
+            marginLeft: "auto",
+            marginRight: "auto",
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
+          },
+        }}
+        open={drawerOpened}
+        onClose={closeDrawer}
+        anchor="bottom"
+      >
+        {cancelApplicationId}
+      </Drawer>
       <V2HeaderC title="my page" />
       <Body>
         <InquiryButton onClick={InquiryCTA}>케빈에게 문의하기</InquiryButton>
@@ -84,6 +148,8 @@ export default function V2MyPage() {
                 teamName={approved.teamName}
                 refetch={refetch}
                 leaderData={applicationOutput?.leaderData}
+                isCancelRequested={approved.isCancelRequested}
+                cancelCTA={cancelCTA}
               />
             );
           })}
