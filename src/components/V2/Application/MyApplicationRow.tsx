@@ -53,19 +53,6 @@ export default function MyApplicationRow({
     }
   };
 
-  const requestCancelApprovedCTA = async () => {
-    const { data } = await mutateEditApplication({
-      applicationId: id,
-      isCancelRequested: "true",
-    });
-    if (data.ok) {
-      await refetch();
-      alert("승인 취소 신청되었습니다");
-    } else {
-      alert("승인 취소 신청에 실패하였습니다");
-    }
-  };
-
   const CopyCTA = () => {
     if (leaderData?.leaderPhoneNumber) {
       navigator.clipboard
