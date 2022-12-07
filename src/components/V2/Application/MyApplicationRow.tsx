@@ -60,41 +60,61 @@ export default function MyApplicationRow({
   };
 
   return (
-    <Container>
-      <LeftContainer>
-        <TeamImage src={optimizeImage(teamImage, { width: 50, height: 50 })} />
-      </LeftContainer>
-      <RightContainer>
-        <TeamNameTag>{teamName}</TeamNameTag>
-        {status === ApplicationStatus.Pending ? (
-          <CTAButton style={{ backgroundColor: "#C4CBD8" }} onClick={cancelCTA}>
-            신청 취소하기
-          </CTAButton>
-        ) : status === ApplicationStatus.Approved && leaderData ? (
-          <>
-            <LeaderContainer>
-              <LeaderImg
-                src={optimizeImage(leaderData?.leaderProfileUrl, {
-                  width: 30,
-                  height: 30,
-                })}
-              />{" "}
-              <LeaderText>{leaderData?.leaderName} leader</LeaderText>
-            </LeaderContainer>
-            <PhoneNumberRow>
-              <PhoneNumberText>
-                전화번호 {leaderData.leaderPhoneNumber}
-              </PhoneNumberText>
-              <PhoneNumberButton onClick={CopyCTA}>복사</PhoneNumberButton>
-            </PhoneNumberRow>
-          </>
-        ) : (
-          <></>
-        )}
-      </RightContainer>
-    </Container>
+    <>
+      <Container>
+        <LeftContainer>
+          <TeamImage
+            src={optimizeImage(teamImage, { width: 50, height: 50 })}
+          />
+        </LeftContainer>
+        <RightContainer>
+          <TeamNameTag>{teamName}</TeamNameTag>
+          {status === ApplicationStatus.Pending ? (
+            <CTAButton
+              style={{ backgroundColor: "#C4CBD8" }}
+              onClick={cancelCTA}
+            >
+              신청 취소하기
+            </CTAButton>
+          ) : status === ApplicationStatus.Approved && leaderData ? (
+            <>
+              <LeaderContainer>
+                <LeaderImg
+                  src={optimizeImage(leaderData?.leaderProfileUrl, {
+                    width: 30,
+                    height: 30,
+                  })}
+                />{" "}
+                <LeaderText>{leaderData?.leaderName} leader</LeaderText>
+              </LeaderContainer>
+              <PhoneNumberRow>
+                <PhoneNumberText>
+                  전화번호 {leaderData.leaderPhoneNumber}
+                </PhoneNumberText>
+                <PhoneNumberButton onClick={CopyCTA}>복사</PhoneNumberButton>
+              </PhoneNumberRow>
+            </>
+          ) : (
+            <></>
+          )}
+        </RightContainer>
+      </Container>
+      <CTA2Button style={{ backgroundColor: "#C4CBD8" }} onClick={() => {}}>
+        승인 취소 요청하기
+      </CTA2Button>
+    </>
   );
 }
+
+const CTA2Button = styled.span`
+  border-radius: 3px;
+  font-weight: 500;
+  font-size: 11px;
+  padding: 5px 3px;
+  color: #ffffff;
+  background-color: #c4cbd8;
+  cursor: pointer;
+`;
 
 const LeaderImg = styled.img`
   width: 30px;
@@ -123,7 +143,6 @@ const LeaderText = styled.span`
 
 const Container = styled.div`
   width: 100%;
-  height: 80px;
   display: flex;
   margin-bottom: 10px;
 `;
