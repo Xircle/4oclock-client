@@ -1,3 +1,6 @@
+import { faCircle } from "@fortawesome/free-regular-svg-icons";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Drawer } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
@@ -9,7 +12,7 @@ import { editApplication } from "../../../lib/api/editApplication";
 import { getMyApplications } from "../../../lib/api/getMyApplications";
 import { GetMyApplicationsOutput, MyApplication } from "../../../lib/api/types";
 import { InquiryCTA } from "../../../lib/v2/utils";
-import { BigTextArea, Container } from "../../../styles/styles";
+import { BigTextArea, Container, colors } from "../../../styles/styles";
 
 export default function V2MyPage() {
   const [approveds, setApproveds] = useState<MyApplication[] | undefined>([]);
@@ -21,6 +24,7 @@ export default function V2MyPage() {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
   const [cancelApplicationId, setCancelApplicationId] = useState("");
+  const [cancelCheck, setCancelCheck] = useState(false);
 
   const { mutateAsync: mutateEditApplication, isLoading: isFetching } =
     useMutation(editApplication);
@@ -36,13 +40,16 @@ export default function V2MyPage() {
     );
 
   const requestCancelApprovedCTA = async () => {
+    if (cancelReason.length < 30 || !cancelCheck) return;
     const { data } = await mutateEditApplication({
       applicationId: cancelApplicationId,
       isCancelRequested: "true",
+      cancelReason: cancelReason,
     });
     if (data.ok) {
       await refetch();
       alert("승인 취소 신청되었습니다");
+      closeDrawer();
     } else {
       alert("승인 취소 신청에 실패하였습니다");
     }
@@ -115,7 +122,7 @@ export default function V2MyPage() {
           </strong>
         </CancelInfo>
         <CancelSubheading>클럽 취소사유</CancelSubheading>
-        {cancelApplicationId}
+
         <BigTextArea
           name="bio"
           value={cancelReason}
@@ -126,6 +133,33 @@ export default function V2MyPage() {
           }}
         />
         <CancelWordCount>{cancelReason.length}/30</CancelWordCount>
+        <CancelConfirmContainer
+          onClick={() => {
+            setCancelCheck(!cancelCheck);
+          }}
+        >
+          <CancelWarningCheck>
+            {cancelCheck ? (
+              <FontAwesomeIcon
+                icon={faCheckCircle}
+                color="rgba(33, 225, 156)"
+              />
+            ) : (
+              <FontAwesomeIcon icon={faCircle} color={colors.LightGray} />
+            )}
+          </CancelWarningCheck>
+          <CancelWarningText>
+            만약, 기존 신청 정보를 확인 후 취소 사유가 거짓으로 확인 되었을 경우
+            클럽 취소가 무산될 수 있습니다.
+          </CancelWarningText>
+        </CancelConfirmContainer>
+        <CancelSubmitButton
+          disabled={cancelReason.length < 30 || !cancelCheck}
+          onClick={requestCancelApprovedCTA}
+        >
+          취소 승인 요청하기
+        </CancelSubmitButton>
+        <CancelCloseButton onClick={closeDrawer}>뒤로가기</CancelCloseButton>
       </Drawer>
       <V2HeaderC title="my page" />
       <Body>
@@ -204,6 +238,28 @@ export default function V2MyPage() {
   );
 }
 
+const CancelConfirmContainer = styled.div`
+  display: flex;
+  width: 100%;
+  margin-top: 15px;
+  margin-left: 30px;
+  align-items: center;
+  margin-bottom: 50px;
+  cursor: pointer;
+`;
+
+const CancelWarningCheck = styled.div`
+  margin-right: 10px;
+`;
+
+const CancelWarningText = styled.div`
+  width: 260px;
+  color: #505050;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+`;
+
 const CancelWordCount = styled.div`
   color: #c4cbd8;
   font-style: normal;
@@ -214,6 +270,26 @@ const CancelWordCount = styled.div`
   margin-right: 20px;
 `;
 
+const CancelSubmitButton = styled.div<{ disabled?: boolean }>`
+  cursor: pointer;
+  background: ${(props) =>
+    props.disabled ? "#6f7789" : "rgba(33, 225, 156, 0.62)"};
+  border-radius: 5px;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+`;
+
+const CancelCloseButton = styled(CancelSubmitButton)`
+  background: #6f7789;
+  margin-top: 23px;
+`;
+
 const CancelTextarea = styled(BigTextArea)``;
 
 const CancelSubheading = styled.div`
@@ -222,7 +298,8 @@ const CancelSubheading = styled.div`
   font-size: 20px;
   line-height: 25px;
   /* identical to box height */
-
+  align-self: flex-start;
+  margin-left: 20px;
   color: #505050;
   margin-top: 20px;
 `;
