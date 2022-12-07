@@ -3,4 +3,5 @@ export enum ApplicationStatus {
   Disapproved = "Disapproved",
   Enrolled = "Enrolled",
   Pending = "Pending",
+  CancelRequested = "CancelRequested",
 }
