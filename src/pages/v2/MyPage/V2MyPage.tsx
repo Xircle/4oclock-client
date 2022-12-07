@@ -78,8 +78,7 @@ export default function V2MyPage() {
             width: 375,
             minHeight: 500,
             justifyContent: "flex-start",
-            paddingTop: 20,
-            paddingBottom: 20,
+            padding: 20,
             color: "#505050",
             fontWeight: "bold",
             fontSize: 19,
@@ -101,6 +100,20 @@ export default function V2MyPage() {
         onClose={closeDrawer}
         anchor="bottom"
       >
+        <CancelHeading>클럽 취소하기</CancelHeading>
+        <CancelInfo>
+          📌취소인정사유: 요일 변경 문제 / 친구와 같이 신청 문제만 인정 이외의
+          단순변심으로 인한 취소는 불가능
+          <br />
+          📌취소진행순서: 리더에게 취소사유를 보내면 리더가 취소승인을 해줘야
+          취소가 돼요{":)"}
+          <br />
+          📌취소사유를 보낸 후 리더에게 문자로 취소 요청 연락을 꼭꼭 해주세요
+          <br />
+          <strong>
+            ※신청취소는 1번 밖에 안되니 신중히 클럽을 신청해주세요
+          </strong>
+        </CancelInfo>
         {cancelApplicationId}
       </Drawer>
       <V2HeaderC title="my page" />
@@ -179,6 +192,26 @@ export default function V2MyPage() {
     </Container>
   );
 }
+
+const CancelInfo = styled.div`
+  width: 100%;
+  background: #dbedff;
+  border-radius: 10px;
+  padding: 8px 15px;
+  margin-top: 18px;
+  font-size: 12px;
+  line-height: 20px;
+  color: #505050;
+  strong {
+    color: #ff0000;
+  }
+`;
+
+const CancelHeading = styled.div`
+  color: #12121d;
+  font-weight: 500;
+  font-size: 17px;
+`;
 
 const BlueInfoText = styled.div`
   padding: 16px 26px;
