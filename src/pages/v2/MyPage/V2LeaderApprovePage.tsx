@@ -58,7 +58,7 @@ export default function V2LeaderApprovePage({ match }: Props) {
             <RowSubHeadering>
               *my클럽에 승인되었지만 취소를 요청하신 크루분들이십니다!
             </RowSubHeadering>
-            {teamApplicationsData?.approvedApplicantProfiles.map(
+            {teamApplicationsData?.cancelRequestedApplicantProfiles.map(
               (applicant) => {
                 return (
                   <Wrapper key={applicant.profileImg}>
@@ -68,6 +68,8 @@ export default function V2LeaderApprovePage({ match }: Props) {
                       teamId={teamId}
                       userId={applicant.userId}
                       phoneNumber={applicant?.phoneNumber}
+                      applicationId={applicant.applicationId}
+                      refetch={refetch}
                     />
                   </Wrapper>
                 );
