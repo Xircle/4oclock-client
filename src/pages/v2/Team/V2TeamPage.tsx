@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
+import ImageCarousel from "../../../components/UI/ImageCarousel";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
 import { getTeamById } from "../../../lib/api/getTeamById";
 import { GetTeamByIdData } from "../../../lib/api/types";
@@ -136,6 +137,9 @@ export default function V2TeamPage({ match, location, history }: Props) {
         <DetailInfoSection>
           <DetailInfoTitle>🔹클럽 소개</DetailInfoTitle>
           <TeamDescription>{teamData?.description}</TeamDescription>
+        </DetailInfoSection>
+        <DetailInfoSection>
+          <ImageCarousel imageUrls={teamData?.images} />
         </DetailInfoSection>
         <DetailInfoSection>
           <DetailInfoTitle>🔹모임 일정 및 활동</DetailInfoTitle>
