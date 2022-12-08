@@ -24,6 +24,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { ClipLoader } from "react-spinners";
 import Footer from "../../../components/footer/Footer";
+import { useHistory } from "react-router-dom";
+import routes from "../../../routes";
 
 enum DrawerType {
   Category = "선호하는 정모 테마을 선택해주세요",
@@ -41,6 +43,10 @@ function V2LandingPage() {
   const [dayData, setDayData] = useState<TimeData[]>(ITimeData);
   const [ageData, setAgeData] = useState<AgeData[]>(IAgeData);
   const [isSamsungBrowserBool, setIsSamsungBrowserBool] = useState(false);
+  const [isYkClub, setIsYkClub] = useState<boolean | undefined>();
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const history = useHistory();
+
   const { mutateAsync: mutateUserData, isLoading: isFetching } =
     useMutation(getUser);
 
@@ -49,10 +55,16 @@ function V2LandingPage() {
       const userData = await mutateUserData();
 
       const temp = storage.getItem(CURRENT_USER);
+
+      temp.profile.isYkClub = userData?.isYkClub;
       temp.profile.role = userData?.accountType;
       temp.username = userData?.username;
       temp.profile.thumbnail = userData?.profileImageUrl;
       storage.setItem(CURRENT_USER, temp!);
+      setIsYkClub(userData?.isYkClub);
+      if (userData?.username) {
+        setLoggedIn(true);
+      }
     }
   };
 
@@ -160,6 +172,14 @@ function V2LandingPage() {
   const openAgeDrawer = () => {
     setDrawerText(DrawerType.Age);
     setDrawerOpened(true);
+  };
+
+  const visitMypage = () => {
+    if (storage.getItem(CURRENT_USER)?.profile.role === "Owner") {
+      history.push(routes.v2LeaderPage);
+    } else {
+      history.push(routes.v2MyPage);
+    }
   };
 
   return (
@@ -290,7 +310,12 @@ function V2LandingPage() {
         <DrawerWhiteSpace />
         <DrawerButton onClick={closeDrawer}>적용하기</DrawerButton>
       </Drawer>
-      <InquiryButton onClick={InquiryCTA}>케빈에게 문의하기</InquiryButton>
+      <ButtonContainer>
+        <InquiryButton onClick={InquiryCTA}>케빈에게 문의하기</InquiryButton>
+        {isYkClub === false && (
+          <InquiryButton onClick={visitMypage}>활동코드 입력하기</InquiryButton>
+        )}
+      </ButtonContainer>
       <InstructionContainer>
         <InstructionHeading>✅신청 step</InstructionHeading>
         <InstructionText>
@@ -370,6 +395,12 @@ function V2LandingPage() {
     </SContainer>
   );
 }
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const ClipLoaderWrapper = styled.div`
   height: 150px;
