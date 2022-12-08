@@ -450,6 +450,8 @@ export interface GetApplicationByLeaderData {
   age: number;
   gender: Gender;
   university: string;
+  isCancelRequested?: boolean;
+  cancelReason?: string;
 }
 
 export interface GetApplicationByLeaderOutput extends CoreOutput {
