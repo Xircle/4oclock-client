@@ -158,7 +158,11 @@ export default function V2TeamPage({ match, location, history }: Props) {
         </DetailInfoSection>
         <DetailInfoSection>
           <DetailInfoTitle>🔹주 활동 지역</DetailInfoTitle>
-          <TeamDescription>{teamData?.areaInfo}</TeamDescription>
+          <TeamDescription>
+            {teamData?.area_names && teamData?.area_names?.length > 0
+              ? teamData?.area_names?.join(", ")
+              : teamData?.areaInfo}
+          </TeamDescription>
         </DetailInfoSection>
         <DetailInfoSection>
           <DetailInfoTitle>🔹신청 전, 꼭 알아주세요!</DetailInfoTitle>
