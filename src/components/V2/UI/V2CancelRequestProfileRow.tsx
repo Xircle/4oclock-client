@@ -1,9 +1,17 @@
 import { faClone, faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  QueryObserverResult,
+  RefetchOptions,
+  RefetchQueryFilters,
+  useMutation,
+} from "react-query";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { Gender } from "../../../lib/api/types";
+import { editApplication } from "../../../lib/api/editApplication";
+import { Gender, GetTeamApplications } from "../../../lib/api/types";
 import optimizeImage from "../../../lib/optimizeImage";
+import { ApplicationStatus } from "../../../lib/v2/enums";
 import { colors } from "../../../styles/styles";
 
 interface Props {
@@ -12,6 +20,12 @@ interface Props {
   teamId: string;
   userId?: string;
   phoneNumber?: string;
+  applicationId?: string;
+  refetch: (
+    options?:
+      | (RefetchOptions & RefetchQueryFilters<GetTeamApplications | undefined>)
+      | undefined,
+  ) => Promise<QueryObserverResult<GetTeamApplications | undefined, unknown>>;
 }
 
 export default function V2CancelRequestProfileRow({
@@ -20,10 +34,30 @@ export default function V2CancelRequestProfileRow({
   teamId,
   userId,
   phoneNumber,
+  applicationId,
+  refetch,
 }: Props) {
   const history = useHistory();
-  const ApproveCancelCTA = () => {
-    // approve cancel
+  const { mutateAsync: mutateEditApplication, isLoading: isFetching } =
+    useMutation(editApplication);
+
+  const ApproveCancelCTA = async () => {
+    if (!applicationId) {
+      alert("지원서가 존재하지 않습니다");
+      return;
+    }
+    const { data } = await mutateEditApplication({
+      applicationId: applicationId,
+      status: ApplicationStatus.Disapproved,
+      cancelReason: "",
+      isCancelRequested: "false",
+    });
+    if (data.ok) {
+      await refetch();
+      alert("취소 승인 성공하였습니다");
+    } else {
+      alert("취소 승인 실패하였습니다");
+    }
   };
 
   const CopyCTA = () => {
