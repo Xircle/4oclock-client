@@ -60,6 +60,12 @@ export default function V2CancelRequestProfileRow({
     }
   };
 
+  const ApproveDetailCTA = () => {
+    if (teamId && userId) {
+      history.push(`/v2/leaderpage/approve_detail/${userId}/${teamId}`);
+    }
+  };
+
   const CopyCTA = () => {
     if (phoneNumber) {
       navigator.clipboard.writeText(phoneNumber).then((value) => {
@@ -81,7 +87,12 @@ export default function V2CancelRequestProfileRow({
       <RightContainer>
         <RightRow>
           <NameTag style={{ marginRight: 10 }}>{username}</NameTag>
-          <CTAButton onClick={ApproveCancelCTA}>취소 승인하기</CTAButton>
+          <ApproveCancelRequestButton onClick={ApproveCancelCTA}>
+            취소 승인하기
+          </ApproveCancelRequestButton>
+          <CancelRequestDetailButton onClick={ApproveDetailCTA}>
+            요청서 보기
+          </CancelRequestDetailButton>
         </RightRow>
         <RightRow style={{ cursor: "pointer" }}>
           <PhoneNumberTag>전화번호 {phoneNumber}</PhoneNumberTag>
@@ -92,7 +103,7 @@ export default function V2CancelRequestProfileRow({
   );
 }
 
-const CTAButton = styled.div`
+const ApproveCancelRequestButton = styled.div`
   font-weight: 500;
   font-size: 10px;
   line-height: 13px;
@@ -101,6 +112,12 @@ const CTAButton = styled.div`
   background-color: #fd8a66;
   border-radius: 3px;
   cursor: pointer;
+`;
+
+const CancelRequestDetailButton = styled(ApproveCancelRequestButton)`
+  background-color: #c4cbd8;
+  color: white;
+  margin-left: 10px;
 `;
 
 const NameTag = styled.div`
