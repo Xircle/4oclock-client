@@ -61,9 +61,8 @@ export default function V2CancelRequestProfileRow({
   };
 
   const ApproveDetailCTA = () => {
-    if (teamId && userId) {
-      history.push(`/v2/leaderpage/approve_detail/${userId}/${teamId}`);
-    }
+    if (applicationId)
+      history.push(`/v2/leaderpage/approve_detail/${applicationId}`);
   };
 
   const CopyCTA = () => {
