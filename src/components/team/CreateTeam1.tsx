@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { TeamAction, TeamState } from "./types";
 
 interface Props {
@@ -7,5 +8,7 @@ interface Props {
 }
 
 export default function CreateTeam1({ onNext, state, dispatch }: Props) {
-  return <div></div>;
+  return <Container></Container>;
 }
+
+const Container = styled.div``;
