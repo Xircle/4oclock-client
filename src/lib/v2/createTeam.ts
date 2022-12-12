@@ -59,9 +59,6 @@ export const createTeam = async (state: TeamState): Promise<CoreOutput> => {
       formData.append("mission", state.mission[i]!);
     }
   }
-  const { data } = await AxiosClient.post<CoreOutput>(
-    "auth/social/register/kakao",
-    formData,
-  );
+  const { data } = await AxiosClient.post<CoreOutput>("team/create", formData);
   return data;
 };
