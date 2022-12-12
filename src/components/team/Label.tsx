@@ -35,4 +35,12 @@ const TeamLabel = styled.div`
   margin-bottom: 15px;
 `;
 
-const Description = styled.div``;
+const Description = styled.div`
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 16px;
+  /* or 145% */
+
+  color: #a7b0c0;
+  width: 80%;
+`;
