@@ -21,23 +21,23 @@ export interface TeamState {
   mission?: string;
 }
 export type TeamAction =
-  | { type: "leaderId"; payload: string }
-  | { type: "images"; payload: File[] }
-  | { type: "season"; payload: number }
-  | { type: "startDate"; payload: string }
-  | { type: "endDate"; payload: string }
-  | { type: "max_participant"; payload: number }
-  | { type: "categoryId"; payload: string }
-  | { type: "question"; payload: string }
-  | { type: "maleMinAge"; payload: number }
-  | { type: "maleMaxAge"; payload: number }
-  | { type: " femaleMinAge"; payload: number }
-  | { type: "femaleMaxAge"; payload: number }
-  | { type: " price"; payload: number }
-  | { type: " leaderIntro"; payload: string }
-  | { type: " meeting_day"; payload: number }
-  | { type: " meeting_hour"; payload: number }
-  | { type: " areaIds"; payload: string[] }
-  | { type: " activityTitles"; payload: string[] }
-  | { type: " activityDetails"; payload: string[] }
-  | { type: " mission"; payload: string };
+  | { type: "setLeaderId"; payload: string }
+  | { type: "setImages"; payload: File[] }
+  | { type: "setSeason"; payload: number }
+  | { type: "setStartDate"; payload: string }
+  | { type: "setEndDate"; payload: string }
+  | { type: "setMax_participant"; payload: number }
+  | { type: "setCategoryId"; payload: string }
+  | { type: "setQuestion"; payload: string }
+  | { type: "setMaleMinAge"; payload: number }
+  | { type: "setMaleMaxAge"; payload: number }
+  | { type: "setFemaleMinAge"; payload: number }
+  | { type: "setFemaleMaxAge"; payload: number }
+  | { type: "setPrice"; payload: number }
+  | { type: "setLeaderIntro"; payload: string }
+  | { type: "setMeeting_day"; payload: number }
+  | { type: "setMeeting_hour"; payload: number }
+  | { type: "setAreaIds"; payload: string[] }
+  | { type: "setActivityTitles"; payload: string[] }
+  | { type: "setActivityDetails"; payload: string[] }
+  | { type: "setMission"; payload: string };
