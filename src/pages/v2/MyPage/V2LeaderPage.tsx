@@ -1,13 +1,15 @@
-import { useEffect } from "react";
 import { useQuery } from "react-query";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import LeaderTeamRow from "../../../components/V2/Team/LeaderTeamRow";
 import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
 import V2SmallProfile from "../../../components/V2/UI/V2SmallProfile";
 import { getMyTeamsLeader } from "../../../lib/api/getMyTeamsLeader";
 import { MyTeamsLeader } from "../../../lib/api/types";
+import routes from "../../../routes";
 
 export default function V2LeaderPage() {
+  const history = useHistory();
   const { data: teamData } = useQuery<MyTeamsLeader[] | undefined>(
     ["leaderTeam"],
     () => getMyTeamsLeader(),
@@ -17,11 +19,9 @@ export default function V2LeaderPage() {
     },
   );
 
-  useEffect(() => {
-    if (teamData) {
-      console.log(teamData);
-    }
-  }, [teamData]);
+  const createTeamCTA = () => {
+    history.push(routes.v2CreateTeamPage);
+  };
 
   return (
     <Container>
@@ -47,13 +47,29 @@ export default function V2LeaderPage() {
               );
             })
           ) : (
-            <div>새로운 팀 개설하기</div>
+            <CreateTeamButton onClick={createTeamCTA}>
+              my 정기 모임 생성하기
+            </CreateTeamButton>
           )}
         </BodyItem>
       </Body>
     </Container>
   );
 }
+
+const CreateTeamButton = styled.div`
+  cursor: pointer;
+  background: rgba(33, 225, 156, 0.33);
+  border-radius: 10px;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 18px;
+  color: #505050;
+  font-weight: 700;
+  font-size: 18px;
+`;
 
 const Container = styled.div``;
 
