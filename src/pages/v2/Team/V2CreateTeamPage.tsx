@@ -14,6 +14,7 @@ import CreateTeam2 from "../../../components/team/CreateTeam2";
 import CreateTeam3 from "../../../components/team/CreateTeam3";
 import CreateTeamEnd from "../../../components/team/CreateTeamEnd";
 import storage from "../../../lib/storage";
+import routes from "../../../routes";
 import { colors, ContainerFlexColumn } from "../../../styles/styles";
 import { teamInitialState, teamReducer } from "./TeamReducer";
 
@@ -38,6 +39,8 @@ export default function V2CreateTeamPage({ leaderId }: Props) {
     const leaderId = storage.getItem(CURRENT_USER)?.uid;
     if (leaderId) {
       dispatch({ type: "setLeaderId", payload: leaderId });
+    } else {
+      history.push(routes.v2Root);
     }
   }, []);
 
