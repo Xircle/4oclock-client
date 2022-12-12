@@ -5,14 +5,10 @@ import {
   ContainerwithLeftRightMargin,
   Heading,
   colors,
-  MidInput,
-  GenderText,
   Label,
   BigTextArea,
   NextButton,
-  SpaceForNavBar,
   SubText,
-  FlexDiv,
 } from "../../styles/styles";
 
 interface Props {
