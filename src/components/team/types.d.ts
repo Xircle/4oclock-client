@@ -1,5 +1,6 @@
 export interface TeamState {
   leaderId: string;
+  name: string;
   images: File[];
   season: number;
   startDate?: string;
@@ -22,6 +23,7 @@ export interface TeamState {
 }
 export type TeamAction =
   | { type: "setLeaderId"; payload: string }
+  | { type: "setName"; payload: string }
   | { type: "setImages"; payload: File[] }
   | { type: "setSeason"; payload: number }
   | { type: "setStartDate"; payload: string }
