@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { colors, MidInput } from "../../styles/styles";
+import { BlankSpace, NextButton } from "./CreateTeam1";
 import Label from "./Label";
 import { TeamAction, TeamState } from "./types";
 
@@ -24,6 +25,10 @@ export default function CreateTeam2({ onNext, state, dispatch }: Props) {
         description="설명만으로는 부족한 my클럽을 표현하는 사진을 올려주세요!
 사진을 통해 클럽의 매력을 발산해주세요!"
       />
+      <BlankSpace />
+      <NextButton type="submit" disabled={false} onClick={onNext}>
+        다음(2/3)
+      </NextButton>
     </Container>
   );
 }
