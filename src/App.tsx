@@ -37,6 +37,10 @@ const V2CreatePlacePage = React.lazy(
   () => import("./pages/v2/PlaceManage/V2CreatePlacePage"),
 );
 
+const V2CreateTeamPage = React.lazy(
+  () => import("./pages/v2/Team/V2CreateTeamPage"),
+);
+
 const V2LeaderInfoPage = React.lazy(
   () => import("./pages/v2/Team/V2LeaderInfoPage"),
 );
@@ -133,6 +137,11 @@ function App() {
                 <Route
                   path={routes.v2CreatePlacePage}
                   component={V2CreatePlacePage}
+                />
+
+                <Route
+                  path={routes.v2CreateTeamPage}
+                  component={V2CreateTeamPage}
                 />
 
                 <Route path={routes.root} component={LandingPage} exact />
