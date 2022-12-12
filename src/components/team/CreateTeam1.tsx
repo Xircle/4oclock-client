@@ -95,11 +95,11 @@ export const NextButton = styled(MainBtn)`
   }
 `;
 
-const BlankSpace = styled.div`
+export const BlankSpace = styled.div`
   height: 100px;
 `;
 
-const CancelWordCount = styled.div`
+export const CancelWordCount = styled.div`
   color: #c4cbd8;
   font-style: normal;
   font-weight: 400;
@@ -108,13 +108,13 @@ const CancelWordCount = styled.div`
   text-align: end;
 `;
 
-const Container = styled.div``;
+export const Container = styled.div``;
 
-const OnelineInput = styled(MidInput)`
+export const OnelineInput = styled(MidInput)`
   width: 100%;
 `;
 
-const MultilineInput = styled(BigTextArea)`
+export const MultilineInput = styled(BigTextArea)`
   width: 100%;
 `;
 
