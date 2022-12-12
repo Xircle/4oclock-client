@@ -37,6 +37,8 @@ export default function V2CreateTeamPage({ leaderId }: Props) {
     else history.goBack();
   };
 
+  const showExample = () => {};
+
   useEffect(() => {
     const leaderId = storage.getItem(CURRENT_USER)?.uid;
     if (leaderId) {
@@ -61,7 +63,7 @@ export default function V2CreateTeamPage({ leaderId }: Props) {
           style={{
             cursor: "pointer",
             position: "absolute",
-            left: 0,
+            left: "10px",
             fontSize: "22px",
           }}
           icon={faArrowLeft}
@@ -71,11 +73,20 @@ export default function V2CreateTeamPage({ leaderId }: Props) {
         />
         <HeaderTitle>리더 정기클럽 생성하기</HeaderTitle>
       </Header>
+      <Body>
+        <TopInfoContainer>
+          <TopInfoLeft>
+            정기클럽 기본정보({step + 1}/{components.length})
+          </TopInfoLeft>
+          <TopInfoRight onClick={showExample}>생성예시보기</TopInfoRight>
+        </TopInfoContainer>
+        {components.map((component, index) => {
+          if (index === step)
+            return <Fragment key={index}>{component}</Fragment>;
+          return null;
+        })}
+      </Body>
 
-      {components.map((component, index) => {
-        if (index === step) return <Fragment key={index}>{component}</Fragment>;
-        return null;
-      })}
       {isLoading && (
         <>
           <LoaderBackdrop />
@@ -92,6 +103,34 @@ export default function V2CreateTeamPage({ leaderId }: Props) {
     </ContainerFlexColumn>
   );
 }
+
+const TopInfoContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const TopInfoLeft = styled.div`
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 35px;
+  color: #505050;
+`;
+
+const TopInfoRight = styled.div`
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 35px;
+  color: #6f7789;
+  padding: 3px 15px;
+  background: rgba(33, 225, 156, 0.31);
+  border-radius: 5px;
+`;
+
+const Body = styled.div`
+  padding: 10px;
+`;
 
 const Header = styled.div`
   display: flex;
