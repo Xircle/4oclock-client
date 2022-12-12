@@ -12,6 +12,7 @@ export const teamInitialState = {
   areaIds: [],
   activityTitles: [],
   activityDetails: [],
+  name: "",
 };
 
 export function teamReducer(state: TeamState, action: TeamAction): TeamState {
@@ -20,6 +21,11 @@ export function teamReducer(state: TeamState, action: TeamAction): TeamState {
       return {
         ...state,
         leaderId: action.payload,
+      };
+    case "setName":
+      return {
+        ...state,
+        name: action.payload,
       };
     case "setImages":
       return {
