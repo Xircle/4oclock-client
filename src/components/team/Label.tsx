@@ -31,6 +31,8 @@ const TeamLabel = styled.div`
   line-height: 20px;
   display: flex;
   align-items: flex-start;
+  margin-top: 15px;
+  margin-bottom: 15px;
 `;
 
 const Description = styled.div``;
