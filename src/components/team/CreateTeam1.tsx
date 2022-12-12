@@ -1,5 +1,11 @@
-interface Props {}
+import { TeamAction, TeamState } from "./types";
 
-export default function CreateTeam1(props: Props) {
+interface Props {
+  onNext: () => void;
+  state: TeamState;
+  dispatch: React.Dispatch<TeamAction>;
+}
+
+export default function CreateTeam1({ onNext, state, dispatch }: Props) {
   return <div></div>;
 }
