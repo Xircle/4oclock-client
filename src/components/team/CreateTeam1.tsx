@@ -22,12 +22,13 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
         //     ? { marginTop: "12px", borderColor: colors.StrongLime }
         //     : { marginTop: "12px" }
         // }
-        // value={state.team}
-        // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-        //   dispatch({ type: "setAge", payload: e.target.value })
-        // }
+        value={state.name}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          dispatch({ type: "setName", payload: e.target.value })
+        }
         //onKeyUp={() => Validate()}
       />
+      <CancelWordCount>{state.name?.length}/30</CancelWordCount>
       <Label mandatory={true} labelName="만나는 정기모임 요일 및 시간" />
       <Label mandatory={true} labelName="주 활동지역 (복수 선택 가능)" />
       <Label mandatory={true} labelName="클럽 나이대" />
@@ -37,6 +38,17 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
   );
 }
 
+const CancelWordCount = styled.div`
+  color: #c4cbd8;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: end;
+`;
+
 const Container = styled.div``;
 
-const OnlineInput = styled(MidInput)``;
+const OnlineInput = styled(MidInput)`
+  width: 100%;
+`;
