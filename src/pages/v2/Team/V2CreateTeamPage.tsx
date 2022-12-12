@@ -1,3 +1,5 @@
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Fragment, useEffect, useReducer, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
@@ -53,8 +55,23 @@ export default function V2CreateTeamPage({ leaderId }: Props) {
 
   return (
     <ContainerFlexColumn>
-      <PageTitle title="프로필 등록" />
-      <BackButtonWithNoBackground onPrev={prevStep} />
+      <PageTitle title="팀 생성" />
+      <Header>
+        <FontAwesomeIcon
+          style={{
+            cursor: "pointer",
+            position: "absolute",
+            left: 0,
+            fontSize: "22px",
+          }}
+          icon={faArrowLeft}
+          color={colors.Black}
+          size="2x"
+          onClick={prevStep}
+        />
+        <HeaderTitle>리더 정기클럽 생성하기</HeaderTitle>
+      </Header>
+
       {components.map((component, index) => {
         if (index === step) return <Fragment key={index}>{component}</Fragment>;
         return null;
@@ -75,3 +92,18 @@ export default function V2CreateTeamPage({ leaderId }: Props) {
     </ContainerFlexColumn>
   );
 }
+
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+  justify-content: center;
+`;
+
+const HeaderTitle = styled.div`
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 35px;
+  color: #222222;
+  padding: 10px;
+`;
