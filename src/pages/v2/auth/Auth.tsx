@@ -21,8 +21,6 @@ import {
 import ClipLoader from "react-spinners/ClipLoader";
 import { initialState, authReducer } from "./AuthReducer";
 import { createAccount } from "../../../lib/api/createAccount";
-import BottomModal from "../../../components/UI/BottomModal";
-import styled from "styled-components";
 
 function Auth() {
   const history = useHistory();
