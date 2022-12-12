@@ -337,6 +337,9 @@ export interface TeamData {
   leaderIntro?: string;
   area_ids?: string[];
   area_names?: string[];
+  activity_titles?: string[];
+  activity_details?: string[];
+  mission?: string;
 }
 
 export interface DetailTeamData extends TeamData {
