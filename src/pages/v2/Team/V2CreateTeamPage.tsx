@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Fragment, useEffect, useReducer, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 import PageTitle from "../../../components/PageTitle";
 import BackButtonWithNoBackground from "../../../components/shared/BackButtonWithNoBackground";
@@ -11,11 +12,13 @@ import {
   LoaderBackdrop,
   LoaderWrapper,
 } from "../../../components/shared/Loader";
+import { CoreOutput } from "../../../components/shared/types";
 import CreateTeam1 from "../../../components/team/CreateTeam1";
 import CreateTeam2 from "../../../components/team/CreateTeam2";
 import CreateTeam3 from "../../../components/team/CreateTeam3";
 import CreateTeamEnd from "../../../components/team/CreateTeamEnd";
 import storage from "../../../lib/storage";
+import { createTeam } from "../../../lib/v2/createTeam";
 import routes from "../../../routes";
 import { colors, ContainerFlexColumn } from "../../../styles/styles";
 import { teamInitialState, teamReducer } from "./TeamReducer";
@@ -30,7 +33,30 @@ export default function V2CreateTeamPage({ leaderId }: Props) {
   const [state, dispatch] = useReducer(teamReducer, teamInitialState);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleNext = async () => {};
+  const handleNext = async () => {
+    if (step < components.length - 1) {
+      setStep((step) => step + 1);
+    } else {
+      setIsLoading(true);
+      try {
+        const data: CoreOutput = await createTeam(state);
+        if (!data.ok) {
+          toast.error(data.error, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        history.push(routes.v2LeaderPage);
+      } catch (err) {
+        console.log(err);
+        throw new Error();
+      } finally {
+        setIsLoading(false);
+      }
+      return () => {
+        setIsLoading(false);
+      };
+    }
+  };
 
   const prevStep = () => {
     if (step > 0) setStep((step) => step - 1);
