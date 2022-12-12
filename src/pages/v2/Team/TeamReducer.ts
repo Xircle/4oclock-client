@@ -9,7 +9,7 @@ export const teamInitialState = {
   leaderIntro: "",
   meeting_day: 0,
   meeting_hour: 0,
-  areaIds: "",
+  areaIds: [],
   activityTitles: [],
   activityDetails: [],
 };
