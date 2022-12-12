@@ -37,6 +37,7 @@ const routes = {
   v2LeaderInfoPage: "/v/leader_info_page/:leaderId",
   v2Auth: "/v2/auth",
   v2CreatePlacePage: "/v2/create_place",
+  v2CreateTeamPage: "/v2/create_team",
 };
 
 export default routes;
