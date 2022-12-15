@@ -44,7 +44,7 @@ export default function CreateTeam3({ onNext, state, dispatch }: Props) {
       </ActivityInfo>
       {state.activityTitles.map((item, index) => {
         return (
-          <Activity>
+          <Activity key={index + "activity"}>
             <OnelineInput
               placeholder="활동 제목을 적어주세요"
               type="text"
