@@ -93,6 +93,7 @@ function V2LandingPage() {
   const {
     data: teamData,
     isLoading: teamDataLoading,
+    refetch: teamDataRefetch,
     isFetchingNextPage: teamDataFetching,
     hasNextPage: hasNextPageTeam,
     fetchNextPage: fetchNextPageTeam,
@@ -157,6 +158,7 @@ function V2LandingPage() {
   };
 
   const closeDrawer = () => {
+    teamDataRefetch();
     setDrawerOpened(false);
   };
 
