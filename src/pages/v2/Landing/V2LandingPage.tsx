@@ -98,7 +98,7 @@ function V2LandingPage() {
     fetchNextPage: fetchNextPageTeam,
     isFetching: isFetchingTeam,
   } = useInfiniteQuery(
-    ["teams", categories, dayData, ageData, refilterCount],
+    ["teams"],
     // @ts-ignore
     ({ pageParam }) =>
       seeTeamsWithFilter(categories, dayData, ageData, pageParam),
@@ -107,13 +107,13 @@ function V2LandingPage() {
         const nextPage = currentPage.meta.page + 1;
         return nextPage <= currentPage.meta.totalPages ? nextPage : null;
       },
-      refetchOnWindowFocus: false,
     },
   );
 
   const OnScroll = useCallback((event) => {
     if (container.current) {
       const { clientHeight } = container.current;
+
       if (window.pageYOffset + window.innerHeight > clientHeight - 200) {
         fetchNextPageTeam();
       }
