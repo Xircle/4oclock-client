@@ -3,6 +3,7 @@ import { colors, MidInput } from "../../styles/styles";
 import {
   BlankSpace,
   CancelWordCount,
+  Container,
   MultilineInput,
   NextButton,
   OnelineInput,
@@ -75,4 +76,6 @@ export default function CreateTeam2({ onNext, state, dispatch }: Props) {
   );
 }
 
-const Container = styled.div``;
+const PhotoContainer = styled.div`
+  width: 100%;
+`;
