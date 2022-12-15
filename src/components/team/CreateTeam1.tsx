@@ -1,10 +1,11 @@
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Checkbox, Drawer, FormControlLabel } from "@material-ui/core";
+import { Checkbox, Drawer, FormControlLabel, Radio } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { Area } from "../../lib/api/types";
+import { seeAllCategory } from "../../lib/api/seeAllCategory";
+import { Area, CategoryData } from "../../lib/api/types";
 import { getAreas } from "../../lib/v2/getAreas";
 import { BigTextArea, colors, MainBtn, MidInput } from "../../styles/styles";
 import Label from "./Label";
@@ -31,6 +32,15 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
   const { data: areaData } = useQuery<Area[] | undefined>(
     ["AreaData"],
     () => getAreas(),
+    {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  );
+
+  const { data: categoryData } = useQuery<CategoryData[] | undefined>(
+    ["categories"],
+    () => seeAllCategory(),
     {
       retry: 1,
       refetchOnWindowFocus: false,
@@ -130,6 +140,34 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
     );
   };
 
+  const CategoryComponent = () => {
+    return (
+      <NonFlexWrapper>
+        {categoryData?.map((item, index) => {
+          return (
+            <div>
+              <FormControlLabel
+                key={index}
+                control={
+                  <Radio
+                    checked={state.categoryId === item.id}
+                    onChange={() => {
+                      dispatch({
+                        type: "setCategoryId",
+                        payload: item.id,
+                      });
+                    }}
+                  />
+                }
+                label={item.name}
+              />
+            </div>
+          );
+        })}
+      </NonFlexWrapper>
+    );
+  };
+
   const AreaComponent = () => {
     return (
       <NonFlexWrapper>
@@ -137,7 +175,7 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
           return (
             <div>
               <FormControlLabel
-                key={index}
+                key={index + "200"}
                 control={
                   <Checkbox
                     checked={state.areaIds.includes(item.id)}
@@ -217,6 +255,8 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
           ? TimeComponent()
           : modalType === ModalType.Area
           ? AreaComponent()
+          : modalType === ModalType.Category
+          ? CategoryComponent()
           : null}
 
         <DrawerButton onClick={closeDrawer}>적용하기</DrawerButton>
@@ -250,11 +290,11 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
       </DropDownButton>
       <Label mandatory={true} labelName="클럽 나이대" />
       <DropDownButton>
-        <DropDownText>해당 클럽의 활동 테마를 골라주세요</DropDownText>
+        <DropDownText>해당 클럽의 나이대를 골라주세요</DropDownText>
         <FontAwesomeIcon icon={faChevronDown} />
       </DropDownButton>
       <Label mandatory={true} labelName="클럽 활동테마" />
-      <DropDownButton>
+      <DropDownButton onClick={openCategoryDrawer}>
         <DropDownText>해당 클럽의 활동테마를 골라주세요</DropDownText>
         <FontAwesomeIcon icon={faChevronDown} />
       </DropDownButton>
