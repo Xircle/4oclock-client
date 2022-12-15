@@ -15,6 +15,10 @@ export const teamInitialState = {
   name: "",
   description: "",
   oneLineInfo: "",
+  maleMinAge: 20,
+  maleMaxAge: 30,
+  femaleMinAge: 20,
+  femaleMaxAge: 30,
 };
 
 export function teamReducer(state: TeamState, action: TeamAction): TeamState {
