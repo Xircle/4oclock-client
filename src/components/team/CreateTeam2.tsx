@@ -108,6 +108,14 @@ export default function CreateTeam2({ onNext, state, dispatch }: Props) {
           multiple
         />
       </PhotoContainer>
+      <PhotosContainer>
+        {filesUrl.map((fileUrl, idx) => (
+          <Photo
+            key={idx}
+            src={fileUrl || "/avatar/anonymous_user.png"}
+          ></Photo>
+        ))}
+      </PhotosContainer>
       <BlankSpace />
       <NextButton type="submit" disabled={false} onClick={onNext}>
         다음(2/3)
@@ -131,4 +139,16 @@ const PhotoContainer = styled.label`
 
 const PhotoText = styled.div`
   margin-left: 18px;
+`;
+
+const PhotosContainer = styled.div`
+  width: 100%;
+  margin-top: 10px;
+`;
+
+const Photo = styled.img`
+  width: 110px;
+  height: 110px;
+  border-radius: none;
+  object-fit: cover;
 `;
