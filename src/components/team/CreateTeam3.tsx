@@ -1,5 +1,6 @@
+import { useState } from "react";
 import styled from "styled-components";
-import { BlankSpace, NextButton } from "./CreateTeam1";
+import { BlankSpace, NextButton, OnelineInput } from "./CreateTeam1";
 import Label from "./Label";
 import { TeamAction, TeamState } from "./types";
 
@@ -10,6 +11,12 @@ interface Props {
 }
 
 export default function CreateTeam3({ onNext, state, dispatch }: Props) {
+  const [activityCount, setActivityCount] = useState(0);
+
+  const AddActivity = () => {
+    setActivityCount(activityCount + 1);
+  };
+
   return (
     <Container>
       <Label mandatory={true} labelName="클럽 활동 회차 정보" />
@@ -30,7 +37,27 @@ export default function CreateTeam3({ onNext, state, dispatch }: Props) {
           모두 열린 마음만 들고 와주세요!
         </ActivityInfoText>
       </ActivityInfo>
-      <Label mandatory={true} labelName="(선택)클럽 활동 mission rule 소개" />
+      <Label
+        mandatory={false}
+        labelName="(선택)클럽 활동 mission rule 소개"
+        description="프렌즈들과 활동을 통해 얻고 싶은 미션을 적어주세요!
+프렌즈들은 의미있는 활동을 좋아해요 !간단한 미션이라도 적어보아요:)  예시) 신촌 맛집 지도 그리기 /영화 감상 나누기 /전시 3회 보러가기  "
+      />
+      <OnelineInput
+        placeholder="활동 미션을 적어주세요"
+        type="text"
+        name="clubMission"
+        // style={
+        //   ageError
+        //     ? { marginTop: "12px", borderColor: colors.StrongLime }
+        //     : { marginTop: "12px" }
+        // }
+        value={state.mission}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          dispatch({ type: "setMission", payload: e.target.value })
+        }
+        //onKeyUp={() => Validate()}
+      />
       <BlankSpace />
       <NextButton type="submit" disabled={false} onClick={onNext}>
         다음(3/3)
