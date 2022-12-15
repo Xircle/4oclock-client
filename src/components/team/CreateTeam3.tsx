@@ -11,10 +11,15 @@ interface Props {
 }
 
 export default function CreateTeam3({ onNext, state, dispatch }: Props) {
-  const [activityCount, setActivityCount] = useState(0);
-
   const AddActivity = () => {
-    setActivityCount(activityCount + 1);
+    dispatch({
+      type: "setActivityTitles",
+      payload: [...state.activityTitles, ""],
+    });
+    dispatch({
+      type: "setActivityDetails",
+      payload: [...state.activityDetails, ""],
+    });
   };
 
   return (
