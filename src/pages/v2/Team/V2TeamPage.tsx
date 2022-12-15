@@ -92,6 +92,7 @@ export default function V2TeamPage({ match, location, history }: Props) {
       <DetailInfoContainer>
         <DetailInfoSection>
           <DetailInfoTitle>🔹클럽 정보</DetailInfoTitle>
+
           <Row style={{ marginBottom: 22 }}>
             <FontAwesomeIcon icon={faWonSign} size="1x" />
             <ClubInfoHeading>활동비 {teamData?.price}원</ClubInfoHeading>
@@ -136,6 +137,7 @@ export default function V2TeamPage({ match, location, history }: Props) {
         </DetailInfoSection>
         <DetailInfoSection>
           <DetailInfoTitle>🔹클럽 소개</DetailInfoTitle>
+          <DetailInfoTitle>{teamData?.oneLineInfo}</DetailInfoTitle>
           <TeamDescription>{teamData?.description}</TeamDescription>
         </DetailInfoSection>
         <DetailInfoSection>
