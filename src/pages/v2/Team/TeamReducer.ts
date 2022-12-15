@@ -13,6 +13,7 @@ export const teamInitialState = {
   activityTitles: [],
   activityDetails: [],
   name: "",
+  description: "",
 };
 
 export function teamReducer(state: TeamState, action: TeamAction): TeamState {
@@ -121,6 +122,11 @@ export function teamReducer(state: TeamState, action: TeamAction): TeamState {
       return {
         ...state,
         mission: action.payload,
+      };
+    case "setDescription":
+      return {
+        ...state,
+        description: action.payload,
       };
     default:
       throw new Error();
