@@ -7,8 +7,7 @@ export const createTeam = async (
   state: TeamState,
 ): Promise<CreateTeamOutput> => {
   const formData = new FormData();
-
-  formData.append("leaderId", state.leaderId + "");
+  formData.append("name", state.name);
   if (state.images) {
     for (let i = 0; i < state.images.length; i++) {
       formData.append("images", state.images[i]!);
@@ -21,9 +20,9 @@ export const createTeam = async (
   if (state.endDate) {
     formData.append("endDate", state.endDate);
   }
-  formData.append("max_participant", state.max_participant + "");
-  formData.append("categoryId", state.categoryId);
-  formData.append("question", state.question);
+  formData.append("maxParticipant", state.max_participant + "");
+  formData.append("category_id", state.categoryId);
+  if (state.question) formData.append("question", state.question);
   if (state.maleMinAge) {
     formData.append("maleMinAge", state.maleMinAge + "");
   }
@@ -34,14 +33,14 @@ export const createTeam = async (
     formData.append("femaleMinAge", state.femaleMinAge + "");
   }
   if (state.femaleMaxAge) {
-    formData.append("femaleMinAge", state.femaleMaxAge + "");
+    formData.append("femaleMaxAge", state.femaleMaxAge + "");
   }
   if (state.price) {
     formData.append("price", state.price + "");
   }
   formData.append("leaderIntro", state.leaderIntro);
-  formData.append("meeting_day", state.meeting_day + "");
-  formData.append("meeting_hour", state.meeting_hour + "");
+  formData.append("meetingDay", state.meeting_day + "");
+  formData.append("meetingHour", state.meeting_hour + "");
   if (state.areaIds) {
     for (let i = 0; i < state.areaIds.length; i++) {
       formData.append("areaIds", state.areaIds[i]!);
@@ -49,22 +48,22 @@ export const createTeam = async (
   }
   if (state.activityTitles) {
     for (let i = 0; i < state.activityTitles.length; i++) {
-      formData.append("activityTitles", state.activityTitles[i]!);
+      formData.append("activity_titles", state.activityTitles[i]!);
     }
   }
   if (state.activityDetails) {
     for (let i = 0; i < state.activityDetails.length; i++) {
-      formData.append("activityDetails", state.activityDetails[i]!);
+      formData.append("activity_details", state.activityDetails[i]!);
     }
   }
   if (state.mission) {
-    for (let i = 0; i < state.mission.length; i++) {
-      formData.append("mission", state.mission[i]!);
-    }
+    formData.append("mission", state.mission);
   }
   if (state.description) {
     formData.append("description", state.description);
   }
+
+  formData.append("oneLineInfo", state.oneLineInfo);
 
   const { data } = await AxiosClient.post<CoreOutput>("team/create", formData);
   return data;
