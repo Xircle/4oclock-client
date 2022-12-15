@@ -48,10 +48,6 @@ export const seeTeamsWithFilter = async (
     timeQuery = [];
   }
 
-  if (ageData.length === ageQuery.length) {
-    ageQuery = [];
-  }
-
   const { data } = await AxiosClient.get(`team/all/filter`, {
     params: {
       page: page,
