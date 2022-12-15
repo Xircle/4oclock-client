@@ -1,8 +1,11 @@
+import { CreateTeamOutput } from "./../api/types.d";
 import { CoreOutput } from "./../../components/shared/types.d";
 import AxiosClient from "../apiClient";
 import { TeamState } from "../../components/team/types";
 
-export const createTeam = async (state: TeamState): Promise<CoreOutput> => {
+export const createTeam = async (
+  state: TeamState,
+): Promise<CreateTeamOutput> => {
   const formData = new FormData();
 
   formData.append("leaderId", state.leaderId + "");
