@@ -32,7 +32,6 @@ export default function V2CreateTeamPage({ leaderId }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleNext = async () => {
-    let tempTeamId;
     if (step < components.length - 1) {
       setStep((step) => step + 1);
     } else {
