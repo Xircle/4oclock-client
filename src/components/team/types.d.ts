@@ -21,6 +21,7 @@ export interface TeamState {
   activityDetails?: string[];
   mission?: string;
   description?: string;
+  oneLineInfo: string;
 }
 export type TeamAction =
   | { type: "setLeaderId"; payload: string }
@@ -44,4 +45,5 @@ export type TeamAction =
   | { type: "setActivityTitles"; payload: string[] }
   | { type: "setActivityDetails"; payload: string[] }
   | { type: "setMission"; payload: string }
-  | { type: "setDescription"; payload: string };
+  | { type: "setDescription"; payload: string }
+  | { type: "setOneLineInfo"; payload: string };
