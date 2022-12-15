@@ -14,6 +14,7 @@ export const teamInitialState = {
   activityDetails: [],
   name: "",
   description: "",
+  oneLineInfo: "",
 };
 
 export function teamReducer(state: TeamState, action: TeamAction): TeamState {
@@ -127,6 +128,11 @@ export function teamReducer(state: TeamState, action: TeamAction): TeamState {
       return {
         ...state,
         description: action.payload,
+      };
+    case "setOneLineInfo":
+      return {
+        ...state,
+        oneLineInfo: action.payload,
       };
     default:
       throw new Error();
