@@ -340,6 +340,7 @@ export interface TeamData {
   activity_titles?: string[];
   activity_details?: string[];
   mission?: string;
+  oneLineInfo?: string;
 }
 
 export interface CreateTeamOutput extends CoreOutput {
