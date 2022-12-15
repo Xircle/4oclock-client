@@ -1,8 +1,11 @@
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Checkbox, Drawer } from "@material-ui/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import styled from "styled-components";
+import { Area } from "../../lib/api/types";
+import { getAreas } from "../../lib/v2/getAreas";
 import { BigTextArea, colors, MainBtn, MidInput } from "../../styles/styles";
 import Label from "./Label";
 import { TeamAction, TeamState } from "./types";
@@ -24,6 +27,15 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [modalType, setModalType] = useState<ModalType>(ModalType.Time);
   const [modalTitle, setModalTitle] = useState("");
+
+  const { data: areaData } = useQuery<Area[] | undefined>(
+    ["AreaData"],
+    () => getAreas(),
+    {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  );
 
   const openDrawer = () => {
     setDrawerOpened(true);
@@ -118,6 +130,45 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
     );
   };
 
+  const AreaComponent = () => {
+    return (
+      <NonFlexWrapper>
+        {areaData?.map((item, index) => {
+          return (
+            <ModalSelect
+              selected={state.areaIds.includes(item.id)}
+              onClick={() => {
+                if (state.areaIds.includes(item.id)) {
+                  dispatch({
+                    type: "setAreaIds",
+                    payload: state.areaIds.filter(
+                      (areaId) => areaId != item.id,
+                    ),
+                  });
+                } else {
+                  dispatch({
+                    type: "setAreaIds",
+                    payload: [...state.areaIds, item.id],
+                  });
+                }
+              }}
+            >
+              {item.name}
+            </ModalSelect>
+          );
+        })}
+        <ModalSelect
+          selected={state.areaIds.length === 0}
+          onClick={() => {
+            dispatch({ type: "setAreaIds", payload: [] });
+          }}
+        >
+          상관없음
+        </ModalSelect>
+      </NonFlexWrapper>
+    );
+  };
+
   return (
     <Container>
       <Drawer
@@ -151,7 +202,11 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
       >
         <DrawerTitle>{modalTitle}</DrawerTitle>
 
-        {modalType === ModalType.Time ? TimeComponent() : null}
+        {modalType === ModalType.Time
+          ? TimeComponent()
+          : modalType === ModalType.Area
+          ? AreaComponent()
+          : null}
 
         <DrawerButton onClick={closeDrawer}>적용하기</DrawerButton>
       </Drawer>
@@ -178,7 +233,7 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
         <FontAwesomeIcon icon={faChevronDown} />
       </DropDownButton>
       <Label mandatory={true} labelName="주 활동지역 (복수 선택 가능)" />
-      <DropDownButton>
+      <DropDownButton onClick={openAreaDrawer}>
         <DropDownText>매주 만나는 장소를 골라주세요</DropDownText>
         <FontAwesomeIcon icon={faChevronDown} />
       </DropDownButton>
@@ -229,6 +284,10 @@ const ModalSelectContainer = styled.div`
   display: flex;
 `;
 
+const NonFlexWrapper = styled.div`
+  margin-top: 10px;
+`;
+
 const ModalSelect = styled.div<{ selected: boolean }>`
   color: ${(props) => (props.selected ? "#21E19C" : "#12121D")};
   border: 2px solid;
@@ -239,6 +298,7 @@ const ModalSelect = styled.div<{ selected: boolean }>`
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 3px 10px;
+  text-align: center;
 `;
 
 const ModalTitle = styled.div``;
