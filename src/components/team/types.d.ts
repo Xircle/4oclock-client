@@ -20,6 +20,7 @@ export interface TeamState {
   activityTitles: string[];
   activityDetails?: string[];
   mission?: string;
+  description?: string;
 }
 export type TeamAction =
   | { type: "setLeaderId"; payload: string }
@@ -42,4 +43,5 @@ export type TeamAction =
   | { type: "setAreaIds"; payload: string[] }
   | { type: "setActivityTitles"; payload: string[] }
   | { type: "setActivityDetails"; payload: string[] }
-  | { type: "setMission"; payload: string };
+  | { type: "setMission"; payload: string }
+  | { type: "setDescription"; payload: string };
