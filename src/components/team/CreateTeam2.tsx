@@ -49,24 +49,23 @@ export default function CreateTeam2({ onNext, state, dispatch }: Props) {
 
   return (
     <Container>
-      {/*       
       <Label mandatory={true} labelName="클럽 활동 소개" />
       <OnelineInput
         placeholder="활동을 간단하게 표현한 한줄소개를 적어주세요!"
         type="text"
-        name="clubDescription"
+        name="clubOneLineInfo"
         // style={
         //   ageError
         //     ? { marginTop: "12px", borderColor: colors.StrongLime }
         //     : { marginTop: "12px" }
         // }
-        value={state.description}
+        value={state.oneLineInfo}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          dispatch({ type: "setDescription", payload: e.target.value })
+          dispatch({ type: "setOneLineInfo", payload: e.target.value })
         }
         //onKeyUp={() => Validate()}
       />
-      <CancelWordCount>{state.description?.length ?? 0}/30</CancelWordCount> */}
+      <CancelWordCount>{state.oneLineInfo?.length ?? 0}/30</CancelWordCount>
       <Label
         mandatory={true}
         labelName="클럽소개 세부글"
