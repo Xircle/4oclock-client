@@ -156,6 +156,8 @@ const TopInfoRight = styled.div`
 
 const Body = styled.div`
   padding: 10px;
+  padding-left: 22px;
+  padding-right: 22px;
 `;
 
 const Header = styled.div`
