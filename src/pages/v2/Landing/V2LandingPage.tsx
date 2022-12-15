@@ -42,7 +42,7 @@ function V2LandingPage() {
   const container = useRef<HTMLDivElement>(null);
   const [refilterCount, setRefeilterCount] = useState(0);
   const [dayData, setDayData] = useState<TimeData[]>(ITimeData);
-  const [ageData, setAgeData] = useState<AgeData[]>(IAgeData);
+  const [ageData, setAgeData] = useState<AgeData[]>([]);
   const [isSamsungBrowserBool, setIsSamsungBrowserBool] = useState(false);
   const [isYkClub, setIsYkClub] = useState<boolean | undefined>();
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
@@ -61,6 +61,8 @@ function V2LandingPage() {
       temp.profile.role = userData?.accountType;
       temp.username = userData?.username;
       temp.profile.thumbnail = userData?.profileImageUrl;
+      temp.profile.gender = userData?.gender;
+      temp.profile.age = userData?.age;
       storage.setItem(CURRENT_USER, temp!);
       setIsYkClub(userData?.isYkClub);
       if (userData?.username) {
@@ -108,6 +110,7 @@ function V2LandingPage() {
         const nextPage = currentPage.meta.page + 1;
         return nextPage <= currentPage.meta.totalPages ? nextPage : null;
       },
+      refetchOnWindowFocus: false,
     },
   );
 
@@ -254,62 +257,72 @@ function V2LandingPage() {
           <br />
           마음에 드는 모임에 신청하기!
         </Info2>
-        {drawerText === DrawerType.Category
-          ? categories.map((item, index) => {
-              return (
-                <FormControlLabel
-                  key={item.id}
-                  control={
-                    <Checkbox
-                      checked={item.selected}
-                      onChange={() => {
-                        let temp = [...categories];
-                        temp[index].selected = !temp[index].selected;
-                        setCategories(temp);
-                      }}
-                    />
+        {drawerText === DrawerType.Category ? (
+          categories.map((item, index) => {
+            return (
+              <FormControlLabel
+                key={item.id}
+                control={
+                  <Checkbox
+                    checked={item.selected}
+                    onChange={() => {
+                      let temp = [...categories];
+                      temp[index].selected = !temp[index].selected;
+                      setCategories(temp);
+                    }}
+                  />
+                }
+                label={categories[index].name}
+              />
+            );
+          })
+        ) : drawerText === DrawerType.Time ? (
+          dayData.map((item, index) => {
+            return (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    checked={item.selected}
+                    onChange={() => {
+                      let temp = [...dayData];
+                      temp[index].selected = !temp[index].selected;
+                      setDayData(temp);
+                    }}
+                  />
+                }
+                label={dayData[index].day}
+              />
+            );
+          })
+        ) : (
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={ageData?.length > 0}
+                onChange={() => {
+                  if (ageData?.length === 0) {
+                    const age = storage.getItem(CURRENT_USER).profile.age;
+                    const gender = storage.getItem(CURRENT_USER).profile.gender;
+                    setAgeData([
+                      {
+                        title: "my age only",
+                        maleMinAge: gender === "Male" ? age : undefined,
+                        maleMaxAge: gender === "Male" ? age : undefined,
+                        femaleMinAge: gender === "Female" ? age : undefined,
+                        femaleMaxAge: gender === "Female" ? age : undefined,
+                        selected: true,
+                      },
+                    ]);
+                  } else {
+                    setAgeData([]);
                   }
-                  label={categories[index].name}
-                />
-              );
-            })
-          : drawerText === DrawerType.Time
-          ? dayData.map((item, index) => {
-              return (
-                <FormControlLabel
-                  key={index}
-                  control={
-                    <Checkbox
-                      checked={item.selected}
-                      onChange={() => {
-                        let temp = [...dayData];
-                        temp[index].selected = !temp[index].selected;
-                        setDayData(temp);
-                      }}
-                    />
-                  }
-                  label={dayData[index].day}
-                />
-              );
-            })
-          : ageData.map((item, index) => {
-              return (
-                <FormControlLabel
-                  key={index}
-                  control={
-                    <Checkbox
-                      checked={item.selected}
-                      onChange={() => {
-                        let temp = [...ageData];
-                        temp[index].selected = !temp[index].selected;
-                        setAgeData(temp);
-                      }}
-                    />
-                  }
-                  label={ageData[index].title}
-                />
-              );
-            })}
+                }}
+              />
+            }
+            label={"내 나이만 보기"}
+          />
+        )}
         <DrawerWhiteSpace />
         <DrawerButton onClick={closeDrawer}>적용하기</DrawerButton>
       </Drawer>
