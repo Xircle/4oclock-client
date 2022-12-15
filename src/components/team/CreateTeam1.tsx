@@ -1,6 +1,6 @@
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Checkbox, Drawer } from "@material-ui/core";
+import { Checkbox, Drawer, FormControlLabel } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
@@ -135,36 +135,47 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
       <NonFlexWrapper>
         {areaData?.map((item, index) => {
           return (
-            <ModalSelect
-              selected={state.areaIds.includes(item.id)}
-              onClick={() => {
-                if (state.areaIds.includes(item.id)) {
-                  dispatch({
-                    type: "setAreaIds",
-                    payload: state.areaIds.filter(
-                      (areaId) => areaId != item.id,
-                    ),
-                  });
-                } else {
-                  dispatch({
-                    type: "setAreaIds",
-                    payload: [...state.areaIds, item.id],
-                  });
+            <div>
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    checked={state.areaIds.includes(item.id)}
+                    onChange={() => {
+                      if (state.areaIds.includes(item.id)) {
+                        dispatch({
+                          type: "setAreaIds",
+                          payload: state.areaIds.filter(
+                            (areaId) => areaId != item.id,
+                          ),
+                        });
+                      } else {
+                        dispatch({
+                          type: "setAreaIds",
+                          payload: [...state.areaIds, item.id],
+                        });
+                      }
+                    }}
+                  />
                 }
-              }}
-            >
-              {item.name}
-            </ModalSelect>
+                label={item.name}
+              />
+            </div>
           );
         })}
-        <ModalSelect
-          selected={state.areaIds.length === 0}
-          onClick={() => {
-            dispatch({ type: "setAreaIds", payload: [] });
-          }}
-        >
-          상관없음
-        </ModalSelect>
+        <div>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={state.areaIds.length === 0}
+                onChange={() => {
+                  dispatch({ type: "setAreaIds", payload: [] });
+                }}
+              />
+            }
+            label="상관없음"
+          />
+        </div>
       </NonFlexWrapper>
     );
   };
