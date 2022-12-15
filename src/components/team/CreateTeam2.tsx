@@ -1,3 +1,6 @@
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 import styled from "styled-components";
 import { colors, MidInput } from "../../styles/styles";
 import {
@@ -18,6 +21,32 @@ interface Props {
 }
 
 export default function CreateTeam2({ onNext, state, dispatch }: Props) {
+  const [filesUrl, setFilesUrl] = useState<string[]>([]);
+
+  const handleFilesOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return null;
+    setFilesUrl([]);
+
+    const files = e.target.files;
+
+    console.log(files.length);
+    for (let i = 0; i < files.length; i++) {
+      if (files[i]?.size > 10000000) {
+        return alert(
+          "사진 최대 용량을 초과했습니다. 사진 용량은 최대 10MB입니다. ",
+        );
+      }
+    }
+    Array.from(files).forEach((file) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = (e) => {
+        setFilesUrl((prev) => [...prev, e.target!.result as string]);
+      };
+      dispatch({ type: "setImages", payload: [...state.images, file] });
+    });
+  };
+
   return (
     <Container>
       {/*       
@@ -68,6 +97,17 @@ export default function CreateTeam2({ onNext, state, dispatch }: Props) {
         description="설명만으로는 부족한 my클럽을 표현하는 사진을 올려주세요!
 사진을 통해 클럽의 매력을 발산해주세요!"
       />
+      <PhotoContainer htmlFor="files">
+        <FontAwesomeIcon icon={faCamera} color="#A7B0C0" size="2x" />
+        <PhotoText>사진 추가</PhotoText>
+        <input
+          id="files"
+          type="file"
+          onChange={handleFilesOnChange}
+          style={{ display: "none" }}
+          multiple
+        />
+      </PhotoContainer>
       <BlankSpace />
       <NextButton type="submit" disabled={false} onClick={onNext}>
         다음(2/3)
@@ -76,6 +116,19 @@ export default function CreateTeam2({ onNext, state, dispatch }: Props) {
   );
 }
 
-const PhotoContainer = styled.div`
+const PhotoContainer = styled.label`
   width: 100%;
+  height: 150px;
+  background-color: #f0eeee;
+  border-radius: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #12121d;
+`;
+
+const PhotoText = styled.div`
+  margin-left: 18px;
 `;
