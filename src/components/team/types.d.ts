@@ -18,7 +18,7 @@ export interface TeamState {
   meeting_hour: number;
   areaIds: string[];
   activityTitles: string[];
-  activityDetails?: string[];
+  activityDetails: string[];
   mission?: string;
   description?: string;
   oneLineInfo: string;
