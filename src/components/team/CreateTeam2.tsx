@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import { colors, MidInput } from "../../styles/styles";
-import { BlankSpace, NextButton, OnelineInput } from "./CreateTeam1";
+import {
+  BlankSpace,
+  CancelWordCount,
+  NextButton,
+  OnelineInput,
+} from "./CreateTeam1";
 import Label from "./Label";
 import { TeamAction, TeamState } from "./types";
 
@@ -29,6 +34,7 @@ export default function CreateTeam2({ onNext, state, dispatch }: Props) {
         }
         //onKeyUp={() => Validate()}
       />
+      <CancelWordCount>{state.description?.length ?? 0}/30</CancelWordCount>
       <Label
         mandatory={true}
         labelName="클럽소개 세부글"
