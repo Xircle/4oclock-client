@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { colors, MidInput } from "../../styles/styles";
-import { BlankSpace, NextButton } from "./CreateTeam1";
+import { BlankSpace, NextButton, OnelineInput } from "./CreateTeam1";
 import Label from "./Label";
 import { TeamAction, TeamState } from "./types";
 
@@ -14,6 +14,21 @@ export default function CreateTeam2({ onNext, state, dispatch }: Props) {
   return (
     <Container>
       <Label mandatory={true} labelName="클럽 활동 소개" />
+      <OnelineInput
+        placeholder="활동을 간단하게 표현한 한줄소개를 적어주세요!"
+        type="text"
+        name="clubDescription"
+        // style={
+        //   ageError
+        //     ? { marginTop: "12px", borderColor: colors.StrongLime }
+        //     : { marginTop: "12px" }
+        // }
+        value={state.description}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          dispatch({ type: "setDescription", payload: e.target.value })
+        }
+        //onKeyUp={() => Validate()}
+      />
       <Label
         mandatory={true}
         labelName="클럽소개 세부글"
