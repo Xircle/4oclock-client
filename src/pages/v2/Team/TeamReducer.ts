@@ -8,7 +8,7 @@ export const teamInitialState = {
   question: "",
   leaderIntro: "",
   meeting_day: 0,
-  meeting_hour: 0,
+  meeting_hour: 14,
   areaIds: [],
   activityTitles: [],
   activityDetails: [],
