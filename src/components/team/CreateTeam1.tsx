@@ -57,6 +57,67 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
     openDrawer();
   };
 
+  const TimeComponent = () => {
+    return (
+      <ModalContentContainer>
+        <ModalText>요일</ModalText>
+        <ModalSelectContainer>
+          <ModalSelect
+            selected={state.meeting_day === 0}
+            onClick={() => {
+              dispatch({ type: "setMeeting_day", payload: 0 });
+            }}
+          >
+            일요일
+          </ModalSelect>
+          <ModalSelect
+            selected={state.meeting_day === 4}
+            onClick={() => {
+              dispatch({ type: "setMeeting_day", payload: 4 });
+            }}
+          >
+            목요일
+          </ModalSelect>
+          <ModalSelect
+            selected={state.meeting_day === 5}
+            onClick={() => {
+              dispatch({ type: "setMeeting_day", payload: 5 });
+            }}
+          >
+            금요일
+          </ModalSelect>
+          <ModalSelect
+            selected={state.meeting_day === 6}
+            onClick={() => {
+              dispatch({ type: "setMeeting_day", payload: 6 });
+            }}
+          >
+            토요일
+          </ModalSelect>
+        </ModalSelectContainer>
+        <ModalText>시간</ModalText>
+        <ModalSelectContainer>
+          <ModalSelect
+            selected={state.meeting_hour === 14}
+            onClick={() => {
+              dispatch({ type: "setMeeting_hour", payload: 14 });
+            }}
+          >
+            2시
+          </ModalSelect>
+          <ModalSelect
+            selected={state.meeting_hour === 18}
+            onClick={() => {
+              dispatch({ type: "setMeeting_hour", payload: 18 });
+            }}
+          >
+            6시
+          </ModalSelect>
+        </ModalSelectContainer>
+      </ModalContentContainer>
+    );
+  };
+
   return (
     <Container>
       <Drawer
@@ -90,7 +151,7 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
       >
         <DrawerTitle>{modalTitle}</DrawerTitle>
 
-        <Info1>중복선택 가능*</Info1>
+        {modalType === ModalType.Time ? TimeComponent() : null}
 
         <DrawerButton onClick={closeDrawer}>적용하기</DrawerButton>
       </Drawer>
@@ -158,6 +219,36 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
     </Container>
   );
 }
+
+const ModalContentContainer = styled.div`
+  width: 100%;
+  padding: 12px;
+`;
+
+const ModalSelectContainer = styled.div`
+  display: flex;
+`;
+
+const ModalSelect = styled.div<{ selected: boolean }>`
+  color: ${(props) => (props.selected ? "#21E19C" : "#12121D")};
+  border: 2px solid;
+  border-color: ${(props) => (props.selected ? "#21E19C" : "#12121D")};
+  border-radius: 13px;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 3px 10px;
+`;
+
+const ModalTitle = styled.div``;
+
+const ModalText = styled.div`
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #12121d;
+`;
 
 const DrawerTitle = styled.div`
   color: #505050;
