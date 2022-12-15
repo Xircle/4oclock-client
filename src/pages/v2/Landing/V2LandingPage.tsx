@@ -35,9 +35,10 @@ enum DrawerType {
 
 function V2LandingPage() {
   const [drawerOpened, setDrawerOpened] = useState(false);
+  const [drawerText, setDrawerText] = useState<DrawerType>(DrawerType.Category);
   const [categories, setCategories] = useState<CategoryData[]>([]);
   const [refetchInitialized, setRefetchInitialized] = useState(false);
-  const [drawerText, setDrawerText] = useState<DrawerType>(DrawerType.Category);
+
   const container = useRef<HTMLDivElement>(null);
   const [refilterCount, setRefeilterCount] = useState(0);
   const [dayData, setDayData] = useState<TimeData[]>(ITimeData);
