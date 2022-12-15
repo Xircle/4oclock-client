@@ -342,6 +342,10 @@ export interface TeamData {
   mission?: string;
 }
 
+export interface CreateTeamOutput extends CoreOutput {
+  teamId?: number;
+}
+
 export interface DetailTeamData extends TeamData {
   maleCount?: number;
   femaleCount?: number;
