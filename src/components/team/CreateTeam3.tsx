@@ -37,6 +37,7 @@ export default function CreateTeam3({ onNext, state, dispatch }: Props) {
           모두 열린 마음만 들고 와주세요!
         </ActivityInfoText>
       </ActivityInfo>
+      <AddActivityButton onClick={AddActivity}>활동 추가하기</AddActivityButton>
       <Label
         mandatory={false}
         labelName="(선택)클럽 활동 mission rule 소개"
@@ -82,4 +83,16 @@ const ActivityInfo = styled.div`
   width: 100%;
   border-radius: 10px;
   padding: 13px;
+`;
+
+const AddActivityButton = styled.div`
+  cursor: pointer;
+  background-color: #f3f1f1;
+  border-radius: 15px;
+  width: 100%;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
 `;
