@@ -517,3 +517,12 @@ export interface MyCreatedPlaceData {
 export interface GetMyCreatedPlaceOutput extends CoreOutput {
   places: MyCreatedPlaceData[];
 }
+
+interface Area {
+  id: string;
+  name: string;
+}
+
+export interface GetAreaOutput extends CoreOutput {
+  areas: Area[];
+}
