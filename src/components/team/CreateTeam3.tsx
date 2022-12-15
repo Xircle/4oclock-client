@@ -42,7 +42,46 @@ export default function CreateTeam3({ onNext, state, dispatch }: Props) {
           모두 열린 마음만 들고 와주세요!
         </ActivityInfoText>
       </ActivityInfo>
+      {state.activityTitles.map((item, index) => {
+        return (
+          <Activity>
+            <OnelineInput
+              placeholder="활동 제목을 적어주세요"
+              type="text"
+              // style={
+              //   ageError
+              //     ? { marginTop: "12px", borderColor: colors.StrongLime }
+              //     : { marginTop: "12px" }
+              // }
+              value={state.activityTitles[index]}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                let temp: string[] = state.activityTitles;
+                temp[index] = e.target.value;
+                dispatch({ type: "setActivityTitles", payload: temp });
+              }}
+              //onKeyUp={() => Validate()}
+            />
+            <OnelineInput
+              placeholder="활동 설명을 적어주세요"
+              type="text"
+              // style={
+              //   ageError
+              //     ? { marginTop: "12px", borderColor: colors.StrongLime }
+              //     : { marginTop: "12px" }
+              // }
+              value={state.activityDetails[index]}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                let temp: string[] = state.activityDetails;
+                temp[index] = e.target.value;
+                dispatch({ type: "setActivityDetails", payload: temp });
+              }}
+              //onKeyUp={() => Validate()}
+            />
+          </Activity>
+        );
+      })}
       <AddActivityButton onClick={AddActivity}>활동 추가하기</AddActivityButton>
+
       <Label
         mandatory={false}
         labelName="(선택)클럽 활동 mission rule 소개"
@@ -71,6 +110,8 @@ export default function CreateTeam3({ onNext, state, dispatch }: Props) {
     </Container>
   );
 }
+
+const Activity = styled.div``;
 
 const ActivityInfoText = styled.div`
   font-weight: 400;
