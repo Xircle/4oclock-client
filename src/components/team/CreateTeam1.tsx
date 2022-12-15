@@ -1,5 +1,7 @@
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Checkbox, Drawer } from "@material-ui/core";
+import { useState } from "react";
 import styled from "styled-components";
 import { BigTextArea, colors, MainBtn, MidInput } from "../../styles/styles";
 import Label from "./Label";
@@ -11,9 +13,87 @@ interface Props {
   dispatch: React.Dispatch<TeamAction>;
 }
 
+enum ModalType {
+  Time = "Time",
+  Age = "Age",
+  Category = "Category",
+  Area = "Area",
+}
+
 export default function CreateTeam1({ onNext, state, dispatch }: Props) {
+  const [drawerOpened, setDrawerOpened] = useState(false);
+  const [modalType, setModalType] = useState<ModalType>(ModalType.Time);
+  const [modalTitle, setModalTitle] = useState("");
+
+  const openDrawer = () => {
+    setDrawerOpened(true);
+  };
+
+  const closeDrawer = () => {
+    setDrawerOpened(false);
+  };
+
+  const openTimeDrawer = () => {
+    setModalType(ModalType.Time);
+    setModalTitle("요일 및 시간");
+    openDrawer();
+  };
+
+  const openAgeDrawer = () => {
+    setModalType(ModalType.Age);
+    setModalTitle("나이대 설정");
+    openDrawer();
+  };
+
+  const openCategoryDrawer = () => {
+    setModalType(ModalType.Category);
+    setModalTitle("활동테마");
+    openDrawer();
+  };
+
+  const openAreaDrawer = () => {
+    setModalType(ModalType.Area);
+    setModalTitle("주 활동지역");
+    openDrawer();
+  };
+
   return (
     <Container>
+      <Drawer
+        PaperProps={{
+          style: {
+            width: 375,
+            minHeight: 500,
+            justifyContent: "flex-start",
+            paddingTop: 20,
+            paddingBottom: 20,
+            color: "#505050",
+            fontWeight: "bold",
+            fontSize: 19,
+          },
+        }}
+        ModalProps={{
+          style: {},
+        }}
+        SlideProps={{
+          style: {
+            alignItems: "center",
+            marginLeft: "auto",
+            marginRight: "auto",
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
+          },
+        }}
+        open={drawerOpened}
+        onClose={closeDrawer}
+        anchor="bottom"
+      >
+        <DrawerTitle>{modalTitle}</DrawerTitle>
+
+        <Info1>중복선택 가능*</Info1>
+
+        <DrawerButton onClick={closeDrawer}>적용하기</DrawerButton>
+      </Drawer>
       <Label mandatory={true} labelName="클럽 이름" />
       <OnelineInput
         placeholder="개성있는 클럽 이름을 적어주세요!"
@@ -32,7 +112,7 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
       />
       <CancelWordCount>{state.name?.length}/30</CancelWordCount>
       <Label mandatory={true} labelName="만나는 정기모임 요일 및 시간" />
-      <DropDownButton>
+      <DropDownButton onClick={openTimeDrawer}>
         <DropDownText>매주 만나는 요일 및 시간을 골라주세요</DropDownText>
         <FontAwesomeIcon icon={faChevronDown} />
       </DropDownButton>
@@ -78,6 +158,38 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
     </Container>
   );
 }
+
+const DrawerTitle = styled.div`
+  color: #505050;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 24px;
+`;
+
+const Info1 = styled.div`
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+  color: #505050;
+  margin-top: 8px;
+`;
+
+const DrawerButton = styled.div`
+  position: absolute;
+  bottom: 30px;
+  cursor: pointer;
+  width: 333px;
+  height: 48px;
+  background-color: rgba(33, 225, 156, 0.62);
+  border-radius: 5px;
+  color: #505050;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const NextButton = styled(MainBtn)`
   position: fixed;
