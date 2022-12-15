@@ -6,17 +6,15 @@ import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import PageTitle from "../../../components/PageTitle";
-import BackButtonWithNoBackground from "../../../components/shared/BackButtonWithNoBackground";
 import { CURRENT_USER } from "../../../components/shared/constants";
 import {
   LoaderBackdrop,
   LoaderWrapper,
 } from "../../../components/shared/Loader";
-import { CoreOutput } from "../../../components/shared/types";
 import CreateTeam1 from "../../../components/team/CreateTeam1";
 import CreateTeam2 from "../../../components/team/CreateTeam2";
 import CreateTeam3 from "../../../components/team/CreateTeam3";
-import CreateTeamEnd from "../../../components/team/CreateTeamEnd";
+import { CreateTeamOutput } from "../../../lib/api/types";
 import storage from "../../../lib/storage";
 import { createTeam } from "../../../lib/v2/createTeam";
 import routes from "../../../routes";
@@ -34,12 +32,13 @@ export default function V2CreateTeamPage({ leaderId }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleNext = async () => {
+    let tempTeamId;
     if (step < components.length - 1) {
       setStep((step) => step + 1);
     } else {
       setIsLoading(true);
       try {
-        const data: CoreOutput = await createTeam(state);
+        const data: CreateTeamOutput = await createTeam(state);
         if (!data.ok) {
           toast.error(data.error, {
             position: toast.POSITION.TOP_CENTER,
@@ -78,7 +77,6 @@ export default function V2CreateTeamPage({ leaderId }: Props) {
     <CreateTeam1 onNext={handleNext} state={state} dispatch={dispatch} />,
     <CreateTeam2 onNext={handleNext} state={state} dispatch={dispatch} />,
     <CreateTeam3 onNext={handleNext} state={state} dispatch={dispatch} />,
-    <CreateTeamEnd />,
   ];
 
   return (
