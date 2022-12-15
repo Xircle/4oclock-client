@@ -3,6 +3,7 @@ import { colors, MidInput } from "../../styles/styles";
 import {
   BlankSpace,
   CancelWordCount,
+  MultilineInput,
   NextButton,
   OnelineInput,
 } from "./CreateTeam1";
@@ -18,6 +19,7 @@ interface Props {
 export default function CreateTeam2({ onNext, state, dispatch }: Props) {
   return (
     <Container>
+      {/*       
       <Label mandatory={true} labelName="클럽 활동 소개" />
       <OnelineInput
         placeholder="활동을 간단하게 표현한 한줄소개를 적어주세요!"
@@ -34,12 +36,31 @@ export default function CreateTeam2({ onNext, state, dispatch }: Props) {
         }
         //onKeyUp={() => Validate()}
       />
-      <CancelWordCount>{state.description?.length ?? 0}/30</CancelWordCount>
+      <CancelWordCount>{state.description?.length ?? 0}/30</CancelWordCount> */}
       <Label
         mandatory={true}
         labelName="클럽소개 세부글"
         description="진행하실 클럽에 대한 소개를 적어주세요!"
       />
+      <MultilineInput
+        name="description"
+        value={state.description}
+        placeholder="프렌즈들에게 보여주는 리더의 자기소개를 적어주세요!"
+        // style={
+        //   bioError
+        //     ? {
+        //         fontSize: "12px",
+        //         lineHeight: "18px",
+        //         borderColor: colors.MidBlue,
+        //       }
+        //     : { fontSize: "12px", lineHeight: "18px" }
+        // }
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+          dispatch({ type: "setDescription", payload: e.target.value })
+        }
+        //onKeyUp={() => Validate()}
+      />
+      <CancelWordCount>{state.description?.length ?? 0}/30</CancelWordCount>
       <Label
         mandatory={true}
         labelName="클럽 소개 사진 올리기(2개 필수)"
