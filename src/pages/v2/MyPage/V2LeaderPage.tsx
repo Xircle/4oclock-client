@@ -1,11 +1,13 @@
 import { useQuery } from "react-query";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { CURRENT_USER } from "../../../components/shared/constants";
 import LeaderTeamRow from "../../../components/V2/Team/LeaderTeamRow";
 import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
 import V2SmallProfile from "../../../components/V2/UI/V2SmallProfile";
 import { getMyTeamsLeader } from "../../../lib/api/getMyTeamsLeader";
 import { MyTeamsLeader } from "../../../lib/api/types";
+import storage from "../../../lib/storage";
 import routes from "../../../routes";
 
 export default function V2LeaderPage() {
@@ -20,7 +22,11 @@ export default function V2LeaderPage() {
   );
 
   const createTeamCTA = () => {
-    history.push(routes.v2CreateTeamPage);
+    if (storage.getItem(CURRENT_USER).profile.isYkClub) {
+      history.push(routes.v2CreateTeamPage);
+    } else {
+      history.push(routes.v2Root);
+    }
   };
 
   return (
