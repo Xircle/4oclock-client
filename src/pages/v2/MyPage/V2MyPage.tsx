@@ -57,7 +57,6 @@ export default function V2MyPage() {
 
   useEffect(() => {
     if (applicationOutput?.applications) {
-      console.log(applicationOutput);
       setApproveds(applicationOutput.applications.approveds);
       setDisapproveds(applicationOutput.applications.disapproveds);
       setPendings(applicationOutput.applications.pendings);
