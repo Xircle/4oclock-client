@@ -5,6 +5,7 @@ import { Drawer } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import styled from "styled-components";
+import Modal from "../../../components/UI/Modal";
 import MyApplicationRow from "../../../components/V2/Application/MyApplicationRow";
 import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
 import V2SmallProfile from "../../../components/V2/UI/V2SmallProfile";
@@ -12,7 +13,12 @@ import { editApplication } from "../../../lib/api/editApplication";
 import { getMyApplications } from "../../../lib/api/getMyApplications";
 import { GetMyApplicationsOutput, MyApplication } from "../../../lib/api/types";
 import { InquiryCTA } from "../../../lib/v2/utils";
-import { BigTextArea, Container, colors } from "../../../styles/styles";
+import {
+  BigTextArea,
+  Container,
+  colors,
+  MainBtn,
+} from "../../../styles/styles";
 
 export default function V2MyPage() {
   const [approveds, setApproveds] = useState<MyApplication[] | undefined>([]);
@@ -25,6 +31,7 @@ export default function V2MyPage() {
   const [cancelReason, setCancelReason] = useState("");
   const [cancelApplicationId, setCancelApplicationId] = useState("");
   const [cancelCheck, setCancelCheck] = useState(false);
+  const [cancelSuccessModal, setCancelSuccessModal] = useState<boolean>(false);
 
   const { mutateAsync: mutateEditApplication, isLoading: isFetching } =
     useMutation(editApplication);
@@ -49,6 +56,7 @@ export default function V2MyPage() {
     if (data.ok) {
       await refetch();
       alert("승인 취소 신청되었습니다");
+      setCancelSuccessModal(true);
       closeDrawer();
     } else {
       alert("승인 취소 신청에 실패하였습니다");
@@ -78,6 +86,28 @@ export default function V2MyPage() {
 
   return (
     <Container>
+      {cancelSuccessModal && (
+        <Modal
+          isClose={!cancelSuccessModal}
+          onClose={() => setCancelSuccessModal((prev) => !prev)}
+        >
+          <ModalWrapper>
+            <h1>크롬 or 사파리로 접속해주세요!</h1>
+            <p>
+              삼성 브라우저에서 회원가입이 잘되지 않는 이슈를 발견했어요!
+              <br />
+              <br />
+              원활한 접속을 위해 크롬 or 사파리로 접속해주세요
+            </p>
+            <MainBtn
+              onClick={() => setCancelSuccessModal(false)}
+              style={{ width: "90%" }}
+            >
+              확인했습니다
+            </MainBtn>
+          </ModalWrapper>
+        </Modal>
+      )}
       <Drawer
         PaperProps={{
           style: {
@@ -235,6 +265,15 @@ export default function V2MyPage() {
     </Container>
   );
 }
+
+const ModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  padding: 10px 40px;
+`;
 
 const CancelConfirmContainer = styled.div`
   display: flex;
