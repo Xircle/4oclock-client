@@ -123,10 +123,9 @@ export default function V2MyPage() {
         <CancelSubheading>클럽 취소사유</CancelSubheading>
 
         <BigTextArea
-          name="bio"
+          name="cancelReason"
           value={cancelReason}
-          placeholder="ex. 어떤거에 관심이 있는지 써주시면 좋아요!
-          요즘 요리에 푹 빠져서 요리강의만 보고 집콕하고 있어요... 맛있는거 먹고싶어요 ><"
+          placeholder="최소 30자 이상 입력 부탁드립니다"
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
             setCancelReason(e.target.value);
           }}
