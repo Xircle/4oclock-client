@@ -1,10 +1,11 @@
 import { faClock, faUser } from "@fortawesome/free-regular-svg-icons";
 import { faWonSign } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { useQuery } from "react-query";
 import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
+import ImageCarousel from "../../../components/UI/ImageCarousel";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
 import { getTeamById } from "../../../lib/api/getTeamById";
 import { GetTeamByIdData } from "../../../lib/api/types";
@@ -91,6 +92,7 @@ export default function V2TeamPage({ match, location, history }: Props) {
       <DetailInfoContainer>
         <DetailInfoSection>
           <DetailInfoTitle>🔹클럽 정보</DetailInfoTitle>
+
           <Row style={{ marginBottom: 22 }}>
             <FontAwesomeIcon icon={faWonSign} size="1x" />
             <ClubInfoHeading>활동비 {teamData?.price}원</ClubInfoHeading>
@@ -135,30 +137,40 @@ export default function V2TeamPage({ match, location, history }: Props) {
         </DetailInfoSection>
         <DetailInfoSection>
           <DetailInfoTitle>🔹클럽 소개</DetailInfoTitle>
+          <DetailInfoTitle>{teamData?.oneLineInfo}</DetailInfoTitle>
           <TeamDescription>{teamData?.description}</TeamDescription>
         </DetailInfoSection>
         <DetailInfoSection>
-          <DetailInfoTitle>🔹모임 일정 및 활동</DetailInfoTitle>
+          <ImageCarousel imageUrls={teamData?.images} />
+        </DetailInfoSection>
+        <DetailInfoSection>
+          <DetailInfoTitle>🔹자세한 모임 일정 및 활동</DetailInfoTitle>
           <TeamSchedule>
-            1회차:다같이 만나는 우정시그널 진행🎉
-            <br />
-            (클럽 프렌즈 다같이 알아가는 시간{"><)"}
-            <br />
-            2회차:6인 팀매칭 활동💎 -뒤풀이는 선택!
-            <br />
-            (리더가 배정해줘요!)
-            <br />
-            ※활동은 테마 별로 다를 예정 <br />
-            3회차:6인 팀매칭 활동💎-뒤풀이는 선택!
-            <br />
-            (리더가 배정해줘요!) <br />
-            ※활동은 테마 별로 다를 예정 <br />
-            4화차:my 클럽 자유 번개팟👾 (선택)
+            {teamData?.activity_titles?.map((item, idx) => {
+              return (
+                <Fragment key={idx}>
+                  <ActivityTitle>
+                    {teamData?.activity_titles?.[idx]}
+                  </ActivityTitle>
+                  <ActivityDetail>
+                    {teamData?.activity_details?.[idx]}
+                  </ActivityDetail>
+                </Fragment>
+              );
+            })}
           </TeamSchedule>
         </DetailInfoSection>
         <DetailInfoSection>
           <DetailInfoTitle>🔹주 활동 지역</DetailInfoTitle>
-          <TeamDescription>{teamData?.areaInfo}</TeamDescription>
+          <TeamDescription>
+            {teamData?.area_names && teamData?.area_names?.length > 0
+              ? teamData?.area_names?.join(", ")
+              : teamData?.areaInfo ?? "장소 미정"}
+          </TeamDescription>
+        </DetailInfoSection>
+        <DetailInfoSection>
+          <DetailInfoTitle>해당 클럽의 MISSION RULE</DetailInfoTitle>
+          <TeamDescription>{teamData?.mission}</TeamDescription>
         </DetailInfoSection>
         <DetailInfoSection>
           <DetailInfoTitle>🔹신청 전, 꼭 알아주세요!</DetailInfoTitle>
@@ -202,6 +214,22 @@ export default function V2TeamPage({ match, location, history }: Props) {
     </Container>
   );
 }
+
+const ActivityTitle = styled.div`
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #505050;
+`;
+
+const ActivityDetail = styled.div`
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #8c94a4;
+  margin-top: 11px;
+  margin-bottom: 33px;
+`;
 
 const ParticipateCount = styled.span`
   position: absolute;

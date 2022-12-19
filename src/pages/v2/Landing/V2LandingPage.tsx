@@ -17,13 +17,17 @@ import {
   ITimeData,
   TimeData,
 } from "../../../lib/v2/utils";
-import { colors, Container, MainBtn } from "../../../styles/styles";
+import { colors, Container, MainBtn, SmallInput } from "../../../styles/styles";
 import { isSamsungBrowser } from "react-device-detect";
 import Modal from "../../../components/UI/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { ClipLoader } from "react-spinners";
 import Footer from "../../../components/footer/Footer";
+import { useHistory } from "react-router-dom";
+import routes from "../../../routes";
+import { verifyByCode } from "../../../lib/api/verifyByCode";
+import { LoaderWrapper } from "../../../components/shared/Loader";
 
 enum DrawerType {
   Category = "선호하는 정모 테마을 선택해주세요",
@@ -33,27 +37,70 @@ enum DrawerType {
 
 function V2LandingPage() {
   const [drawerOpened, setDrawerOpened] = useState(false);
+  const [drawerText, setDrawerText] = useState<DrawerType>(DrawerType.Category);
   const [categories, setCategories] = useState<CategoryData[]>([]);
   const [refetchInitialized, setRefetchInitialized] = useState(false);
-  const [drawerText, setDrawerText] = useState<DrawerType>(DrawerType.Category);
+
   const container = useRef<HTMLDivElement>(null);
   const [refilterCount, setRefeilterCount] = useState(0);
   const [dayData, setDayData] = useState<TimeData[]>(ITimeData);
-  const [ageData, setAgeData] = useState<AgeData[]>(IAgeData);
+  const [ageData, setAgeData] = useState<AgeData[]>([]);
   const [isSamsungBrowserBool, setIsSamsungBrowserBool] = useState(false);
+  const [isYkClub, setIsYkClub] = useState<boolean | undefined>();
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [codeModal, setCodeModal] = useState<boolean>(false);
+  const [codeModalLoading, setCodeModalLoading] = useState<boolean>(false);
+  const [code, setCode] = useState("");
+
   const { mutateAsync: mutateUserData, isLoading: isFetching } =
     useMutation(getUser);
+
+  const { mutateAsync: mutateVerifyByCode, isLoading: verifyByCodeIsLoading } =
+    useMutation(verifyByCode);
 
   const fetchNewUserData = async () => {
     if (storage.getItem(CURRENT_USER)?.token) {
       const userData = await mutateUserData();
 
       const temp = storage.getItem(CURRENT_USER);
+
+      temp.profile.isYkClub = userData?.isYkClub;
       temp.profile.role = userData?.accountType;
       temp.username = userData?.username;
       temp.profile.thumbnail = userData?.profileImageUrl;
+      temp.profile.gender = userData?.gender;
+      temp.profile.age = userData?.age;
       storage.setItem(CURRENT_USER, temp!);
+      setIsYkClub(userData?.isYkClub);
+      if (userData?.username) {
+        setLoggedIn(true);
+        if (userData?.isYkClub === false) {
+          codeCheck();
+        }
+      }
     }
+  };
+
+  const VerifyCTA = async (code: string) => {
+    try {
+      setCodeModalLoading(true);
+      const data = await mutateVerifyByCode(code);
+      await fetchNewUserData();
+      if (data.ok) {
+        alert("코드 입력 완료");
+      } else {
+        alert(data.error);
+      }
+    } catch (error) {
+      alert("네트워크 에러가 발생했습니다");
+    } finally {
+      setCodeModalLoading(false);
+      setCodeModal(false);
+    }
+  };
+
+  const codeCheck = () => {
+    setCodeModal(true);
   };
 
   useEffect(() => {
@@ -80,12 +127,13 @@ function V2LandingPage() {
   const {
     data: teamData,
     isLoading: teamDataLoading,
+    refetch: teamDataRefetch,
     isFetchingNextPage: teamDataFetching,
     hasNextPage: hasNextPageTeam,
     fetchNextPage: fetchNextPageTeam,
     isFetching: isFetchingTeam,
   } = useInfiniteQuery(
-    ["teams", categories, dayData, ageData, refilterCount],
+    ["teams"],
     // @ts-ignore
     ({ pageParam }) =>
       seeTeamsWithFilter(categories, dayData, ageData, pageParam),
@@ -101,6 +149,7 @@ function V2LandingPage() {
   const OnScroll = useCallback((event) => {
     if (container.current) {
       const { clientHeight } = container.current;
+
       if (window.pageYOffset + window.innerHeight > clientHeight - 200) {
         fetchNextPageTeam();
       }
@@ -144,6 +193,7 @@ function V2LandingPage() {
   };
 
   const closeDrawer = () => {
+    teamDataRefetch();
     setDrawerOpened(false);
   };
 
@@ -182,6 +232,25 @@ function V2LandingPage() {
               style={{ width: "90%" }}
             >
               알겠습니다
+            </MainBtn>
+          </ModalWrapper>
+        </Modal>
+      )}
+      {codeModal && (
+        <Modal
+          isClose={!codeModal}
+          onClose={() => setCodeModal((prev) => !prev)}
+        >
+          <ModalWrapper>
+            <h1>활동 코드 입력하기</h1>
+            <p>코드를 모르겠다면 전체 단톡방 확인!</p>
+            <CodeInput
+              onChange={(e) => {
+                setCode(e.target.value);
+              }}
+            />
+            <MainBtn onClick={() => VerifyCTA(code)} style={{ width: "90%" }}>
+              입력하기
             </MainBtn>
           </ModalWrapper>
         </Modal>
@@ -231,66 +300,83 @@ function V2LandingPage() {
           <br />
           마음에 드는 모임에 신청하기!
         </Info2>
-        {drawerText === DrawerType.Category
-          ? categories.map((item, index) => {
-              return (
-                <FormControlLabel
-                  key={item.id}
-                  control={
-                    <Checkbox
-                      checked={item.selected}
-                      onChange={() => {
-                        let temp = [...categories];
-                        temp[index].selected = !temp[index].selected;
-                        setCategories(temp);
-                      }}
-                    />
+        {drawerText === DrawerType.Category ? (
+          categories.map((item, index) => {
+            return (
+              <FormControlLabel
+                key={item.id}
+                control={
+                  <Checkbox
+                    checked={item.selected}
+                    onChange={() => {
+                      let temp = [...categories];
+                      temp[index].selected = !temp[index].selected;
+                      setCategories(temp);
+                    }}
+                  />
+                }
+                label={categories[index].name}
+              />
+            );
+          })
+        ) : drawerText === DrawerType.Time ? (
+          dayData.map((item, index) => {
+            return (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    checked={item.selected}
+                    onChange={() => {
+                      let temp = [...dayData];
+                      temp[index].selected = !temp[index].selected;
+                      setDayData(temp);
+                    }}
+                  />
+                }
+                label={dayData[index].day}
+              />
+            );
+          })
+        ) : (
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={ageData?.length > 0}
+                onChange={() => {
+                  if (ageData?.length === 0) {
+                    const age = storage.getItem(CURRENT_USER).profile.age;
+                    const gender = storage.getItem(CURRENT_USER).profile.gender;
+                    setAgeData([
+                      {
+                        title: "my age only",
+                        maleMinAge: gender === "Male" ? age : undefined,
+                        maleMaxAge: gender === "Male" ? age : undefined,
+                        femaleMinAge: gender === "Female" ? age : undefined,
+                        femaleMaxAge: gender === "Female" ? age : undefined,
+                        selected: true,
+                      },
+                    ]);
+                  } else {
+                    setAgeData([]);
                   }
-                  label={categories[index].name}
-                />
-              );
-            })
-          : drawerText === DrawerType.Time
-          ? dayData.map((item, index) => {
-              return (
-                <FormControlLabel
-                  key={index}
-                  control={
-                    <Checkbox
-                      checked={item.selected}
-                      onChange={() => {
-                        let temp = [...dayData];
-                        temp[index].selected = !temp[index].selected;
-                        setDayData(temp);
-                      }}
-                    />
-                  }
-                  label={dayData[index].day}
-                />
-              );
-            })
-          : ageData.map((item, index) => {
-              return (
-                <FormControlLabel
-                  key={index}
-                  control={
-                    <Checkbox
-                      checked={item.selected}
-                      onChange={() => {
-                        let temp = [...ageData];
-                        temp[index].selected = !temp[index].selected;
-                        setAgeData(temp);
-                      }}
-                    />
-                  }
-                  label={ageData[index].title}
-                />
-              );
-            })}
+                }}
+              />
+            }
+            label={"내 나이만 보기"}
+          />
+        )}
         <DrawerWhiteSpace />
         <DrawerButton onClick={closeDrawer}>적용하기</DrawerButton>
       </Drawer>
-      <InquiryButton onClick={InquiryCTA}>케빈에게 문의하기</InquiryButton>
+      <ButtonContainer>
+        <InquiryButton onClick={InquiryCTA}>케빈에게 문의하기</InquiryButton>
+        {isYkClub === false && (
+          <InquiryButton onClick={() => setCodeModal(true)}>
+            활동코드 입력하기
+          </InquiryButton>
+        )}
+      </ButtonContainer>
       <InstructionContainer>
         <InstructionHeading>✅신청 step</InstructionHeading>
         <InstructionText>
@@ -365,11 +451,32 @@ function V2LandingPage() {
           />
         </ClipLoaderWrapper>
       )}
+      <>
+        <LoaderWrapper top={"40%"}>
+          <ClipLoader
+            loading={codeModalLoading}
+            color={colors.MidBlue}
+            css={{
+              name: "width",
+              styles: "border-width: 4px; z-index: 999;",
+            }}
+            size={40}
+          />
+        </LoaderWrapper>
+      </>
 
       <Footer />
     </SContainer>
   );
 }
+
+const CodeInput = styled(SmallInput)``;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const ClipLoaderWrapper = styled.div`
   height: 150px;

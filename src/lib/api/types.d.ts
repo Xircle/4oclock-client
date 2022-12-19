@@ -335,6 +335,16 @@ export interface TeamData {
   femaleMinAge?: number;
   femaleMaxAge?: number;
   leaderIntro?: string;
+  area_ids?: string[];
+  area_names?: string[];
+  activity_titles?: string[];
+  activity_details?: string[];
+  mission?: string;
+  oneLineInfo?: string;
+}
+
+export interface CreateTeamOutput extends CoreOutput {
+  teamId?: number;
 }
 
 export interface DetailTeamData extends TeamData {
@@ -364,6 +374,7 @@ export interface MyApplication {
   isCanceled: boolean;
   paid?: boolean;
   teamImage: string;
+  isCancelRequested?: boolean;
 }
 
 export interface MyApplicationsByStatus {
@@ -389,6 +400,8 @@ export interface EditApplicationInput {
   status?: ApplicationStatus;
   isCanceled?: string;
   paid?: string;
+  isCancelRequested?: string;
+  cancelReason?: string;
 }
 
 export interface MyTeamsLeader {
@@ -411,6 +424,7 @@ export interface ApplicantProfiles {
   phoneNumber?: string;
   profileImg: string;
   userId?: string;
+  isCancelRequested?: boolean;
 }
 
 export interface GetTeamApplications {
@@ -422,6 +436,7 @@ export interface GetTeamApplications {
   femaleApplyCount: number;
   pendingApplicantProfiles: ApplicantProfiles[];
   approvedApplicantProfiles: ApplicantProfiles[];
+  cancelRequestedApplicantProfiles: ApplicantProfiles[];
 }
 
 export interface GetTeamApplicationsOutput extends CoreOutput {
@@ -445,6 +460,8 @@ export interface GetApplicationByLeaderData {
   age: number;
   gender: Gender;
   university: string;
+  isCancelRequested?: boolean;
+  cancelReason?: string;
 }
 
 export interface GetApplicationByLeaderOutput extends CoreOutput {
@@ -462,4 +479,51 @@ export interface SchoolsInfo {
 
 export interface SearchSchoolOutput {
   dataSearch: SchoolsInfo;
+}
+
+export interface CreatePlaceData {
+  name: string;
+  maxParticipantsNumber?: number;
+  participationFee: string;
+  startDateAt: string;
+  description: string;
+  detailAddress: string;
+  coverImage?: File;
+  subImages?: File[];
+  placeId?: string;
+  kakaoLink?: string;
+  recommendation?: string;
+  participating?: boolean;
+  qAndA?: string[];
+}
+
+// need to change CreatePlaceOutput
+export interface CreatePlaceOutput extends CreatePlaceData {}
+
+export interface MyCreatedPlaceData {
+  isClosed: boolean;
+  id: string;
+  coverImage: string;
+  name: string;
+  startDateFromNow: string;
+  kakaoPlaceId?: string;
+  recommendation?: string;
+  subImages?: string[];
+  team_id?: string | null;
+  placeType: string;
+  placeDetail: MyCreatedPlaceDetail;
+  startDateAt: string;
+}
+
+export interface GetMyCreatedPlaceOutput extends CoreOutput {
+  places: MyCreatedPlaceData[];
+}
+
+interface Area {
+  id: string;
+  name: string;
+}
+
+export interface GetAreaOutput extends CoreOutput {
+  areas: Area[];
 }

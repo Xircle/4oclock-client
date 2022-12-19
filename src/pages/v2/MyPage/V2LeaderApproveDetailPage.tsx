@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useMutation, useQuery } from "react-query";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
 import { editApplication } from "../../../lib/api/editApplication";
@@ -13,6 +13,7 @@ interface Props
   extends RouteComponentProps<{ param1?: string; param2?: string }, {}, {}> {}
 
 export default function V2LeaderApproveDetailPage({ match }: Props) {
+  const history = useHistory();
   const { param1, param2 } = match.params;
   const { data, refetch } = useQuery<GetApplicationByLeaderData | undefined>(
     ["ApplicationByLeader", param1, param2],
@@ -47,6 +48,28 @@ export default function V2LeaderApproveDetailPage({ match }: Props) {
       alert("승인 실패하였습니다");
     }
   };
+
+  const ApproveCancelCTA = async () => {
+    if (!param1) {
+      alert("지원서가 존재하지 않습니다");
+      return;
+    }
+    const { data: editApplicationData } = await mutateEditApplication({
+      applicationId: param1,
+      status: ApplicationStatus.Disapproved,
+      cancelReason: "",
+      isCancelRequested: "false",
+    });
+    console.log(editApplicationData);
+    if (editApplicationData.ok) {
+      // move back to original
+      alert("취소 승인 성공하였습니다");
+      history.goBack();
+    } else {
+      alert("취소 승인 실패하였습니다");
+    }
+  };
+
   const CopyCTA = () => {
     if (data?.phoneNumber) {
       navigator.clipboard.writeText(data?.phoneNumber).then((value) => {
@@ -99,13 +122,29 @@ export default function V2LeaderApproveDetailPage({ match }: Props) {
           <ShortBioHeading>자기소개</ShortBioHeading>
           <ShortBioText>{data?.shortBio}</ShortBioText>
         </ShortBioContainer>
-        <InstructionContainer>
-          <InstructionHeading>🙋‍♀️클럽에 신청한 이유+자기소개</InstructionHeading>
+        {data?.isCancelRequested ? (
+          <InstructionContainer>
+            <InstructionHeading>취소 요청 사유</InstructionHeading>
 
-          <InstructionText>{data?.content}</InstructionText>
-        </InstructionContainer>
+            <InstructionText>{data?.cancelReason}</InstructionText>
+          </InstructionContainer>
+        ) : (
+          <InstructionContainer>
+            <InstructionHeading>
+              🙋‍♀️클럽에 신청한 이유+자기소개
+            </InstructionHeading>
+
+            <InstructionText>{data?.content}</InstructionText>
+          </InstructionContainer>
+        )}
       </BodyContainer>
-      {data?.phoneNumber ? (
+      {data?.isCancelRequested ? (
+        <CancelButtonWrapper>
+          <CancelButton onClick={ApproveCancelCTA}>
+            취소요청 승인하기
+          </CancelButton>
+        </CancelButtonWrapper>
+      ) : data?.phoneNumber ? (
         <RecommendationContainer>
           <RecommendationHeading>🔥초간단 단톡파기🔥</RecommendationHeading>
           <RecommendationSubHeading>
@@ -118,6 +157,26 @@ export default function V2LeaderApproveDetailPage({ match }: Props) {
     </Container>
   );
 }
+
+const CancelButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 35px;
+`;
+
+const CancelButton = styled.div`
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 8px;
+  background-color: rgba(33, 225, 156, 0.33);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 23px;
+  color: #505050;
+  padding: 11px 45px;
+`;
 
 const UnivTag = styled.div`
   color: #6f7789;

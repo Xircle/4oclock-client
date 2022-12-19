@@ -1,13 +1,24 @@
+import { faCircle } from "@fortawesome/free-regular-svg-icons";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Drawer } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import styled from "styled-components";
+import Modal from "../../../components/UI/Modal";
 import MyApplicationRow from "../../../components/V2/Application/MyApplicationRow";
 import V2HeaderC from "../../../components/V2/UI/V2HeaderC";
 import V2SmallProfile from "../../../components/V2/UI/V2SmallProfile";
+import { editApplication } from "../../../lib/api/editApplication";
 import { getMyApplications } from "../../../lib/api/getMyApplications";
 import { GetMyApplicationsOutput, MyApplication } from "../../../lib/api/types";
 import { InquiryCTA } from "../../../lib/v2/utils";
-import { Container } from "../../../styles/styles";
+import {
+  BigTextArea,
+  Container,
+  colors,
+  MainBtn,
+} from "../../../styles/styles";
 
 export default function V2MyPage() {
   const [approveds, setApproveds] = useState<MyApplication[] | undefined>([]);
@@ -16,6 +27,14 @@ export default function V2MyPage() {
   );
   const [pendings, setPendings] = useState<MyApplication[] | undefined>([]);
   const [enrolleds, setEnrolleds] = useState<MyApplication[] | undefined>([]);
+  const [drawerOpened, setDrawerOpened] = useState(false);
+  const [cancelReason, setCancelReason] = useState("");
+  const [cancelApplicationId, setCancelApplicationId] = useState("");
+  const [cancelCheck, setCancelCheck] = useState(false);
+  const [cancelSuccessModal, setCancelSuccessModal] = useState<boolean>(false);
+
+  const { mutateAsync: mutateEditApplication, isLoading: isFetching } =
+    useMutation(editApplication);
 
   const { data: applicationOutput, refetch } =
     useQuery<GetMyApplicationsOutput>(
@@ -27,18 +46,152 @@ export default function V2MyPage() {
       },
     );
 
+  const requestCancelApprovedCTA = async () => {
+    if (cancelReason.length < 30 || !cancelCheck) return;
+    const { data } = await mutateEditApplication({
+      applicationId: cancelApplicationId,
+      isCancelRequested: "true",
+      cancelReason: cancelReason,
+    });
+    if (data.ok) {
+      await refetch();
+      alert("승인 취소 신청되었습니다");
+      setCancelSuccessModal(true);
+      closeDrawer();
+    } else {
+      alert("승인 취소 신청에 실패하였습니다");
+    }
+  };
+
   useEffect(() => {
     if (applicationOutput?.applications) {
-      console.log(applicationOutput);
       setApproveds(applicationOutput.applications.approveds);
       setDisapproveds(applicationOutput.applications.disapproveds);
       setPendings(applicationOutput.applications.pendings);
       setEnrolleds(applicationOutput.applications.enrolleds);
     }
   }, [applicationOutput]);
+  const closeDrawer = () => {
+    setDrawerOpened(false);
+  };
+
+  const openDrawer = () => {
+    setDrawerOpened(true);
+  };
+
+  const cancelCTA = (applicationId: string) => {
+    setCancelApplicationId(applicationId);
+    openDrawer();
+  };
 
   return (
     <Container>
+      {cancelSuccessModal && (
+        <Modal
+          isClose={!cancelSuccessModal}
+          onClose={() => setCancelSuccessModal((prev) => !prev)}
+        >
+          <ModalWrapper>
+            <h1>
+              클럽 취소가 정상적으로 <br /> 요청되었습니다.
+            </h1>
+            <p>
+              📌취소사유를 보낸 후 리더에게
+              <br /> 문자로 취소 요청 연락을 꼭꼭 해주세요.
+              <br />
+              <br />
+              📌리더 전화번호 복사{">"} 리더에게 문의하기
+            </p>
+            <MainBtn
+              onClick={() => setCancelSuccessModal(false)}
+              style={{ width: "90%" }}
+            >
+              확인했습니다
+            </MainBtn>
+          </ModalWrapper>
+        </Modal>
+      )}
+      <Drawer
+        PaperProps={{
+          style: {
+            width: 375,
+            minHeight: 500,
+            justifyContent: "flex-start",
+            padding: 20,
+            color: "#505050",
+            fontWeight: "bold",
+            fontSize: 19,
+          },
+        }}
+        ModalProps={{
+          style: {},
+        }}
+        SlideProps={{
+          style: {
+            alignItems: "center",
+            marginLeft: "auto",
+            marginRight: "auto",
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
+          },
+        }}
+        open={drawerOpened}
+        onClose={closeDrawer}
+        anchor="bottom"
+      >
+        <CancelHeading>클럽 취소하기</CancelHeading>
+        <CancelInfo>
+          📌취소인정사유: 요일 변경 문제 / 친구와 같이 신청 문제만 인정 이외의
+          단순변심으로 인한 취소는 불가능
+          <br />
+          📌취소진행순서: 리더에게 취소사유를 보내면 리더가 취소승인을 해줘야
+          취소가 돼요{":)"}
+          <br />
+          📌취소사유를 보낸 후 리더에게 문자로 취소 요청 연락을 꼭꼭 해주세요
+          <br />
+          <strong>
+            ※신청취소는 1번 밖에 안되니 신중히 클럽을 신청해주세요
+          </strong>
+        </CancelInfo>
+        <CancelSubheading>클럽 취소사유</CancelSubheading>
+
+        <BigTextArea
+          name="cancelReason"
+          value={cancelReason}
+          placeholder="최소 30자 이상 입력 부탁드립니다"
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+            setCancelReason(e.target.value);
+          }}
+        />
+        <CancelWordCount>{cancelReason.length}/30</CancelWordCount>
+        <CancelConfirmContainer
+          onClick={() => {
+            setCancelCheck(!cancelCheck);
+          }}
+        >
+          <CancelWarningCheck>
+            {cancelCheck ? (
+              <FontAwesomeIcon
+                icon={faCheckCircle}
+                color="rgba(33, 225, 156)"
+              />
+            ) : (
+              <FontAwesomeIcon icon={faCircle} color={colors.LightGray} />
+            )}
+          </CancelWarningCheck>
+          <CancelWarningText>
+            만약, 기존 신청 정보를 확인 후 취소 사유가 거짓으로 확인 되었을 경우
+            클럽 취소가 무산될 수 있습니다.
+          </CancelWarningText>
+        </CancelConfirmContainer>
+        <CancelSubmitButton
+          disabled={cancelReason.length < 30 || !cancelCheck}
+          onClick={requestCancelApprovedCTA}
+        >
+          취소 승인 요청하기
+        </CancelSubmitButton>
+        <CancelCloseButton onClick={closeDrawer}>뒤로가기</CancelCloseButton>
+      </Drawer>
       <V2HeaderC title="my page" />
       <Body>
         <InquiryButton onClick={InquiryCTA}>케빈에게 문의하기</InquiryButton>
@@ -84,6 +237,8 @@ export default function V2MyPage() {
                 teamName={approved.teamName}
                 refetch={refetch}
                 leaderData={applicationOutput?.leaderData}
+                isCancelRequested={approved.isCancelRequested}
+                cancelCTA={cancelCTA}
               />
             );
           })}
@@ -113,6 +268,117 @@ export default function V2MyPage() {
     </Container>
   );
 }
+
+const ModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  padding: 10px 40px;
+  h1 {
+    text-align: center;
+    letter-spacing: -0.005em;
+
+    color: #222222;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 35px;
+  }
+  p {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 19px;
+
+    color: #505050;
+  }
+`;
+
+const CancelConfirmContainer = styled.div`
+  display: flex;
+  width: 100%;
+  margin-top: 15px;
+  margin-left: 30px;
+  align-items: center;
+  margin-bottom: 50px;
+  cursor: pointer;
+`;
+
+const CancelWarningCheck = styled.div`
+  margin-right: 10px;
+`;
+
+const CancelWarningText = styled.div`
+  width: 260px;
+  color: #505050;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+`;
+
+const CancelWordCount = styled.div`
+  color: #c4cbd8;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  align-self: flex-end;
+  margin-right: 20px;
+`;
+
+const CancelSubmitButton = styled.div<{ disabled?: boolean }>`
+  cursor: pointer;
+  background: ${(props) =>
+    props.disabled ? "#6f7789" : "rgba(33, 225, 156, 0.62)"};
+  border-radius: 5px;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+`;
+
+const CancelCloseButton = styled(CancelSubmitButton)`
+  background: #6f7789;
+  margin-top: 23px;
+`;
+
+const CancelTextarea = styled(BigTextArea)``;
+
+const CancelSubheading = styled.div`
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 25px;
+  /* identical to box height */
+  align-self: flex-start;
+  margin-left: 20px;
+  color: #505050;
+  margin-top: 20px;
+`;
+
+const CancelInfo = styled.div`
+  width: 100%;
+  background: #dbedff;
+  border-radius: 10px;
+  padding: 8px 15px;
+  margin-top: 18px;
+  font-size: 12px;
+  line-height: 20px;
+  color: #505050;
+  strong {
+    color: #ff0000;
+  }
+`;
+
+const CancelHeading = styled.div`
+  color: #12121d;
+  font-weight: 500;
+  font-size: 17px;
+`;
 
 const BlueInfoText = styled.div`
   padding: 16px 26px;

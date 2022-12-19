@@ -6,6 +6,7 @@ import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import V2ApplyProfileRow from "../../../components/V2/UI/V2ApplyProfileRow";
 import V2ApproveProfileRow from "../../../components/V2/UI/V2ApproveProfileRow";
+import V2CancelRequestProfileRow from "../../../components/V2/UI/V2CancelRequestProfileRow";
 import V2SubHeaderC from "../../../components/V2/UI/V2SubHeaderC";
 import { getTeamApplications } from "../../../lib/api/getTeamApplications";
 import { GetTeamApplications } from "../../../lib/api/types";
@@ -50,8 +51,34 @@ export default function V2LeaderApprovePage({ match }: Props) {
             {teamApplicationsData?.femaleApproveCount}
           </PartialCountContainer>
         </CountContainer>
+        {teamApplicationsData?.cancelRequestedApplicantProfiles &&
+        teamApplicationsData.cancelRequestedApplicantProfiles.length > 0 ? (
+          <ApplicantRowContainer>
+            <RowHeading>승인 취소 요청</RowHeading>
+            <RowSubHeadering>
+              *my클럽에 승인되었지만 취소를 요청하신 크루분들이십니다!
+            </RowSubHeadering>
+            {teamApplicationsData?.cancelRequestedApplicantProfiles.map(
+              (applicant) => {
+                return (
+                  <Wrapper key={applicant.profileImg}>
+                    <V2CancelRequestProfileRow
+                      profileImg={applicant.profileImg}
+                      username={applicant.username}
+                      teamId={teamId}
+                      userId={applicant.userId}
+                      phoneNumber={applicant?.phoneNumber}
+                      applicationId={applicant.applicationId}
+                      refetch={refetch}
+                    />
+                  </Wrapper>
+                );
+              },
+            )}
+          </ApplicantRowContainer>
+        ) : null}
 
-        <ApplyContainer>
+        <ApplicantRowContainer>
           {teamApplicationsData?.pendingApplicantProfiles.map((applicant) => {
             return (
               <Wrapper key={applicant.profileImg}>
@@ -66,12 +93,12 @@ export default function V2LeaderApprovePage({ match }: Props) {
               </Wrapper>
             );
           })}
-        </ApplyContainer>
-        <ApproveContainer>
-          <ApproveHeading>my 클럽 프렌즈들</ApproveHeading>
-          <ApproveSubHeadering>
+        </ApplicantRowContainer>
+        <ApplicantRowContainer>
+          <RowHeading>my 클럽 프렌즈들</RowHeading>
+          <RowSubHeadering>
             *my클럽이 된 프렌즈들이야! 단톡을 파서 프렌즈들을 초대해보자!
-          </ApproveSubHeadering>
+          </RowSubHeadering>
           {teamApplicationsData?.approvedApplicantProfiles.map((applicant) => {
             return (
               <Wrapper key={applicant.profileImg}>
@@ -85,7 +112,7 @@ export default function V2LeaderApprovePage({ match }: Props) {
               </Wrapper>
             );
           })}
-        </ApproveContainer>
+        </ApplicantRowContainer>
       </InfoContainer>
     </Container>
   );
@@ -100,25 +127,21 @@ const SpaceDiv = styled.div`
   height: 20px;
 `;
 
-const ApproveHeading = styled.div`
+const RowHeading = styled.div`
   color: #505050;
   font-weight: 700;
   font-size: 20px;
   margin-bottom: 18px;
 `;
 
-const ApproveSubHeadering = styled.div`
+const RowSubHeadering = styled.div`
   color: #505050;
   font-weight: 400;
   font-size: 14px;
   margin-bottom: 30px;
 `;
 
-const ApproveContainer = styled.div`
-  margin-top: 30px;
-`;
-
-const ApplyContainer = styled.div`
+const ApplicantRowContainer = styled.div`
   margin-top: 30px;
 `;
 

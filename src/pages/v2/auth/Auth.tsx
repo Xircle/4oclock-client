@@ -19,16 +19,14 @@ import {
   LoaderWrapper,
 } from "../../../components/shared/Loader";
 import ClipLoader from "react-spinners/ClipLoader";
-import { initialState, reducer } from "./AuthReducer";
+import { initialState, authReducer } from "./AuthReducer";
 import { createAccount } from "../../../lib/api/createAccount";
-import BottomModal from "../../../components/UI/BottomModal";
-import styled from "styled-components";
 
 function Auth() {
   const history = useHistory();
   const location = useLocation<SocialAuthResponse>();
   const [step, setStep] = useState(0);
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(authReducer, initialState);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
