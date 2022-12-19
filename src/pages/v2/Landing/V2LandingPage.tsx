@@ -17,7 +17,7 @@ import {
   ITimeData,
   TimeData,
 } from "../../../lib/v2/utils";
-import { colors, Container, MainBtn } from "../../../styles/styles";
+import { colors, Container, MainBtn, SmallInput } from "../../../styles/styles";
 import { isSamsungBrowser } from "react-device-detect";
 import Modal from "../../../components/UI/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,6 +27,7 @@ import Footer from "../../../components/footer/Footer";
 import { useHistory } from "react-router-dom";
 import routes from "../../../routes";
 import { verifyByCode } from "../../../lib/api/verifyByCode";
+import { LoaderWrapper } from "../../../components/shared/Loader";
 
 enum DrawerType {
   Category = "선호하는 정모 테마을 선택해주세요",
@@ -48,6 +49,8 @@ function V2LandingPage() {
   const [isYkClub, setIsYkClub] = useState<boolean | undefined>();
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [codeModal, setCodeModal] = useState<boolean>(false);
+  const [codeModalLoading, setCodeModalLoading] = useState<boolean>(false);
+  const [code, setCode] = useState("");
   const history = useHistory();
 
   const { mutateAsync: mutateUserData, isLoading: isFetching } =
@@ -78,10 +81,16 @@ function V2LandingPage() {
 
   const VerifyCTA = async (code: string) => {
     try {
+      setCodeModalLoading(true);
       const data = await mutateVerifyByCode(code);
       await fetchNewUserData();
+      if (data.ok) {
+        alert("코드 입력 완료");
+      }
     } catch (error) {
     } finally {
+      setCodeModalLoading(false);
+      setCodeModal(false);
     }
   };
 
@@ -232,18 +241,15 @@ function V2LandingPage() {
           onClose={() => setCodeModal((prev) => !prev)}
         >
           <ModalWrapper>
-            <h1>크롬 or 사파리로 접속해주세요!</h1>
-            <p>
-              삼성 브라우저에서 회원가입이 잘되지 않는 이슈를 발견했어요!
-              <br />
-              <br />
-              원활한 접속을 위해 크롬 or 사파리로 접속해주세요
-            </p>
-            <MainBtn
-              onClick={() => setCodeModal(false)}
-              style={{ width: "90%" }}
-            >
-              알겠습니다
+            <h1>활동 코드 입력하기</h1>
+            <p>코드를 모르겠다면 전체 단톡방 확인!</p>
+            <CodeInput
+              onChange={(e) => {
+                setCode(e.target.value);
+              }}
+            />
+            <MainBtn onClick={() => VerifyCTA(code)} style={{ width: "90%" }}>
+              입력하기
             </MainBtn>
           </ModalWrapper>
         </Modal>
@@ -444,11 +450,26 @@ function V2LandingPage() {
           />
         </ClipLoaderWrapper>
       )}
+      <>
+        <LoaderWrapper top={"40%"}>
+          <ClipLoader
+            loading={codeModalLoading}
+            color={colors.MidBlue}
+            css={{
+              name: "width",
+              styles: "border-width: 4px; z-index: 999;",
+            }}
+            size={40}
+          />
+        </LoaderWrapper>
+      </>
 
       <Footer />
     </SContainer>
   );
 }
+
+const CodeInput = styled(SmallInput)``;
 
 const ButtonContainer = styled.div`
   display: flex;
