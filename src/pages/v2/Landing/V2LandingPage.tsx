@@ -77,7 +77,8 @@ function V2LandingPage() {
 
   const VerifyCTA = async (code: string) => {
     try {
-      const data = mutateVerifyByCode(code);
+      const data = await mutateVerifyByCode(code);
+      await fetchNewUserData();
     } catch (error) {
     } finally {
     }
