@@ -74,6 +74,9 @@ function V2LandingPage() {
       setIsYkClub(userData?.isYkClub);
       if (userData?.username) {
         setLoggedIn(true);
+        if (userData?.isYkClub === false) {
+          codeCheck();
+        }
       }
     }
   };
@@ -85,12 +88,19 @@ function V2LandingPage() {
       await fetchNewUserData();
       if (data.ok) {
         alert("코드 입력 완료");
+      } else {
+        alert(data.error);
       }
     } catch (error) {
+      alert("네트워크 에러가 발생했습니다");
     } finally {
       setCodeModalLoading(false);
       setCodeModal(false);
     }
+  };
+
+  const codeCheck = () => {
+    setCodeModal(true);
   };
 
   useEffect(() => {
