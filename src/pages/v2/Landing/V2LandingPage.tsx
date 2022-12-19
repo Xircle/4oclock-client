@@ -47,6 +47,7 @@ function V2LandingPage() {
   const [isSamsungBrowserBool, setIsSamsungBrowserBool] = useState(false);
   const [isYkClub, setIsYkClub] = useState<boolean | undefined>();
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [codeModal, setCodeModal] = useState<boolean>(false);
   const history = useHistory();
 
   const { mutateAsync: mutateUserData, isLoading: isFetching } =
@@ -225,6 +226,28 @@ function V2LandingPage() {
           </ModalWrapper>
         </Modal>
       )}
+      {codeModal && (
+        <Modal
+          isClose={!codeModal}
+          onClose={() => setCodeModal((prev) => !prev)}
+        >
+          <ModalWrapper>
+            <h1>크롬 or 사파리로 접속해주세요!</h1>
+            <p>
+              삼성 브라우저에서 회원가입이 잘되지 않는 이슈를 발견했어요!
+              <br />
+              <br />
+              원활한 접속을 위해 크롬 or 사파리로 접속해주세요
+            </p>
+            <MainBtn
+              onClick={() => setCodeModal(false)}
+              style={{ width: "90%" }}
+            >
+              알겠습니다
+            </MainBtn>
+          </ModalWrapper>
+        </Modal>
+      )}
       <V2HeaderC />
       <Drawer
         PaperProps={{
@@ -342,7 +365,9 @@ function V2LandingPage() {
       <ButtonContainer>
         <InquiryButton onClick={InquiryCTA}>케빈에게 문의하기</InquiryButton>
         {isYkClub === false && (
-          <InquiryButton onClick={visitMypage}>활동코드 입력하기</InquiryButton>
+          <InquiryButton onClick={() => setCodeModal(true)}>
+            활동코드 입력하기
+          </InquiryButton>
         )}
       </ButtonContainer>
       <InstructionContainer>
