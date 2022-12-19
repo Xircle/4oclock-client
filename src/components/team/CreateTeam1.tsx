@@ -79,6 +79,19 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
     openDrawer();
   };
 
+  const nextDisabled: boolean =
+    state.name?.length > 0 &&
+    state.meeting_day !== undefined &&
+    state.meeting_hour !== undefined &&
+    state.leaderIntro?.length > 0 &&
+    state.maleMaxAge !== undefined &&
+    state.maleMinAge !== undefined &&
+    state.femaleMinAge !== undefined &&
+    state.categoryId &&
+    state.femaleMaxAge !== undefined
+      ? false
+      : true;
+
   const TimeComponent = () => {
     return (
       <ModalContentContainer>
@@ -217,6 +230,54 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
       </NonFlexWrapper>
     );
   };
+  const AgeComponent = () => {
+    return (
+      <ModalContentContainer>
+        <ModalText>남자 최소 나이 (이상)</ModalText>
+        <OnelineInput
+          placeholder="20"
+          type="number"
+          value={state.maleMinAge}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            dispatch({ type: "setMaleMinAge", payload: Number(e.target.value) })
+          }
+        />
+        <ModalText>남자 최대 나이 (이하)</ModalText>
+        <OnelineInput
+          placeholder="30"
+          type="number"
+          value={state.maleMaxAge}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            dispatch({ type: "setMaleMaxAge", payload: Number(e.target.value) })
+          }
+        />
+        <ModalText>여자 최소 나이 (이상)</ModalText>
+        <OnelineInput
+          placeholder="20"
+          type="number"
+          value={state.femaleMinAge}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            dispatch({
+              type: "setFemaleMinAge",
+              payload: Number(e.target.value),
+            })
+          }
+        />
+        <ModalText>여자 최대 나이 (이하)</ModalText>
+        <OnelineInput
+          placeholder="30"
+          type="number"
+          value={state.femaleMaxAge}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            dispatch({
+              type: "setFemaleMaxAge",
+              payload: Number(e.target.value),
+            })
+          }
+        />
+      </ModalContentContainer>
+    );
+  };
 
   return (
     <Container>
@@ -257,6 +318,8 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
           ? AreaComponent()
           : modalType === ModalType.Category
           ? CategoryComponent()
+          : modalType === ModalType.Age
+          ? AgeComponent()
           : null}
 
         <DrawerButton onClick={closeDrawer}>적용하기</DrawerButton>
@@ -289,7 +352,7 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
         <FontAwesomeIcon icon={faChevronDown} />
       </DropDownButton>
       <Label mandatory={true} labelName="클럽 나이대" />
-      <DropDownButton>
+      <DropDownButton onClick={openAgeDrawer}>
         <DropDownText>해당 클럽의 나이대를 골라주세요</DropDownText>
         <FontAwesomeIcon icon={faChevronDown} />
       </DropDownButton>
@@ -319,7 +382,7 @@ export default function CreateTeam1({ onNext, state, dispatch }: Props) {
       />
       <CancelWordCount>{state.leaderIntro?.length}/30</CancelWordCount>
       <BlankSpace />
-      <NextButton type="submit" disabled={false} onClick={onNext}>
+      <NextButton type="submit" disabled={nextDisabled} onClick={onNext}>
         다음(1/3)
       </NextButton>
     </Container>
