@@ -26,6 +26,7 @@ import { ClipLoader } from "react-spinners";
 import Footer from "../../../components/footer/Footer";
 import { useHistory } from "react-router-dom";
 import routes from "../../../routes";
+import { verifyByCode } from "../../../lib/api/verifyByCode";
 
 enum DrawerType {
   Category = "선호하는 정모 테마을 선택해주세요",
@@ -51,6 +52,9 @@ function V2LandingPage() {
   const { mutateAsync: mutateUserData, isLoading: isFetching } =
     useMutation(getUser);
 
+  const { mutateAsync: mutateVerifyByCode, isLoading: verifyByCodeIsLoading } =
+    useMutation(verifyByCode);
+
   const fetchNewUserData = async () => {
     if (storage.getItem(CURRENT_USER)?.token) {
       const userData = await mutateUserData();
@@ -68,6 +72,14 @@ function V2LandingPage() {
       if (userData?.username) {
         setLoggedIn(true);
       }
+    }
+  };
+
+  const VerifyCTA = async (code: string) => {
+    try {
+      const data = mutateVerifyByCode(code);
+    } catch (error) {
+    } finally {
     }
   };
 
