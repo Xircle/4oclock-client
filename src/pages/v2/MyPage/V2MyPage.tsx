@@ -92,12 +92,15 @@ export default function V2MyPage() {
           onClose={() => setCancelSuccessModal((prev) => !prev)}
         >
           <ModalWrapper>
-            <h1>크롬 or 사파리로 접속해주세요!</h1>
+            <h1>
+              클럽 취소가 정상적으로 <br /> 요청되었습니다.
+            </h1>
             <p>
-              삼성 브라우저에서 회원가입이 잘되지 않는 이슈를 발견했어요!
+              📌취소사유를 보낸 후 리더에게
+              <br /> 문자로 취소 요청 연락을 꼭꼭 해주세요.
               <br />
               <br />
-              원활한 접속을 위해 크롬 or 사파리로 접속해주세요
+              📌리더 전화번호 복사{">"} 리더에게 문의하기
             </p>
             <MainBtn
               onClick={() => setCancelSuccessModal(false)}
@@ -273,6 +276,22 @@ const ModalWrapper = styled.div`
   align-items: center;
   height: 100%;
   padding: 10px 40px;
+  h1 {
+    text-align: center;
+    letter-spacing: -0.005em;
+
+    color: #222222;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 35px;
+  }
+  p {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 19px;
+
+    color: #505050;
+  }
 `;
 
 const CancelConfirmContainer = styled.div`
