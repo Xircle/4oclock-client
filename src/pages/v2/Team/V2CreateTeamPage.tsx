@@ -99,7 +99,7 @@ export default function V2CreateTeamPage({ leaderId }: Props) {
       <Body>
         <TopInfoContainer>
           <TopInfoLeft>
-            정기클럽 기본정보({step + 1}/{components.length - 1})
+            정기클럽 기본정보({step + 1}/{components.length})
           </TopInfoLeft>
           <TopInfoRight onClick={showExample}>생성예시보기</TopInfoRight>
         </TopInfoContainer>
