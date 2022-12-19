@@ -51,7 +51,6 @@ function V2LandingPage() {
   const [codeModal, setCodeModal] = useState<boolean>(false);
   const [codeModalLoading, setCodeModalLoading] = useState<boolean>(false);
   const [code, setCode] = useState("");
-  const history = useHistory();
 
   const { mutateAsync: mutateUserData, isLoading: isFetching } =
     useMutation(getUser);
@@ -201,14 +200,6 @@ function V2LandingPage() {
   const openAgeDrawer = () => {
     setDrawerText(DrawerType.Age);
     setDrawerOpened(true);
-  };
-
-  const visitMypage = () => {
-    if (storage.getItem(CURRENT_USER)?.profile.role === "Owner") {
-      history.push(routes.v2LeaderPage);
-    } else {
-      history.push(routes.v2MyPage);
-    }
   };
 
   return (
