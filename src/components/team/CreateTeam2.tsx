@@ -23,9 +23,16 @@ interface Props {
 export default function CreateTeam2({ onNext, state, dispatch }: Props) {
   const [filesUrl, setFilesUrl] = useState<string[]>([]);
 
+  const disabledNext =
+    state.oneLineInfo?.length > 0 &&
+    state.description &&
+    state.description?.length > 0 &&
+    state.images?.length > 1
+      ? false
+      : true;
+
   const handleFilesOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return null;
-    setFilesUrl([]);
 
     const files = e.target.files;
 
@@ -37,14 +44,17 @@ export default function CreateTeam2({ onNext, state, dispatch }: Props) {
         );
       }
     }
+    setFilesUrl([]);
+    let images: File[] = [];
     Array.from(files).forEach((file) => {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.onload = (e) => {
         setFilesUrl((prev) => [...prev, e.target!.result as string]);
       };
-      dispatch({ type: "setImages", payload: [...state.images, file] });
+      images.push(file);
     });
+    dispatch({ type: "setImages", payload: images });
   };
 
   return (
@@ -116,7 +126,7 @@ export default function CreateTeam2({ onNext, state, dispatch }: Props) {
         ))}
       </PhotosContainer>
       <BlankSpace />
-      <NextButton type="submit" disabled={false} onClick={onNext}>
+      <NextButton type="submit" disabled={disabledNext} onClick={onNext}>
         다음(2/3)
       </NextButton>
     </Container>
