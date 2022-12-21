@@ -165,7 +165,7 @@ export default function V2TeamPage({ match, location, history }: Props) {
           <TeamDescription>
             {teamData?.area_names && teamData?.area_names?.length > 0
               ? teamData?.area_names?.join(", ")
-              : teamData?.areaInfo ?? "장소 미정"}
+              : teamData?.areaInfo ?? "상관없음"}
           </TeamDescription>
         </DetailInfoSection>
         <DetailInfoSection>
