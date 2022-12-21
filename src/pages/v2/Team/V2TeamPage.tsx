@@ -169,7 +169,7 @@ export default function V2TeamPage({ match, location, history }: Props) {
           </TeamDescription>
         </DetailInfoSection>
         <DetailInfoSection>
-          <DetailInfoTitle>해당 클럽의 MISSION RULE</DetailInfoTitle>
+          <DetailInfoTitle>🔹해당 클럽의 MISSION RULE</DetailInfoTitle>
           <TeamDescription>{teamData?.mission}</TeamDescription>
         </DetailInfoSection>
         <DetailInfoSection>
@@ -184,6 +184,22 @@ export default function V2TeamPage({ match, location, history }: Props) {
             <br />
             마음에 드는 모임에 신청하기 !<br />
             4.모임 3회 미만 참석 시 클럽 영구제명입니다
+          </DetailInfoTag>
+        </DetailInfoSection>
+        <DetailInfoSection>
+          <DetailInfoTitle>🔹케빈의 클럽 환불규정</DetailInfoTitle>
+          <DetailInfoTag style={{ color: "#A7B0C0" }}>
+            ※승인 후 클럽 단톡방이 생성되기 전까지는 환불 수수료 없이 전액 환불
+            <br />
+            -클럽 모임 1주차 전까지는 추가 차감 없이 환불 수수료 50% 발생
+            <br />
+            -클럽 모임 1주차 당일 부터는 환불이 불가
+            <br />
+            <br />※ 케빈의 클럽의 정기모임 기수 시작일 2주 전 클럽 단위로 모집을
+            마치고, 1개월 간 진행될 4번의 모임 및 이벤트에 대한 준비를 사전에
+            마치기에 모집 마감 일 이후 환불 시 이미 지출된 비용에 대한 환불
+            수수료가 발생합니다. 프렌즈분들의 더 좋은 클럽 활동을 위하여 위
+            내용을 이해해주시는 점 진심으로 감사드립니다.
           </DetailInfoTag>
         </DetailInfoSection>
       </DetailInfoContainer>
