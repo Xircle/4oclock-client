@@ -56,12 +56,20 @@ export default function V2CreateTeamPage({ leaderId }: Props) {
     }
   };
 
+  const example =
+    "https://auspicious-court-380.notion.site/ef351a2209aa4d8190c947caca3d0856";
+
+  const showExample = () => {
+    const win = window.open(example, "_blank");
+    if (win) {
+      win.focus();
+    }
+  };
+
   const prevStep = () => {
     if (step > 0) setStep((step) => step - 1);
     else history.goBack();
   };
-
-  const showExample = () => {};
 
   useEffect(() => {
     const leaderId = storage.getItem(CURRENT_USER)?.uid;

@@ -6,6 +6,7 @@ import { TeamState } from "../../components/team/types";
 export const createTeam = async (
   state: TeamState,
 ): Promise<CreateTeamOutput> => {
+  console.log(state);
   const formData = new FormData();
   formData.append("name", state.name);
   if (state.images) {
@@ -50,11 +51,13 @@ export const createTeam = async (
     for (let i = 0; i < state.activityTitles.length; i++) {
       formData.append("activity_titles", state.activityTitles[i]!);
     }
+    formData.append("activity_titles", "");
   }
   if (state.activityDetails) {
     for (let i = 0; i < state.activityDetails.length; i++) {
       formData.append("activity_details", state.activityDetails[i]!);
     }
+    formData.append("activity_details", "");
   }
   if (state.mission) {
     formData.append("mission", state.mission);
