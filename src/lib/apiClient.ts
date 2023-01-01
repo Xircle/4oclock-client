@@ -6,7 +6,7 @@ import routes from "../routes";
 // http://localhost:3080
 const host =
   process.env.NODE_ENV === "production"
-    ? process.env.REACT_APP_PRODUCTION_API_SERVER
+    ? "https://api.4oclock.kr"
     : "http://localhost:3080";
 
 const apiClient = axios.create({
