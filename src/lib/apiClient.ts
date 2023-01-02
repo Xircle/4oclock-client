@@ -6,7 +6,7 @@ import routes from "../routes";
 // http://localhost:3080
 const host =
   process.env.NODE_ENV === "production"
-    ? "https://api.4oclock.kr"
+    ? process.env.REACT_APP_PRODUCTION_API_SERVER
     : "http://localhost:3080";
 
 const apiClient = axios.create({
@@ -38,7 +38,7 @@ apiClient.interceptors.request.use((config: AxiosRequestConfig) => {
 });
 
 apiClient.interceptors.response.use(
-  (response) => response,
+  (request) => request,
   (error) => {
     if (error.response.status === 403 || error.response.status === 401) {
       storage.clearItems();
